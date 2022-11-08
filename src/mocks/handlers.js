@@ -1,10 +1,9 @@
 import { rest } from "msw";
 export const handlers = [
   // 기본형
-  rest.post("/login", async (res, req, ctx) => {
+  rest.post("/login", async (req, res, ctx) => {
     return res(ctx.json("뱉어줄정보들!"));
   }),
-
   // Handles a GET /user request
   rest.get("https://testserver.com/shopping", async (req, res, ctx) => {
     return res(
@@ -57,12 +56,30 @@ export const handlers = [
             price: 20000,
             userInfo: {
               userId: 3,
-              nickname: "sexyYounJeong",
+              nickname: "sexyYunJeong",
             },
             tag: 2,
           },
         ],
       })
     );
+  }),
+
+  rest.get("https://testserver.com/shopping/1", async (req, res, ctx) => {
+    return res(ctx.json(
+      {
+        dealId:1,
+        title:"예쁜 식물",
+        content:"예쁜 식물이 싸게싸게 나왔어요 여러분~",
+        createdAt:"2022-11-08",
+        view:13,
+        price:5000,
+        userInfo: {
+              userId:1,
+              nickname:"junguZzang"
+              },
+        "tag": 1
+      }
+    ));
   }),
 ];

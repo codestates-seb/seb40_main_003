@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import ProductCard from "../Components/ProductCard";
 import { ProductPreviewType } from "../types/productTypes";
+import { SigButton } from './../Components/GlobalComponents';
 
 type elemMaps = [ProductPreviewType];
 
@@ -25,6 +26,11 @@ const Main = () => {
         console.log(e.title)
         return <ProductCard key={e.dealId} data={e} />
       })}
+      <input type="text" />
+      <SigButton>버튼</SigButton>
+      <SigButton className="disable">버튼</SigButton>
+      <SigButton className="ghost">버튼</SigButton>
+      
     </>
   ) : (
     <>loading...</>
