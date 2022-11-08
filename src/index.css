@@ -30,6 +30,9 @@
   --line-black:#777777;
   --line-gray: #BABABA;
   --line-light-gray:#EDEDED;
+  --bold:700;
+  --medium:500;
+  --light:200;
 }
 
 a, input, button, select, textarea{
@@ -39,6 +42,20 @@ a, input, button, select, textarea{
   border: none;
 }
 
+input, textarea{
+  padding: 8px;
+  outline-style: solid;  
+  outline-width: 1px;
+  outline-color: var(--line-light-gray);
+  border-radius: 6px;
+}
+input:focus, textarea:focus{
+  filter: drop-shadow(0px 0px 2px #127C56);
+  color: var(--font-main)
+}
+
+
+/* 폰트 두께 설정 */
 .light{
   font-weight: 200;
 }
@@ -49,11 +66,10 @@ a, input, button, select, textarea{
   font-weight: 700;
 }
 
-
+/* 폰트 크기 설정 */
 .sub {
   font-size: 0.8rem;
 }
-
 .h4 {
   font-size: 1.2rem;
 }
@@ -66,11 +82,15 @@ a, input, button, select, textarea{
 .h1 {
   font-size: 1.8rem;
 }
-.mt-5 {
-  margin-top: 5px;
+/* 마진 설정 */
+.mt-4 {
+  margin-top: 4px;
 }
-.mt-10 {
-  margin-top: 10px;
+.mt-8 {
+  margin-top: 8px;
+}
+.mt-16{
+  margin-top: 16px;
 }
 .mb-10 {
   margin-bottom: 10px;
@@ -95,9 +115,16 @@ a, input, button, select, textarea{
   margin-right: 24px;
 }
 
-.sig-border {
+.sig-border16 {
+  border-radius: 16px 0px 16px 0px;
+}
+.sig-border8 {
   border-radius: 8px 0px 8px 0px;
 }
+.sig-border4 {
+  border-radius: 4px 0px 4px 0px;
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
