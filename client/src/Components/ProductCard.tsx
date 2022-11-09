@@ -9,12 +9,14 @@ const ProductWrapper = styled.div`
   padding: 24px 8px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid var(--line-light-gray);
 `;
 
 const ProductDescription = styled.div`
-  width: auto;
+  height: 100px;
   display: flex;
+  justify-content: space-between;
 `;
 const Price = styled.span`
   display: block;
@@ -23,23 +25,21 @@ const Price = styled.span`
 const Title = styled.span``;
 
 const ProductCard = ({ data }: any) => {
-  console.log(data.pictures[0].picture);
   return (
     <ProductWrapper>
-      <ImageWrapper
-        size={"100"}
-        src={String(data.pictures[0].picture)}
-        alt={`상품명 ${data.title}의 대표이미지`}
-      />
-      <ProductDescription className="ml-16">
+      <ProductDescription>
+        <ImageWrapper
+          size={"100"}
+          src={String(data.pictures[0].picture)}
+          alt={`상품명 ${data.title}의 대표이미지`}
+        />
         <ColumnWrapper>
           <span>{data.title}</span>
           <span className="sub">{data.createdAt}</span>
           <Price className="bold h4">{data.price.toLocaleString()}원</Price>
         </ColumnWrapper>
-
-        <ViewCounter view={data.view} like={data.like}></ViewCounter>
       </ProductDescription>
+      <ViewCounter view={data.view} like={data.like}></ViewCounter>
     </ProductWrapper>
   );
 };

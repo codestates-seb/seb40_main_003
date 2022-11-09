@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { ColumnWrapper } from "./main/Wrapper";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -57,6 +58,8 @@ const ImageElem = styled.img`
   overflow: hidden;
   border-radius: 8px 0px;
   display: block;
+  object-fit : fill;
+  margin-right: 16px;
 `;
 
 type imageWrapperProps = {
@@ -75,30 +78,34 @@ type ViewCounterProps = {
   like?: number;
 };
 const ViewCounterWrapper = styled.div`
-  width: 60px;
-  height: 16px;
   display: flex;
+  height: 100%;
   justify-content: space-between;
 `;
 const IconElem = styled.img`
   width: 16px;
   height: 16px;
 `;
+const ViewCounterColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content:end;
+`
 
 export const ViewCounter = ({ view, like }: ViewCounterProps) => {
   return (
     <ViewCounterWrapper>
       {view ? (
-        <div>
+        <ViewCounterColumn className="text-align-center mr-16">
           <SubText className="medium font-gray">조회수</SubText>
-          <SubText className="ml-4 font-gray">{view}</SubText>
-        </div>
+          <SubText className="font-gray">{view}</SubText>
+        </ViewCounterColumn>
       ) : null}
       {like ? (
-        <div>
-          <SubText className="medium font-gray">좋아요</SubText>
-          <SubText className="ml-4 font-gray">{like}</SubText>
-        </div>
+        <ViewCounterColumn className="text-align-center mr-16">
+          <SubText className="medium font-gray">찜</SubText>
+          <SubText className="font-gray">{like}</SubText>
+        </ViewCounterColumn>
       ) : null}
     </ViewCounterWrapper>
   );
