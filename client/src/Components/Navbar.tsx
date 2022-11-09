@@ -1,8 +1,13 @@
 import styled from "@emotion/styled";
 // 이미지의 경우, 상단에 변수로 Import해서 사용할 시 자동으로 경로를 관리해줍니다
 // 아래와같이 변수로 import시 이미지의 경로를 string 형태로 리턴해줍니다
-import { Link,Outlet } from "react-router-dom";
-
+import { Link, Outlet } from "react-router-dom";
+import { SubText } from "./GlobalComponents";
+import { ReactComponent as Home } from "../images/homeIcon.svg";
+import { ReactComponent as Community } from "../images/communityIcon.svg";
+import { ReactComponent as Chat } from "../images/chatIcon.svg";
+import { ReactComponent as Market } from "../images/marketIcon.svg";
+import ProfileIcon from "../images/emptyProfileIcon.svg"
 const NavContainer = styled.nav`
   width: 100%;
   max-width: 360px;
@@ -21,53 +26,74 @@ const NavElemWrapper = styled.ul`
   justify-content: space-between;
   padding: 0 8px;
 `;
-const NavElem = styled.li`
-  cursor: pointer;
-  width: 36px;
-  height: 36px;
-  border-radius: 18px;
-  background-color: #999;
-`;
 
 
-const Logo = styled.h1`
-  background-image: url();
-`;
-
-const SearchInput = styled.input`
-  box-sizing: border-box;
+const IconWrapper = styled.div`
   width: 100%;
-  border-radius: 3px;
-  border: 1px solid gray;
-  padding: 8px;
-  padding-right: 400px;
+  max-width: 60px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `;
 
-type Props = {};
+type ProfileProps ={
+  url?:string
+}
+const ProfilePhotoWrapper = styled.div`
+  width: 22px;
+  height:22px;
+  border-radius: 16px;
+  background-image:url(${(props:ProfileProps)=>props.url?props.url:ProfileIcon});
+`
+type NavElemProps = {
+  title?: string;
+  children?: JSX.Element;
+};
+const NavElem = ({ title = "Untitled", children }: NavElemProps) => {
+  return (
+    <IconWrapper>
+      {children}
+      <SubText className={"text-align-center"}>{title}</SubText>
+    </IconWrapper>
+  );
+};
 
-const Navbar = (props: Props) => {
+interface Auth {
+  img?:"string"
+}
+const Navbar = ({img}:Auth) => {
   return (
     <>
-    <NavContainer>
-      <NavElemWrapper>
-        <Link to="/">
-          <NavElem />
-        </Link>
-        <Link to="/product">
-          <NavElem />
-        </Link>
-        <Link to="/board">
-          <NavElem />
-        </Link>
-        <Link to="/talk">
-          <NavElem />
-        </Link>
-        <Link to="/profile">
-          <NavElem />
-        </Link>
-      </NavElemWrapper>
-    </NavContainer>
-    <Outlet/>
+      <NavContainer>
+        <NavElemWrapper>
+          <Link to="/">
+            <NavElem title="홈">
+              <Home />
+            </NavElem>
+          </Link>
+          <Link to="/product">
+            <NavElem title="장터">
+              <Market />
+            </NavElem>
+          </Link>
+          <Link to="/board">
+            <NavElem title="커뮤니티">
+              <Community/>
+            </NavElem>
+          </Link>
+          <Link to="/talk">
+            <NavElem title="대화">
+              <Chat/>
+            </NavElem>
+          </Link>
+          <Link to="/profile">
+            <NavElem title="프로필">
+            <ProfilePhotoWrapper/>
+            </NavElem>
+          </Link>
+        </NavElemWrapper>
+      </NavContainer>
+      <Outlet />
     </>
   );
 };
