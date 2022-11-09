@@ -1,6 +1,7 @@
 // import { useState } from "react";
 // import { useEffect } from "react";
 // import axios from "axios";
+import { SigTag } from "../Components/GlobalComponents";
 import  CareCard  from "../Components/main/CareCard";
 
 type Props = {}
@@ -20,6 +21,10 @@ const Care = (props: Props) => {
   return (
     <div>
       <CareCard>Care</CareCard>
+      <SigTag>배고파</SigTag>
+      <SigTag className="variant2">배고파</SigTag>
+      <SigTag className="variant3">배고파</SigTag>
+      <SigTag className="variant4">배고파</SigTag>
     </div>
   )
 }
