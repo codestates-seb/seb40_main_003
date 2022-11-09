@@ -2,10 +2,10 @@ import React from 'react'
 
 type Props = {}
 
-const Register = (props: Props) => {
+const Signup = (props: Props) => {
   return (
     <div>SignUp</div>
   )
 }
 
-export default Register
+export default Signup
