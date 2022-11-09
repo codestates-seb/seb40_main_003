@@ -42,7 +42,9 @@ a, input, button, select, textarea{
   color: inherit;
   border: none;
 }
-
+.font-gray{
+  color: var(--font-gray);
+}
 input, textarea{
   padding: 8px;
   outline-style: solid;  
@@ -113,7 +115,23 @@ input:focus, textarea:focus{
   margin-right: 24px;
 }
 .mr-36{
-  margin-right: 24px;
+  margin-right: 36px;
+}
+
+.ml-4 {
+  margin-left: 4px;
+}
+.ml-8 {
+  margin-left: 8px;
+}
+.ml-16 {
+  margin-left: 16px;
+}
+.ml-24 {
+  margin-left: 24px;
+}
+.ml-36{
+  margin-left: 36px;
 }
 
 .sig-border16 {

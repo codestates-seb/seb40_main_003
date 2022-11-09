@@ -52,7 +52,8 @@
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.10.2",
-    "msw": "^0.47.4"
+    "msw": "^0.47.4",
+    "typescript-styled-plugin": "^0.18.2"
   },
   "main": "index.js",
   "license": "MIT",
