@@ -9,6 +9,7 @@ import Signup from "./Pages/Signup";
 import Missing from "./Pages/Missing";
 import Care from "./Pages/Care";
 import Community from "./Pages/Community";
+import Talk from "./Pages/Talk";
 // type Props = {
 //   id: number;
 //   vote: number;
@@ -28,12 +29,14 @@ function App() {
       {/* 양옆 Padding을 제공하는 Wrapper 입니다 */}
 
       <Routes>
-        <Route path="/" element={<Product />} />
+        <Route path="/" element={<Care />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/care" element={<Care />} />
+        <Route path="/product" element={<Product />} />
         <Route path="/board" element={<Community />} />
+        <Route path="/talk" element={<Talk />} />
 
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />
