@@ -3,11 +3,11 @@ import axios from "axios";
 import { useEffect } from "react";
 import ProductCard from "../Components/ProductCard";
 import { ProductPreviewType } from "../types/productTypes";
-import { SigButton } from './../Components/GlobalComponents';
+import { SigButton } from '../Components/GlobalComponents';
 
 type elemMaps = [ProductPreviewType];
 
-const Main = () => {
+const Product = () => {
   const [data, setData] = useState<elemMaps>();
   const [isLoading, setIsLoading] = useState(true);
 
@@ -37,4 +37,4 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default Product;
