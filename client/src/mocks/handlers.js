@@ -1,5 +1,9 @@
 import { rest } from "msw";
 export const handlers = [
+  // 로그인 테스트
+  rest.post("https://testserver.com/auth/token", async (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
   // 기본형
   rest.post("https://testserver.com/login", async (req, res, ctx) => {
       return res(
