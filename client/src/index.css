@@ -33,6 +33,7 @@
   --bold:700;
   --medium:500;
   --light:200;
+  --sub-font-size: 0.8rem;
 }
 
 a, input, button, select, textarea{
@@ -123,6 +124,10 @@ input:focus, textarea:focus{
 }
 .sig-border4 {
   border-radius: 4px 0px 4px 0px;
+}
+
+.text-align-center{
+  text-align: center;
 }
 
 
