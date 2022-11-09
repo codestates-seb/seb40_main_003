@@ -10,6 +10,7 @@ import Missing from "./Pages/Missing";
 import Care from "./Pages/Care";
 import Community from "./Pages/Community";
 import Talk from "./Pages/Talk";
+import DevTools from "./Components/DevTools";
 // type Props = {
 //   id: number;
 //   vote: number;
@@ -25,6 +26,7 @@ function App() {
   return (
     <BrowserRouter>
       {/* Navbar는 리랜더링 되지않고, URL에 따라 하위 컴포넌트만 리랜더링 되게하기 위한 구조입니다 */}
+      <DevTools/>
       <Navbar />
       {/* 양옆 Padding을 제공하는 Wrapper 입니다 */}
 

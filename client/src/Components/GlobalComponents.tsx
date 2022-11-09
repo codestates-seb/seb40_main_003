@@ -95,18 +95,18 @@ const ViewCounterColumn = styled.div`
 export const ViewCounter = ({ view, like }: ViewCounterProps) => {
   return (
     <ViewCounterWrapper>
-      {view ? (
+      {view&&(
         <ViewCounterColumn className="text-align-center mr-16">
           <SubText className="medium font-gray">조회수</SubText>
           <SubText className="font-gray">{view}</SubText>
         </ViewCounterColumn>
-      ) : null}
-      {like ? (
+      )}
+      {like && (
         <ViewCounterColumn className="text-align-center mr-16">
           <SubText className="medium font-gray">찜</SubText>
           <SubText className="font-gray">{like}</SubText>
         </ViewCounterColumn>
-      ) : null}
+      )}
     </ViewCounterWrapper>
   );
 };

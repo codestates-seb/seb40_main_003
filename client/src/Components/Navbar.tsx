@@ -7,7 +7,10 @@ import { ReactComponent as Home } from "../images/homeIcon.svg";
 import { ReactComponent as Community } from "../images/communityIcon.svg";
 import { ReactComponent as Chat } from "../images/chatIcon.svg";
 import { ReactComponent as Market } from "../images/marketIcon.svg";
+import { ReactComponent as Login } from "../images/loginIcon.svg";
 import ProfileIcon from "../images/emptyProfileIcon.svg";
+import { useRecoilValue } from "recoil";
+import { userState } from "../Recoil/atoms/atom";
 
 const NavContainer = styled.nav`
   width: 100%;
@@ -29,43 +32,48 @@ const NavElemWrapper = styled.ul`
   padding: 0 8px;
 `;
 
-const IconWrapper = styled.div`
+const ButtonWrapper = styled.div`
   width: 60px;
   display: flex;
   align-items: center;
   flex-direction: column;
 `;
+const IconWrapper = styled.div`
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 type ProfileProps = {
-  url?: string;
+  userImage: string;
 };
 const ProfilePhotoWrapper = styled.div`
   width: 22px;
   height: 22px;
   overflow: hidden;
   border-radius: 16px;
-  background-image: url(${(props: ProfileProps) =>
-    props.url ? props.url : ProfileIcon});
+  background-image: url(${(props: ProfileProps) =>props.userImage ? props.userImage : ProfileIcon});
   background-size: cover;
 `;
 type NavElemProps = {
   title?: string;
   children?: JSX.Element;
-  className?:any
+  className?: any;
 };
 const NavElem = ({ title = "Untitled", children }: NavElemProps) => {
   return (
-    <IconWrapper>
-      {children}
+    <ButtonWrapper>
+      <IconWrapper>{children}</IconWrapper>
       <SubText className={"text-align-center"}>{title}</SubText>
-    </IconWrapper>
+    </ButtonWrapper>
   );
 };
 
-interface Auth {
-  img?: "string";
-}
-const Navbar = ({ img }: Auth) => {
+const Navbar = () => {
+  const user = useRecoilValue(userState);
+
   return (
     <>
       <NavContainer>
@@ -90,9 +98,13 @@ const Navbar = ({ img }: Auth) => {
               <Chat />
             </NavElem>
           </Link>
-          <Link to="/profile">
-            <NavElem title="프로필" >
-              <ProfilePhotoWrapper url="https://search.pstatic.net/common/?src=http%3A%2F%2Fimage.nmv.naver.net%2Fcafe_2022_02_25_1067%2Ff3f966cc-95ff-11ec-b69c-a0369ff94ed0_01.jpg&type=sc960_832"/>
+          <Link to={user ? `/profile/${user.userId}` : "/login"}>
+            <NavElem title={user ? "프로필" : "로그인"}>
+              {user ? (
+                <ProfilePhotoWrapper userImage={user.userImage} />
+              ) : (
+                <Login />
+              )}
             </NavElem>
           </Link>
         </NavElemWrapper>
