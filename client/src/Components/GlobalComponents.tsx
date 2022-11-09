@@ -27,29 +27,28 @@ export const SubText = styled.span`
 
 // 태그 앨리먼트
 export const SigTag = styled.span`
-  padding: 2px 4px;
-  background-color: var(--main);
+padding: 2px 4px;
+background-color: var(--main);
+color: var(--pure-white);
+font-weight: var(--sub);
+text-align: center;
+min-width: 33px;
+border-radius: 4px 0px;
+&.ghost{
   color: var(--pure-white);
-  font-weight: var(--sub);
-  text-align: center;
-  min-width: 33px;
-  border-radius: 4px 0px;
-  &.variant2 {
-    color: var(--pure-white);
-    background-color: var(--line-gray);
-  }
-  &.variant3 {
-    color: var(--main);
-    background-color: var(--pure-white);
-    border: 1px solid var(--main);
-  }
-  &.variant4 {
-    color: var(--line-gray);
-    background-color: var(--pure-white);
-    border: 1px solid var(--line-gray);
-  }
-`;
-
+  background-color: var(--line-gray);
+}
+&.active{
+  color: var(--main);
+  background-color: var(--pure-white);
+  border: 1px solid var(--main);
+}
+&.disabled{
+  color: var(--line-gray);
+  background-color: var(--pure-white);
+  border: 1px solid var(--line-gray);
+}
+`
 // 이미지 랩퍼
 const ImageElem = styled.img`
   width: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
