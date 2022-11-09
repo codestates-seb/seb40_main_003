@@ -35,16 +35,16 @@ font-weight: var(--sub);
 text-align: center;
 min-width: 33px;
 border-radius: 4px 0px;
-&.variant2{
+&.ghost{
   color: var(--pure-white);
   background-color: var(--line-gray);
 }
-&.variant3{
+&.active{
   color: var(--main);
   background-color: var(--pure-white);
   border: 1px solid var(--main);
 }
-&.variant4{
+&.disabled{
   color: var(--line-gray);
   background-color: var(--pure-white);
   border: 1px solid var(--line-gray);
