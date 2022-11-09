@@ -82,4 +82,44 @@ export const handlers = [
       }
     ));
   }),
-];
+  rest.get("https://testserver.com/caring", async (req, res, ctx) => {
+    return res(ctx.json(
+  {
+    "name" : "이름",
+    "age" : "나이",
+    "gender" : "성별",
+    "photo" : "프로필사진",
+    "simpleCotent" : "간단자기소개",
+    "detailContent" : "상세자기소개",
+    "useNum" : "고용수",
+    "price" : "가격",
+    "extra" : "추가사항",
+    "address" : "주소",
+    "plant" : [
+        {
+            "plantId" : "식물아이디",
+            "plantPhoto" : "식물사진",
+            "plantName" : "식물이름",
+            "plantType" : "식물 종",
+            "plantAge" : "년수"
+        }
+    ],
+    "expertReview" : [
+        {
+            "reviewId" : "리뷰아이디",
+            "content" : "리뷰내용",
+            "writerInfo" : {
+                "userId" : "작성자아이디",
+                "userNickname" : "작성자닉네임"
+            }
+        }
+    ],
+    "techTag" : [
+        {
+            "techId" : "기술태그아이디",
+            "name" : "기술태그내용"
+        }
+      ]
+    })
+  )}
+)];

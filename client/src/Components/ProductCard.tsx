@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { ColumnWarpper } from "./main/Wrapper";
+import { ColumnWrapper } from "./main/Wrapper";
 
 const ProductWrapper = styled.div`
   width: 100%;
@@ -31,11 +31,11 @@ const ProductCard = ({ data }: any) => {
     <ProductWrapper>
       <LeftWrapper>
         <img src={data.pictures[0].picture} alt="alt" className="mr-16" />
-        <ColumnWarpper>
+        <ColumnWrapper>
           <p>{data.title}</p>
           <p className="sub">{data.createdAt}</p>
           <Price className="bold h4">{data.price.toLocaleString()}원</Price>
-        </ColumnWarpper>
+        </ColumnWrapper>
       </LeftWrapper>
       {data.view}
     </ProductWrapper>
