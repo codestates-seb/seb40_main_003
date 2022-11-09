@@ -24,7 +24,7 @@ export const MainContentContainer  = styled.div`
   display: flex;
   flex-direction: row;
 `
-export const ColumnWarpper = styled.div`
+export const ColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `

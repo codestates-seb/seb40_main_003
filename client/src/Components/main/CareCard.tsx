@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-const ProductWrapper = styled.div`
+const CardWrapper = styled.div`
   width: 100%;
   min-width: 312px;
   max-width: 730px;
@@ -18,28 +18,33 @@ const LeftWrapper = styled.div`
 const RightWrapper = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 const Price = styled.span`
   display: block;
   color: var(--font-main);
 `;
-const Title = styled.span``;
+const Title = styled.span`
+font-size: 15px;
+width: fit-content;
+`;
 
-const ProductCard = ({ data }: any) => {
-  console.log(data.pictures[0].picture);
-  return (
-    <ProductWrapper>
+const CareCard = ({ data }: any) => {
+    return (
+        <>
+    <CardWrapper>
       <LeftWrapper>
-        <img src={data.pictures[0].picture} alt="alt" className="mr-16" />
+        <img src={``} alt="alt" className="mr-16" />
+        </LeftWrapper>
         <RightWrapper>
-          <p>{data.title}</p>
-          <p className="sub">{data.createdAt}</p>
-          <Price className="bold h4">{data.price.toLocaleString()}원</Price>
+          <p>{}</p>
+          <p className="sub">{}</p>
+          <Price className="bold h4">{}원</Price>
         </RightWrapper>
-      </LeftWrapper>
-      {data.view}
-    </ProductWrapper>
-  );
-};
-
-export default ProductCard;
+      {}
+    </CardWrapper>
+        </>
+    );
+  };
+  
+  export default CareCard;
+  

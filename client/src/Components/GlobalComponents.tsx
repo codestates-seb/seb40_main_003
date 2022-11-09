@@ -27,6 +27,30 @@ export const SubText = styled.span`
   font-size: var(--sub-font-size);
 `;
 
+export const SigTag = styled.span`
+padding: 2px 4px;
+background-color: var(--main);
+color: var(--pure-white);
+font-weight: var(--sub);
+text-align: center;
+min-width: 33px;
+border-radius: 4px 0px;
+&.variant2{
+  color: var(--pure-white);
+  background-color: var(--line-gray);
+}
+&.variant3{
+  color: var(--main);
+  background-color: var(--pure-white);
+  border: 1px solid var(--main);
+}
+&.variant4{
+  color: var(--line-gray);
+  background-color: var(--pure-white);
+  border: 1px solid var(--line-gray);
+}
+`
+
 const GlobalComponents = (props: Props) => {
   return <div>GlobalComponents</div>;
 };
