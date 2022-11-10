@@ -1,18 +1,22 @@
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import ProductCard, {ProductPlaceHolder} from "../Components/product/ProductCard";
+import ProductCard, {
+  ProductPlaceHolder,
+} from "../Components/product/ProductCard";
 import { ProductPreviewType } from "../types/productTypes";
+import { Link } from "react-router-dom";
 
 type elemMaps = [ProductPreviewType];
 
 const Product = () => {
   const [data, setData] = useState<elemMaps>();
   const [isLoading, setIsLoading] = useState(true);
+  const [hidingTime, setHidingTime] = useState(true);
 
   useEffect(() => {
-    axios.get("https://testserver.com/shopping")
-    .then(({ data }) => {
+    setTimeout(() =>{setHidingTime(false)},200)
+    axios.get("https://testserver.com/shopping").then(({ data }) => {
       setData(data.shopping);
       setIsLoading(false);
     });
@@ -20,12 +24,17 @@ const Product = () => {
 
   return !isLoading && data !== undefined ? (
     <>
+    
       {data.map((e) => {
-        return <ProductCard key={e.dealId} data={e} />
+        return <Link to={`/product/${e.dealId}`}><ProductCard key={e.dealId} data={e} /></Link>;
       })}
     </>
   ) : (
-    <><ProductPlaceHolder/><ProductPlaceHolder/><ProductPlaceHolder/></>
+    <div className={hidingTime ?"display-none":""}>
+      <ProductPlaceHolder />
+      <ProductPlaceHolder />
+      <ProductPlaceHolder />
+    </div>
   );
 };
 
