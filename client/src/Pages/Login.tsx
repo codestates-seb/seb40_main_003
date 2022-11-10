@@ -88,7 +88,6 @@ function Login() {
   // const url = 'https://testserver.com/';
   const [error, setErrMsg] = useState('');
   const [user, setUser] = useRecoilState(userState);
-  const ref = useRef<HTMLInputElement>(null);
   const {
     register,
     formState: { errors },
