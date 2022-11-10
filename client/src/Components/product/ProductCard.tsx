@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
-import { ImageWrapper, ViewCounter } from "./GlobalComponents";
-import { ColumnWrapper } from "./main/Wrapper";
+import { ImageWrapper, ViewCounter } from "../GlobalComponents";
+import { ColumnWrapper } from "../main/Wrapper";
 
 const ProductWrapper = styled.div`
   width: 100%;
@@ -17,10 +17,23 @@ const ProductDescription = styled.div`
   height: 100px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 const Price = styled.span`
   display: block;
   color: var(--font-main);
+`;
+const DescriptionColumnWrapper = styled.div`
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+const SpaceEnd = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  height: 100%;
 `;
 const Title = styled.span``;
 
@@ -33,13 +46,18 @@ const ProductCard = ({ data }: any) => {
           src={String(data.pictures[0].picture)}
           alt={`상품명 ${data.title}의 대표이미지`}
         />
-        <ColumnWrapper>
-          <span>{data.title}</span>
-          <span className="sub">{data.createdAt}</span>
+        <DescriptionColumnWrapper>
+          <ColumnWrapper>
+            <span>{data.title}</span>
+            <span className="sub">{data.createdAt}</span>
+          </ColumnWrapper>
           <Price className="bold h4">{data.price.toLocaleString()}원</Price>
-        </ColumnWrapper>
+        </DescriptionColumnWrapper>
       </ProductDescription>
-      <ViewCounter view={data.view} like={data.like}></ViewCounter>
+      <DescriptionColumnWrapper>
+        <div>...</div>
+        <ViewCounter view={data.view} like={data.like} />
+      </DescriptionColumnWrapper>
     </ProductWrapper>
   );
 };

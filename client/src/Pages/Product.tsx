@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import ProductCard from "../Components/ProductCard";
+import ProductCard from "../Components/product/ProductCard";
 import { ProductPreviewType } from "../types/productTypes";
 
 type elemMaps = [ProductPreviewType];

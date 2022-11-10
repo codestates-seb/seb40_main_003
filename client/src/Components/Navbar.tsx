@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 // 이미지의 경우, 상단에 변수로 Import해서 사용할 시 자동으로 경로를 관리해줍니다
 // 아래와같이 변수로 import시 이미지의 경로를 string 형태로 리턴해줍니다
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useParams,NavLink  } from "react-router-dom";
 import { SubText } from "./GlobalComponents";
 import { ReactComponent as Home } from "../images/homeIcon.svg";
 import { ReactComponent as Community } from "../images/communityIcon.svg";
@@ -73,32 +73,36 @@ const NavElem = ({ title = "Untitled", children }: NavElemProps) => {
 
 const Navbar = () => {
   const user = useRecoilValue(userState);
+  const {currentLocation} = useParams()
+  console.log(currentLocation)
 
   return (
     <>
       <NavContainer>
         <NavElemWrapper>
-          <Link to="/">
+
+          <NavLink to="/" className={({isActive}) =>isActive?"activeIcon":"disableIcon"}>
             <NavElem title="홈">
               <Home />
             </NavElem>
-          </Link>
-          <Link to="/product">
-            <NavElem title="장터" className="123">
+          </NavLink>
+
+          <NavLink to="/product" className={({isActive}) =>isActive?"activeIcon":"disableIcon"}>
+            <NavElem title="장터">
               <Market />
             </NavElem>
-          </Link>
-          <Link to="/board">
+          </NavLink>
+          <NavLink to="/board" className={({isActive}) =>isActive?"activeIcon":"disableIcon"}>
             <NavElem title="커뮤니티">
               <Community />
             </NavElem>
-          </Link>
-          <Link to="/talk">
+          </NavLink>
+          <NavLink to="/talk" className={({isActive}) =>isActive?"activeIcon":"disableIcon"}>
             <NavElem title="대화">
               <Chat />
             </NavElem>
-          </Link>
-          <Link to={user ? `/profile/${user.userId}` : "/login"}>
+          </NavLink>
+          <NavLink to={user ? `/profile/${user.userId}` : "/login"} className={({isActive}) =>isActive?"activeIcon":"disableIcon"}>
             <NavElem title={user ? "프로필" : "로그인"}>
               {user ? (
                 <ProfilePhotoWrapper userImage={user.userImage} />
@@ -106,7 +110,7 @@ const Navbar = () => {
                 <Login />
               )}
             </NavElem>
-          </Link>
+          </NavLink>
         </NavElemWrapper>
       </NavContainer>
       <Outlet />

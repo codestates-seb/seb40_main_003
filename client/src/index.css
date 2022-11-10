@@ -56,7 +56,17 @@ input:focus, textarea:focus{
   filter: drop-shadow(0px 0px 2px #127C56);
   color: var(--font-main)
 }
-
+/* 아이콘 active */
+.activeIcon span{
+    color: var(--main);
+    font-weight: var(--bold)
+}
+.activeIcon svg,.activeIcon p{
+    fill: var(--main);
+}
+.disableIcon svg,.activeIcon p{
+  fill: var(--font-gray);
+}
 
 /* 폰트 두께 설정 */
 .light{
