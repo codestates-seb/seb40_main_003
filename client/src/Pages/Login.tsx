@@ -1,7 +1,10 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { userState } from "../Recoil/atoms/atom";
+
 
 const Container = styled.div`
   width: 300px;
@@ -83,29 +86,45 @@ interface LoginForm {
 
 function Login() {
   // const url = 'https://testserver.com/';
-  const [error, setError] = useState('');
+  const [error, setErrMsg] = useState('');
+  const [user, setUser] = useRecoilState(userState);
+  const ref = useRef<HTMLInputElement>(null);
   const {
     register,
     formState: { errors },
     handleSubmit,
+    setFocus,
   } = useForm<LoginForm>({ 
     mode: "onChange", });
+
+    useEffect(() => {
+      setFocus('email');
+    }, [setFocus]);
+
   const onLogin = async (data: LoginForm) => {
-    
+    try {
     axios.post('https://testserver.com/auth/token', {
       headers: {
         'Content-Type': 'application/json'
     },
-      // email: data.email,
-      // password : data.password,
+      email: data.email,
+      password : data.password,
 
     }).then((res)=>{
       console.log(res);
     })
-    try {
-      console.log(data);
-    } catch (err) {
-      setError('');
+  } catch (err:any) {
+    console.log(err);
+    if (!err?.response) {
+      setErrMsg("서버로부터 응답이 없습니다");
+    } else if (err.response?.status === 400) {
+      setErrMsg("이메일 또는 패스워드를 확인해주세요");
+      console.log(error);
+    } else if (err.response?.status === 401) {
+      setErrMsg("허가되지않은 접근입니다");
+    } else {
+      setErrMsg("Login Failed");
+    }
     }
   };
 
