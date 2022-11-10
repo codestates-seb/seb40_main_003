@@ -1,35 +1,33 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import { SigTag } from "../Components/GlobalComponents";
 import  CareCard  from "../Components/main/CareCard";
-// import { careType } from "../types/careTypes";
+import { caringTypes } from "../types/caringTypes";
 
-// type props = [careType];
+type props = [caringTypes];
 
 const Care = (props:any) => {
-  const [data, setData] = useState();
+  const [data, setData] = useState<props>();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     axios.get("https://testserver.com/caring")
     .then(({ data }) => {
       console.log(data);
-      setData(data);
+      setData(data.expertProfileId);
       setIsLoading(false);
     });
   }, []);
 
-  return (
-    ! isLoading ?
-    <div>
-      <CareCard data={data}/>
-      <SigTag>배고파</SigTag>
-      <SigTag className="variant2">배고파</SigTag>
-      <SigTag className="variant3">배고파</SigTag>
-      <SigTag className="variant4">배고파</SigTag>
-    </div> : <>loading</>
-  )
-}
+  return !isLoading && data !== undefined ? (
+    <>
+      {data.map((e) => {
+        return <CareCard key={e.data[0].expertProfileId} data={e} />
+      })}
+    </>
+  ) : (
+    <> loading... </>
+  );
+};
 
 export default Care;

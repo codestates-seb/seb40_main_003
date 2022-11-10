@@ -99,9 +99,122 @@ export const handlers = [
       })
     );
   }),
+
+
   rest.get("https://testserver.com/caring", async (req, res, ctx) => {
     return res(
       ctx.json({
+        data: [
+          {
+              expertProfileId: 1,
+              simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
+              address: "연남동",
+              userLikeExpert: 1,
+              member: {
+                  memberId: 1,
+                  image: {
+                          imageId: 1,
+                          imgUrl: "",
+                          isRepImg: ""
+                      },
+                  name: "김고수",
+                  age: 25,
+                  gender: 1
+              },
+              
+              techTag:[
+                  {
+                      techTagId: 1,
+                      techTagName: "분갈이"
+                  }
+              ],
+              areaTag:[
+                  {
+                      areaTagId: 1,
+                      ateaTagName: "마포구"
+                  }
+              ]
+          }
+        ],
+        
+      },
+      {
+        data: [
+          {
+              expertProfileId: 1,
+              simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
+              address: "연남동",
+              userLikeExpert: 1,
+              member: {
+                  memberId: 1,
+                  image: {
+                          imageId: 1,
+                          imgUrl: "",
+                          isRepImg: ""
+                      },
+                  name: "김고수",
+                  age: 25,
+                  gender: 1
+              },
+              
+              techTag:[
+                  {
+                      techTagId: 1,
+                      techTagName: "분갈이"
+                  }
+              ],
+              areaTag:[
+                  {
+                      areaTagId: 1,
+                      ateaTagName: "마포구"
+                  }
+              ]
+          }
+        ],
+        
+      },
+      {
+        data: [
+          {
+              expertProfileId: 1,
+              simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
+              address: "연남동",
+              userLikeExpert: 1,
+              member: {
+                  memberId: 1,
+                  image: {
+                          imageId: 1,
+                          imgUrl: "",
+                          isRepImg: ""
+                      },
+                  name: "김고수",
+                  age: 25,
+                  gender: 1
+              },
+              
+              techTag:[
+                  {
+                      techTagId: 1,
+                      techTagName: "분갈이"
+                  }
+              ],
+              areaTag:[
+                  {
+                      areaTagId: 1,
+                      ateaTagName: "마포구"
+                  }
+              ]
+          }
+        ],
+        
+      }),
+      );
+    }),
+      
+  rest.get("https://testserver.com/profile-expert", async (req, res, ctx) => {
+    return res(
+      ctx.json(
+        {
         name: "김고수",
         age: 25,
         gender: "여",
@@ -144,8 +257,37 @@ export const handlers = [
             techId: "기술태그아이디",
             name: "분갈이",
           },
-        ],
-      })
+        ],})
+      
     );
   }),
 ];
+
+  rest.get("https://testserver.com/bamboo", async (req, res, ctx) => {
+    return res(
+      ctx.json({
+        data: [
+          {
+              "communityId": 1,
+              "title": "",
+              "content": "",
+              "view": 1,
+              "createdAt": "",
+              "modifiedAt": "",
+              "commentNum": 1,
+              "image": [
+                  {
+                      "imageId": 1,
+                      "imgUrl": "",
+                      "isRepImg": ""
+                  }
+              ],
+              "member": {
+                  "memberId": 1,
+                  "nickname": ""
+              }
+          }
+        ]
+      })
+    )
+  });

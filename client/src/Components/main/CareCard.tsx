@@ -34,16 +34,16 @@ const CareCard = ({ data }: any) => {
         <>
     <CardWrapper>
       <LeftWrapper>
-        </LeftWrapper>
-        <RightWrapper>
-        <ImageWrapper
+      <ImageWrapper
           size={"100"}
           src={String(data.photos.photo)}
-          alt={`상품명 ${data.title}의 대표이미지`}
+          alt={`상품명 ${data.name}의 대표이미지`}
         />
+        </LeftWrapper>
+        <RightWrapper>
           <span>{``}</span>
           <p className="sub">{}</p>
-          <Price className="bold h4">{}원</Price>
+          <Price className="bold h4">{}</Price>
         </RightWrapper>
       {}
     </CardWrapper>
