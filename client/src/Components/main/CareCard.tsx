@@ -19,11 +19,9 @@ const LeftWrapper = styled.div`
 const RightWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: aliceblue;
 `;
-const Price = styled.span`
-  display: block;
-  color: var(--font-main);
-`;
+
 const Title = styled.span`
 font-size: 15px;
 width: fit-content;
@@ -31,15 +29,15 @@ width: fit-content;
 
 const CareCard = ({ data }: any) => {
     return (
-        <>
+        <>asdf
     <CardWrapper>
       <LeftWrapper>
-
+      <Title>{data.image}</Title>
         </LeftWrapper>
         <RightWrapper>
-          <span>{``}</span>
-          <p className="sub">{}</p>
-          <Price className="bold h4">{}</Price>
+            <span className="medium">{data.adress}</span>
+            <span className="sub">{data.gender}</span>
+
         </RightWrapper>
       {}
     </CardWrapper>
