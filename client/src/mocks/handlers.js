@@ -100,10 +100,15 @@ export const handlers = [
   rest.get("https://testserver.com/caring", async (req, res, ctx) => {
     return res(
       ctx.json({
+        
         name: "김고수",
         age: 25,
         gender: "여",
-        photo: "프로필사진",
+        photos: [
+          { photo: "https://picsum.photos/seed/picsum/100/150​" },
+          { photo: "https://picsum.photos/seed/picsum/200/300​" },
+          { photo: "https://picsum.photos/seed/picsum/400/600​" },
+        ],
         simpleCotent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
         detailContent:
           "식물자원학과를 졸업하여 전문 지식이 풍부하답니다. 친절하게 이웃 분들의 소중한 반려식물들을 돌보겠습니다.",
