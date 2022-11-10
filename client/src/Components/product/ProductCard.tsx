@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
-import { ColumnWrapper } from "../Wrapper";
+import { ColumnWrapper } from "../main/Wrapper";
 
 const ProductWrapper = styled.div`
   width: 100%;
