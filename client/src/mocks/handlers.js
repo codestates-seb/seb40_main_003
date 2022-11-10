@@ -154,7 +154,7 @@ export const handlers = [
                       },
                   name: "김고수",
                   age: 25,
-                  gender: 1
+                  gender: 2
               },
               
               techTag:[
@@ -189,7 +189,7 @@ export const handlers = [
                       },
                   name: "김고수",
                   age: 25,
-                  gender: 1
+                  gender: 2
               },
               
               techTag:[
@@ -217,7 +217,7 @@ export const handlers = [
         {
         name: "김고수",
         age: 25,
-        gender: "여",
+        gender: 2,
         photos: [
           {
             photo:

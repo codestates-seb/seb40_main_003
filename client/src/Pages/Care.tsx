@@ -14,7 +14,7 @@ const Care = (props:any) => {
     axios.get("https://testserver.com/caring")
     .then(({ data }) => {
       console.log(data)
-      setData(data[0]);
+      setData(data.data);
       setIsLoading(false);
     });
   }, []);
@@ -22,7 +22,7 @@ const Care = (props:any) => {
   return !isLoading && data !== undefined ? (
     <>
       {data.map((e) => {
-        return <CareCard key={e.data[0]} data={e} />
+        return <CareCard key={e.expertProfileId} data={e} />
       })}
     </>
   ) : (

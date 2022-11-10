@@ -3,7 +3,7 @@ type profileExpert =
     dealId: number,
     name : string,
     age : number,
-    gender : string,
+    gender : number,
     photo : [picture: string],
     simpleCotent : string,
     detailContent : string,
