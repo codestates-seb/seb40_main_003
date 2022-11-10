@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import { ColumnWrapper } from "./main/Wrapper";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -58,7 +57,7 @@ const ImageElem = styled.img`
   overflow: hidden;
   border-radius: 8px 0px;
   display: block;
-  object-fit : fill;
+  object-fit : cover;
   margin-right: 16px;
 `;
 
@@ -110,6 +109,21 @@ export const ViewCounter = ({ view, like }: ViewCounterProps) => {
     </ViewCounterWrapper>
   );
 };
+// 스켈레톤
+const SkelethonWrapper= styled.article`
+  
+`
+interface skelethon {
+  number:number
+}
+
+export const Skelethon= ({number}:skelethon) =>{
+  let emptyArr =[]
+  for(let i=0;i<number;i++){
+    emptyArr.push("hi")
+  }
+  emptyArr.map((e)=><></>)
+}
 
 // ㄴㄴ
 const GlobalComponents = () => {};

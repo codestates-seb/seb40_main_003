@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
-import { ColumnWrapper } from "../main/Wrapper";
+import { ColumnWrapper } from "../Wrapper";
 
 const ProductWrapper = styled.div`
   width: 100%;
@@ -20,11 +20,11 @@ const ProductDescription = styled.div`
   align-items: center;
 `;
 const Price = styled.span`
+  margin-top: 16px;
   display: block;
   color: var(--font-main);
 `;
 const DescriptionColumnWrapper = styled.div`
-  height: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -35,27 +35,26 @@ const SpaceEnd = styled.div`
   justify-content: end;
   height: 100%;
 `;
-const Title = styled.span``;
 
 const ProductCard = ({ data }: any) => {
+  console.log(data.pictures[0].picture)
   return (
     <ProductWrapper>
       <ProductDescription>
         <ImageWrapper
           size={"100"}
-          src={String(data.pictures[0].picture)}
+          src={data.pictures[0].picture}
           alt={`상품명 ${data.title}의 대표이미지`}
         />
         <DescriptionColumnWrapper>
           <ColumnWrapper>
-            <span>{data.title}</span>
+            <span className="medium">{data.title}</span>
             <span className="sub">{data.createdAt}</span>
           </ColumnWrapper>
           <Price className="bold h4">{data.price.toLocaleString()}원</Price>
         </DescriptionColumnWrapper>
       </ProductDescription>
       <DescriptionColumnWrapper>
-        <div>...</div>
         <ViewCounter view={data.view} like={data.like} />
       </DescriptionColumnWrapper>
     </ProductWrapper>

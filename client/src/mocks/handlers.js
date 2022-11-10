@@ -6,9 +6,14 @@ export const handlers = [
   }),
   // 기본형
   rest.post("https://testserver.com/login", async (req, res, ctx) => {
-      return res(
-        ctx.json({ userId: 1, userImage: null, userNickname: "준구짱" })
-      );
+    return res(
+      ctx.json({
+        userId: 1,
+        userImage:
+          "https://learnenglish.britishcouncil.org/sites/podcasts/files/2021-10/RS6715_492969113-hig.jpg",
+        userNickname: "준구짱",
+      })
+    );
   }),
   rest.post("https://testserver.com/logout", async (req, res, ctx) => {
     return res(ctx.status(200));
@@ -22,12 +27,9 @@ export const handlers = [
             dealId: 1,
             title: "예쁜 식물",
             pictures: [
-              {
-                picture:
-                  "https://search.pstatic.net/common/?src=http%3A%2F%2Fshop1.phinf.naver.net%2F20220415_161%2F1650008062753a75gw_JPEG%2F51143890355561342_1063830887.jpg&type=a340​",
-              },
-              { picture: "https://picsum.photos/seed/picsum/200/300​" },
-              { picture: "https://picsum.photos/seed/picsum/400/600​" },
+              { picture: "https://picsum.photos/640/360" },
+              { picture: "https://www.stevensegallery.com/640/360​​" },
+              { picture: "https://placebear.com/640/360" },
             ],
             createdAt: "2022-11-08",
             view: 13,
@@ -43,7 +45,7 @@ export const handlers = [
             dealId: 2,
             title: "몬스테라 팔아요~",
             pictures: [
-              { picture: "https://picsum.photos/seed/picsum/100/150​" },
+              { picture: "https://www.stevensegallery.com/640/360​​" },
               { picture: "https://picsum.photos/seed/picsum/200/300​" },
               { picture: "https://picsum.photos/seed/picsum/400/600​" },
             ],
@@ -61,7 +63,7 @@ export const handlers = [
             dealId: 3,
             title: "당근마켓 팔아요~",
             pictures: [
-              { picture: "https://picsum.photos/seed/picsum/100/150​" },
+              { picture: "https://placebear.com/640/360" },
               { picture: "https://picsum.photos/seed/picsum/200/300​" },
               { picture: "https://picsum.photos/seed/picsum/400/600​" },
             ],
@@ -100,12 +102,14 @@ export const handlers = [
   rest.get("https://testserver.com/caring", async (req, res, ctx) => {
     return res(
       ctx.json({
-        
         name: "김고수",
         age: 25,
         gender: "여",
         photos: [
-          { photo: "https://picsum.photos/seed/picsum/100/150​" },
+          {
+            photo:
+              "https://i.picsum.photos/id/863/200/200.jpg?hmac=b2PqP--PkLWi3zKCrto-MSpLXkrtt4kYpKbUkZa2Yjo​",
+          },
           { photo: "https://picsum.photos/seed/picsum/200/300​" },
           { photo: "https://picsum.photos/seed/picsum/400/600​" },
         ],
