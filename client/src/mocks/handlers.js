@@ -97,6 +97,47 @@ export const handlers = [
       })
     );
   }),
+
+
+  rest.get("https://testserver.com/caring", async (req, res, ctx) => {
+    return res(
+      ctx.json({
+        data: [
+          {
+              expertProfileId: 1,
+              simpleContent: "",
+              address: "",
+              userLikeExpert: 1,
+              member: {
+                  memberId: 1,
+                  image: {
+                          imageId: 1,
+                          imgUrl: "",
+                          isRepImg: ""
+                      },
+                  name: "",
+                  age: 1,
+                  gender: 1
+              },
+              
+              techTag:[
+                  {
+                      techTagId: 1,
+                      techTagName: ""
+                  }
+              ],
+              areaTag:[
+                  {
+                      areaTagId: 1,
+                      ateaTagName: ""
+                  }
+              ]
+          }
+        ]
+      }),
+      );
+    }),
+      
   rest.get("https://testserver.com/profile-expert", async (req, res, ctx) => {
     return res(
       ctx.json(
