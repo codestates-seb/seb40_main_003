@@ -257,3 +257,32 @@ export const handlers = [
     );
   }),
 ];
+
+  rest.get("https://testserver.com/bamboo", async (req, res, ctx) => {
+    return res(
+      ctx.json({
+        data: [
+          {
+              "communityId": 1,
+              "title": "",
+              "content": "",
+              "view": 1,
+              "createdAt": "",
+              "modifiedAt": "",
+              "commentNum": 1,
+              "image": [
+                  {
+                      "imageId": 1,
+                      "imgUrl": "",
+                      "isRepImg": ""
+                  }
+              ],
+              "member": {
+                  "memberId": 1,
+                  "nickname": ""
+              }
+          }
+        ]
+      })
+    )
+  });
