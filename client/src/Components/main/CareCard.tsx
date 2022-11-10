@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 
 const CardWrapper = styled.div`
   width: 100%;
@@ -33,10 +34,14 @@ const CareCard = ({ data }: any) => {
         <>
     <CardWrapper>
       <LeftWrapper>
-        <img src={``} alt="alt" className="mr-16" />
         </LeftWrapper>
         <RightWrapper>
-          <p>{}</p>
+        <ImageWrapper
+          size={"100"}
+          src={String(data.photos[0].photo)}
+          alt={`상품명 ${data.title}의 대표이미지`}
+        />
+          <span>{``}</span>
           <p className="sub">{}</p>
           <Price className="bold h4">{}원</Price>
         </RightWrapper>
@@ -47,4 +52,3 @@ const CareCard = ({ data }: any) => {
   };
   
   export default CareCard;
-  

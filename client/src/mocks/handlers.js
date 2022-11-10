@@ -103,7 +103,7 @@ export const handlers = [
         name: "김고수",
         age: 25,
         gender: "여",
-        photo: [
+        photos: [
           { photo: "https://picsum.photos/seed/picsum/100/150​" },
           { photo: "https://picsum.photos/seed/picsum/200/300​" },
           { photo: "https://picsum.photos/seed/picsum/400/600​" },
