@@ -38,7 +38,7 @@ const CareCard = ({ data }: any) => {
         <RightWrapper>
         <ImageWrapper
           size={"100"}
-          src={String(data.photos[0].photo)}
+          src={String(data.photos.photo)}
           alt={`상품명 ${data.title}의 대표이미지`}
         />
           <span>{``}</span>

@@ -100,6 +100,7 @@ export const handlers = [
   rest.get("https://testserver.com/caring", async (req, res, ctx) => {
     return res(
       ctx.json({
+        
         name: "김고수",
         age: 25,
         gender: "여",
