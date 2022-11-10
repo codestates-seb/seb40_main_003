@@ -13,8 +13,8 @@ const Care = (props:any) => {
   useEffect(() => {
     axios.get("https://testserver.com/caring")
     .then(({ data }) => {
-      console.log(data.data)
-      setData(data.data);
+      console.log(data)
+      setData(data[0]);
       setIsLoading(false);
     });
   }, []);
