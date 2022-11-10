@@ -13,8 +13,8 @@ const Care = (props:any) => {
   useEffect(() => {
     axios.get("https://testserver.com/caring")
     .then(({ data }) => {
-      console.log(data);
-      setData(data.expertProfileId);
+      console.log(data)
+      setData(data[0]);
       setIsLoading(false);
     });
   }, []);
@@ -22,11 +22,11 @@ const Care = (props:any) => {
   return !isLoading && data !== undefined ? (
     <>
       {data.map((e) => {
-        return <CareCard key={e.data[0].expertProfileId} data={e} />
+        return <CareCard key={e.data[0]} data={e} />
       })}
     </>
   ) : (
-    <> loading... </>
+    <> loading... 로딩 그만하고 이제 내보내줘 살려줘 </>
   );
 };
 
