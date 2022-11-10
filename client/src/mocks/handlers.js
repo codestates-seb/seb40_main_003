@@ -114,7 +114,7 @@ export const handlers = [
                   memberId: 1,
                   image: {
                           imageId: 1,
-                          imgUrl: "",
+                          imgUrl: "https://placebear.com/640/360",
                           isRepImg: ""
                       },
                   name: "김고수",

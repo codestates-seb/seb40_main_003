@@ -1,4 +1,4 @@
-type careType = 
+type profileExpert = 
   {
     dealId: number,
     name : string,
@@ -37,4 +37,4 @@ type careType =
   }]
 }
 ;
-export type {careType}
+export type {profileExpert}
