@@ -1,5 +1,6 @@
 type careType = 
   {
+    dealId: number,
     name : string,
     age : number,
     gender : string,

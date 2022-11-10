@@ -99,8 +99,11 @@ export const handlers = [
   }),
   rest.get("https://testserver.com/caring", async (req, res, ctx) => {
     return res(
-      ctx.json(
-        {
+      ctx.json({
+        caring: 
+        [
+          {
+        dealId: 1,
         name: "김고수",
         age: 25,
         gender: "여",
@@ -143,6 +146,7 @@ export const handlers = [
         ],
       },
       {
+        dealId: 2,
         name: "김고수",
         age: 25,
         gender: "여",
@@ -185,6 +189,7 @@ export const handlers = [
         ],
       },
       {
+        dealId: 3,
         name: "김고수",
         age: 25,
         gender: "여",
@@ -225,8 +230,8 @@ export const handlers = [
             name: "분갈이",
           },
         ],
-      }
-      )
+      }]
+    })
     );
   }),
 ];
