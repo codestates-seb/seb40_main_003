@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import ProductCard from "../Components/product/ProductCard";
+import ProductCard, {ProductPlaceHolder} from "../Components/product/ProductCard";
 import { ProductPreviewType } from "../types/productTypes";
 
 type elemMaps = [ProductPreviewType];
@@ -25,7 +25,7 @@ const Product = () => {
       })}
     </>
   ) : (
-    <>loading...</>
+    <><ProductPlaceHolder/><ProductPlaceHolder/><ProductPlaceHolder/></>
   );
 };
 
