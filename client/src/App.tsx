@@ -8,7 +8,7 @@ import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import Missing from "./Pages/Missing";
 import Care from "./Pages/Care";
-import Community from "./Pages/Community";
+import Community from "./Pages/Bamboo";
 import Talk from "./Pages/Talk";
 import DevTools from "./Components/DevTools";
 // type Props = {
