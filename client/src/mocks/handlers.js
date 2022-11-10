@@ -105,8 +105,8 @@ export const handlers = [
         data: [
           {
               expertProfileId: 1,
-              simpleContent: "",
-              address: "",
+              simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
+              address: "연남동",
               userLikeExpert: 1,
               member: {
                   memberId: 1,
@@ -115,25 +115,96 @@ export const handlers = [
                           imgUrl: "",
                           isRepImg: ""
                       },
-                  name: "",
-                  age: 1,
+                  name: "김고수",
+                  age: 25,
                   gender: 1
               },
               
               techTag:[
                   {
                       techTagId: 1,
-                      techTagName: ""
+                      techTagName: "분갈이"
                   }
               ],
               areaTag:[
                   {
                       areaTagId: 1,
-                      ateaTagName: ""
+                      ateaTagName: "마포구"
                   }
               ]
           }
-        ]
+        ],
+        
+      },
+      {
+        data: [
+          {
+              expertProfileId: 1,
+              simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
+              address: "연남동",
+              userLikeExpert: 1,
+              member: {
+                  memberId: 1,
+                  image: {
+                          imageId: 1,
+                          imgUrl: "",
+                          isRepImg: ""
+                      },
+                  name: "김고수",
+                  age: 25,
+                  gender: 1
+              },
+              
+              techTag:[
+                  {
+                      techTagId: 1,
+                      techTagName: "분갈이"
+                  }
+              ],
+              areaTag:[
+                  {
+                      areaTagId: 1,
+                      ateaTagName: "마포구"
+                  }
+              ]
+          }
+        ],
+        
+      },
+      {
+        data: [
+          {
+              expertProfileId: 1,
+              simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
+              address: "연남동",
+              userLikeExpert: 1,
+              member: {
+                  memberId: 1,
+                  image: {
+                          imageId: 1,
+                          imgUrl: "",
+                          isRepImg: ""
+                      },
+                  name: "김고수",
+                  age: 25,
+                  gender: 1
+              },
+              
+              techTag:[
+                  {
+                      techTagId: 1,
+                      techTagName: "분갈이"
+                  }
+              ],
+              areaTag:[
+                  {
+                      areaTagId: 1,
+                      ateaTagName: "마포구"
+                  }
+              ]
+          }
+        ],
+        
       }),
       );
     }),

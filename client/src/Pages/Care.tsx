@@ -2,9 +2,9 @@ import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
 import  CareCard  from "../Components/main/CareCard";
-import { careType } from "../types/careTypes";
+import { caringTypes } from "../types/caringTypes";
 
-type props = [careType];
+type props = [caringTypes];
 
 const Care = (props:any) => {
   const [data, setData] = useState<props>();
@@ -14,7 +14,7 @@ const Care = (props:any) => {
     axios.get("https://testserver.com/caring")
     .then(({ data }) => {
       console.log(data);
-      setData(data.caring);
+      setData(data.expertProfileId);
       setIsLoading(false);
     });
   }, []);
@@ -22,11 +22,11 @@ const Care = (props:any) => {
   return !isLoading && data !== undefined ? (
     <>
       {data.map((e) => {
-        return <CareCard key={e.dealId} data={e} />
+        return <CareCard key={e.data[0].expertProfileId} data={e} />
       })}
     </>
   ) : (
-    <>loading...</>
+    <> loading... </>
   );
 };
 

@@ -11,7 +11,8 @@ const Product = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("https://testserver.com/shopping").then(({ data }) => {
+    axios.get("https://testserver.com/shopping")
+    .then(({ data }) => {
       setData(data.shopping);
       setIsLoading(false);
     });
