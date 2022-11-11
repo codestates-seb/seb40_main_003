@@ -1,9 +1,9 @@
-type careType = 
+type profileExpert = 
   {
     dealId: number,
     name : string,
     age : number,
-    gender : string,
+    gender : number,
     photo : [picture: string],
     simpleCotent : string,
     detailContent : string,
@@ -37,4 +37,4 @@ type careType =
   }]
 }
 ;
-export type {careType}
+export type {profileExpert}

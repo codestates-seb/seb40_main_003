@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper } from "../main/Wrapper";
+import Skeleton from "../Skeleton";
 
 const ProductWrapper = styled.div`
   width: 100%;
@@ -37,7 +38,6 @@ const SpaceEnd = styled.div`
 `;
 
 const ProductCard = ({ data }: any) => {
-  console.log(data.pictures[0].picture)
   return (
     <ProductWrapper>
       <ProductDescription>
@@ -56,6 +56,27 @@ const ProductCard = ({ data }: any) => {
       </ProductDescription>
       <DescriptionColumnWrapper>
         <ViewCounter view={data.view} like={data.like} />
+      </DescriptionColumnWrapper>
+    </ProductWrapper>
+  );
+};
+export const ProductPlaceHolder = () => {
+  
+  return (
+    <ProductWrapper>
+      <ProductDescription>
+        <Skeleton width={100} height={100} rounded={true} mr={16} />
+        <DescriptionColumnWrapper>
+          <ColumnWrapper>
+            <Skeleton width={150} height={20}/>
+          </ColumnWrapper>
+          <Price className="bold h4">
+          <Skeleton width={80} height={20}/>
+          </Price>
+        </DescriptionColumnWrapper>
+      </ProductDescription>
+      <DescriptionColumnWrapper>
+      <Skeleton width={80} height={20}/>
       </DescriptionColumnWrapper>
     </ProductWrapper>
   );

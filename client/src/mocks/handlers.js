@@ -114,7 +114,7 @@ export const handlers = [
                   memberId: 1,
                   image: {
                           imageId: 1,
-                          imgUrl: "",
+                          imgUrl: "https://placebear.com/640/360",
                           isRepImg: ""
                       },
                   name: "김고수",
@@ -154,7 +154,7 @@ export const handlers = [
                       },
                   name: "김고수",
                   age: 25,
-                  gender: 1
+                  gender: 2
               },
               
               techTag:[
@@ -189,7 +189,7 @@ export const handlers = [
                       },
                   name: "김고수",
                   age: 25,
-                  gender: 1
+                  gender: 2
               },
               
               techTag:[
@@ -217,7 +217,7 @@ export const handlers = [
         {
         name: "김고수",
         age: 25,
-        gender: "여",
+        gender: 2,
         photos: [
           {
             photo:

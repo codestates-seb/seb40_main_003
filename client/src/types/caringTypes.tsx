@@ -1,6 +1,5 @@
 type caringTypes = 
-{
-data: [
+
     {
         expertProfileId: number,
         simpleContent: string,
@@ -31,6 +30,4 @@ data: [
             }
         ]
     }
-  ]
-}
   export type {caringTypes}

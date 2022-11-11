@@ -109,21 +109,8 @@ export const ViewCounter = ({ view, like }: ViewCounterProps) => {
     </ViewCounterWrapper>
   );
 };
-// 스켈레톤
-const SkelethonWrapper= styled.article`
-  
-`
-interface skelethon {
-  number:number
-}
 
-export const Skelethon= ({number}:skelethon) =>{
-  let emptyArr =[]
-  for(let i=0;i<number;i++){
-    emptyArr.push("hi")
-  }
-  emptyArr.map((e)=><></>)
-}
+// 스켈레톤
 
 // ㄴㄴ
 const GlobalComponents = () => {};
