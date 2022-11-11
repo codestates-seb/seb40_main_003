@@ -259,33 +259,34 @@ export const handlers = [
       
     );
   }),
-];
-
   rest.get("https://testserver.com/bamboo", async (req, res, ctx) => {
     return res(
       ctx.json({
         data: [
           {
               communityId: 1,
-              title: "",
-              content: "",
+              title: "안녕하세요!",
+              content: "안녕하세요!",
               view: 1,
-              createdAt: "",
-              modifiedAt: "",
+              createdAt: "안녕하세요!",
+              modifiedAt: "안녕하세요!",
               commentNum: 1,
               image: [
                   {
                       imageId: 1,
-                      imgUrl: "",
-                      isRepImg: ""
+                      imgUrl: "안녕하세요!",
+                      isRepImg: "안녕하세요!"
                   }
               ],
               member: {
                   memberId: 1,
-                  nickname: ""
+                  nickname: "안녕하세요!"
               }
           }
         ]
       })
     )
-  });
+  })
+];
+
+  

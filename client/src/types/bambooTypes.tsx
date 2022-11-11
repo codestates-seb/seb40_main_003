@@ -1,8 +1,6 @@
 type bambooTypes = 
-{
-  data: [
     {
-        communityId: number,
+data:[{        communityId: number,
         title: string,
         content: string,
         view: number,
@@ -19,8 +17,6 @@ type bambooTypes =
         member: {
             memberId: number,
             nickname: string
-        }
+        }}]
     }
-  ]
-}
   export type {bambooTypes}
