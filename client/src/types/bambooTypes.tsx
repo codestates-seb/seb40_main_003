@@ -1,35 +1,25 @@
 type bambooTypes = 
 {
-data: [
+  data: [
     {
-        expertProfileId: number,
-        simpleContent: string,
-        address: string,
-        userLikeExpert: number,
-        member: {
-            memberId: number,
-            image: {
-                    imageId: number,
-                    imgUrl: string,
-                    isRepImg: string
-                },
-            name: string,
-            age: number,
-            gender: number
-        },
-        
-        techTag:[
+        communityId: number,
+        title: string,
+        content: string,
+        view: number,
+        createdAt: string,
+        modifiedAt: string,
+        commentNum: number,
+        image: [
             {
-                techTagId: number,
-                techTagName: string
+                imageId: number,
+                imgUrl: string,
+                isRepImg: string
             }
         ],
-        areaTag:[
-            {
-                areaTagId: number,
-                ateaTagName: string
-            }
-        ]
+        member: {
+            memberId: number,
+            nickname: string
+        }
     }
   ]
 }

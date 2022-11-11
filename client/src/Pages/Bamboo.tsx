@@ -1,11 +1,35 @@
-import React from 'react'
+import { useState } from "react";
+import axios from "axios";
+import { useEffect } from "react";
+// import BambooCard from '../Components/bamboo/BambooCard';
+import { bambooTypes } from '../types/bambooTypes'
 
-type Props = {}
+type elemMaps = [bambooTypes]
 
-const Community = (props: Props) => {
-  return (
-    <div>Community</div>
-  )
-}
+const Community = () => {
+  const [data, setData] = useState<elemMaps>();
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    axios.get("https://testserver.com/bamboo")
+    .then(({ data }) => {
+      setData(data.communityId);
+      setIsLoading(false);
+    });
+  }, []);
+
+    console.log(data);
+  
+  // return !isLoading && data !== undefined ? (
+  //   <>
+  //     {data.map((e) => {
+  //       console.log(e);
+  //       return <p key={e.communityId} data={e} />
+  //     })}
+  //   </>
+  // ) : (
+  //   <>loading...</>
+  // );
+};
 
 export default Community
