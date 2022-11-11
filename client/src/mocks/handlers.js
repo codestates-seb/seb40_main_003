@@ -115,7 +115,7 @@ export const handlers = [
                   image: {
                           imageId: 1,
                           imgUrl: "https://placebear.com/640/360",
-                          isRepImg: ""
+                          isRepImg: 1
                       },
                   name: "김고수",
                   age: 25,
@@ -149,8 +149,8 @@ export const handlers = [
                   memberId: 1,
                   image: {
                           imageId: 1,
-                          imgUrl: "",
-                          isRepImg: ""
+                          imgUrl: "https://placebear.com/640/360",
+                          isRepImg: 1
                       },
                   name: "김고수",
                   age: 25,
@@ -184,8 +184,8 @@ export const handlers = [
                   memberId: 1,
                   image: {
                           imageId: 1,
-                          imgUrl: "",
-                          isRepImg: ""
+                          imgUrl: "https://picsum.photos/seed/picsum/200/300",
+                          isRepImg: 1
                       },
                   name: "김고수",
                   age: 25,
@@ -220,9 +220,7 @@ export const handlers = [
         gender: 2,
         photos: [
           {
-            photo:
-              "https://i.picsum.photos/id/863/200/200.jpg?hmac=b2PqP--PkLWi3zKCrto-MSpLXkrtt4kYpKbUkZa2Yjo​",
-          },
+            photo: "https://picsum.photos/seed/picsum/200/300​" },
           { photo: "https://picsum.photos/seed/picsum/200/300​" },
           { photo: "https://picsum.photos/seed/picsum/400/600​" },
         ],
