@@ -4,25 +4,27 @@ import { useEffect } from "react";
 // import BambooCard from '../Components/bamboo/BambooCard';
 import { bambooTypes } from '../types/bambooTypes'
 
-type elemMaps = [bambooTypes]
-
 const Community = () => {
-  const [data, setData] = useState<elemMaps>();
+  const [data, setData] = useState<bambooTypes>();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     axios.get("https://testserver.com/bamboo")
-    .then(({ data }) => {
-      setData(data.communityId);
+    .then(( res ) => {
+      console.log(res.data);
+      setData(res.data);
+      console.log(`저장된 값 ${data}`)
       setIsLoading(false);
     });
   }, []);
+  console.log(data);
 
-    console.log(data);
-  
-  return isLoading && data !== undefined ? (
+  return !isLoading && data !== undefined ? (
     <>
-      
+      {data.data.map((e) => {
+        console.log(e.communityId);
+        return <p key={e.communityId} >{e.communityId}</p>
+      })}
     </>
   ) : (
     <>loading...</>
