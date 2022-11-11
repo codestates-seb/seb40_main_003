@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
@@ -102,7 +102,7 @@ function Login() {
 
   const onLogin = async (data: LoginForm) => {
     try {
-    axios.post('https://testserver.com/auth/token', {
+    axios.post('/auth/token', {
       headers: {
         'Content-Type': 'application/json'
     },

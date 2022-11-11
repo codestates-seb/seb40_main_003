@@ -16,7 +16,7 @@ const Product = () => {
 
   useEffect(() => {
     setTimeout(() =>{setHidingTime(false)},200)
-    axios.get("https://testserver.com/shopping").then(({ data }) => {
+    axios.get("/shopping").then(({ data }) => {
       setData(data.shopping);
       setIsLoading(false);
     });
