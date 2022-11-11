@@ -20,16 +20,13 @@ const Community = () => {
 
     console.log(data);
   
-  // return !isLoading && data !== undefined ? (
-  //   <>
-  //     {data.map((e) => {
-  //       console.log(e);
-  //       return <p key={e.communityId} data={e} />
-  //     })}
-  //   </>
-  // ) : (
-  //   <>loading...</>
-  // );
+  return isLoading && data !== undefined ? (
+    <>
+      
+    </>
+  ) : (
+    <>loading...</>
+  );
 };
 
 export default Community
