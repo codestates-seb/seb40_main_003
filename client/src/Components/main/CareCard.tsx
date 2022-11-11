@@ -23,7 +23,11 @@ background-color: yellowgreen;
   display: flex;
   flex-direction: column;
 `;
-
+const DescriptionColumnWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 const Title = styled.span`
 background-color: aquamarine;
 font-size: 15px;
@@ -35,15 +39,23 @@ const CareCard = ({ data }: any) => {
   return (
         <>
     <CardWrapper>
-      <LeftWrapper>왼쪽
-        <span>{data[0]}</span>
+      <LeftWrapper>
+      <ImageWrapper
+          size={"100"}
+          src={data.member.image.imgUrl}
+          alt={`상품명 ${data.member.name}의 대표이미지`}
+        />
         </LeftWrapper>
-        <RightWrapper>오른쪽
+        <RightWrapper>
+            <span>{data.member.name} / {data.member.age}세 / {data.member.gender}</span>
+            <span>{data.simpleContent}</span>
+            <span>{data.techTagId}</span>
             <span className="medium">{data.address}</span>
-            <span className="sub">{data.member.gender}</span>
-
+            <ViewCounter view={data.view} like={data.like} />
         </RightWrapper>
-      {}
+        <DescriptionColumnWrapper>
+        <ViewCounter view={data.view} like={data.like} />
+      </DescriptionColumnWrapper>
     </CardWrapper>
         </>
     );

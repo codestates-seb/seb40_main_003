@@ -9,7 +9,7 @@ type caringTypes =
             image: {
                     imageId: number,
                     imgUrl: string,
-                    isRepImg: string
+                    isRepImg: number
                 },
             name: string,
             age: number,
