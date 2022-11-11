@@ -13,9 +13,9 @@ const Care = (props:any) => {
   useEffect(() => {
     axios.get("https://testserver.com/caring")
     .then(( res ) => {
-      console.log(res.data)
+      // console.log(res.data)
       setData(res.data.data);
-      console.log(`저장된값 ${data}`)
+      // console.log(`저장된값 ${data}`)
       setIsLoading(false);
     });
   }, []);

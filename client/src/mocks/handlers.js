@@ -106,6 +106,8 @@ export const handlers = [
       ctx.json({
         data: [
           {
+              view: 123,
+              like: 56,
               expertProfileId: 1,
               simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
               address: "연남동",
@@ -123,11 +125,20 @@ export const handlers = [
               },
               
               techTag:[
-                  {
-                      techTagId: 1,
-                      techTagName: "분갈이"
-                  }
-              ],
+                {
+                    techTagId: 1,
+                    techTagName: "분갈이"
+                },
+                {
+                  techTagId: 2,
+                  techTagName: "물주기"
+                },
+                {
+                  techTagId: 3,
+                  techTagName: "병/해충"
+                }
+            ],
+            
               areaTag:[
                   {
                       areaTagId: 1,
@@ -158,11 +169,19 @@ export const handlers = [
               },
               
               techTag:[
-                  {
-                      techTagId: 1,
-                      techTagName: "분갈이"
-                  }
-              ],
+                {
+                    techTagId: 1,
+                    techTagName: "분갈이"
+                },
+                {
+                  techTagId: 2,
+                  techTagName: "물주기"
+                },
+                {
+                  techTagId: 3,
+                  techTagName: "병/해충"
+                }
+            ],
               areaTag:[
                   {
                       areaTagId: 1,
@@ -193,11 +212,19 @@ export const handlers = [
               },
               
               techTag:[
-                  {
-                      techTagId: 1,
-                      techTagName: "분갈이"
-                  }
-              ],
+                {
+                    techTagId: 1,
+                    techTagName: "분갈이"
+                },
+                {
+                  techTagId: 2,
+                  techTagName: "물주기"
+                },
+                {
+                  techTagId: 3,
+                  techTagName: "병/해충"
+                }
+            ],
               areaTag:[
                   {
                       areaTagId: 1,
