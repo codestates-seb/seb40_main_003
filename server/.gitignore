@@ -8,6 +8,7 @@ application.yml
 application.yaml
 application.properties
 localhost.p12
+plant_hiker.pem
 
 ### STS ###
 .apt_generated
