@@ -67,8 +67,10 @@ public class MemberService {
         return true;
     }
 
-    public MemberInfoResponseDto postMemberInfo(MemberInfoPostDto infoPostDto) {
+    public MemberInfoResponseDto postMemberInfo(Long userId, MemberInfoPostDto infoPostDto) {
         MemberInformation info = memberMapper.memberInfoPostDtoToMemberInfo(infoPostDto);
+        Member registerMember = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+        info.setMember(registerMember);
         MemberInformation savedInfo = memberInfoRepository.save(info);
         return memberMapper.memberInfoToResponseDto(savedInfo);
     }
