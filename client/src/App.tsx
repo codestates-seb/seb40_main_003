@@ -12,6 +12,8 @@ import Care from "./Pages/Care";
 import Community from "./Pages/Bamboo";
 import Talk from "./Pages/Talk";
 import DevTools from "./Components/DevTools";
+import ProductDetail from "./Pages/Product/ProductDetail";
+import axios from "axios";
 // type Props = {
 //   id: number;
 //   vote: number;
@@ -22,6 +24,7 @@ import DevTools from "./Components/DevTools";
 //   like: number;
 //   nickname: string;
 // };
+axios.defaults.baseURL="https://testserver.com"
 
 function App() {
   return (
@@ -35,7 +38,6 @@ function App() {
         {/* 보호된 라우팅 */}
         <Route element={<AuthProvider />}>
           <Route path="/talk" element={<Talk />} />
-          <Route path="/profile" element={<Profile />} />
           <Route path="/profile/:id" element={<Profile />} />
         </Route>
         {/* 오픈된 라우팅 */}
@@ -44,6 +46,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/care" element={<Care />} />
         <Route path="/product" element={<Product />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/board" element={<Community />} />
 
         {/* 잘못된 경로일때 보내는 곳*/}
