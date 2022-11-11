@@ -1,5 +1,4 @@
 type caringTypes = 
-
     {
         expertProfileId: number,
         simpleContent: string,
@@ -30,4 +29,5 @@ type caringTypes =
             }
         ]
     }
-  export type {caringTypes}
+
+export type {caringTypes}
