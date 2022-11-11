@@ -9,19 +9,26 @@ import com.kittyhiker.sikjipsa.community.enitity.CommunityLike;
 import com.kittyhiker.sikjipsa.deal.entity.Deal;
 import com.kittyhiker.sikjipsa.deal.entity.MemberLikeDeal;
 import com.kittyhiker.sikjipsa.deal.entity.MemberReview;
+import com.kittyhiker.sikjipsa.entity.AuditingEntity;
 import com.kittyhiker.sikjipsa.plant.entity.Plant;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Getter
-//@Builder
-//@NoArgsConstructor
-//@AllArgsConstructor
-public class Member {
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+public class Member extends AuditingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
@@ -31,7 +38,9 @@ public class Member {
 
 	private String password;
 
-	private String role;
+	private String nickname;
+
+	private String roles;
 
 	@OneToOne(mappedBy = "member")
 	private MemberProfile memberProfile;
@@ -67,8 +76,20 @@ public class Member {
 	private List<Comment> comments = new ArrayList<>();
 
 	@OneToOne(mappedBy = "member")
-	private MemberInfo memberInfo;
+	private MemberInformation memberInformation;
 
 	@OneToOne(mappedBy = "member")
 	private Token token;
+
+	public List<String> getRolesToList() {
+		return Arrays.stream(this.roles.split(",")).collect(Collectors.toList());
+	}
+
+	public void addRole(String roles) {
+		this.roles = roles;
+	}
+
+	public void encryptingPassword(PasswordEncoder passwordEncoder) {
+		this.password = passwordEncoder.encode(this.getPassword());
+	}
 }
