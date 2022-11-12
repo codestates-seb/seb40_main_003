@@ -1,4 +1,4 @@
-package com.kittyhiker.sikjipsa.member.entiry;
+package com.kittyhiker.sikjipsa.member.entity;
 
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
 import lombok.AllArgsConstructor;
