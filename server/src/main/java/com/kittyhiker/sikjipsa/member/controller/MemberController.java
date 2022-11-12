@@ -1,6 +1,7 @@
 package com.kittyhiker.sikjipsa.member.controller;
 
 import com.kittyhiker.sikjipsa.jwt.dto.TokenDto;
+import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
 import com.kittyhiker.sikjipsa.member.dto.*;
 import com.kittyhiker.sikjipsa.member.mapper.MemberMapper;
 import com.kittyhiker.sikjipsa.member.service.MemberService;
@@ -18,6 +19,7 @@ import javax.validation.Valid;
 public class MemberController {
 
     private final MemberService memberService;
+    private final JwtTokenizer jwtTokenizer;
 
     @PostMapping("/auth")
     public ResponseEntity signUp(@RequestBody @Valid MemberSignupDto signUpDto) {
@@ -53,7 +55,8 @@ public class MemberController {
     @PostMapping("/auth/information")
     public ResponseEntity setProfile(@RequestHeader("Authorization") String token,
                                      @RequestBody MemberInfoPostDto infoPostDto) {
-        MemberInfoResponseDto infoResponseDto = memberService.postMemberInfo(infoPostDto);
+        Long userId = jwtTokenizer.getUserIdFromToken(token);
+        MemberInfoResponseDto infoResponseDto = memberService.postMemberInfo(userId, infoPostDto);
         return new ResponseEntity(infoResponseDto, HttpStatus.CREATED);
     }
 }
