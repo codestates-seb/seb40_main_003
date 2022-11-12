@@ -32,5 +32,4 @@ public class MemberInformation extends AuditingEntity {
     public void setMember(Member member) {
         this.member = member;
     }
-
 }
