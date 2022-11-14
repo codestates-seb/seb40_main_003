@@ -29,4 +29,11 @@ public class DealController {
         DealResponseDto response = dealService.postDeal(dealPostDto, jwtTokenizer.getUserIdFromToken(token));
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
+
+    @PatchMapping("/{deal-id}")
+    public ResponseEntity patchDeal(@PathVariable("deal-id") Long dealId,
+                                    @RequestBody DealPostDto dealPostDto) {
+        DealResponseDto response = dealService.patchDeal(dealId, dealPostDto);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
 }

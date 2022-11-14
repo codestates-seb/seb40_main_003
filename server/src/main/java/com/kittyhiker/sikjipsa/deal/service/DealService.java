@@ -30,5 +30,12 @@ public class DealService {
         return mapper.dealToDealResponseDto(deal);
     }
 
+    public DealResponseDto patchDeal(Long dealId, DealPostDto dealPatchDto) {
+        Deal findDeal = dealRepository.findById(dealId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND DEAL"));
+        findDeal.updateDeal(dealPatchDto);
+        dealRepository.save(findDeal);
+        return mapper.dealToDealResponseDto(findDeal);
+    }
+
 
 }

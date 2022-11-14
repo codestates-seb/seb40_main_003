@@ -1,6 +1,7 @@
 package com.kittyhiker.sikjipsa.deal.entity;
 
 import com.kittyhiker.sikjipsa.caring.entity.AreaTag;
+import com.kittyhiker.sikjipsa.deal.dto.DealPostDto;
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.plant.entity.Image;
@@ -24,7 +25,7 @@ public class Deal extends AuditingEntity {
 
 	private Long view;
 
-	private Long price;
+	private int price;
 
 	private Long likes;
 
@@ -53,5 +54,12 @@ public class Deal extends AuditingEntity {
 
 	public void setMember(Member member){
 		this.member = member;
+	}
+
+	public void updateDeal(DealPostDto dealPostDto) {
+		this.title = dealPostDto.getTitle();
+		this.content = dealPostDto.getContent();
+		this.price = dealPostDto.getPrice();
+		this.category = dealPostDto.getCategory();
 	}
 }
