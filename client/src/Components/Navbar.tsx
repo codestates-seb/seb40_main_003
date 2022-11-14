@@ -16,6 +16,7 @@ const NavContainer = styled.nav`
   width: 100%;
   height: 52px;
   border-top: 1px solid var(--line-gray);
+  background-color: var(--pure-white);
   display: flex;
   align-items: center;
   justify-content: center;

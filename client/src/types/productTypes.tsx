@@ -23,6 +23,7 @@ type ProductDetailType = {
     price: number
     createdAt: string
     modifiedAt: string
+    category: number
     state: number
     memberLikeDeal: number
     image: [

@@ -42,7 +42,9 @@ a, input, button, select, textarea{
   color: inherit;
   border: none;
 }
-
+image{
+  loading:lazy;
+}
 input, textarea{
   padding: 8px;
   outline-style: solid;  

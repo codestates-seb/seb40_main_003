@@ -8,22 +8,53 @@ export const ProductDetailHandler = (pageNumber) => {
         ctx.json({
           dealId: pageNumber,
           title: "예쁜 식물",
-          content: "예쁜 식물이 싸게싸게 나왔어요 여러분~",
-          createdAt: "2022-11-08",
           view: 13,
           price: 5000,
-          userInfo: {
-            userId: pageNumber,
-            nickname: "junguZzang",
-          },
-          tag: 1,
+          content: "예쁜 식물이 싸게싸게 나왔어요 여러분~",
+          createdAt: "2022-11-08",
+          modifiedAt: "2022-11-08",
+          category: 1,
+          state: 1,
+          memberLikeDeal: 1,
+          image: [
+            {
+              imageId: pageNumber,
+              imgUrl: "https://picsum.photos/640/360",
+              isRepImg: 1,
+            },
+            {
+              imageId: pageNumber+1,
+              imgUrl: "https://www.stevensegallery.com/640/360",
+              isRepImg: 0,
+            },
+            {
+              imageId: pageNumber+2,
+              imgUrl: "https://placebear.com/640/360",
+              isRepImg: 0,
+            },
+          ],
+          areaTag: [
+            {
+              areaTagId: 1,
+              areaTagName: "관악구",
+            },
+          ],
+          member: {
+            memberId: 1,
+            nickname: "프로플하러",
+            image: {
+              imageId: 1,
+              imgUrl: "https://www.stevensegallery.com/640/360​​",
+              isRepImg: 0,
+            },
+          }
         })
       );
     }
   );
 };
 
-export const ProductListHandler = ()=>{
+export const ProductListHandler = () => {
   return rest.get("https://testserver.com/shopping", async (req, res, ctx) => {
     return res(
       ctx.json({
@@ -85,6 +116,5 @@ export const ProductListHandler = ()=>{
         ],
       })
     );
-  })
-  
-}
+  });
+};

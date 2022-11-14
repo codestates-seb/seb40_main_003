@@ -1,4 +1,6 @@
 import styled from "@emotion/styled";
+import { overKillo } from "../utils/controller";
+import { ColumnWrapper } from "./main/Wrapper";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -30,52 +32,60 @@ export const TagWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-`
+  flex-wrap: wrap;
+`;
 
 // 태그 앨리먼트
 export const SigTag = styled.span`
-padding: 2px 4px;
-background-color: var(--main);
-color: var(--pure-white);
-font-weight: var(--sub);
-text-align: center;
-min-width: 33px;
-border-radius: 4px 0px;
-margin: 4px 4px 4px 0px;
-&.ghost{
+  padding: 2px 4px;
+  background-color: var(--main);
   color: var(--pure-white);
-  background-color: var(--font-gray);
-}
-&.active{
-  color: var(--main);
-  background-color: var(--pure-white);
-  border: 1px solid var(--main);
-}
-&.disabled{
-  color: var(--line-black);
-  background-color: var(--pure-white);
-  border: 1px solid var(--line-black);
-}
-`
+  font-weight: var(--sub);
+  text-align: center;
+  min-width: 33px;
+  border-radius: 4px 0px;
+  margin: 4px 4px 4px 0px;
+  &.ghost {
+    color: var(--pure-white);
+    background-color: var(--font-gray);
+  }
+  &.active {
+    color: var(--main);
+    background-color: var(--pure-white);
+    border: 1px solid var(--main);
+  }
+  &.disabled {
+    color: var(--line-black);
+    background-color: var(--pure-white);
+    border: 1px solid var(--line-black);
+  }
+`;
 // 이미지 랩퍼
 const ImageElem = styled.img`
   width: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
   height: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
   background-color: var(--bg-gray);
   overflow: hidden;
-  border-radius: 8px 0px;
+  border-radius: ${(props: imageWrapperProps) =>
+    props.circle ? `${props.size}px` : "8px 0px"};
   display: block;
-  object-fit : cover;
+  object-fit: cover;
   margin-right: 16px;
 `;
 
 type imageWrapperProps = {
   src: string;
-  size?: "36" | "56" | "100";
+  size?: "16" | "36" | "56" | "100";
   alt: string;
+  circle?: boolean;
 };
 
-export const ImageWrapper = ({ size = "36", src, alt }: imageWrapperProps) => {
+export const ImageWrapper = ({
+  size = "36",
+  src,
+  alt,
+  circle = false,
+}: imageWrapperProps) => {
   return <ImageElem src={src} size={size} alt={alt} />;
 };
 
@@ -87,6 +97,7 @@ type ViewCounterProps = {
 const ViewCounterWrapper = styled.div`
   display: flex;
   height: 100%;
+  max-width: 100px;
   justify-content: space-between;
 `;
 const IconElem = styled.img`
@@ -96,29 +107,60 @@ const IconElem = styled.img`
 const ViewCounterColumn = styled.div`
   display: flex;
   flex-direction: column;
-`
+`;
 
 export const ViewCounter = ({ view, like }: ViewCounterProps) => {
   return (
     <ViewCounterWrapper>
-      {view&&(
+      {view && (
         <ViewCounterColumn className="text-align-center mr-16">
           <SubText className="medium font-gray">조회수</SubText>
-          <SubText className="font-gray">{view}</SubText>
+          <SubText className="font-gray">{overKillo(view)}</SubText>
         </ViewCounterColumn>
       )}
       {like && (
         <ViewCounterColumn className="text-align-center mr-16">
           <SubText className="medium font-gray">찜</SubText>
-          <SubText className="font-gray">{like}</SubText>
+          <SubText className="font-gray">{overKillo(like)}</SubText>
         </ViewCounterColumn>
       )}
     </ViewCounterWrapper>
   );
 };
 
-// 스켈레톤
-
+const ProfileCardWrapper = styled.div`
+  width: 100%;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line-light-gray);
+  display: flex;
+  align-items: center;
+`;
+// 프로필
+type ProfileCardTypes = {
+  size?: string
+  src: string
+  alt: string
+  name: string
+  location: string
+};
+export const ProfileCard = (props: ProfileCardTypes) => {
+  // 비구조화할당
+  const {size, src,alt, name, location} = props;
+  return(
+  <ProfileCardWrapper>
+    <ImageElem
+      src={src}
+      alt={alt}
+      size={size === "sm" ? "16" : "36"}
+      className="mr-16"
+    ></ImageElem>
+    <ColumnWrapper>
+      <span className="medium">{name}</span>
+      <span className="sub font-gray">{location}</span>
+    </ColumnWrapper>
+  </ProfileCardWrapper>
+  )
+};
 // ㄴㄴ
 const GlobalComponents = () => {};
 
