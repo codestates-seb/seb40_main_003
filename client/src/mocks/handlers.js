@@ -1,6 +1,6 @@
 import { rest } from "msw";
 import {ProductDetailHandler,ProductListHandler} from "./productHandler"
-import {CaringListHandler} from "./caringHandler"
+import {CaringListHandler,exportProfileDetail} from "./caringHandler"
 export const handlers = [
   // 로그인 테스트
   rest.post("https://testserver.com/auth/token", async (req, res, ctx) => {
@@ -29,6 +29,7 @@ export const handlers = [
 
 // 캐어링 핸들러
   CaringListHandler(),
+  exportProfileDetail(1),
       
   rest.get("https://testserver.com/profile-expert", async (req, res, ctx) => {
     return res(

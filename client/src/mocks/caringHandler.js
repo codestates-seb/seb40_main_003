@@ -1,12 +1,12 @@
 import { rest } from "msw";
 
-
-export const CaringListHandler = ()=>{
-  return  rest.get("https://testserver.com/caring", async (req, res, ctx) => {
+export const CaringListHandler = () => {
+  return rest.get("https://testserver.com/caring", async (req, res, ctx) => {
     return res(
-      ctx.json({
-        data: [
-          {
+      ctx.json(
+        {
+          data: [
+            {
               view: 123,
               like: 56,
               expertProfileId: 1,
@@ -14,143 +14,140 @@ export const CaringListHandler = ()=>{
               address: "연남동",
               userLikeExpert: 1,
               member: {
-                  memberId: 1,
-                  image: {
-                          imageId: 1,
-                          imgUrl: "https://placebear.com/640/360",
-                          isRepImg: 1
-                      },
-                  name: "김고수",
-                  age: 25,
-                  gender: 1
+                memberId: 1,
+                image: {
+                  imageId: 1,
+                  imgUrl: "https://placebear.com/640/360",
+                  isRepImg: 1,
+                },
+                name: "김고수",
+                age: 25,
+                gender: 1,
               },
-              
-              techTag:[
-                {
-                    techTagId: 1,
-                    techTagName: "분갈이"
-                },
-                {
-                  techTagId: 2,
-                  techTagName: "물주기"
-                },
-                {
-                  techTagId: 3,
-                  techTagName: "병/해충"
-                }
-            ],
-            
-              areaTag:[
-                  {
-                      areaTagId: 1,
-                      ateaTagName: "마포구"
-                  }
-              ]
-          }
-        ],
-        
-      },
-      {
-        data: [
-          {
-              expertProfileId: 1,
-              simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
-              address: "연남동",
-              userLikeExpert: 1,
-              member: {
-                  memberId: 1,
-                  image: {
-                          imageId: 1,
-                          imgUrl: "https://placebear.com/640/360",
-                          isRepImg: 1
-                      },
-                  name: "김고수",
-                  age: 25,
-                  gender: 2
-              },
-              
-              techTag:[
-                {
-                    techTagId: 1,
-                    techTagName: "분갈이"
-                },
-                {
-                  techTagId: 2,
-                  techTagName: "물주기"
-                },
-                {
-                  techTagId: 3,
-                  techTagName: "병/해충"
-                }
-            ],
-              areaTag:[
-                  {
-                      areaTagId: 1,
-                      ateaTagName: "마포구"
-                  }
-              ]
-          }
-        ],
-        
-      },
-      {
-        data: [
-          {
-              expertProfileId: 1,
-              simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
-              address: "연남동",
-              userLikeExpert: 1,
-              member: {
-                  memberId: 1,
-                  image: {
-                          imageId: 1,
-                          imgUrl: "https://picsum.photos/seed/picsum/200/300",
-                          isRepImg: 1
-                      },
-                  name: "김고수",
-                  age: 25,
-                  gender: 2
-              },
-              
-              techTag:[
-                {
-                    techTagId: 1,
-                    techTagName: "분갈이"
-                },
-                {
-                  techTagId: 2,
-                  techTagName: "물주기"
-                },
-                {
-                  techTagId: 3,
-                  techTagName: "병/해충"
-                }
-            ],
-              areaTag:[
-                  {
-                      areaTagId: 1,
-                      ateaTagName: "마포구"
-                  }
-              ]
-          }
-        ],
-        
-      }),
-      );
-    })
-}
 
+              techTag: [
+                {
+                  techTagId: 1,
+                  techTagName: "분갈이",
+                },
+                {
+                  techTagId: 2,
+                  techTagName: "물주기",
+                },
+                {
+                  techTagId: 3,
+                  techTagName: "병/해충",
+                },
+              ],
+
+              areaTag: [
+                {
+                  areaTagId: 1,
+                  ateaTagName: "마포구",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          data: [
+            {
+              expertProfileId: 1,
+              simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
+              address: "연남동",
+              userLikeExpert: 1,
+              member: {
+                memberId: 1,
+                image: {
+                  imageId: 1,
+                  imgUrl: "https://placebear.com/640/360",
+                  isRepImg: 1,
+                },
+                name: "김고수",
+                age: 25,
+                gender: 2,
+              },
+
+              techTag: [
+                {
+                  techTagId: 1,
+                  techTagName: "분갈이",
+                },
+                {
+                  techTagId: 2,
+                  techTagName: "물주기",
+                },
+                {
+                  techTagId: 3,
+                  techTagName: "병/해충",
+                },
+              ],
+              areaTag: [
+                {
+                  areaTagId: 1,
+                  ateaTagName: "마포구",
+                },
+              ],
+            },
+          ],
+        },
+        {
+          data: [
+            {
+              expertProfileId: 1,
+              simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
+              address: "연남동",
+              userLikeExpert: 1,
+              member: {
+                memberId: 1,
+                image: {
+                  imageId: 1,
+                  imgUrl: "https://picsum.photos/seed/picsum/200/300",
+                  isRepImg: 1,
+                },
+                name: "김고수",
+                age: 25,
+                gender: 2,
+              },
+
+              techTag: [
+                {
+                  techTagId: 1,
+                  techTagName: "분갈이",
+                },
+                {
+                  techTagId: 2,
+                  techTagName: "물주기",
+                },
+                {
+                  techTagId: 3,
+                  techTagName: "병/해충",
+                },
+              ],
+              areaTag: [
+                {
+                  areaTagId: 1,
+                  ateaTagName: "마포구",
+                },
+              ],
+            },
+          ],
+        }
+      )
+    );
+  });
+};
 
 rest.get("https://testserver.com/profile-expert", async (req, res, ctx) => {
   return res(
-    ctx.json(
-      {
+    ctx.json({
       name: "김고수",
       age: 25,
       gender: 2,
       photos: [
         {
-          photo: "https://picsum.photos/seed/picsum/200/300​" },
+          photo: "https://picsum.photos/seed/picsum/200/300​",
+        },
         { photo: "https://picsum.photos/seed/picsum/200/300​" },
         { photo: "https://picsum.photos/seed/picsum/400/600​" },
       ],
@@ -185,67 +182,86 @@ rest.get("https://testserver.com/profile-expert", async (req, res, ctx) => {
           techId: "기술태그아이디",
           name: "분갈이",
         },
-      ],})
-    
+      ],
+    })
   );
-})
+});
 
-
-rest.get("https://testserver.com/expert-profile-id", async (req, res, ctx) => {
-  return res(
-    ctx.json(
-      {
-        expertProfileId: 1,
-        simpleContent: "",
-        detailContent: "",
-        useNum: 1,
-        price: 10,
-        address: "",
-        extra: "",
-        userLikeExpert: 1,
-        view: 1,
-        member: {
+export const exportProfileDetail = (profileNumber) => {
+  return rest.get(
+    `https://testserver.com/caring/${profileNumber}`,
+    async (req, res, ctx) => {
+      return res(
+        ctx.json({
+          expertProfileId: profileNumber,
+          simpleContent: "",
+          detailContent: "",
+          useNum: 1,
+          price: 10,
+          address: "",
+          extra: "",
+          userLikeExpert: 1,
+          view: 1,
+          member: {
             memberId: 1,
             image: {
-                    imageId: 1,
-                    imgUrl: "",
-                    isRepImg: ""
-                },
+              imageId: 1,
+              imgUrl: "",
+              isRepImg: "",
+            },
             name: "",
             age: 1,
-            gender: 1
-        },
-        expertReview: [
+            gender: 1,
+          },
+          expertReview: [
             {
-                expertReviewId: 1,
-                writer: {
-                    memberId: 1,
-                    nickname: "식물쪼아"
-                },
-                content: ""
-            }
-        ],
-        techTag:[
+              expertReviewId: 1,
+              writer: {
+                memberId: 1,
+                nickname: "식물쪼아",
+              },
+              content: "",
+            },
             {
-                techTagId: 1,
-                techTagName: ""
-            }
-        ],
-        areaTag:[
+              expertReviewId: 2,
+              writer: {
+                memberId: 1,
+                nickname: "식물씨러",
+              },
+              content: "",
+            },
             {
-                areaTagId: 1,
-                areaTagName: ""
-            }
-        ],
-       plant:[
+              expertReviewId: 3,
+              writer: {
+                memberId: 1,
+                nickname: "식물노잼",
+              },
+              content: "",
+            },
+            
+          ],
+          techTag: [
             {
-                plantId: 1,
-                plantType: "",
-                name: "",
-                year: 1
-            }
-        ]
+              techTagId: 1,
+              techTagName: "",
+            },
+          ],
+          areaTag: [
+            {
+              areaTagId: 1,
+              areaTagName: "",
+            },
+          ],
+          plant: [
+            {
+              plantId: 1,
+              plantType: "",
+              name: "",
+              year: 1,
+            },
+          ],
+        })
+      );
     }
-  )
-)}
-)
+  );
+};

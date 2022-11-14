@@ -26,11 +26,11 @@ const CareDetail = () => {
   return !isLoading && data !== null ? (
     <>
       <img src={data.member.image.imgUrl} alt={`${data.member.name}의 대표사진`} />
-      <Link to={isLogin?`/Care/${data.expertProfileId}`:""}>
+      <Link to={`/Care/${data.expertProfileId}`}>
         <ProfileCard
           src={data.member.image.imgUrl}
-          alt={`${data.expertReview.writer.nickname}의 대표사진`}
-          name={data.expertReview.writer.nickname}
+          alt={`${data.expertReview[0].writer.nickname}의 대표사진`}
+          name={data.expertReview[0].writer.nickname}
           location={data.areaTag[0].areaTagName}
         />
       </Link>
