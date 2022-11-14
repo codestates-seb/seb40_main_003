@@ -100,11 +100,10 @@ export const ImageWrapper = ({
 
 // 커뮤니티 이미지 랩퍼
 const BambooImageElem = styled.img`
-  /* width: ${(props: BambooimageWrapperProps) => (props.size ? props.size : "36")}px;
-  height: ${(props: BambooimageWrapperProps) => (props.size ? props.size : "36")}px; */
+  /* width: ${(props: BambooimageWrapperProps) => (props.size ? props.size : "100")}px;
+  height: ${(props: BambooimageWrapperProps) => (props.size ? props.size : "100")}px; */
   background-color: var(--bg-gray);
   overflow: hidden;
-  width: 730px;
   height: 265px;
   border-radius: 8px 0px;
   display: block;
@@ -160,53 +159,6 @@ export const ViewCounter = ({ view, like }: ViewCounterProps) => {
     </ViewCounterWrapper>
   );
 };
-
-// 커뮤니티 좋아요 카운트
-type BambooViewCounterProps = {
-  view?: number;
-  like?: number;
-};
-const BambooViewCounterWrapper = styled.div`
-  display: flex;
-  height: 100%;
-  justify-content: space-between;
-`;
-const BambooIconElem = styled.img`
-  width: 16px;
-  height: 16px;
-`;
-const BambooViewCounterColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-export const BambooViewCounter = ({ view, like }: BambooViewCounterProps) => {
-  return (
-    <BambooViewCounterWrapper>
-      {view && (
-        <BambooViewCounterColumn className="text-align-center mr-8">
-          <SubText className="medium font-gray">조회수</SubText>
-        </BambooViewCounterColumn>
-      )}
-      {view && (
-        <BambooViewCounterColumn className="text-align-center mr-16">
-          <SubText className="font-gray">{overKillo(view)}</SubText>
-        </BambooViewCounterColumn>
-      )}
-      {like && (
-        <BambooViewCounterColumn className="text-align-center mr-8">
-          <SubText className="medium font-gray">찜</SubText>
-        </BambooViewCounterColumn>
-      )}
-      {like && (
-        <BambooViewCounterColumn className="text-align-center mr-16">
-          <SubText className="font-gray">{overKillo(like)}</SubText>
-        </BambooViewCounterColumn>
-      )}
-    </BambooViewCounterWrapper>
-  );
-};
-
 
 const ProfileCardWrapper = styled.div`
   width: 100%;
