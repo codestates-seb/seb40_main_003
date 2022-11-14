@@ -13,6 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Positive;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -35,5 +37,10 @@ public class DealController {
                                     @RequestBody DealPostDto dealPostDto) {
         DealResponseDto response = dealService.patchDeal(dealId, dealPostDto);
         return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity getDealList(@Positive @RequestParam int page, @Positive @RequestParam int size) {
+        return dealService.getDealList(page, size);
     }
 }

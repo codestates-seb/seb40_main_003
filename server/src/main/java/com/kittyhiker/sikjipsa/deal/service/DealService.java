@@ -1,7 +1,9 @@
 package com.kittyhiker.sikjipsa.deal.service;
 
+import com.kittyhiker.sikjipsa.deal.dto.DealPagingDto;
 import com.kittyhiker.sikjipsa.deal.dto.DealPostDto;
 import com.kittyhiker.sikjipsa.deal.dto.DealResponseDto;
+import com.kittyhiker.sikjipsa.deal.dto.PageInfo;
 import com.kittyhiker.sikjipsa.deal.entity.Deal;
 import com.kittyhiker.sikjipsa.deal.mapper.DealMapper;
 import com.kittyhiker.sikjipsa.deal.respository.DealRepository;
@@ -10,7 +12,16 @@ import com.kittyhiker.sikjipsa.deal.respository.LikeDealRepository;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -35,6 +46,12 @@ public class DealService {
         findDeal.updateDeal(dealPatchDto);
         dealRepository.save(findDeal);
         return mapper.dealToDealResponseDto(findDeal);
+    }
+
+    public ResponseEntity getDealList(int page, int size) {
+        Page<Deal> dealList = dealRepository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
+        PageInfo pageInfo = new PageInfo(page, size, (int) dealList.getTotalElements(), dealList.getTotalPages());
+        return new ResponseEntity(new DealPagingDto<>(dealList, pageInfo), HttpStatus.OK);
     }
 
 
