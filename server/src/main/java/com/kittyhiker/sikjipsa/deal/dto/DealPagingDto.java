@@ -8,5 +8,5 @@ import lombok.Getter;
 public class DealPagingDto<T> {
 
     private T data;
-    private PageInfo pageInfo
+    private PageInfo pageInfo;
 }
