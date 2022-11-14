@@ -50,4 +50,8 @@ public class Deal extends AuditingEntity {
 
 	@OneToMany(mappedBy = "deal")
 	private List<Image> images = new ArrayList<>();
+
+	public void setMember(Member member){
+		this.member = member;
+	}
 }
