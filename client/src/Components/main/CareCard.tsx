@@ -26,7 +26,7 @@ const CareDescription = styled.div`
 `;
 
 const CareCard = ({ data }: any) => {
-    console.log(data.techTag)
+    console.log(data)
 
   return (
         <>
