@@ -42,7 +42,6 @@ const CareCard = ({ data }: any) => {
               <span className="medium font-main">{data.member.name} / {data.member.age}세 / {data.member.gender}</span>
               <span className="font-gray sub">{data.simpleContent}</span>
               <span>{data.techTagId}</span>
-              <span className="medium font-gray sub">{data.address}</span>
               <TagWrapper>
                 <SigTag className="disabled sub">{data.techTag.techTagName}물주기</SigTag>
                 <SigTag className="disabled sub">{data.techTag.techTagName}분재</SigTag>
@@ -50,6 +49,7 @@ const CareCard = ({ data }: any) => {
                 <SigTag className="disabled sub">{data.techTag.techTagName}가지치기</SigTag>
               </TagWrapper>
           </ColumnWrapper>
+          <span className="medium font-gray sub">{data.address}</span>
         </DescriptionColumnWrapper>
         </CareDescription>
         <SpaceEnd>

@@ -30,10 +30,11 @@ export const TagWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+  /* flex-wrap: wrap; */
 `
 
 // 태그 앨리먼트
-export const SigTag = styled.span`
+export const SigTag = styled.div`
 padding: 2px 4px;
 background-color: var(--main);
 color: var(--pure-white);
