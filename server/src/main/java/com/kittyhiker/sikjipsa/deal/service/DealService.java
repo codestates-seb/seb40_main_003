@@ -56,6 +56,8 @@ public class DealService {
 
     public DealResponseDto getDealDetail(Long dealId) {
         Deal findDeal = verifiedDeal(dealId);
+        findDeal.updateView();
+        dealRepository.save(findDeal);
         return mapper.dealToDealResponseDto(findDeal);
     }
 

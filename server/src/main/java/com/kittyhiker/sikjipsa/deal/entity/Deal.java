@@ -23,11 +23,11 @@ public class Deal extends AuditingEntity {
 
 	private String content;
 
-	private Long view;
+	private int view=0;
 
 	private int price;
 
-	private Long likes;
+	private int likes;
 
 	private int category;
 
@@ -54,6 +54,10 @@ public class Deal extends AuditingEntity {
 
 	public void setMember(Member member){
 		this.member = member;
+	}
+
+	public void updateView() {
+		this.view+=1;
 	}
 
 	public void updateDeal(DealPostDto dealPostDto) {
