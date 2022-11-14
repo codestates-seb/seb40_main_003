@@ -39,7 +39,7 @@ type CareDetailTypes =
     areaTag:[
         {
             areaTagId: number,
-            ateaTagName: string
+            areaTagName: string
         }
     ],
    plant:[

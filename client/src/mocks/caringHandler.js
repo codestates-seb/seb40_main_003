@@ -220,7 +220,7 @@ rest.get("https://testserver.com/expert-profile-id", async (req, res, ctx) => {
                 expertReviewId: 1,
                 writer: {
                     memberId: 1,
-                    nickname: ""
+                    nickname: "식물쪼아"
                 },
                 content: ""
             }
@@ -234,7 +234,7 @@ rest.get("https://testserver.com/expert-profile-id", async (req, res, ctx) => {
         areaTag:[
             {
                 areaTagId: 1,
-                ateaTagName: ""
+                areaTagName: ""
             }
         ],
        plant:[
