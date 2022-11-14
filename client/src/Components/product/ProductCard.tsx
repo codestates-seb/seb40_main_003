@@ -25,15 +25,15 @@ const Price = styled.span`
   display: block;
   color: var(--font-main);
 `;
-const DescriptionColumnWrapper = styled.div`
+export const DescriptionColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
-const SpaceEnd = styled.div`
+export const SpaceEnd = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  align-self: end;
   height: 100%;
 `;
 
@@ -54,12 +54,13 @@ const ProductCard = ({ data }: any) => {
           <Price className="bold h4">{data.price.toLocaleString()}원</Price>
         </DescriptionColumnWrapper>
       </ProductDescription>
-      <DescriptionColumnWrapper>
+      <SpaceEnd>
         <ViewCounter view={data.view} like={data.like} />
-      </DescriptionColumnWrapper>
+      </SpaceEnd>
     </ProductWrapper>
   );
 };
+// 스켈레톤 컴포넌트
 export const ProductPlaceHolder = () => {
   
   return (

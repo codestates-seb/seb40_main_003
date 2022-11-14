@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper } from "../main/Wrapper";
+import {SpaceEnd,DescriptionColumnWrapper} from"../../Components/product/ProductCard"
 
 const CardWrapper = styled.div`
 background-color: aliceblue;
@@ -19,11 +20,6 @@ const CareDescription = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-`;
-const DescriptionColumnWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 `;
 
 const CareCard = ({ data }: any) => {
@@ -48,9 +44,9 @@ const CareCard = ({ data }: any) => {
           </ColumnWrapper>
         </DescriptionColumnWrapper>
         </CareDescription>
-        <DescriptionColumnWrapper>
+        <SpaceEnd>
           <ViewCounter view={data.view} like={data.like} />
-        </DescriptionColumnWrapper>
+        </SpaceEnd>
     </CardWrapper>
         </>
     );

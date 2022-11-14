@@ -15,10 +15,13 @@ export const MainCenterWrapper = styled.section`
 `;
 export const MainRightWrapper = styled.aside`
   min-width: 298px;
-  display: flex;
+  display: none;
   flex-direction: column;
   min-height: 600px;
   background-color: #333;
+  @media screen and (max-width: 768px) {
+    display: flex;
+  }
 `;
 export const MainContentContainer  = styled.div`
   display: flex;
@@ -28,5 +31,6 @@ export const ColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `
+
 
 export default MainLeftWrapper;

@@ -88,7 +88,6 @@ const IconElem = styled.img`
 const ViewCounterColumn = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content:end;
 `
 
 export const ViewCounter = ({ view, like }: ViewCounterProps) => {
