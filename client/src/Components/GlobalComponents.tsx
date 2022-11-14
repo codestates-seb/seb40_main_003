@@ -79,6 +79,30 @@ export const ImageWrapper = ({ size = "36", src, alt }: imageWrapperProps) => {
   return <ImageElem src={src} size={size} alt={alt} />;
 };
 
+// 커뮤니티 이미지 랩퍼
+const BambooImageElem = styled.img`
+  /* width: ${(props: BambooimageWrapperProps) => (props.size ? props.size : "36")}px;
+  height: ${(props: BambooimageWrapperProps) => (props.size ? props.size : "36")}px; */
+  background-color: var(--bg-gray);
+  overflow: hidden;
+  width: 730px;
+  height: 265px;
+  border-radius: 8px 0px;
+  display: block;
+  object-fit : cover;
+  margin-right: 16px;
+`;
+
+type BambooimageWrapperProps = {
+  src: string;
+  size?: "36" | "56" | "100";
+  alt: string;
+};
+
+export const BambooImageWrapper = ({ size = "100", src, alt }: BambooimageWrapperProps) => {
+  return <BambooImageElem src={src} size={size} alt={alt} />;
+};
+
 // 좋아요 카운트
 type ViewCounterProps = {
   view?: number;
