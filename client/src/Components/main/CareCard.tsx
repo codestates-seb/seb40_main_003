@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper } from "../main/Wrapper";
 import {SpaceEnd, DescriptionColumnWrapper} from"../../Components/product/ProductCard"
-import { SigTag } from "../GlobalComponents";
+import { SigTag, TagWrapper} from "../GlobalComponents";
 
 
 
@@ -24,12 +24,6 @@ const CareDescription = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
-
-const TagWrapper = styled.div`
-  margin: 4px;
-  display: flex;
-
-`
 
 const CareCard = ({ data }: any) => {
     console.log(data.techTag)
