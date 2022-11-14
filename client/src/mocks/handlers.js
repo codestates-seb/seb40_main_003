@@ -292,22 +292,22 @@ export const handlers = [
         data: [
           {
               communityId: 1,
-              title: "안녕하세요!",
-              content: "안녕하세요!",
-              view: 1,
-              createdAt: "안녕하세요!",
-              modifiedAt: "안녕하세요!",
+              title: "우리 식물 좀 보세요! 얼마나 이쁘게요",
+              content: "이번에 갑조네에서 아스파라거스를 샀는데요...",
+              view: 22,
+              createdAt: "2022-11-14",
+              modifiedAt: "2022-11-15",
               commentNum: 1,
               image: [
                   {
                       imageId: 1,
-                      imgUrl: "안녕하세요!",
-                      isRepImg: "안녕하세요!"
+                      imgUrl: "https://placebear.com/640/360",
+                      isRepImg: 1
                   }
               ],
               member: {
                   memberId: 1,
-                  nickname: "안녕하세요!"
+                  nickname: "Jane Woo"
               }
           }
         ]
