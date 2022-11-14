@@ -54,5 +54,9 @@ public class DealService {
         return new ResponseEntity(new DealPagingDto<>(dealList, pageInfo), HttpStatus.OK);
     }
 
+    public DealResponseDto getDealDetail(Long dealId) {
+        Deal findDeal = dealRepository.findById(dealId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND DEAL"));
+        return mapper.dealToDealResponseDto(findDeal);
+    }
 
 }

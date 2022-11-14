@@ -43,4 +43,10 @@ public class DealController {
     public ResponseEntity getDealList(@Positive @RequestParam int page, @Positive @RequestParam int size) {
         return dealService.getDealList(page, size);
     }
+
+    @GetMapping("/{deal-id}")
+    public ResponseEntity getDealDetail(@PathVariable("deal-id") Long dealId) {
+        DealResponseDto dealDetail = dealService.getDealDetail(dealId);
+        return new ResponseEntity(dealDetail, HttpStatus.OK);
+    }
 }
