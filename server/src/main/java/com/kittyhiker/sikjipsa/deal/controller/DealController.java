@@ -2,6 +2,7 @@ package com.kittyhiker.sikjipsa.deal.controller;
 
 import com.kittyhiker.sikjipsa.deal.dto.DealPostDto;
 import com.kittyhiker.sikjipsa.deal.dto.DealResponseDto;
+import com.kittyhiker.sikjipsa.deal.dto.LikeDealResponseDto;
 import com.kittyhiker.sikjipsa.deal.entity.Deal;
 import com.kittyhiker.sikjipsa.deal.service.DealService;
 import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
@@ -25,6 +26,9 @@ public class DealController {
     private final DealService dealService;
     private final JwtTokenizer jwtTokenizer;
 
+    /**
+     * 거래글 등록
+     */
     @PostMapping
     public ResponseEntity postDeal(@RequestBody DealPostDto dealPostDto,
                                    @RequestHeader("Authorization") String token) {
@@ -32,6 +36,9 @@ public class DealController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
+    /**
+     * 거래글 수정
+     */
     @PatchMapping("/{deal-id}")
     public ResponseEntity patchDeal(@PathVariable("deal-id") Long dealId,
                                     @RequestBody DealPostDto dealPostDto) {
@@ -39,17 +46,38 @@ public class DealController {
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
+    /**
+     * 거래글 전체 조회
+     */
     @GetMapping
     public ResponseEntity getDealList(@Positive @RequestParam int page, @Positive @RequestParam int size) {
         return dealService.getDealList(page, size);
     }
 
+    /**
+     * 거래글 상세 조회
+     */
     @GetMapping("/{deal-id}")
     public ResponseEntity getDealDetail(@PathVariable("deal-id") Long dealId) {
         DealResponseDto dealDetail = dealService.getDealDetail(dealId);
         return new ResponseEntity(dealDetail, HttpStatus.OK);
     }
 
+    /**
+     * 거래글 좋아요(찜)
+     */
+    @PostMapping("/shopping/like/{deal-id}")
+    public ResponseEntity likeDeal(@PathVariable("deal-id") Long dealId,
+                                   @RequestHeader("Authorization") String token) {
+        Long userId = jwtTokenizer.getUserIdFromToken(token);
+        LikeDealResponseDto response = dealService.likeDeal(userId, dealId);
+        return new ResponseEntity(response, HttpStatus.CREATED);
+    }
+
+
+    /**
+     * 거래글 삭제
+     */
     @DeleteMapping("/{deal-id}")
     public ResponseEntity deleteDeal(@PathVariable("deal-id") Long dealId) {
         dealService.removeDeal(dealId);

@@ -27,7 +27,7 @@ public class Deal extends AuditingEntity {
 
 	private int price;
 
-	private int likes;
+	private int likes=0;
 
 	private int category;
 
@@ -51,6 +51,11 @@ public class Deal extends AuditingEntity {
 
 	@OneToMany(mappedBy = "deal")
 	private List<Image> images = new ArrayList<>();
+
+	public void likeDeal(MemberLikeDeal likeDeal) {
+		likes+=1;
+		this.memberLikeDeals.add(likeDeal);
+	}
 
 	public void setMember(Member member){
 		this.member = member;

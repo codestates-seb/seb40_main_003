@@ -1,10 +1,8 @@
 package com.kittyhiker.sikjipsa.deal.service;
 
-import com.kittyhiker.sikjipsa.deal.dto.DealPagingDto;
-import com.kittyhiker.sikjipsa.deal.dto.DealPostDto;
-import com.kittyhiker.sikjipsa.deal.dto.DealResponseDto;
-import com.kittyhiker.sikjipsa.deal.dto.PageInfo;
+import com.kittyhiker.sikjipsa.deal.dto.*;
 import com.kittyhiker.sikjipsa.deal.entity.Deal;
+import com.kittyhiker.sikjipsa.deal.entity.MemberLikeDeal;
 import com.kittyhiker.sikjipsa.deal.mapper.DealMapper;
 import com.kittyhiker.sikjipsa.deal.respository.DealRepository;
 import com.kittyhiker.sikjipsa.deal.respository.DealReviewRepository;
@@ -59,6 +57,22 @@ public class DealService {
         findDeal.updateView();
         dealRepository.save(findDeal);
         return mapper.dealToDealResponseDto(findDeal);
+    }
+
+    public LikeDealResponseDto likeDeal(Long userId, Long dealId) {
+        Member findMember = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+        Deal findDeal = verifiedDeal(dealId);
+        MemberLikeDeal likeDeal = MemberLikeDeal.builder()
+                .member(findMember)
+                .deal(findDeal).build();
+        MemberLikeDeal savedLike = likeDealRepository.save(likeDeal);
+        findDeal.likeDeal(savedLike);
+        findMember.likeDeal(savedLike);
+        memberRepository.save(findMember);
+        return LikeDealResponseDto.builder().memberId(userId)
+                .dealId(dealId)
+                .likeNum(findDeal.getLikes())
+                .likeDealId(savedLike.getId()).build();
     }
 
     public void removeDeal(Long dealId) {
