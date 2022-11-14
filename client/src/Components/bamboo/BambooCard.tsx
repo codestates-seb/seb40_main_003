@@ -16,16 +16,18 @@ const BambooWrapper = styled.div`
 
 
 const BambooCard = ({ data }: any) => {
+  console.log(data);
+  
   return (
     <BambooWrapper>
       <ColumnWrapper>
           <span className='medium font-main mb-3'>{data.title}</span>
           <span className='sub font-gray mb-20'>{data.content}</span>
-          <BambooImageWrapper
+          {data.image?<BambooImageWrapper
           size={"100"}
           src={data.image[0].imgUrl}
           alt={`상품명 ${data.title}의 대표이미지`}
-        />
+        />:null}
         <SpaceEnd>
           <ViewCounter view={data.view} like={data.likes}/>
         </SpaceEnd>

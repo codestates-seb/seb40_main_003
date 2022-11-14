@@ -25,7 +25,22 @@ return rest.get("https://testserver.com/bamboo", async (req, res, ctx) => {
                   memberId: 1,
                   nickname: "Jane Woo"
               }
-          }
+          },
+          {
+            communityId: 2,
+            title: "우리 식물이 오늘 하늘나라로 갔어요 ㅠ^ㅠ",
+            content: "제가 13년동안 키우던 식물이 오늘 ㅠㅠㅠㅠ...",
+            view: 22,
+            createdAt: "2022-11-14",
+            modifiedAt: "2022-11-15",
+            commentNum: 2,
+            likes: 2,
+            image: [],
+            member: {
+                memberId: 2,
+                nickname: "Jane Woo"
+            }
+        }
         ]
       })
     )
