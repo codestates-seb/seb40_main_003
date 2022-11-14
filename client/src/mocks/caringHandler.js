@@ -114,11 +114,11 @@ export const CaringListHandler = () => {
                 },
                 {
                   techTagId: 2,
-                  techTagName: "물주기",
+                  techTagName: "병해충",
                 },
                 {
                   techTagId: 3,
-                  techTagName: "병/해충",
+                  techTagName: "가지치기",
                 },
               ],
 
@@ -137,7 +137,7 @@ export const CaringListHandler = () => {
 };
 
 export const profileExpertDetail = () => {
-rest.get("https://testserver.com/profile-expert", async (req, res, ctx) => {
+return rest.get("https://testserver.com/profile-expert", async (req, res, ctx) => {
   return res(
     ctx.json({
       name: "김고수",
@@ -186,29 +186,29 @@ rest.get("https://testserver.com/profile-expert", async (req, res, ctx) => {
 }
 
 
-export const exportProfileDetail = (profileNumber) => {
+export const expertProfileDetail = (profileNumber) => {
   return rest.get(
     `https://testserver.com/caring/${profileNumber}`,
     async (req, res, ctx) => {
       return res(
         ctx.json({
           expertProfileId: profileNumber,
-          simpleContent: "",
-          detailContent: "",
-          useNum: 1,
+          simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
+          detailContent: "식물자원학과를 졸업하여 전문 지식이 풍부하답니다. 친절하게 이웃 분들의 소중한 반려식물들을 돌보겠습니다.",
+          useNum: 20,
           price: 10,
-          address: "",
-          extra: "",
+          address: "연남동",
+          extra: "서비스별 추가비용 발생 약제 비용 별도 서비스 당 20% 할인",
           userLikeExpert: 1,
           view: 1,
           member: {
             memberId: 1,
             image: {
               imageId: 1,
-              imgUrl: "",
+              imgUrl: "https://placebear.com/640/360",
               isRepImg: "",
             },
-            name: "",
+            name: "김고수",
             age: 1,
             gender: 1,
           },
@@ -219,7 +219,7 @@ export const exportProfileDetail = (profileNumber) => {
                 memberId: 1,
                 nickname: "식물쪼아",
               },
-              content: "",
+              content: "고수님 최고예요^^",
             },
             {
               expertReviewId: 2,
@@ -227,7 +227,7 @@ export const exportProfileDetail = (profileNumber) => {
                 memberId: 1,
                 nickname: "식물씨러",
               },
-              content: "",
+              content: "너무 친절하게 잘 설명해주시고 소중히 다뤄주셨어요. 짱짱!",
             },
             {
               expertReviewId: 3,
@@ -235,28 +235,37 @@ export const exportProfileDetail = (profileNumber) => {
                 memberId: 1,
                 nickname: "식물노잼",
               },
-              content: "",
+              content: "너무 친절하게 잘 설명해주시고 소중히 다뤄주셨어요. 짱짱!",
             },
             
           ],
           techTag: [
             {
               techTagId: 1,
-              techTagName: "",
+              techTagName: "분갈이",
+            },            {
+              techTagId: 1,
+              techTagName: "병/해충",
+            },            {
+              techTagId: 1,
+              techTagName: "가지치기",
+            },            {
+              techTagId: 1,
+              techTagName: "수형관리",
             },
           ],
           areaTag: [
             {
               areaTagId: 1,
-              areaTagName: "",
+              areaTagName: "마포구",
             },
           ],
           plant: [
             {
               plantId: 1,
-              plantType: "",
-              name: "",
-              year: 1,
+              plantType: "몬스테라",
+              name: "몬식이",
+              year: 137,
             },
           ],
         })

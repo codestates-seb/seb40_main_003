@@ -13,7 +13,7 @@ const Care = (props:any) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("https://testserver.com/caring")
+    axios.get("/caring")
     .then(( res ) => {
       // console.log(res.data)
       setData(res.data.data);
