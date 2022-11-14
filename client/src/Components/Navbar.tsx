@@ -93,7 +93,7 @@ const Navbar = () => {
               <Market />
             </NavElem>
           </NavLink>
-          <NavLink to="/board" className={({isActive}) =>isActive?"activeIcon":"disableIcon"}>
+          <NavLink to="/bamboo" className={({isActive}) =>isActive?"activeIcon":"disableIcon"}>
             <NavElem title="커뮤니티">
               <Community />
             </NavElem>
