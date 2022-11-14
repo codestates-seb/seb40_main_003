@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useInRouterContext, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { ProfileCard, SigTag, ViewCounter } from "../../Components/GlobalComponents";
+import { ProfileCard, CardWrapper, SigTag, ViewCounter } from "../../Components/GlobalComponents";
 import { userState } from "../../Recoil/atoms/atom";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
 
@@ -31,14 +31,21 @@ const isLogin = useRecoilValue(userState)
             alt={`${data.expertReview[0].writer.nickname}의 대표사진`}
             name={data.expertReview[0].writer.nickname}
             location={data.address}
+            // 태그 
+            // <ViewCounter like={data.userLikeExpert} view={data.view} />
+
             />
-            <SigTag className="active">{data.view}번 고용됨</SigTag>
         </Link>
-        <h1 className="h4 bold">{data.member.name}</h1>
-        <ViewCounter like={data.userLikeExpert} view={data.view} />
-            <p>{data.simpleContent}</p>
+            <p>{data.simpleContent}</p> 
             <p>{data.detailContent}</p>
-        </>
+        <CardWrapper><h1 className="h4 bold">반려식물</h1></CardWrapper>    
+            {/* 반려식물 컴포넌트 */}
+        <CardWrapper><h1 className="h4 bold">보유 기술</h1></CardWrapper>    
+        <CardWrapper><h1 className="h4 bold">소개합니다</h1></CardWrapper>    
+        <CardWrapper><h1 className="h4 bold">기본 비용</h1></CardWrapper>    
+        <CardWrapper><h1 className="h4 bold">추가 비용</h1></CardWrapper>    
+
+            </>
     ) : (
         <>loading...</>
     );
