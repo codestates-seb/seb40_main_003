@@ -138,6 +138,7 @@ export const CaringListHandler = () => {
   });
 };
 
+export const profileExpertDetail = () => {
 rest.get("https://testserver.com/profile-expert", async (req, res, ctx) => {
   return res(
     ctx.json({
@@ -186,6 +187,8 @@ rest.get("https://testserver.com/profile-expert", async (req, res, ctx) => {
     })
   );
 });
+}
+
 
 export const exportProfileDetail = (profileNumber) => {
   return rest.get(
