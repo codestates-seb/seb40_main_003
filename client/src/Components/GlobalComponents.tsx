@@ -32,23 +32,32 @@ export const TagWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+
   flex-wrap: wrap;
 `;
 
+
+
+
+
 // 태그 앨리먼트
-export const SigTag = styled.span`
-  padding: 2px 4px;
-  background-color: var(--main);
+export const SigTag = styled.div`
+padding: 2px 4px;
+background-color: var(--main);
+color: var(--pure-white);
+font-weight: var(--sub);
+text-align: center;
+min-width: 33px;
+border-radius: 4px 0px;
+margin: 4px 4px 4px 0px;
+&.ghost{
   color: var(--pure-white);
   font-weight: var(--sub);
   text-align: center;
   min-width: 33px;
   border-radius: 4px 0px;
-  margin: 4px 4px 4px 0px;
-  &.ghost {
-    color: var(--pure-white);
-    background-color: var(--font-gray);
-  }
+  margin: 4px 4px 4px 0px;}
+
   &.active {
     color: var(--main);
     background-color: var(--pure-white);
@@ -59,7 +68,7 @@ export const SigTag = styled.span`
     background-color: var(--pure-white);
     border: 1px solid var(--line-black);
   }
-`;
+`
 // 이미지 랩퍼
 const ImageElem = styled.img`
   width: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
@@ -87,6 +96,30 @@ export const ImageWrapper = ({
   circle = false,
 }: imageWrapperProps) => {
   return <ImageElem src={src} size={size} alt={alt} />;
+};
+
+// 커뮤니티 이미지 랩퍼
+const BambooImageElem = styled.img`
+  /* width: ${(props: BambooimageWrapperProps) => (props.size ? props.size : "36")}px;
+  height: ${(props: BambooimageWrapperProps) => (props.size ? props.size : "36")}px; */
+  background-color: var(--bg-gray);
+  overflow: hidden;
+  width: 730px;
+  height: 265px;
+  border-radius: 8px 0px;
+  display: block;
+  object-fit : cover;
+  margin-right: 16px;
+`;
+
+type BambooimageWrapperProps = {
+  src: string;
+  size?: "36" | "56" | "100";
+  alt: string;
+};
+
+export const BambooImageWrapper = ({ size = "100", src, alt }: BambooimageWrapperProps) => {
+  return <BambooImageElem src={src} size={size} alt={alt} />;
 };
 
 // 좋아요 카운트

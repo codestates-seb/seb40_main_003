@@ -84,7 +84,7 @@ export const handlers = [
         data: [
           {
               communityId: 1,
-              title: "우리 식물 좀 보세요! 얼마나 이쁘게요",
+              title: "우리 식물 좀 보세요! 얼마나 이쁘게요🤍",
               content: "이번에 갑조네에서 아스파라거스를 샀는데요...",
               view: 22,
               createdAt: "2022-11-14",
