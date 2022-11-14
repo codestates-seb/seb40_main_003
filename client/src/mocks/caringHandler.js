@@ -143,9 +143,7 @@ rest.get("https://testserver.com/profile-expert", async (req, res, ctx) => {
       age: 25,
       gender: 2,
       photos: [
-        {
-          photo: "https://picsum.photos/seed/picsum/200/300​",
-        },
+        { photo: "https://picsum.photos/seed/picsum/200/300​" },
         { photo: "https://picsum.photos/seed/picsum/200/300​" },
         { photo: "https://picsum.photos/seed/picsum/400/600​" },
       ],
