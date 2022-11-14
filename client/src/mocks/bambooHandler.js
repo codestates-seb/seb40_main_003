@@ -72,7 +72,7 @@ export const BambooDetailHandler = (pageNumber) => {
   return rest.get(`https://testserver.com/bamboo${pageNumber}`, async (req, res, ctx) => {
       return res(
         ctx.json({
-            communityId: 1,
+            communityId: pageNumber,
             title: "우리 식물 좀 보세요! 얼마나 이쁘게요🤍",
             content: "할지라도 소담스러운 따뜻한 철환하였는가? 가치를 끓는 할지니, 열락의 힘있다.",
             view: 11,

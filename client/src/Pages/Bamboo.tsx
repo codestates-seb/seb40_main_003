@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect } from "react";
 import BambooCard from '../Components/bamboo/BambooCard';
 import { bambooTypes } from '../types/bambooTypes'
+import { Link } from 'react-router-dom';
 
 const Community = () => {
   const [data, setData] = useState<bambooTypes>();
@@ -22,8 +23,7 @@ const Community = () => {
   return !isLoading && data !== undefined ? (
     <>
       {data.data.map((e) => {
-        console.log(e.communityId);
-        return <BambooCard key={e.communityId} data={e} />
+        return <Link to={`/bamboo/${e.communityId}`}><BambooCard key={e.communityId} data={e} /></Link>
       })}
     </>
   ) : (

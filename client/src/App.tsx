@@ -11,6 +11,7 @@ import Missing from "./Pages/Missing";
 import Care from "./Pages/Care";
 import CareDetail from "./Pages/Main/CareDetail";
 import Community from "./Pages/Bamboo";
+import CommunityDetail from "./Pages/Bamboo/BambooDetail";
 import Talk from "./Pages/Talk";
 import DevTools from "./Components/DevTools";
 import ProductDetail from "./Pages/Product/ProductDetail";
@@ -49,7 +50,8 @@ function App() {
         <Route path="/caring/:id" element={<CareDetail />} />
         <Route path="/product" element={<Product />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/board" element={<Community />} />
+        <Route path="/bamboo" element={<Community />} />
+        <Route path="/bamboo/:id" element={<CommunityDetail />} />
 
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />
