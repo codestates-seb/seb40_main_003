@@ -49,4 +49,10 @@ public class DealController {
         DealResponseDto dealDetail = dealService.getDealDetail(dealId);
         return new ResponseEntity(dealDetail, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{deal-id}")
+    public ResponseEntity deleteDeal(@PathVariable("deal-id") Long dealId) {
+        dealService.removeDeal(dealId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }
