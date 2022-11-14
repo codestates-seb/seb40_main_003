@@ -15,7 +15,9 @@ const Product = () => {
   const [hidingTime, setHidingTime] = useState(true);
 
   useEffect(() => {
-    setTimeout(() =>{setHidingTime(false)},200)
+    setTimeout(() => {
+      setHidingTime(false);
+    }, 200);
     axios.get("/shopping").then(({ data }) => {
       setData(data.shopping);
       setIsLoading(false);
@@ -25,11 +27,15 @@ const Product = () => {
   return !isLoading && data !== undefined ? (
     <>
       {data.map((e) => {
-        return <Link to={`/product/${e.dealId}`}><ProductCard key={e.dealId} data={e} /></Link>;
+        return (
+          <Link to={`/product/${e.dealId}`}>
+            <ProductCard key={e.dealId} data={e} />
+          </Link>
+        );
       })}
     </>
   ) : (
-    <div className={hidingTime ?"display-none":""}>
+    <div className={hidingTime ? "display-none" : ""}>
       <ProductPlaceHolder />
       <ProductPlaceHolder />
       <ProductPlaceHolder />
