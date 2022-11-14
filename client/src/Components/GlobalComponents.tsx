@@ -142,6 +142,7 @@ const ViewCounterColumn = styled.div`
 `;
 
 export const ViewCounter = ({ view, like }: ViewCounterProps) => {
+
   return (
     <ViewCounterWrapper>
       {view && (
