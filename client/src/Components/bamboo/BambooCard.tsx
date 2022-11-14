@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
-import { BambooImageWrapper, ViewCounter } from "../GlobalComponents";
+import { BambooImageWrapper, BambooViewCounter } from "../GlobalComponents";
 import { ColumnWrapper } from "../main/Wrapper";
-import {SpaceEnd,DescriptionColumnWrapper} from"../../Components/product/ProductCard"
+import {SpaceEnd} from"../../Components/product/ProductCard"
 
 
 const BambooWrapper = styled.div`
@@ -26,8 +26,10 @@ const BambooCard = ({ data }: any) => {
           src={data.image[0].imgUrl}
           alt={`상품명 ${data.title}의 대표이미지`}
         />
+        <SpaceEnd>
+          <BambooViewCounter view={data.view} like={data.likes}/>
+        </SpaceEnd>
           </ColumnWrapper>
-        
     </BambooWrapper>
   );
 };
