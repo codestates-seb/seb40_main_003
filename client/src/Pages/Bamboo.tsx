@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-// import BambooCard from '../Components/bamboo/BambooCard';
+import BambooCard from '../Components/bamboo/BambooCard';
 import { bambooTypes } from '../types/bambooTypes'
 
 const Community = () => {
@@ -23,7 +23,7 @@ const Community = () => {
     <>
       {data.data.map((e) => {
         console.log(e.communityId);
-        return <p key={e.communityId} >{e.communityId}</p>
+        return <BambooCard key={e.communityId} data={e} />
       })}
     </>
   ) : (
