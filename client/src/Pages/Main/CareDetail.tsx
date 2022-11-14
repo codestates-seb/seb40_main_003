@@ -26,7 +26,7 @@ const CareDetail = () => {
   return !isLoading && data !== null ? (
     <>
       <img src={data.member.image.imgUrl} alt={`${data.member.name}의 대표사진`} />
-      <Link to={`/Care/${data.expertProfileId}`}>
+      <Link to={isLogin?`/caring/${data.member.memberId}`:""}>
         <ProfileCard
           src={data.member.image.imgUrl}
           alt={`${data.expertReview[0].writer.nickname}의 대표사진`}

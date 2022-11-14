@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import axios from "axios";
 import  CareCard  from "../Components/main/CareCard";
 import { caringTypes } from "../types/caringTypes";
+import { Link } from "react-router-dom";
+
 
 type props = [caringTypes];
 
@@ -23,8 +25,13 @@ const Care = (props:any) => {
   return !isLoading && data !== undefined ? (
     <>
       {data.map((e) => {
-        return <CareCard key={e.expertProfileId} data={e} />
-      })}
+        return (
+        <Link to={`/caring/${e.expertProfileId}`}>
+          <CareCard key={e.expertProfileId} data={e} />
+        </Link>
+        )
+    })}
+      
     </>
   ) : (
     <> loading... 로딩 그만하고 이제 내보내줘 살려줘 </>
