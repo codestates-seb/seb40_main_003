@@ -34,9 +34,10 @@ font-weight: var(--sub);
 text-align: center;
 min-width: 33px;
 border-radius: 4px 0px;
+margin: 2px;
 &.ghost{
   color: var(--pure-white);
-  background-color: var(--line-gray);
+  background-color: var(--font-gray);
 }
 &.active{
   color: var(--main);
@@ -44,9 +45,9 @@ border-radius: 4px 0px;
   border: 1px solid var(--main);
 }
 &.disabled{
-  color: var(--line-gray);
+  color: var(--line-black);
   background-color: var(--pure-white);
-  border: 1px solid var(--line-gray);
+  border: 1px solid var(--line-black);
 }
 `
 // 이미지 랩퍼
