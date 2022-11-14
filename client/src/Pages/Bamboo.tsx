@@ -9,7 +9,7 @@ const Community = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    axios.get("https://testserver.com/bamboo")
+    axios.get("/bamboo")
     .then(( res ) => {
       console.log(res.data);
       setData(res.data);

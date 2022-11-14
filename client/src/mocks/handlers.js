@@ -90,6 +90,7 @@ export const handlers = [
               createdAt: "2022-11-14",
               modifiedAt: "2022-11-15",
               commentNum: 1,
+              likes: 1,
               image: [
                   {
                       imageId: 1,
