@@ -62,23 +62,22 @@ const ProductCard = ({ data }: any) => {
 };
 // 스켈레톤 컴포넌트
 export const ProductPlaceHolder = () => {
-  
   return (
     <ProductWrapper>
       <ProductDescription>
         <Skeleton width={100} height={100} rounded={true} mr={16} />
         <DescriptionColumnWrapper>
           <ColumnWrapper>
-            <Skeleton width={150} height={20}/>
+            <Skeleton width={150} height={20} />
           </ColumnWrapper>
           <Price className="bold h4">
-          <Skeleton width={80} height={20}/>
+            <Skeleton width={80} height={20} />
           </Price>
         </DescriptionColumnWrapper>
       </ProductDescription>
-      <DescriptionColumnWrapper>
-      <Skeleton width={80} height={20}/>
-      </DescriptionColumnWrapper>
+      <SpaceEnd>
+        <Skeleton width={80} height={25} />
+      </SpaceEnd>
     </ProductWrapper>
   );
 };

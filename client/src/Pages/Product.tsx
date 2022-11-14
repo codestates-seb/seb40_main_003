@@ -24,7 +24,6 @@ const Product = () => {
 
   return !isLoading && data !== undefined ? (
     <>
-    
       {data.map((e) => {
         return <Link to={`/product/${e.dealId}`}><ProductCard key={e.dealId} data={e} /></Link>;
       })}
