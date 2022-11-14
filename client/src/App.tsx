@@ -9,6 +9,7 @@ import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import Missing from "./Pages/Missing";
 import Care from "./Pages/Care";
+import CareDetail from "./Pages/Main/CareDetail";
 import Community from "./Pages/Bamboo";
 import Talk from "./Pages/Talk";
 import DevTools from "./Components/DevTools";
@@ -44,7 +45,8 @@ function App() {
         <Route path="/" element={<Care />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/care" element={<Care />} />
+        <Route path="/careing" element={<Care />} />
+        <Route path="/caring/:id" element={<CareDetail />} />
         <Route path="/product" element={<Product />} />
         <Route path="/product/:id" element={<ProductDetail />} />
         <Route path="/board" element={<Community />} />
