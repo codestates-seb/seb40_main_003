@@ -25,6 +25,13 @@ export const SubText = styled.span`
   font-size: var(--sub-font-size);
 `;
 
+// 태그 랩퍼
+export const TagWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+`
+
 // 태그 앨리먼트
 export const SigTag = styled.span`
 padding: 2px 4px;
@@ -34,7 +41,7 @@ font-weight: var(--sub);
 text-align: center;
 min-width: 33px;
 border-radius: 4px 0px;
-margin: 2px;
+margin: 4px 4px 4px 0px;
 &.ghost{
   color: var(--pure-white);
   background-color: var(--font-gray);
