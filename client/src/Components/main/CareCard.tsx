@@ -1,9 +1,11 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper } from "../main/Wrapper";
+import { SigTag } from "../GlobalComponents";
+
 
 const CardWrapper = styled.div`
-background-color: aliceblue;
+/* background-color: aliceblue; */
   width: 100%;
   min-width: 312px;
   max-width: 730px;
@@ -25,6 +27,12 @@ const DescriptionColumnWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
+const TagWrapper = styled.div`
+  margin: 4px;
+  display: flex;
+  justify-content: space-between;
+
+`
 
 const CareCard = ({ data }: any) => {
     console.log(data.techTag)
@@ -44,9 +52,14 @@ const CareCard = ({ data }: any) => {
               <span>{data.simpleContent}</span>
               <span>{data.techTagId}</span>
               <span className="medium">{data.address}</span>
-              <span>{data.techTag.techTagName}</span>
           </ColumnWrapper>
         </DescriptionColumnWrapper>
+        <TagWrapper>
+          <SigTag className="disabled">{data.techTag.techTagName}물주기</SigTag>
+          <SigTag className="disabled">{data.techTag.techTagName}분재</SigTag>
+          <SigTag className="disabled">{data.techTag.techTagName}병/해충</SigTag>
+          <SigTag className="disabled">{data.techTag.techTagName}가지치기</SigTag>
+        </TagWrapper>
         </CareDescription>
         <DescriptionColumnWrapper>
           <ViewCounter view={data.view} like={data.like} />
