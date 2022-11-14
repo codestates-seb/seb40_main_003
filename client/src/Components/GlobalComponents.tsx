@@ -161,13 +161,22 @@ export const ViewCounter = ({ view, like }: ViewCounterProps) => {
   );
 };
 
-const ProfileCardWrapper = styled.div`
+export const ProfileCardWrapper = styled.div`
   width: 100%;
   padding: 8px 0;
   border-bottom: 1px solid var(--line-light-gray);
   display: flex;
   align-items: center;
 `;
+
+export const CardWrapper = styled.div`
+  width: 100%;
+  padding: 8px 0;
+  border-top: 1px solid var(--line-light-gray);
+  display: flex;
+  align-items: center;
+`;
+
 // 프로필
 type ProfileCardTypes = {
   size?: string
