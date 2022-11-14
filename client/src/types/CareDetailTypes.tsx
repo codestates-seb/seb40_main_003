@@ -42,8 +42,8 @@ type CareDetailTypes =
             areaTagName: string
         }
     ],
-   plant:[
-        {
+    plant:[
+        {   
             plantId: number,
             plantType: string,
             name: string,
