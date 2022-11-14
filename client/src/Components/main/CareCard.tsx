@@ -1,8 +1,7 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper } from "../main/Wrapper";
-
-import {SpaceEnd,DescriptionColumnWrapper} from"../../Components/product/ProductCard"
+import {SpaceEnd, DescriptionColumnWrapper} from"../../Components/product/ProductCard"
 import { SigTag } from "../GlobalComponents";
 
 
@@ -15,23 +14,23 @@ const CardWrapper = styled.div`
   padding: 24px 8px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   border-bottom: 1px solid var(--line-light-gray);
 `;
 const CareDescription = styled.div`
   /* background-color: yellow; */
-  width: 100%;
   height: 100px;
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
 `;
 
 const TagWrapper = styled.div`
   margin: 4px;
   display: flex;
-  justify-content: space-between;
 
 `
+
 const CareCard = ({ data }: any) => {
     console.log(data.techTag)
 
@@ -46,18 +45,18 @@ const CareCard = ({ data }: any) => {
         />
         <DescriptionColumnWrapper>
           <ColumnWrapper>
-              <span className="medium">{data.member.name} / {data.member.age}세 / {data.member.gender}</span>
-              <span>{data.simpleContent}</span>
+              <span className="medium font-main">{data.member.name} / {data.member.age}세 / {data.member.gender}</span>
+              <span className="font-gray sub">{data.simpleContent}</span>
               <span>{data.techTagId}</span>
-              <span className="medium">{data.address}</span>
+              <span className="medium font-gray sub">{data.address}</span>
+              <TagWrapper>
+                <SigTag className="disabled sub">{data.techTag.techTagName}물주기</SigTag>
+                <SigTag className="disabled sub">{data.techTag.techTagName}분재</SigTag>
+                <SigTag className="disabled sub">{data.techTag.techTagName}병/해충</SigTag>
+                <SigTag className="disabled sub">{data.techTag.techTagName}가지치기</SigTag>
+              </TagWrapper>
           </ColumnWrapper>
         </DescriptionColumnWrapper>
-        <TagWrapper>
-          <SigTag className="disabled">{data.techTag.techTagName}물주기</SigTag>
-          <SigTag className="disabled">{data.techTag.techTagName}분재</SigTag>
-          <SigTag className="disabled">{data.techTag.techTagName}병/해충</SigTag>
-          <SigTag className="disabled">{data.techTag.techTagName}가지치기</SigTag>
-        </TagWrapper>
         </CareDescription>
         <SpaceEnd>
           <ViewCounter view={data.view} like={data.like} />
