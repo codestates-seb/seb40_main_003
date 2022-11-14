@@ -1,6 +1,6 @@
 import { rest } from "msw";
 import {ProductDetailHandler,ProductListHandler} from "./productHandler"
-import {CaringListHandler, expertProfileDetail} from "./caringHandler"
+import {CaringListHandler,exportProfileDetail} from "./caringHandler"
 import { BambooListHandler } from "./bambooHandler"
 export const handlers = [
   // 로그인 테스트
@@ -35,6 +35,7 @@ export const handlers = [
 
 // 커뮤니티 핸들러
 BambooListHandler(),
+BambooDetailHandler(1),
 
   rest.get("https://testserver.com/profile-expert", async (req, res, ctx) => {
     return res(

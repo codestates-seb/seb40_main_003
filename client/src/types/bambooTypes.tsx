@@ -11,7 +11,7 @@ data:[{        communityId: number,
             {
                 imageId: number,
                 imgUrl: string,
-                isRepImg: string
+                isRepImg: number
             }
         ],
         member: {
