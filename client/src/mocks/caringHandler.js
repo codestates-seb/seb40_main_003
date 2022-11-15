@@ -121,7 +121,7 @@ export const CaringListHandler = () => {
                   techTagName: "가지치기",
                 },
               ],
-
+ 
               areaTag: [
                 {
                   areaTagId: 1,

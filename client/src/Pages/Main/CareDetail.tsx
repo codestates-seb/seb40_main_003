@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useInRouterContext, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { ProfileCard, CardWrapper, SigTag, ViewCounter, TagWrapper } from "../../Components/GlobalComponents";
+import { ProfileCard, CardWrapper, SigTag, ViewCounter, TagWrapper, SigButton } from "../../Components/GlobalComponents";
 import { userState } from "../../Recoil/atoms/atom";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
 
@@ -60,6 +60,7 @@ const isLogin = useRecoilValue(userState)
             <h1 className="h4 bold">추가 비용</h1>
             <p>{data.extra}</p>
         </CardWrapper>
+        <SigButton>문의 하기</SigButton>
             </>
     ) : (
         <>loading...</>
