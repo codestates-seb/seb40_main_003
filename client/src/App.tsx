@@ -5,7 +5,7 @@ import AuthProvider from "./AuthProvider";
 import Product from "./Pages/Product";
 import Navbar from "./Components/Navbar";
 import Profile from "./Pages/Profile";
-import Login from "./Pages/Login";
+import Login from "./Pages/User/Login";
 import Signup from "./Pages/Signup";
 import Missing from "./Pages/Missing";
 import Care from "./Pages/Main/Care";
