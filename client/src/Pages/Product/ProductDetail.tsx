@@ -8,7 +8,6 @@ import {
   ViewCounter,
 } from "../../Components/GlobalComponents";
 import {
-  BottomPlaceHolder,
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
@@ -34,8 +33,10 @@ const ProductDetail = () => {
   }, [id]);
 
   return !isLoading && data !== null ? (
-    // 메인 컨테이너 ()
+    // 메인 컨테이너 (반응형 제공!)
     <MainContentContainer>
+
+      {/* 실제 메인이 되는 내용! */}
       <MainCenterWrapper>
         <img src={data.image[0].imgUrl} alt={`${data.title}의 대표사진`} />
         <Link to={isLogin ? `/profile/${data.member.memberId}` : ""}>
@@ -46,15 +47,17 @@ const ProductDetail = () => {
             location={data.areaTag[0].areaTagName}
           />
         </Link>
-        <h1 className="h4 bold">{data.title}</h1>
-        <span className="sub font-gray">{data.createdAt}</span>
+        <h1 className="h4 bold mt-16">{data.title}</h1>
+        <span className="sub font-gray mb-8">{data.createdAt}</span>
         <ViewCounter like={data.memberLikeDeal} view={data.view} />
-        <p>{data.content}</p>
-        <BottomPlaceHolder />
+        <p className="mt-16">{data.content}</p>
+        {/* 반응형으로 바뀌면 하단에 버튼이 생기므로 가려짐, 따라서 길이를 늘려줌 */}
+        {/* <BottomPlaceHolder /> */}
       </MainCenterWrapper>
 
       <MainRightWrapper>
-        <SigButton>문의하기</SigButton>
+        <span className="h4 bold">{(data.price).toLocaleString()}원</span>
+        <SigButton>채팅하기</SigButton>
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
