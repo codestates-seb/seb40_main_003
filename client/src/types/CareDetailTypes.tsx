@@ -16,13 +16,13 @@ type CareDetailTypes =
                 imgUrl: string,
                 isRepImg: string
             },
-        name: string,
+        name: string, 
         age: number,
         gender: number
     },
     expertReview: [
         {
-            expertReviewId: number,
+             expertReviewId: number,
             writer: {
                 memberId: number,
                 nickname: string
@@ -49,7 +49,6 @@ type CareDetailTypes =
           name: string,
           year: number
         }
-    ]
-}
-;
+    ]}
+; 
 export type {CareDetailTypes}
