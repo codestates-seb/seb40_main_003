@@ -39,6 +39,8 @@ export const handlers = [
 // 커뮤니티 핸들러
 BambooListHandler(),
 BambooDetailHandler(1),
+BambooDetailHandler(2),
+BambooDetailHandler(3),
 
 ];
 
