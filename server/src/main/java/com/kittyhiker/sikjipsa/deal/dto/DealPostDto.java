@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -17,6 +18,9 @@ public class DealPostDto {
     String content;
     int price;
     int category;
-    List<Integer> areaTag;
+    int area;
+//    private String filename;
+//    private String filepath;
+    MultipartFile image;
 
 }

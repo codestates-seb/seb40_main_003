@@ -16,10 +16,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +35,17 @@ public class DealService {
     private final DealReviewRepository reviewRepository;
     private final LikeDealRepository likeDealRepository;
 
-    public DealResponseDto postDeal(DealPostDto dealPostDto, Long userId) {
+    public DealResponseDto postDeal(DealPostDto dealPostDto, Long userId) throws IOException {
+
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+        UUID uuid = UUID.randomUUID();
+        MultipartFile file = dealPostDto.getImage();
+        String fileName = uuid + "_" + file.getOriginalFilename();
+        File saveFile = new File(projectPath, fileName); //빈껍데기 생성 (경로, 파일이름)
+        file.transferTo(saveFile);
+
+        //이미지저장
+
         Deal deal = mapper.dealPostDtoToDeal(dealPostDto);
         Member findMember = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
         deal.setMember(findMember);
@@ -39,7 +53,15 @@ public class DealService {
         return mapper.dealToDealResponseDto(deal);
     }
 
-    public DealResponseDto patchDeal(Long dealId, DealPostDto dealPatchDto) {
+    public DealResponseDto patchDeal(Long dealId, DealPostDto dealPatchDto) throws IOException {
+
+        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
+        UUID uuid = UUID.randomUUID();
+        MultipartFile file = dealPatchDto.getImage();
+        String fileName = uuid + "_" + file.getOriginalFilename();
+        File saveFile = new File(projectPath, fileName); //빈껍데기 생성 (경로, 파일이름)
+        file.transferTo(saveFile);
+
         Deal findDeal = verifiedDeal(dealId);
         findDeal.updateDeal(dealPatchDto);
         dealRepository.save(findDeal);

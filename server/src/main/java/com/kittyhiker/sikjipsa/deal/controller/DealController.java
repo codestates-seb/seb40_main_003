@@ -12,8 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Positive;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +33,7 @@ public class DealController {
      */
     @PostMapping
     public ResponseEntity postDeal(@RequestBody DealPostDto dealPostDto,
-                                   @RequestHeader("Authorization") String token) {
+                                   @RequestHeader("Authorization") String token) throws IOException {
         DealResponseDto response = dealService.postDeal(dealPostDto, jwtTokenizer.getUserIdFromToken(token));
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
@@ -41,8 +43,8 @@ public class DealController {
      */
     @PatchMapping("/{deal-id}")
     public ResponseEntity patchDeal(@PathVariable("deal-id") Long dealId,
-                                    @RequestBody DealPostDto dealPostDto) {
-        DealResponseDto response = dealService.patchDeal(dealId, dealPostDto);
+                                    @RequestBody DealPostDto dealPatchDto) throws IOException {
+        DealResponseDto response = dealService.patchDeal(dealId, dealPatchDto);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
