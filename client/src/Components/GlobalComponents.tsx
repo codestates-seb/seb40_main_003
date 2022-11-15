@@ -110,6 +110,7 @@ const BambooImageElem = styled.img`
   display: block;
   object-fit : cover;
   margin-right: 16px;
+  padding-bottom: 5px;
 `;
 
 type BambooimageWrapperProps = {

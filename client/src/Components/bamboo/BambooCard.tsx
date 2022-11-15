@@ -3,26 +3,17 @@ import { BambooImageWrapper, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper } from "../main/Wrapper";
 import {SpaceEnd} from"../../Components/product/ProductCard"
 
-
 const BambooWrapper = styled.div`
-  padding: 24px 22px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
   border-bottom: 1px solid var(--line-light-gray);
+  padding: 5px 0;
 `;
 
-
-
-
 const BambooCard = ({ data }: any) => {
-  console.log(data);
-  
   return (
     <BambooWrapper>
       <ColumnWrapper>
           <span className='medium font-main mb-3'>{data.title}</span>
-          <span className='sub font-gray mb-20'>{data.content}</span>
+          <span className='sub font-gray mb-10'>{data.content}</span>
           {data.image[0]?<BambooImageWrapper
           size={"100"}
           src={data.image[0].imgUrl}
@@ -31,8 +22,8 @@ const BambooCard = ({ data }: any) => {
         <SpaceEnd>
           <ViewCounter view={data.view} like={data.likes}/>
         </SpaceEnd>
-          </ColumnWrapper>
-    </BambooWrapper>
+      </ColumnWrapper>
+      </BambooWrapper>
   );
 };
 
