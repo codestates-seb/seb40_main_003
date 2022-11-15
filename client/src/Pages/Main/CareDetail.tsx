@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useInRouterContext, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { ProfileCard, CardWrapper, SigTag, ViewCounter, TagWrapper } from "../../Components/GlobalComponents";
+import { ProfileCard, CardWrapper, SigTag, ViewCounter, TagWrapper, SigButton, ProfilePlantCard  } from "../../Components/GlobalComponents";
 import { userState } from "../../Recoil/atoms/atom";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
 
