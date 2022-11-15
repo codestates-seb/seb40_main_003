@@ -50,7 +50,7 @@ export const CaringListHandler = () => {
             {
               view: 123,
               like: 56,
-              expertProfileId: 1,
+              expertProfileId: 2,
               simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
               address: "연남동",
               userLikeExpert: 1,
@@ -61,7 +61,7 @@ export const CaringListHandler = () => {
                   imgUrl: "https://placebear.com/640/360",
                   isRepImg: 1,
                 },
-                name: "김고수",
+                name: "박고수",
                 age: 25,
                 gender: 1,
               },
@@ -91,7 +91,7 @@ export const CaringListHandler = () => {
             {
               view: 123,
               like: 56,
-              expertProfileId: 1,
+              expertProfileId: 3,
               simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
               address: "연남동",
               userLikeExpert: 1,
@@ -102,7 +102,7 @@ export const CaringListHandler = () => {
                   imgUrl: "https://placebear.com/640/360",
                   isRepImg: 1,
                 },
-                name: "김고수",
+                name: "최고수",
                 age: 25,
                 gender: 1,
               },
@@ -180,7 +180,8 @@ return rest.get("https://testserver.com/profile-expert", async (req, res, ctx) =
           name: "분갈이",
         },
       ],
-    })
+    },
+    )
   );
 });
 }
@@ -196,9 +197,9 @@ export const expertProfileDetail = (profileNumber) => {
           simpleContent: "식물을 사랑하는 우리 동네 식물 전문가입니다~",
           detailContent: "식물자원학과를 졸업하여 전문 지식이 풍부하답니다. 친절하게 이웃 분들의 소중한 반려식물들을 돌보겠습니다.",
           useNum: 20,
-          price: 10,
+          price: "30분 9,000원 \n\r1시간 15,000원",
           address: "연남동",
-          extra: "서비스별 추가비용 발생 약제 비용 별도 서비스 당 20% 할인",
+          extra: "서비스별 추가비용 발생 \n약제 비용 별도 \n서비스 당 20% 할인",
           userLikeExpert: 1,
           view: 1,
           member: {
@@ -268,7 +269,8 @@ export const expertProfileDetail = (profileNumber) => {
               year: 137,
             },
           ],
-        })
+        },
+        )
       );
     }
   );
