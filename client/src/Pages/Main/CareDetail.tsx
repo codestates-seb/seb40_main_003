@@ -17,6 +17,7 @@ const isLogin = useRecoilValue(userState)
         axios.get(`/caring/${id}`).then((res) => {
             setData(res.data);
             setIsLoading(false);
+            console.log(res.data)
         });
         } catch (err) {
         console.log(err);
@@ -37,7 +38,6 @@ const isLogin = useRecoilValue(userState)
             />
         </Link>
             <p>{data.simpleContent}</p> 
-            <p>{data.detailContent}</p>
         <CardWrapper><h1 className="h4 bold">반려식물</h1></CardWrapper>    
             {/* 반려식물 컴포넌트 */}
         <CardWrapper><h1 className="h4 bold">보유 기술</h1></CardWrapper>
@@ -48,10 +48,18 @@ const isLogin = useRecoilValue(userState)
             <SigTag>{data.techTag[0].techTagName}</SigTag>   
             <SigTag>{data.techTag[0].techTagName}</SigTag>   
         </TagWrapper>
-        <CardWrapper><h1 className="h4 bold">소개합니다</h1></CardWrapper>    
-        <CardWrapper><h1 className="h4 bold">기본 비용</h1></CardWrapper>    
-        <CardWrapper><h1 className="h4 bold">추가 비용</h1></CardWrapper>    
-
+        <CardWrapper>
+            <h1 className="h4 bold">소개합니다</h1>
+            <p>{data.detailContent}</p>
+        </CardWrapper>    
+        <CardWrapper>
+            <h1 className="h4 bold">기본 비용</h1>
+            <p>{data.price}</p>
+        </CardWrapper>    
+        <CardWrapper>
+            <h1 className="h4 bold">추가 비용</h1>
+            <p>{data.extra}</p>
+        </CardWrapper>
             </>
     ) : (
         <>loading...</>
