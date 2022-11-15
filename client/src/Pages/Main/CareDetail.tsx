@@ -17,13 +17,14 @@ const isLogin = useRecoilValue(userState)
         axios.get(`/caring/${id}`).then((res) => {
             setData(res.data);
             setIsLoading(false);
-            console.log(res.data)
+            console.log(res.data.techTag[2].techTagName)
         });
         } catch (err) {
         console.log(err);
         }
     }, []);
 
+console.log(data)
     return !isLoading && data !== null ? (
         <>
         <Link to={isLogin?`/caring/${data.member.memberId}`:""}>
@@ -42,11 +43,7 @@ const isLogin = useRecoilValue(userState)
             {/* 반려식물 컴포넌트 */}
         <CardWrapper><h1 className="h4 bold">보유 기술</h1></CardWrapper>
         <TagWrapper>
-        <SigTag>{data.techTag[0].techTagName}</SigTag>   
-            <SigTag>{data.techTag[0].techTagName}</SigTag>   
-            <SigTag>{data.techTag[0].techTagName}</SigTag>   
-            <SigTag>{data.techTag[0].techTagName}</SigTag>   
-            <SigTag>{data.techTag[0].techTagName}</SigTag>   
+            {data.techTag.map ((e) =>  <SigTag>{e.techTagName}</SigTag>)}   
         </TagWrapper>
         <CardWrapper>
             <h1 className="h4 bold">소개합니다</h1>
@@ -60,6 +57,8 @@ const isLogin = useRecoilValue(userState)
             <h1 className="h4 bold">추가 비용</h1>
             <p>{data.extra}</p>
         </CardWrapper>
+        <CardWrapper><h1 className="h4 bold">돌봄 리뷰</h1>
+            </CardWrapper>
         <SigButton>문의 하기</SigButton>
             </>
     ) : (
