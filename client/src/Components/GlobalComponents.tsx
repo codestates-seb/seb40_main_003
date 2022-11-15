@@ -82,7 +82,7 @@ export const ImageWrapper = styled.img`
 
 type imageWrapperProps = {
   src: string;
-  size?: "16" | "36" | "56" | "100";
+  size?: "16" | "36" | "56" | "66" |"100";
   alt: string;
   circle?: boolean;
 };
@@ -181,22 +181,24 @@ export const CardWrapper = styled.div`
 
 // 프로필
 type ProfileCardTypes = {
-  size?: string;
+  size?: "16"|"36"|"56"|"66"|"100";
   src: string;
   alt: string;
   name: string;
   location: string;
+  circle?:boolean;
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
-  const { size, src, alt, name, location } = props;
+  const { size = "36", src, alt, name, location, circle=false } = props;
   return (
     <ProfileCardWrapper>
       <ImageWrapper
         src={src}
         alt={alt}
-        size={size === "sm" ? "16" : "36"}
+        size={size}
         className="mr-16"
+        circle={circle}
       ></ImageWrapper>
       <ColumnWrapper>
         <span className="medium">{name}</span>
