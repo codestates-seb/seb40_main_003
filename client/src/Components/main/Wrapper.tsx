@@ -19,31 +19,33 @@ export const MainCenterWrapper = styled.main`
   width: 100%;
   min-width: 312px;
   max-width: 730px;
-  padding: 36px;
-  border: 1px solid var(--line-gray);
+  padding: 24px;
+  margin-bottom: 156px;
+  border: 1px solid var(--line-light-gray);
+  border-radius: var(--sig-border-16);
+  @media screen and (max-width: 1024px) {
+    margin-bottom: 156px;
+  }
 `;
 export const MainRightWrapper = styled.aside`
   min-width: 298px;
   display: flex;
   margin-left: 18px;
   flex-direction: column;
-  min-height: 600px;
-  background-color: #333;
-  padding: 16px;
+  background-color: var(--pure-white);
+  padding: 16px 24px;
 
   @media screen and (max-width: 1024px) {
-    min-height: 0;
     margin-left: 0;
+    flex-direction: row;
+    justify-content: space-between;
     position: fixed;
     width: 100%;
     bottom: 52px;
     align-items: center;
+    border-top: 1px solid var(--line-light-gray);
   }
 `;
-export const BottomPlaceHolder = styled.div`
-  width:100%;
-  height:120px;
-`
 
 const MainLeftWrapper = styled.aside`
   min-width: 164px;
