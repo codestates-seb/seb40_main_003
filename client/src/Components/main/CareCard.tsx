@@ -30,33 +30,33 @@ const CareCard = ({ data }: any) => {
 
   return (
         <>
-    <CardWrapper>
-      <CareDescription>
-        <ImageWrapper
-          size={"100"}
-          src={data.member.image.imgUrl}
-          alt={`상품명 ${data.member.name}의 대표이미지`}
-        />
-        <DescriptionColumnWrapper>
-          <ColumnWrapper>
-              <span className="medium font-main">{data.member.name} / {data.member.age}세 / {data.member.gender}</span>
-              <span className="font-gray sub">{data.simpleContent}</span>
-              <span>{data.techTagId}</span>
-              <TagWrapper>
-                <SigTag className="disabled sub">{data.techTag.techTagName}물주기</SigTag>
-                <SigTag className="disabled sub">{data.techTag.techTagName}분재</SigTag>
-                <SigTag className="disabled sub">{data.techTag.techTagName}병/해충</SigTag>
-                <SigTag className="disabled sub">{data.techTag.techTagName}가지치기</SigTag>
-              </TagWrapper>
-          </ColumnWrapper>
-          <span className="medium font-gray sub">{data.address}</span>
-        </DescriptionColumnWrapper>
-        </CareDescription>
-        <SpaceEnd>
-          <ViewCounter view={data.view} like={data.like} />
-        </SpaceEnd>
-    </CardWrapper>
-        </>
+      <CardWrapper>
+          <CareDescription>
+            <ImageWrapper
+              size={"100"}
+              src={data.member.image.imgUrl}
+              alt={`상품명 ${data.member.name}의 대표이미지`}
+            />
+            <DescriptionColumnWrapper>
+              <ColumnWrapper>
+                  <span className="medium font-main">{data.member.name} / {data.member.age}세 / {data.member.gender}</span>
+                  <span className="font-gray sub">{data.simpleContent}</span>
+                  <span>{data.techTagId}</span>
+                  <TagWrapper>
+                    <SigTag className="disabled sub">{data.techTag.techTagName}물주기</SigTag>
+                    <SigTag className="disabled sub">{data.techTag.techTagName}분재</SigTag>
+                    <SigTag className="disabled sub">{data.techTag.techTagName}병/해충</SigTag>
+                    <SigTag className="disabled sub">{data.techTag.techTagName}가지치기</SigTag>
+                  </TagWrapper>
+              </ColumnWrapper>
+              <span className="medium font-gray sub">{data.address}</span>
+            </DescriptionColumnWrapper>
+            </CareDescription>
+            <SpaceEnd>
+              <ViewCounter view={data.view} like={data.like} />
+            </SpaceEnd>
+        </CardWrapper>
+        </> 
     );
   };
   

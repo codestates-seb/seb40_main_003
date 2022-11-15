@@ -4,6 +4,8 @@ import axios from "axios";
 import  CareCard  from "../../Components/main/CareCard";
 import { caringTypes } from "../../types/caringTypes";
 import { Link } from "react-router-dom";
+import { MainContentContainer, MainCenterWrapper, MainRightWrapper } from "../../Components/main/Wrapper";
+import { SigButton } from "../../Components/GlobalComponents";
 
 
 type props = [caringTypes];
@@ -23,7 +25,8 @@ const Care = (props:any) => {
   }, []);
 
   return !isLoading && data !== undefined ? (
-    <>
+    <MainContentContainer>
+      <MainCenterWrapper>
       {data.map((e) => {
         return (
         <Link to={`/caring/${e.expertProfileId}`}>
@@ -31,8 +34,11 @@ const Care = (props:any) => {
         </Link>
         )
     })}
-      
-    </>
+      </MainCenterWrapper>
+
+      <MainRightWrapper>
+      </MainRightWrapper>
+    </MainContentContainer>
   ) : (
     <> loading... 로딩 그만하고 이제 내보내줘 살려줘 </>
   );
