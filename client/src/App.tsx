@@ -6,7 +6,7 @@ import Product from "./Pages/Product";
 import Navbar from "./Components/Navbar";
 import Profile from "./Pages/Profile";
 import Login from "./Pages/User/Login";
-import Signup from "./Pages/Signup";
+import Signup from "./Pages/User/Signup";
 import Missing from "./Pages/Missing";
 import Care from "./Pages/Main/Care";
 import CareDetail from "./Pages/Main/CareDetail";
