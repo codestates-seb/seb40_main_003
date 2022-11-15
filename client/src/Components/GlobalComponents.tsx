@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
 import { ColumnWrapper } from "./main/Wrapper";
-import { SpaceEnd } from './product/ProductCard';
+import { SpaceEnd } from "./product/ProductCard";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -37,27 +37,24 @@ export const TagWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-
-
-
-
 // 태그 앨리먼트
 export const SigTag = styled.div`
-padding: 2px 4px;
-background-color: var(--main);
-color: var(--pure-white);
-font-weight: var(--sub);
-text-align: center;
-min-width: 33px;
-border-radius: 4px 0px;
-margin: 4px 4px 4px 0px;
-&.ghost{
+  padding: 2px 4px;
+  background-color: var(--main);
   color: var(--pure-white);
   font-weight: var(--sub);
   text-align: center;
   min-width: 33px;
   border-radius: 4px 0px;
-  margin: 4px 4px 4px 0px;}
+  margin: 4px 4px 4px 0px;
+  &.ghost {
+    color: var(--pure-white);
+    font-weight: var(--sub);
+    text-align: center;
+    min-width: 33px;
+    border-radius: 4px 0px;
+    margin: 4px 4px 4px 0px;
+  }
 
   &.active {
     color: var(--main);
@@ -69,9 +66,9 @@ margin: 4px 4px 4px 0px;
     background-color: var(--pure-white);
     border: 1px solid var(--line-black);
   }
-`
+`;
 // 이미지 랩퍼
-const ImageElem = styled.img`
+export const ImageWrapper = styled.img`
   width: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
   height: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
   background-color: var(--bg-gray);
@@ -90,25 +87,19 @@ type imageWrapperProps = {
   circle?: boolean;
 };
 
-export const ImageWrapper = ({
-  size = "36",
-  src,
-  alt,
-  circle = false,
-}: imageWrapperProps) => {
-  return <ImageElem src={src} size={size} alt={alt} />;
-};
 
 // 커뮤니티 이미지 랩퍼
 const BambooImageElem = styled.img`
-  /* width: ${(props: BambooimageWrapperProps) => (props.size ? props.size : "100")}px;
-  height: ${(props: BambooimageWrapperProps) => (props.size ? props.size : "100")}px; */
+  /* width: ${(props: BambooimageWrapperProps) =>
+    props.size ? props.size : "100"}px;
+  height: ${(props: BambooimageWrapperProps) =>
+    props.size ? props.size : "100"}px; */
   background-color: var(--bg-gray);
   overflow: hidden;
   height: 265px;
   border-radius: 8px 0px;
   display: block;
-  object-fit : cover;
+  object-fit: cover;
   margin-right: 16px;
   padding-bottom: 5px;
 `;
@@ -119,7 +110,11 @@ type BambooimageWrapperProps = {
   alt: string;
 };
 
-export const BambooImageWrapper = ({ size = "100", src, alt }: BambooimageWrapperProps) => {
+export const BambooImageWrapper = ({
+  size = "100",
+  src,
+  alt,
+}: BambooimageWrapperProps) => {
   return <BambooImageElem src={src} size={size} alt={alt} />;
 };
 
@@ -127,13 +122,12 @@ export const BambooImageWrapper = ({ size = "100", src, alt }: BambooimageWrappe
 type ViewCounterProps = {
   view?: number;
   like?: number;
-  renameView?:string;
-  renameLike?:string;
+  renameView?: string;
+  renameLike?: string;
 };
 const ViewCounterWrapper = styled.div`
   display: flex;
-  height: 100%;
-  max-width: 120px;
+  max-width: 100px;
   justify-content: space-between;
 `;
 const IconElem = styled.img`
@@ -145,8 +139,12 @@ const ViewCounterColumn = styled.div`
   flex-direction: row;
 `;
 
-export const ViewCounter = ({ view, like, renameView="조회수", renameLike="찜" }: ViewCounterProps) => {
-
+export const ViewCounter = ({
+  view,
+  like,
+  renameView = "조회수",
+  renameLike = "찜",
+}: ViewCounterProps) => {
   return (
     <ViewCounterWrapper>
       {view && (
@@ -177,37 +175,38 @@ export const CardWrapper = styled.div`
   width: 100%;
   padding: 8px 0;
   border-top: 1px solid var(--line-light-gray);
-  display: coulmn;
+  display: flex;
   align-items: center;
 `;
 
 // 프로필
 type ProfileCardTypes = {
-  size?: string
-  src: string
-  alt: string
-  name: string
-  location: string
+  size?: string;
+  src: string;
+  alt: string;
+  name: string;
+  location: string;
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
-  const {size, src,alt, name, location} = props;
-  return(
-  <ProfileCardWrapper>
-    <ImageElem
-      src={src}
-      alt={alt}
-      size={size === "sm" ? "16" : "36"}
-      className="mr-16"
-    ></ImageElem>
-    <ColumnWrapper>
-      <span className="medium">{name}</span>
-      <span className="sub font-gray">{location}</span>
-    </ColumnWrapper>
-  </ProfileCardWrapper>
-  )
+  const { size, src, alt, name, location } = props;
+  return (
+    <ProfileCardWrapper>
+      <ImageWrapper
+        src={src}
+        alt={alt}
+        size={size === "sm" ? "16" : "36"}
+        className="mr-16"
+      ></ImageWrapper>
+      <ColumnWrapper>
+        <span className="medium">{name}</span>
+        <span className="sub font-gray">{location}</span>
+      </ColumnWrapper>
+    </ProfileCardWrapper>
+  );
 };
 
+// 프로필 반려식물
 export const ProfilePlantCardWrapper = styled.div`
   width: 100%;
   padding: 8px 0;
@@ -215,39 +214,33 @@ export const ProfilePlantCardWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
-
-// 프로필 반려식물
 type ProfilePlantCardTypes = {
-  size?: string
-  src: string
-  alt: string
-  name: string
-  type: string
-  age: number
+  size?: string;
+  src: string;
+  alt: string;
+  name: string;
+  type: string;
+  age: number;
 };
-
-
 export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
   // 비구조화할당
-  const {size, src, alt, name, type, age} = props;
-  return(
-  <ProfilePlantCardWrapper>
-    <ImageElem
-      src={src}
-      alt={alt}
-      size={size === "sm" ? "16" : "36"}
-      className="mr-16"
-    ></ImageElem>
-    <ColumnWrapper>
-      <span className="medium">{name}</span>
-      <span className="sub font-gray">{type}</span>
-      <div className='sub font-gray ml-54'>{age}년차</div>
-    </ColumnWrapper> 
-    <SpaceEnd>
-      
-    </SpaceEnd>
-  </ProfilePlantCardWrapper>
-  )
+  const { size, src, alt, name, type, age } = props;
+  return (
+    <ProfilePlantCardWrapper>
+      <ImageWrapper
+        src={src}
+        alt={alt}
+        size={size === "sm" ? "16" : "36"}
+        className="mr-16"
+      ></ImageWrapper>
+      <ColumnWrapper>
+        <span className="medium">{name}</span>
+        <span className="sub font-gray">{type}</span>
+        <div className="sub font-gray ml-54">{age}년차</div>
+      </ColumnWrapper>
+      <SpaceEnd></SpaceEnd>
+    </ProfilePlantCardWrapper>
+  );
 };
 
 const GlobalComponents = () => {};
