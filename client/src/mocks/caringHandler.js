@@ -121,7 +121,7 @@ export const CaringListHandler = () => {
                   techTagName: "가지치기",
                 },
               ],
- 
+
               areaTag: [
                 {
                   areaTagId: 1,
@@ -245,13 +245,13 @@ export const expertProfileDetail = (profileNumber) => {
               techTagId: 1,
               techTagName: "분갈이",
             },            {
-              techTagId: 1,
+              techTagId: 2,
               techTagName: "병/해충",
             },            {
-              techTagId: 1,
+              techTagId: 3,
               techTagName: "가지치기",
             },            {
-              techTagId: 1,
+              techTagId: 4,
               techTagName: "수형관리",
             },
           ],

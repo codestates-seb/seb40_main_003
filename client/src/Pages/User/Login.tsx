@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { userState } from "../Recoil/atoms/atom";
-
+import { userState } from "../../Recoil/atoms/atom";
+import { SigButton } from "../../Components/GlobalComponents";
 
 const Container = styled.div`
   width: 300px;
@@ -169,7 +169,10 @@ function Login() {
               <Errormsg> 최소 길이는 8자 이상이여야 합니다</Errormsg>
             )}
           </InputContainer>
-          <SubmitBtn type="submit" value={'Login'}></SubmitBtn>
+          
+          <button className="font-gray sub">ID / PW 찾기</button>
+          <button className="font-main sub bold">회원 가입</button>
+          <SigButton className="disable" type="submit" value={'Login'}>로그인</SigButton>
           {error && <Errormsg> {error}</Errormsg>}
         </Form>
       </Container>
