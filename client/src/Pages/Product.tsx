@@ -6,6 +6,12 @@ import ProductCard, {
 } from "../Components/product/ProductCard";
 import { ProductPreviewType } from "../types/productTypes";
 import { Link } from "react-router-dom";
+import {
+  MainCenterWrapper,
+  MainContentContainer,
+  MainRightWrapper,
+} from "../Components/main/Wrapper";
+import { SigButton } from "../Components/GlobalComponents";
 
 type elemMaps = [ProductPreviewType];
 
@@ -25,15 +31,21 @@ const Product = () => {
   }, []);
 
   return !isLoading && data !== undefined ? (
-    <>
-      {data.map((e) => {
-        return (
-          <Link to={`/product/${e.dealId}`}>
-            <ProductCard key={e.dealId} data={e} />
-          </Link>
-        );
-      })}
-    </>
+    <MainContentContainer>
+      <MainCenterWrapper>
+        {data.map((e) => {
+          return (
+            <Link to={`/product/${e.dealId}`}>
+              <ProductCard key={e.dealId} data={e} />
+            </Link>
+          );
+        })}
+      </MainCenterWrapper>
+      <MainRightWrapper>
+        <span className="h4 bold"></span>
+        <SigButton>새글 쓰기</SigButton>
+      </MainRightWrapper>
+    </MainContentContainer>
   ) : (
     <div className={hidingTime ? "display-none" : ""}>
       <ProductPlaceHolder />
