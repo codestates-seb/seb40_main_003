@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useInRouterContext, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { ProfileCard, CardWrapper, SigTag, ViewCounter, TagWrapper } from "../../Components/GlobalComponents";
+import { ProfileCard, CardWrapper, SigTag, ViewCounter, TagWrapper, SigButton, ProfilePlantCard  } from "../../Components/GlobalComponents";
 import { userState } from "../../Recoil/atoms/atom";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
 
@@ -40,6 +40,12 @@ const isLogin = useRecoilValue(userState)
             <p>{data.simpleContent}</p> 
         <CardWrapper><h1 className="h4 bold">반려식물</h1></CardWrapper>    
             {/* 반려식물 컴포넌트 */}
+        <ProfilePlantCard
+          src={data.member.image.imgUrl}
+          alt={`${data.member.name}의 반려식물`}
+          name={data.plant[0].name}
+          type={data.plant[0].plantType}
+          age={data.plant[0].year}/>
         <CardWrapper><h1 className="h4 bold">보유 기술</h1></CardWrapper>
         <TagWrapper>
         <SigTag>{data.techTag[0].techTagName}</SigTag>   
@@ -60,6 +66,7 @@ const isLogin = useRecoilValue(userState)
             <h1 className="h4 bold">추가 비용</h1>
             <p>{data.extra}</p>
         </CardWrapper>
+        <SigButton>문의 하기</SigButton>
             </>
     ) : (
         <>loading...</>
