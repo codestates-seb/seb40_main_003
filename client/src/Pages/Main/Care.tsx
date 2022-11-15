@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import axios from "axios";
-import  CareCard  from "../Components/main/CareCard";
-import { caringTypes } from "../types/caringTypes";
+import  CareCard  from "../../Components/main/CareCard";
+import { caringTypes } from "../../types/caringTypes";
 import { Link } from "react-router-dom";
 
 

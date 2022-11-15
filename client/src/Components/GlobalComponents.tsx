@@ -173,7 +173,7 @@ export const CardWrapper = styled.div`
   width: 100%;
   padding: 8px 0;
   border-top: 1px solid var(--line-light-gray);
-  display: flex;
+  display: coulmn;
   align-items: center;
 `;
 
