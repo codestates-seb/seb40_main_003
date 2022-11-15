@@ -69,7 +69,7 @@ return rest.get("https://testserver.com/bamboo", async (req, res, ctx) => {
 };
 
 export const BambooDetailHandler = (pageNumber) => {
-  return rest.get(`https://testserver.com/bamboo${pageNumber}`, async (req, res, ctx) => {
+  return rest.get(`https://testserver.com/bamboo/${pageNumber}`, async (req, res, ctx) => {
       return res(
         ctx.json({
             communityId: pageNumber,
@@ -82,7 +82,7 @@ export const BambooDetailHandler = (pageNumber) => {
             image: [
                 {
                     imageId: 1,
-                    imgUrl: "https://cdn.mhns.co.kr/news/photo/202102/427833_564830_06.jpg",
+                    imgUrl: "https://cdn.pixabay.com/photo/2015/10/22/17/45/leaf-1001679_1280.jpg",
                     isRepImg: 1
                 }
             ],

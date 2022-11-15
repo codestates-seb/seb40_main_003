@@ -18,7 +18,6 @@ const Community = () => {
       setIsLoading(false);
     });
   }, []);
-  console.log(data);
 
   return !isLoading && data !== undefined ? (
     <>
