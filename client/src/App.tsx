@@ -8,7 +8,7 @@ import Profile from "./Pages/Profile";
 import Login from "./Pages/Login";
 import Signup from "./Pages/Signup";
 import Missing from "./Pages/Missing";
-import Care from "./Pages/Care";
+import Care from "./Pages/Main/Care";
 import CareDetail from "./Pages/Main/CareDetail";
 import Community from "./Pages/Bamboo";
 import CommunityDetail from "./Pages/Bamboo/BambooDetail";

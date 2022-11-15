@@ -14,8 +14,9 @@ const { id } = useParams();
           axios.get(`/bamboo/${id}`).then((res) => {
             setData(res.data);
             setIsLoading(false);
+            console.log(res.data)
         });
-        } catch (err) {
+        } catch(err) {
         console.log(err);
         }
     }, []);
