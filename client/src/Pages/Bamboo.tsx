@@ -4,6 +4,8 @@ import { useEffect } from "react";
 import BambooCard from '../Components/bamboo/BambooCard';
 import { bambooTypes } from '../types/bambooTypes'
 import { Link } from 'react-router-dom';
+import { MainCenterWrapper, MainContentContainer, MainRightWrapper } from '../Components/main/Wrapper';
+import { SigButton } from '../Components/GlobalComponents';
 
 const Community = () => {
   const [data, setData] = useState<bambooTypes>();
@@ -20,11 +22,17 @@ const Community = () => {
   }, []);
 
   return !isLoading && data !== undefined ? (
-    <>
+    <MainContentContainer>
+      <MainCenterWrapper>
       {data.data.map((e) => {
         return <Link to={`/bamboo/${e.communityId}`}><BambooCard key={e.communityId} data={e} /></Link>
       })}
-    </>
+      </MainCenterWrapper>
+      <MainRightWrapper>
+      <span className="h4 bold"></span>
+      <SigButton>새글 쓰기</SigButton>
+      </MainRightWrapper>
+    </MainContentContainer>
   ) : (
     <>loading...</>
   );
