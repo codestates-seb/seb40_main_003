@@ -11,7 +11,7 @@ export const SigButton = styled.button`
   font-weight: var(--bold);
   text-align: center;
   min-width: 173px;
-  border-radius: 16px 0 16px 0;
+  border-radius: var(--sig-border-16);
   cursor: pointer;
   &.ghost {
     color: var(--main);
@@ -33,7 +33,6 @@ export const TagWrapper = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-
   flex-wrap: wrap;
 `;
 
@@ -52,7 +51,7 @@ export const SigTag = styled.div`
     font-weight: var(--sub);
     text-align: center;
     min-width: 33px;
-    border-radius: 4px 0px;
+    border-radius: var(--sig-border-4);
     margin: 4px 4px 4px 0px;
   }
 
