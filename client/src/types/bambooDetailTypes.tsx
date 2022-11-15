@@ -4,6 +4,7 @@ type bambooDetailTypes =
   title: string,
   content: string,
   view: number,
+  likeNum: number,
   createdAt: string,
   modifiedAt: string,
   commentNum: number,
@@ -23,17 +24,6 @@ type bambooDetailTypes =
           isRepImg: number
           }
   },
-  communityLike: [
-      {
-          likeId: number,
-          member: [
-              {
-                  memberId: number
-              }
-          ],
-          likeNum: number
-      }
-  ],
   comment: [
       {
           commentId: number,

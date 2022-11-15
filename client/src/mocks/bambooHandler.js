@@ -79,6 +79,7 @@ export const BambooDetailHandler = (pageNumber) => {
             createdAt: "2022-11-14",
             modifiedAt: "2022-11-15",
             commentNum: 1,
+            likeNum: 16,
             image: [
                 {
                     imageId: 1,
@@ -95,17 +96,6 @@ export const BambooDetailHandler = (pageNumber) => {
                     isRepImg: 1
                     }
             },
-            communityLike: [
-                {
-                    likeId: 1,
-                    member: [
-                        {
-                            memberId: 1
-                        }
-                    ],
-                    likeNum: 1
-                }
-            ],
             comment: [
                 {
                     commentId: 1,
