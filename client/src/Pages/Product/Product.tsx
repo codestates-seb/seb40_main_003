@@ -3,15 +3,15 @@ import axios from "axios";
 import { useEffect } from "react";
 import ProductCard, {
   ProductPlaceHolder,
-} from "../Components/product/ProductCard";
-import { ProductPreviewType } from "../types/productTypes";
+} from "../../Components/product/ProductCard";
+import { ProductPreviewType } from "../../types/productTypes";
 import { Link } from "react-router-dom";
 import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
-} from "../Components/main/Wrapper";
-import { SigButton } from "../Components/GlobalComponents";
+} from "../../Components/main/Wrapper";
+import { SigButton } from "../../Components/GlobalComponents";
 
 type elemMaps = [ProductPreviewType];
 

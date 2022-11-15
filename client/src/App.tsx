@@ -2,7 +2,7 @@ import { Routes } from "react-router";
 import { BrowserRouter, Route } from "react-router-dom";
 
 import AuthProvider from "./AuthProvider";
-import Product from "./Pages/Product";
+import Product from "./Pages/Product/Product";
 import Navbar from "./Components/Navbar";
 import Profile from "./Pages/Profile";
 import Login from "./Pages/User/Login";
