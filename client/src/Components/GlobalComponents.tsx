@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
 import { ColumnWrapper } from "./main/Wrapper";
+import { SpaceEnd } from './product/ProductCard';
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -203,7 +204,51 @@ export const ProfileCard = (props: ProfileCardTypes) => {
   </ProfileCardWrapper>
   )
 };
-// ㄴㄴ
+
+export const ProfilePlantCardWrapper = styled.div`
+  width: 100%;
+  padding: 8px 0;
+  border: 1px solid var(--line-light-gray);
+  display: flex;
+  align-items: center;
+`;
+
+// 프로필 반려식물
+type ProfilePlantCardTypes = {
+  size?: string
+  src: string
+  alt: string
+  name: string
+  type: string
+  age: number
+};
+
+
+export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
+  // 비구조화할당
+  const {size, src, alt, name, type, age} = props;
+  return(
+  <ProfilePlantCardWrapper>
+    <ImageElem
+      src={src}
+      alt={alt}
+      size={size === "sm" ? "16" : "36"}
+      className="mr-16"
+    ></ImageElem>
+    <ColumnWrapper>
+      <span className="medium">{name}</span>
+      <span className="sub font-gray">{type}</span>
+      <div className='sub font-gray ml-54'>{age}년차</div>
+    </ColumnWrapper> 
+    <SpaceEnd>
+      
+    </SpaceEnd>
+  </ProfilePlantCardWrapper>
+  )
+};
+
+
+
 const GlobalComponents = () => {};
 
 export default GlobalComponents;

@@ -44,10 +44,10 @@ type CareDetailTypes =
     ],
     plant:[
         {   
-            plantId: number,
-            plantType: string,
-            name: string,
-            year: number
+          plantId: number,
+          plantType: string,
+          name: string,
+          year: number
         }
     ]}
 ; 
