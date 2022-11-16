@@ -81,41 +81,19 @@ export const ImageWrapper = styled.img`
   display: block;
   object-fit: cover;
   margin-right: 16px;
+  &.bambooImage{
+    width: 100%;
+    margin-right:0;
+  }
 `;
 
 type imageWrapperProps = {
   src: string;
-  size?: "16" | "36" | "56" | "66" | "100";
+  size?: string;
   alt: string;
   circle?: boolean;
-};
-// 커뮤니티 이미지 랩퍼
-const BambooImageElem = styled.img`
-  /* width: ${(props: BambooimageWrapperProps) =>
-    props.size ? props.size : "100"}px;
-  height: ${(props: BambooimageWrapperProps) =>
-    props.size ? props.size : "100"}px; */
-  background-color: var(--bg-gray);
-  overflow: hidden;
-  height: 265px;
-  border-radius: 8px 0px;
-  display: block;
-  object-fit: cover;
-  padding-bottom: 5px;
-`;
-
-type BambooimageWrapperProps = {
-  src: string;
-  size?: "36" | "56" | "100";
-  alt: string;
-};
-
-export const BambooImageWrapper = ({
-  size = "100",
-  src,
-  alt,
-}: BambooimageWrapperProps) => {
-  return <BambooImageElem src={src} size={size} alt={alt} />;
+  width?: number;
+  height?: number;
 };
 
 // 좋아요 카운트
@@ -166,13 +144,13 @@ export const ViewCounter = ({
 type centeringWrapper = {
   pb?: number;
   pt?: number;
-  border?: boolean
+  borderNone?: boolean
 };
 export const CenteringWrapper = styled.section`
   width: 100%;
   padding-top: ${(props: centeringWrapper) => (props.pt ? props.pt : 8)}px;
   padding-bottom: ${(props: centeringWrapper) => (props.pb ? props.pb : 8)}px;
-  border-bottom: ${((props:centeringWrapper)=>(props.border?"1px solid var(--line-light-gray)":"none"))};
+  border-bottom: ${((props:centeringWrapper)=>(props.borderNone?"none":"1px solid var(--line-light-gray)"))};
   display: flex;
   align-items: center;
   &.space-between {
@@ -195,7 +173,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
   const { size = "36", src, alt, name, location, circle = false, tag} = props;
   return (
-    <CenteringWrapper className='space-between' border={false}>
+    <CenteringWrapper className='space-between' borderNone={true}>
       <RowWrapper className='align-center'>
         <ImageWrapper
           src={src}
