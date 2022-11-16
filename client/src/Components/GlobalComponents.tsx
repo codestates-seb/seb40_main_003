@@ -189,7 +189,7 @@ type ProfileCardTypes = {
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
-  const { size = "36", src, alt, name, location, circle=false, content } = props;
+  const { size = "36", src, alt, name, location, circle=false } = props;
   return (
     <CenteringWrapper>
       <ImageWrapper
@@ -198,7 +198,6 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         size={size}
         className="mr-16"
         circle={circle}
-        content={data.simpleContent}
       ></ImageWrapper>
       <ColumnWrapper>
         <span className="medium">{name}</span>
