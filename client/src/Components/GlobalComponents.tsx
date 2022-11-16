@@ -253,6 +253,12 @@ export const CommentPlantCardWrapper = styled.div`
   display: flex;
   align-items: center;
 `;
+
+export const CommentColumnWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
 type CommentProfilePlantCardTypes = {
   size?: string;
   src: string;
@@ -272,11 +278,15 @@ export const CommentProfilePlantCard = (props: CommentProfilePlantCardTypes) => 
         size={size === "sm" ? "16" : "36"}
         className="mr-16"
       ></ImageWrapper>
+      <CommentColumnWrapper>
       <ColumnWrapper>
         <span className="medium">{name}</span>
-        <div className="sub font-gray">{createdAt}</div>
         <div className="sub font-gray">{content}</div>
-      </ColumnWrapper>
+        </ColumnWrapper>
+      <ColumnWrapper>
+        <div className="sub font-gray">{createdAt}</div>
+        </ColumnWrapper>
+      </CommentColumnWrapper>
       <SpaceEnd></SpaceEnd>
     </CommentPlantCardWrapper>
   );

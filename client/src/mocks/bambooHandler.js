@@ -89,17 +89,17 @@ export const BambooDetailHandler = (pageNumber) => {
             ],
             member: {
                 memberId: 1,
-                nickname: "Phillip Chung",
+                nickname: "전교수님",
                 image: {
                     imageId: 1,
-                    imgUrl: "https://velog.velcdn.com/images/wusi-hub/profile/19ef6227-58fe-47e7-a9d4-79a0e857079f/image.jpeg",
+                    imgUrl: "https://cdn.discordapp.com/attachments/1032514339682402359/1040541403249397860/DSC_3003.JPG",
                     isRepImg: 1
                     }
             },
             comment: [
                 {
                     commentId: 1,
-                    content: "플랜트하이커 번창하세욤!",
+                    content: "좋은 서비스를 저렴한 가격에 제공해주셨어요!",
                     createdAt: "2022-11-14",
                     modifiedAt: "2022-11-15",
                     isModified: 1,
