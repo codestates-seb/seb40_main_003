@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
-import { ColumnWrapper } from "./Wrapper";
+import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import { SpaceEnd } from "./product/ProductCard";
 
 // 버튼앨리먼트
@@ -24,7 +24,6 @@ export const SigButton = styled.button`
     &:hover {
       background-color: var(--main);
     }
-      
   }
 `;
 export const SubText = styled.span`
@@ -85,7 +84,7 @@ export const ImageWrapper = styled.img`
 
 type imageWrapperProps = {
   src: string;
-  size?: "16" | "36" | "56" | "66" |"100";
+  size?: "16" | "36" | "56" | "66" | "100";
   alt: string;
   circle?: boolean;
 };
@@ -163,52 +162,55 @@ export const ViewCounter = ({
   );
 };
 
-type centeringWrapper= {
-  pb?: number
-  pt?: number
-}
+type centeringWrapper = {
+  pb?: number;
+  pt?: number;
+};
 export const CenteringWrapper = styled.section`
   width: 100%;
-  padding-top: ${(props:centeringWrapper)=>props.pt?props.pt:8}px;
-  padding-bottom: ${(props:centeringWrapper)=>props.pb?props.pb:8}px;
+  padding-top: ${(props: centeringWrapper) => (props.pt ? props.pt : 8)}px;
+  padding-bottom: ${(props: centeringWrapper) => (props.pb ? props.pb : 8)}px;
   border-bottom: 1px solid var(--line-light-gray);
   display: flex;
   align-items: center;
+  &.space-between {
+    justify-content: space-between;
+  }
 `;
 
 // 프로필
 type ProfileCardTypes = {
-  size?: "16"|"36"|"56"|"66"|"100";
+  size?: "16" | "36" | "56" | "66" | "100";
   src: string;
   alt: string;
   name: string;
   location: string;
-  circle?:boolean;
+  circle?: boolean;
   tag?: number;
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
-  const { size = "36", src, alt, name, location, circle=false, tag } = props;
+  const { size = "36", src, alt, name, location, circle = false, tag } = props;
   return (
-    <CenteringWrapper>
-      <ImageWrapper
-        src={src}
-        alt={alt}
-        size={size}
-        className="mr-16"
-        circle={circle}
-      ></ImageWrapper>
-      <ColumnWrapper>
-        <span className="medium">{name}</span>
-        <span className="sub font-gray">{location}</span>
-        <TagWrapper>
-          <>
-        <SigTag className="active">{tag}</SigTag>
-        </>
-        </TagWrapper>
-      </ColumnWrapper>
+    <CenteringWrapper className="space-between">
+      <RowWrapper className="align-center">
+        <ImageWrapper
+          src={src}
+          alt={alt}
+          size={size}
+          className="mr-16"
+          circle={circle}
+        />
+
+        <ColumnWrapper>
+          <span className="medium">{name}</span>
+          <span className="sub font-gray">{location}</span>
+        </ColumnWrapper>
+      </RowWrapper>
+
+      {tag && <SigTag className="active">{tag}번 고용</SigTag>}
     </CenteringWrapper>
-  )
+  );
 };
 
 // 프로필 반려식물
@@ -243,7 +245,6 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
         <span className="sub font-gray">{type}</span>
         <div className="sub font-gray ml-54">{age}년차</div>
       </ColumnWrapper>
-      <SpaceEnd></SpaceEnd>
     </ProfilePlantCardWrapper>
   );
 };
@@ -261,7 +262,7 @@ export const CommentCardWrapper = styled.div`
 export const CommentColumnWrapper = styled.div`
   display: flex;
   justify-content: center;
-`
+`;
 
 type CommentCardTypes = {
   size?: string;
@@ -283,16 +284,15 @@ export const CommentCard = (props: CommentCardTypes) => {
         className="mr-16"
       ></ImageWrapper>
       <CommentColumnWrapper>
-      <ColumnWrapper>
-        <span className="medium">{name}</span>
-        <div className="sub font-gray">{content}</div>
+        <ColumnWrapper>
+          <span className="medium">{name}</span>
+          <div className="sub font-gray">{content}</div>
         </ColumnWrapper>
-      <ColumnWrapper>
-        <div className="sub font-gray mt-1">{createdAt}</div>
+        <ColumnWrapper>
+          <div className="sub font-gray mt-1">{createdAt}</div>
         </ColumnWrapper>
       </CommentColumnWrapper>
       <SpaceEnd></SpaceEnd>
     </CommentCardWrapper>
   );
 };
-

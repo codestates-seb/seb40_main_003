@@ -51,7 +51,7 @@ const ProductCard = ({ data }: any) => {
             <span className="medium">{data.title}</span>
             <span className="sub">{data.createdAt}</span>
           </ColumnWrapper>
-          <Price className="bold h4">{data.price.toLocaleString()}원</Price>
+          <Price className="bold h4">{data.price.toLocaleString()}</Price>
         </DescriptionColumnWrapper>
       </ProductDescription>
       <SpaceEnd>
