@@ -14,20 +14,20 @@ const CardWrapper = styled.div`
   padding: 8px 8px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   border-bottom: 1px solid var(--line-light-gray);
 `;
 const CareDescription = styled.div`
   /* background-color: yellow; */
   height: 100px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 `;
 
 const EndWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  background-color: white;
+  padding-bottom: 15px;
 `
 
 const CareCard = ({ data }: any) => {

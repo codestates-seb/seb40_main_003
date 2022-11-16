@@ -35,9 +35,12 @@ export const SubText = styled.span`
 // 태그 랩퍼
 export const TagWrapper = styled.div`
   width: 100%;
+  height: 30px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  overflow: hidden;
+  background-color: aliceblue;
 `;
 
 // 태그 앨리먼트
@@ -50,6 +53,7 @@ export const SigTag = styled.div`
   min-width: 33px;
   border-radius: 4px 0px;
   margin: 4px 4px 4px 0px;
+  overflow: hidden;
   &.ghost {
     color: var(--pure-white);
     font-weight: var(--sub);
@@ -58,7 +62,6 @@ export const SigTag = styled.div`
     border-radius: var(--sig-border-4);
     margin: 4px 4px 4px 0px;
   }
-
   &.active {
     color: var(--main);
     background-color: var(--pure-white);
@@ -75,7 +78,6 @@ export const ImageWrapper = styled.img`
   width: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
   height: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
   background-color: var(--bg-gray);
-  overflow: hidden;
   border-radius: ${(props: imageWrapperProps) =>
     props.circle ? `${props.size}px` : "8px 0px"};
   display: block;

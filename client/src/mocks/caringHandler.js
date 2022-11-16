@@ -32,19 +32,30 @@ export const CaringListHandler = () => {
                 },
                 {
                   techTagId: 2,
-                  techTagName: "물주기",
-                },
-                {
-                  techTagId: 3,
                   techTagName: "병/해충",
                 },
                 {
-                  techTagId: 2,
-                  techTagName: "물주기",
+                  techTagId: 3,
+                  techTagName: "가지치기",
                 },
                 {
-                  techTagId: 3,
-                  techTagName: "병/해충",
+                  techTagId: 4,
+                  techTagName: "화병관리",
+                },
+                {
+                  techTagId: 5,
+                  techTagName: "잎 솎기",
+                },
+                {
+                  techTagId: 6,
+                  techTagName: "물 주기",
+                },                
+                {
+                  techTagId: 7,
+                  techTagName: "잎 닦기",
+                },                {
+                  techTagId: 8,
+                  techTagName: "수형관리",
                 },
               ],
 
@@ -81,19 +92,30 @@ export const CaringListHandler = () => {
                 },
                 {
                   techTagId: 2,
-                  techTagName: "물주기",
-                },
-                {
-                  techTagId: 3,
                   techTagName: "병/해충",
                 },
                 {
-                  techTagId: 2,
-                  techTagName: "물주기",
+                  techTagId: 3,
+                  techTagName: "가지치기",
                 },
                 {
-                  techTagId: 3,
-                  techTagName: "병/해충",
+                  techTagId: 4,
+                  techTagName: "화병관리",
+                },
+                {
+                  techTagId: 5,
+                  techTagName: "잎 솎기",
+                },
+                {
+                  techTagId: 6,
+                  techTagName: "물 주기",
+                },                
+                {
+                  techTagId: 7,
+                  techTagName: "잎 닦기",
+                },                {
+                  techTagId: 8,
+                  techTagName: "수형관리",
                 },
               ],
 
@@ -130,19 +152,30 @@ export const CaringListHandler = () => {
                 },
                 {
                   techTagId: 2,
-                  techTagName: "병해충",
+                  techTagName: "병/해충",
                 },
                 {
                   techTagId: 3,
                   techTagName: "가지치기",
                 },
                 {
-                  techTagId: 2,
-                  techTagName: "물주기",
+                  techTagId: 4,
+                  techTagName: "화병관리",
                 },
                 {
-                  techTagId: 3,
-                  techTagName: "병/해충",
+                  techTagId: 5,
+                  techTagName: "잎 솎기",
+                },
+                {
+                  techTagId: 6,
+                  techTagName: "물 주기",
+                },                
+                {
+                  techTagId: 7,
+                  techTagName: "잎 닦기",
+                },                {
+                  techTagId: 8,
+                  techTagName: "수형관리",
                 },
               ],
 
