@@ -289,11 +289,11 @@ export const CommentCard = (props: CommentCardTypes) => {
         src={src}
         alt={alt}
         size={size === "sm" ? "16" : "36"}
-        className='mr-16'
+        className='mr-16 mt-8'
       ></ImageWrapper>
       <CommentColumnWrapper>
         <ColumnWrapper>
-          <span className='medium mb-3'>{name}</span>
+          <span className='medium mt-8'>{name}</span>
           {tag ? (
             <TagWrapper>
               {tag.map((e) => {
@@ -305,7 +305,7 @@ export const CommentCard = (props: CommentCardTypes) => {
           <CommentColumnWrapper></CommentColumnWrapper>
         </ColumnWrapper>
         <ColumnWrapper>
-          <div className='sub font-gray mt-1 mb-25'>{createdAt}</div>
+          <div className='sub font-gray mt-7 mb-20'>{createdAt}</div>
           <CommentButtonWrapper>
             {String(author) === String(user?.userId) ? (
               <span className='sub font-gray'> 수정</span>
