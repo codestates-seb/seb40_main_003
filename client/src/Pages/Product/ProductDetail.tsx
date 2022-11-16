@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import { TopCarousel } from "../../Components/Carousel";
 import {
   ProfileCard,
   SigButton,
@@ -14,6 +15,7 @@ import {
 } from "../../Components/Wrapper";
 import { userState } from "../../Recoil/atoms/atom";
 import { ProductDetailType } from "../../types/productTypes";
+
 
 const ProductDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -35,10 +37,19 @@ const ProductDetail = () => {
   return !isLoading && data !== null ? (
     // 메인 컨테이너 (반응형 제공!)
     <MainContentContainer>
-
       {/* 실제 메인이 되는 내용! */}
       <MainCenterWrapper>
-        <img src={data.image[0].imgUrl} alt={`${data.title}의 대표사진`} />
+        {/* 캐로샐로 바꾸기 */}
+        <TopCarousel>
+          {data.image.map((e, i) => {
+            return (
+              <div>
+                <img src={e.imgUrl} alt={`${data.title}의 ${i}번째사진`} key={i}/>
+              </div>
+            );
+          })}
+        </TopCarousel>
+
         <Link to={isLogin ? `/profile/${data.member.memberId}` : ""}>
           <ProfileCard
             src={data.member.image.imgUrl}
@@ -57,7 +68,7 @@ const ProductDetail = () => {
       </MainCenterWrapper>
 
       <MainRightWrapper>
-        <span className="h4 bold">{(data.price).toLocaleString()}원</span>
+        <span className="h4 bold">{data.price.toLocaleString()}원</span>
         <SigButton>채팅하기</SigButton>
       </MainRightWrapper>
     </MainContentContainer>
