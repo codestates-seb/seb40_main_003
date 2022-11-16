@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { CenteringWrapper, SigTag, TagWrapper } from "../GlobalComponents";
+import { CenteringWrapper, SigTag, TagWrapper } from "./GlobalComponents";
 
 // 전체를 감싸는 컨테이너, 반응형 제공
 export const MainContentContainer = styled.div`

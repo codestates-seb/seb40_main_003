@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { BambooImageWrapper, ViewCounter } from "../GlobalComponents";
-import { ColumnWrapper } from "../main/Wrapper";
+import { ColumnWrapper } from "../Wrapper";
 import {SpaceEnd} from"../../Components/product/ProductCard"
 
 const BambooWrapper = styled.div`

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
-import { ColumnWrapper } from "./main/Wrapper";
+import { ColumnWrapper } from "./Wrapper";
 import { SpaceEnd } from "./product/ProductCard";
 
 // 버튼앨리먼트
@@ -101,7 +101,6 @@ const BambooImageElem = styled.img`
   border-radius: 8px 0px;
   display: block;
   object-fit: cover;
-  margin-right: 16px;
   padding-bottom: 5px;
 `;
 
@@ -185,6 +184,7 @@ type ProfileCardTypes = {
   name: string;
   location: string;
   circle?:boolean;
+  content?:string;
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
@@ -291,6 +291,3 @@ export const CommentCard = (props: CommentCardTypes) => {
   );
 };
 
-const GlobalComponents = () => {};
-
-export default GlobalComponents;

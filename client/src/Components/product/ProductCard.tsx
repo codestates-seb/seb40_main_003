@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
-import { ColumnWrapper } from "../main/Wrapper";
+import { ColumnWrapper } from "../Wrapper";
 import Skeleton from "../Skeleton";
 
 const ProductWrapper = styled.div`

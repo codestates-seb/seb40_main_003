@@ -10,7 +10,7 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
-} from "../../Components/main/Wrapper";
+} from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 
 type elemMaps = [ProductPreviewType];

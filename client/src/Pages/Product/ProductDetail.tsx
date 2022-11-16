@@ -11,7 +11,7 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
-} from "../../Components/main/Wrapper";
+} from "../../Components/Wrapper";
 import { userState } from "../../Recoil/atoms/atom";
 import { ProductDetailType } from "../../types/productTypes";
 

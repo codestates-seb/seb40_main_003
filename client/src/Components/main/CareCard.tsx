@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
-import { ColumnWrapper } from "../main/Wrapper";
+import { ColumnWrapper } from "../Wrapper";
 import {SpaceEnd, DescriptionColumnWrapper} from"../../Components/product/ProductCard"
 import { SigTag, TagWrapper} from "../GlobalComponents";
 

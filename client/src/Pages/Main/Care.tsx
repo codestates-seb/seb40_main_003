@@ -4,7 +4,7 @@ import axios from "axios";
 import  CareCard  from "../../Components/main/CareCard";
 import { caringTypes } from "../../types/caringTypes";
 import { Link } from "react-router-dom";
-import { MainContentContainer, MainCenterWrapper, MainRightWrapper } from "../../Components/main/Wrapper";
+import { MainContentContainer, MainCenterWrapper, MainRightWrapper } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 
 
