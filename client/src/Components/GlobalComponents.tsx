@@ -257,15 +257,19 @@ export const CommentCardWrapper = styled.div`
   margin-top: 8px;
   border: 1px solid var(--line-light-gray);
   display: flex;
-  align-items: center;
+  /* align-items: center; */
+  align-content: space-between;
   
 
+`;
+
+export const CommentButtonWrapper = styled.div`
+  display: flex;
 `;
 
 export const CommentColumnWrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-content: flex-end;
 `;
 
 type CommentCardTypes = {
@@ -292,7 +296,7 @@ export const CommentCard = (props: CommentCardTypes) => {
       ></ImageWrapper>
       <CommentColumnWrapper>
         <ColumnWrapper>
-          <span className='medium'>{name}</span>
+          <span className='medium mb-3'>{name}</span>
           {tag ? (
             <TagWrapper>
               {tag.map((e) => {
@@ -302,13 +306,18 @@ export const CommentCard = (props: CommentCardTypes) => {
           ) : null}
           <div className='sub font-gray'>{content}</div>
           <CommentColumnWrapper>
-          {String(author) === String(user?.userId) ? (
-            <span className='sub font-gray mr-16'> 수정⠀삭제</span>
-          ) : null}
           </CommentColumnWrapper>
         </ColumnWrapper>
         <ColumnWrapper>
-          <div className='sub font-gray mt-1'>{createdAt}</div>
+          <div className='sub font-gray mt-1 mb-25'>{createdAt}</div>
+          <CommentButtonWrapper>
+          {String(author) === String(user?.userId) ? (
+            <span className='sub font-gray'> 수정</span>
+          ) : null}
+          {String(author) === String(user?.userId) ? (
+            <span className='sub font-gray ml-24'> 삭제</span>
+          ) : null}
+        </CommentButtonWrapper>
         </ColumnWrapper>
       </CommentColumnWrapper>
     </CommentCardWrapper>
