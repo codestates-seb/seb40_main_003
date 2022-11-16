@@ -5,17 +5,17 @@ import { useRecoilValue } from "recoil";
 import {
   ProfileCard,
   ProfilePlantCard,
-  SigTag,
-  ViewCounter,
-  TagWrapper,
   SigButton,
+  CommentCard,
 } from "../../Components/GlobalComponents";
+import PlantCardCarousel from "../../Components/profile/plantCardCarousel";
 import {
   MainContentContainer,
   MainCenterWrapper,
   MainRightWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
+import useWindowSize from "../../Hooks/windowSize";
 import { userState } from "../../Recoil/atoms/atom";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
 
@@ -24,6 +24,7 @@ const CareDetail = () => {
   const [data, setData] = useState<CareDetailTypes | null>(null);
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
+  const width= useWindowSize().width
 
   useEffect(() => {
     try {
@@ -35,9 +36,8 @@ const CareDetail = () => {
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [id]);
 
-  console.log(data);
   return !isLoading && data !== null ? (
     <MainContentContainer>
       <MainCenterWrapper>
@@ -56,9 +56,9 @@ const CareDetail = () => {
               // <ViewCounter like={data.userLikeExpert} view={data.view} />
             />
           </Link>
-          <SectionWrapper content={data.simpleContent} pb={8}/>
+          <SectionWrapper content={data.simpleContent} pb={8} />
           <SectionWrapper title="반려 식물">
-            <>
+            <PlantCardCarousel width={width}>
               {data.plant.map((e) => {
                 return (
                   <ProfilePlantCard
@@ -70,14 +70,44 @@ const CareDetail = () => {
                   />
                 );
               })}
-            </>
+            </PlantCardCarousel>
           </SectionWrapper>
-          <SectionWrapper title="보유기술" tag={data.techTag} borderNone={true}/>
-          <SectionWrapper title="소개합니다" content={data.detailContent} borderNone={true}/>
-          <SectionWrapper title="기본비용" content={data.price} borderNone={true}/>
-          <SectionWrapper title="추가비용" content={data.extra} borderNone={true}/>
+          <SectionWrapper
+            title="보유기술"
+            tag={data.techTag}
+            borderNone={true}
+          />
+          <SectionWrapper
+            title="소개합니다"
+            content={data.detailContent}
+            borderNone={true}
+          />
+          <SectionWrapper
+            title="기본비용"
+            content={data.price}
+            borderNone={true}
+          />
+          <SectionWrapper
+            title="추가비용"
+            content={data.extra}
+            borderNone={true}
+          />
           <SectionWrapper title="돌봄 리뷰" borderNone={true}>
-            <div>하이</div>
+            <>
+              {data.expertReview.map((e) => {
+                return (
+                  <CommentCard
+                    name={e.writer.nickname}
+                    // ==================날짜 안날오옴==================
+                    createdAt={"날짜가 서버에서 안날아옵니다"}
+                    content={e.content}
+                    user={isLogin}
+                    author={e.writer.memberId}
+                    key={e.expertReviewId}
+                  />
+                );
+              })}
+            </>
           </SectionWrapper>
         </section>
       </MainCenterWrapper>

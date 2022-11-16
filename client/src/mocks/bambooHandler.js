@@ -8,7 +8,7 @@ return rest.get("https://testserver.com/bamboo", async (req, res, ctx) => {
             {
                 communityId: 1,
                 title: "우리 식물 좀 보세요! 얼마나 이쁘게요🤍",
-                content: "이번에 갑조네에서 아스파라거스를 샀는데요...",
+                content: "이번에 갑조네에서 아스파라거스를 샀는데요 너무 예쁘지않나요?? 여러분들은 어떤 식물을 키우시나요?",
                 view: 22,
                 createdAt: "2022-11-14",
                 modifiedAt: "2022-11-15",
@@ -29,7 +29,7 @@ return rest.get("https://testserver.com/bamboo", async (req, res, ctx) => {
             {
             communityId: 2,
             title: "우리 식물이 오늘 하늘나라로 갔어요 ㅠ^ㅠ",
-            content: "제가 13년동안 키우던 식물이 오늘 ㅠㅠㅠㅠ...",
+            content: "제가 13년동안 키우던 식물이 오늘 ㅠㅠㅠㅠ 세상을 떠났습니다.. 제가 잘 못 키운 탓일까요 괜히 마음이 아프네요 안그래도 식물 죽여먹기로 유명한 전데 이번에는 마음이 좀 아프네요ㅠ",
             view: 20,
             createdAt: "2022-11-14",
             modifiedAt: "2022-11-15",

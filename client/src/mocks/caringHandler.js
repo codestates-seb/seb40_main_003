@@ -282,7 +282,7 @@ export const expertProfileDetail = (profileNumber) => {
             {
               expertReviewId: 2,
               writer: {
-                memberId: 1,
+                memberId: 2,
                 nickname: "식물씨러",
               },
               content: "너무 친절하게 잘 설명해주시고 소중히 다뤄주셨어요. 짱짱!",

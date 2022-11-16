@@ -52,9 +52,9 @@ type SectionWrapperType = {
   tag?: [{ techTagId: number; techTagName: string }];
   children?: JSX.Element;
   width?: number;
-  borderNone?:boolean;
-  pb?:number
-  pt?:number
+  borderNone?: boolean;
+  pb?: number;
+  pt?: number;
 };
 export const SectionWrapper = ({
   title,
@@ -63,24 +63,33 @@ export const SectionWrapper = ({
   children,
   width,
   borderNone,
-  pb=16,pt=16
+  pb = 16,
+  pt = 16,
 }: SectionWrapperType) => {
   return (
-    <CenteringWrapper pt={pt} pb={pb} borderNone={borderNone?borderNone:false}>
+    <CenteringWrapper
+      pt={pt}
+      pb={pb}
+      borderNone={borderNone ? borderNone : false}
+    >
       <ColumnWrapper width={width}>
-        <h2 className="bold font-main">{title}</h2>
-        <p className="mt-8">{content}</p>
-        <TagWrapper>
-          <>
-            {tag ? (
-              tag.map((e) => {
-                return <SigTag className='sub' key={e.techTagId}>{e.techTagName}</SigTag>;
-              })
-            ) : (
-              <></>
-            )}
-          </>
-        </TagWrapper>
+        {title ? <h2 className="bold font-main">{title}</h2> : null}
+        {content ? <p className="mt-8">{content}</p> : null}
+        {tag?
+          <TagWrapper>
+            <>
+              {tag
+                ? tag.map((e) => {
+                    return (
+                      <SigTag className="sub" key={e.techTagId}>
+                        {e.techTagName}
+                      </SigTag>
+                    );
+                  })
+                : null}
+            </>
+          </TagWrapper>:null
+        }
         {children && children}
       </ColumnWrapper>
     </CenteringWrapper>
@@ -93,20 +102,21 @@ const MainLeftWrapper = styled.aside`
   background-color: #333;
   min-height: 600;
 `;
-type columnWrapperType ={
-  width?: number,
-}
+type columnWrapperType = {
+  width?: number;
+};
 export const ColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  width:${((props:columnWrapperType)=>(props.width?`${props.width}%`:"auto"))};
+  width: ${(props: columnWrapperType) =>
+    props.width ? `${props.width}%` : "auto"};
 `;
-export const RowWrapper= styled.div`
-display: flex;
-flex-direction: row;
-&.align-center{
-  align-items: center;
-}
+export const RowWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  &.align-center {
+    align-items: center;
+  }
 `;
 
 export default MainLeftWrapper;
