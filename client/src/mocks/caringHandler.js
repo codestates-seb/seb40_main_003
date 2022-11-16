@@ -38,6 +38,14 @@ export const CaringListHandler = () => {
                   techTagId: 3,
                   techTagName: "병/해충",
                 },
+                {
+                  techTagId: 2,
+                  techTagName: "물주기",
+                },
+                {
+                  techTagId: 3,
+                  techTagName: "병/해충",
+                },
               ],
 
               areaTag: [
@@ -70,6 +78,14 @@ export const CaringListHandler = () => {
                 {
                   techTagId: 1,
                   techTagName: "분갈이",
+                },
+                {
+                  techTagId: 2,
+                  techTagName: "물주기",
+                },
+                {
+                  techTagId: 3,
+                  techTagName: "병/해충",
                 },
                 {
                   techTagId: 2,
@@ -119,6 +135,14 @@ export const CaringListHandler = () => {
                 {
                   techTagId: 3,
                   techTagName: "가지치기",
+                },
+                {
+                  techTagId: 2,
+                  techTagName: "물주기",
+                },
+                {
+                  techTagId: 3,
+                  techTagName: "병/해충",
                 },
               ],
 

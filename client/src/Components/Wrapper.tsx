@@ -67,7 +67,7 @@ export const SectionWrapper = ({
           <>
             {tag ? (
               tag.map((e) => {
-                return <SigTag key={e.techTagId}>{e.techTagName}</SigTag>;
+                return <SigTag className='sub' key={e.techTagId}>{e.techTagName}</SigTag>;
               })
             ) : (
               <></>
