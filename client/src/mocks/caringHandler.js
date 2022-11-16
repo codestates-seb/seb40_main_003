@@ -244,13 +244,16 @@ export const expertProfileDetail = (profileNumber) => {
             {
               techTagId: 1,
               techTagName: "분갈이",
-            },            {
+            },            
+            {
               techTagId: 2,
               techTagName: "병/해충",
-            },            {
+            },            
+            {
               techTagId: 3,
               techTagName: "가지치기",
-            },            {
+            },            
+            {
               techTagId: 4,
               techTagName: "수형관리",
             },

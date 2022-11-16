@@ -185,11 +185,11 @@ type ProfileCardTypes = {
   name: string;
   location: string;
   circle?:boolean;
-  content?:string;
+  tag?: string;
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
-  const { size = "36", src, alt, name, location, circle=false } = props;
+  const { size = "36", src, alt, name, location, circle=false, tag } = props;
   return (
     <CenteringWrapper>
       <ImageWrapper
@@ -202,9 +202,14 @@ export const ProfileCard = (props: ProfileCardTypes) => {
       <ColumnWrapper>
         <span className="medium">{name}</span>
         <span className="sub font-gray">{location}</span>
+        <TagWrapper>
+          <>
+        <SigTag className="active">{tag}</SigTag>
+        </>
+        </TagWrapper>
       </ColumnWrapper>
     </CenteringWrapper>
-  );
+  )
 };
 
 // 프로필 반려식물
