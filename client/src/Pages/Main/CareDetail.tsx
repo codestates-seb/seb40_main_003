@@ -15,7 +15,7 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
   SectionWrapper,
-} from "../../Components/main/Wrapper";
+} from "../../Components/Wrapper";
 import { userState } from "../../Recoil/atoms/atom";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
 
@@ -57,7 +57,6 @@ const CareDetail = () => {
           </Link>
           <SectionWrapper content={data.simpleContent}></SectionWrapper>
           <SectionWrapper title="안녕">
-            {/* 반려식물 컴포넌트 */}
             <>
               {data.plant.map((e) => {
                 return (

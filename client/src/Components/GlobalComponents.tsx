@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
-import { ColumnWrapper } from "./main/Wrapper";
+import { ColumnWrapper } from "./Wrapper";
 import { SpaceEnd } from "./product/ProductCard";
 
 // 버튼앨리먼트
@@ -185,10 +185,11 @@ type ProfileCardTypes = {
   name: string;
   location: string;
   circle?:boolean;
+  content?:string;
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
-  const { size = "36", src, alt, name, location, circle=false } = props;
+  const { size = "36", src, alt, name, location, circle=false, content } = props;
   return (
     <CenteringWrapper>
       <ImageWrapper
@@ -197,6 +198,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         size={size}
         className="mr-16"
         circle={circle}
+        content={data.simpleContent}
       ></ImageWrapper>
       <ColumnWrapper>
         <span className="medium">{name}</span>
