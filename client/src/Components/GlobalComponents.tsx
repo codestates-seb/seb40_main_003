@@ -21,6 +21,10 @@ export const SigButton = styled.button`
   &.disable {
     background-color: var(--line-gray);
     color: var(--pure-white);
+    &:hover {
+      background-color: var(--main);
+    }
+      
   }
 `;
 export const SubText = styled.span`
