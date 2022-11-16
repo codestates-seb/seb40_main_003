@@ -193,23 +193,23 @@ export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
   const { size = "36", src, alt, name, location, circle = false, tag } = props;
   return (
-    <CenteringWrapper className="space-between">
-      <RowWrapper className="align-center">
+    <CenteringWrapper className='space-between'>
+      <RowWrapper className='align-center'>
         <ImageWrapper
           src={src}
           alt={alt}
           size={size}
-          className="mr-16"
+          className='mr-16'
           circle={circle}
         />
 
         <ColumnWrapper>
-          <span className="medium">{name}</span>
-          <span className="sub font-gray">{location}</span>
+          <span className='medium'>{name}</span>
+          <span className='sub font-gray'>{location}</span>
         </ColumnWrapper>
       </RowWrapper>
 
-      {tag && <SigTag className="active">{tag}번 고용</SigTag>}
+      {tag && <SigTag className='active sub'>{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
@@ -217,10 +217,12 @@ export const ProfileCard = (props: ProfileCardTypes) => {
 // 프로필 반려식물
 export const ProfilePlantCardWrapper = styled.div`
   width: 100%;
-  padding: 8px 0;
+  padding: 8px;
   border: 1px solid var(--line-light-gray);
   display: flex;
   align-items: center;
+  border-radius: 8px 0px;
+
 `;
 type ProfilePlantCardTypes = {
   size?: string;
@@ -238,7 +240,7 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
       <ImageWrapper
         src={src}
         alt={alt}
-        size={size === "sm" ? "16" : "36"}
+        size={size === "sm" ? "36" : "66"}
         className='mr-16'
       ></ImageWrapper>
       <ColumnWrapper>
@@ -257,15 +259,16 @@ export const CommentCardWrapper = styled.div`
   margin-top: 8px;
   border: 1px solid var(--line-light-gray);
   display: flex;
-  align-items: center;
-  
+`;
 
+export const CommentButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
 `;
 
 export const CommentColumnWrapper = styled.div`
   display: flex;
   justify-content: center;
-  align-content: flex-end;
 `;
 
 type CommentCardTypes = {
@@ -288,11 +291,11 @@ export const CommentCard = (props: CommentCardTypes) => {
         src={src}
         alt={alt}
         size={size === "sm" ? "16" : "36"}
-        className='mr-16'
+        className='mr-16 mt-8'
       ></ImageWrapper>
       <CommentColumnWrapper>
         <ColumnWrapper>
-          <span className='medium'>{name}</span>
+          <span className='medium mt-8'>{name}</span>
           {tag ? (
             <TagWrapper>
               {tag.map((e) => {
@@ -301,14 +304,18 @@ export const CommentCard = (props: CommentCardTypes) => {
             </TagWrapper>
           ) : null}
           <div className='sub font-gray'>{content}</div>
-          <CommentColumnWrapper>
-          {String(author) === String(user?.userId) ? (
-            <span className='sub font-gray mr-16'> 수정⠀삭제</span>
-          ) : null}
-          </CommentColumnWrapper>
+          <CommentColumnWrapper></CommentColumnWrapper>
         </ColumnWrapper>
         <ColumnWrapper>
-          <div className='sub font-gray mt-1'>{createdAt}</div>
+          <div className='sub font-gray mt-7 mb-20'>{createdAt}</div>
+          <CommentButtonWrapper>
+            {String(author) === String(user?.userId) ? (
+              <span className='sub font-gray'> 수정</span>
+            ) : null}
+            {String(author) === String(user?.userId) ? (
+              <span className='sub font-gray'> 삭제</span>
+            ) : null}
+          </CommentButtonWrapper>
         </ColumnWrapper>
       </CommentColumnWrapper>
     </CommentCardWrapper>
