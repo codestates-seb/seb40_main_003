@@ -50,6 +50,7 @@ const CareDetail = () => {
               location={data.address}
               circle={true}
               size={"66"}
+              tag={data.useNum}
 
               // 태그
               // <ViewCounter like={data.userLikeExpert} view={data.view} />

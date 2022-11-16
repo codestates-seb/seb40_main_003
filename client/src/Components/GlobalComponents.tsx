@@ -184,7 +184,7 @@ type ProfileCardTypes = {
   name: string;
   location: string;
   circle?:boolean;
-  tag?: string;
+  tag?: number;
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
