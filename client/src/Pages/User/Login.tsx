@@ -54,22 +54,6 @@ const Input = styled.input`
   padding: 0;
 `;
 
-const SubmitBtn = styled.input`
-  width: 260px;
-  height: 35px;
-  font-size: 13.6px;
-  font-weight: 600;
-  color: white;
-  background-color: #127C56;
-  border: 0;
-  border-radius: 3px;
-  padding: 0;
-  margin-bottom: 5px;
-  &:hover {
-    background-color: #0d5d40;
-  }
-`;
-
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;

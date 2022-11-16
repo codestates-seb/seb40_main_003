@@ -21,6 +21,10 @@ export const SigButton = styled.button`
   &.disable {
     background-color: var(--line-gray);
     color: var(--pure-white);
+    &:hover {
+      background-color: var(--main);
+    }
+      
   }
 `;
 export const SubText = styled.span`
@@ -175,7 +179,7 @@ export const CardWrapper = styled.div`
   padding: 8px 0;
   border-top: 1px solid var(--line-light-gray);
   display: flex;
-  align-items: center;
+  flex-direction: column;
 `;
 
 // 프로필
