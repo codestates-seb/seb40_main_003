@@ -43,10 +43,10 @@ const CareCard = ({ data }: any) => {
                   <span className="font-gray sub">{data.simpleContent}</span>
                   <span>{data.techTagId}</span>
                   <TagWrapper>
-                    <SigTag className="disabled sub">{data.techTag.techTagName}물주기</SigTag>
-                    <SigTag className="disabled sub">{data.techTag.techTagName}분재</SigTag>
-                    <SigTag className="disabled sub">{data.techTag.techTagName}병/해충</SigTag>
-                    <SigTag className="disabled sub">{data.techTag.techTagName}가지치기</SigTag>
+                    {data.map((e:any) => {
+                      return (
+                        <SigTag key={e.techTag.techTagName}></SigTag>
+                    )})}
                   </TagWrapper>
               </ColumnWrapper>
               <span className="medium font-gray sub">{data.address}</span>
