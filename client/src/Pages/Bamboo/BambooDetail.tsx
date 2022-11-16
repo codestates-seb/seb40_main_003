@@ -2,8 +2,8 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
-  BambooImageWrapper,
   CommentCard,
+  ImageWrapper,
   ViewCounter,
 } from "../../Components/GlobalComponents";
 import { SpaceEnd } from "../../Components/product/ProductCard";
@@ -28,16 +28,16 @@ const BambooDetail = () => {
 
   return !isLoading && data !== null ? (
     <>
-      <Link to={`/bamboo/${data.communityId}`}></Link>
       <span className='h4 bold font-main'>{data.title}</span>
       {data.image[0] ? (
-        <BambooImageWrapper
-          size={"100"}
+        <ImageWrapper
+          className='bambooImage'
+          size={"360"}
           src={data.image[0].imgUrl}
           alt={`상품명 ${data.title}의 대표이미지`}
         />
       ) : null}
-      <div className='sub font-gray'>{data.content}</div>
+      <p className='font-black'>{data.content}</p>
       <span className='sub font-gray'>{data.createdAt}</span>
       <span className='sub font-gray ml-4'>{data.member.nickname}</span>
       <SpaceEnd>

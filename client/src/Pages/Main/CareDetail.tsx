@@ -56,7 +56,7 @@ const CareDetail = () => {
               // <ViewCounter like={data.userLikeExpert} view={data.view} />
             />
           </Link>
-          <SectionWrapper content={data.simpleContent}></SectionWrapper>
+          <SectionWrapper content={data.simpleContent} pb={8}/>
           <SectionWrapper title="반려 식물">
             <>
               {data.plant.map((e) => {
@@ -72,11 +72,11 @@ const CareDetail = () => {
               })}
             </>
           </SectionWrapper>
-          <SectionWrapper title="보유기술" tag={data.techTag} />
-          <SectionWrapper title="소개합니다" content={data.detailContent} />
-          <SectionWrapper title="기본비용" content={data.price} />
-          <SectionWrapper title="추가비용" content={data.extra} />
-          <SectionWrapper title="돌봄 리뷰">
+          <SectionWrapper title="보유기술" tag={data.techTag} borderNone={true}/>
+          <SectionWrapper title="소개합니다" content={data.detailContent} borderNone={true}/>
+          <SectionWrapper title="기본비용" content={data.price} borderNone={true}/>
+          <SectionWrapper title="추가비용" content={data.extra} borderNone={true}/>
+          <SectionWrapper title="돌봄 리뷰" borderNone={true}>
             <div>하이</div>
           </SectionWrapper>
         </section>
