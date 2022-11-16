@@ -50,23 +50,4 @@ public class Image {
     @JoinColumn(name = "member_profile_id")
     private MemberProfile memberProfile;
 
-    public void setDeal(Deal deal) {
-        this.deal = deal;
-    }
-
-    public void setCommunity(Community community) {
-        this.community = community;
-    }
-
-    public void setExpertProfile (ExpertProfile expertProfile) {
-        this.expertProfile = expertProfile;
-    }
-
-    public void setPlant (Plant plant) {
-        this.plant = plant;
-    }
-
-    public void setMemberProfile (MemberProfile memberProfile) {
-        this.memberProfile = memberProfile;
-    }
 }
