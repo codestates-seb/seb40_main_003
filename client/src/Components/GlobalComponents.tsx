@@ -258,11 +258,14 @@ export const CommentCardWrapper = styled.div`
   border: 1px solid var(--line-light-gray);
   display: flex;
   align-items: center;
+  
+
 `;
 
 export const CommentColumnWrapper = styled.div`
   display: flex;
   justify-content: center;
+  align-content: flex-end;
 `;
 
 type CommentCardTypes = {
@@ -273,8 +276,8 @@ type CommentCardTypes = {
   createdAt: string;
   content: string;
   tag?: [{ techId: number; name: string }];
-  user: UserStateType;
-  author: string;
+  user?: UserStateType;
+  author?: string;
 };
 export const CommentCard = (props: CommentCardTypes) => {
   // 비구조화할당
@@ -297,16 +300,17 @@ export const CommentCard = (props: CommentCardTypes) => {
               })}
             </TagWrapper>
           ) : null}
-          {String(author) === String(user.userId) ? (
-            <span> 수정 삭제</span>
-          ) : null}
           <div className='sub font-gray'>{content}</div>
+          <CommentColumnWrapper>
+          {String(author) === String(user?.userId) ? (
+            <span className='sub font-gray mr-16'> 수정⠀삭제</span>
+          ) : null}
+          </CommentColumnWrapper>
         </ColumnWrapper>
         <ColumnWrapper>
           <div className='sub font-gray mt-1'>{createdAt}</div>
         </ColumnWrapper>
       </CommentColumnWrapper>
-      <SpaceEnd></SpaceEnd>
     </CommentCardWrapper>
   );
 };
