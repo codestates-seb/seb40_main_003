@@ -45,7 +45,7 @@ const CareCard = ({ data }: any) => {
                   <TagWrapper>
                     {data.techTag.map((e:any) => {
                       return (
-                        <SigTag key={e.techTagName}></SigTag>
+                        <SigTag key={e.techTagId}>{e.techTagName}</SigTag>
                     )})}
                   </TagWrapper>
               </ColumnWrapper>
