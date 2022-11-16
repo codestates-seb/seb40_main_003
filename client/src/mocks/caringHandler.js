@@ -328,6 +328,18 @@ export const expertProfileDetail = (profileNumber) => {
               name: "몬식이",
               year: 137,
             },
+            {
+              plantId: 1,
+              plantType: "율마",
+              name: "율무차",
+              year: 56,
+            },
+            {
+              plantId: 1,
+              plantType: "스투키",
+              name: "통키",
+              year: 7,
+            },
           ],
         },
         )
