@@ -21,6 +21,10 @@ export const SigButton = styled.button`
   &.disable {
     background-color: var(--line-gray);
     color: var(--pure-white);
+    &:hover {
+      background-color: var(--main);
+    }
+      
   }
 `;
 export const SubText = styled.span`
@@ -239,8 +243,8 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
   );
 };
 
-// 코멘트 컴포넌트
-export const CommentPlantCardWrapper = styled.div`
+// Comment 컴포넌트
+export const CommentCardWrapper = styled.div`
   width: 100%;
   padding: 8px 0;
   margin-top: 8px;
@@ -254,7 +258,7 @@ export const CommentColumnWrapper = styled.div`
   justify-content: center;
 `
 
-type CommentProfilePlantCardTypes = {
+type CommentCardTypes = {
   size?: string;
   src: string;
   alt: string;
@@ -262,11 +266,11 @@ type CommentProfilePlantCardTypes = {
   createdAt: string;
   content: string;
 };
-export const CommentProfilePlantCard = (props: CommentProfilePlantCardTypes) => {
+export const CommentCard = (props: CommentCardTypes) => {
   // 비구조화할당
   const { size, src, alt, name, createdAt, content } = props;
   return (
-    <CommentPlantCardWrapper>
+    <CommentCardWrapper>
       <ImageWrapper
         src={src}
         alt={alt}
@@ -279,11 +283,11 @@ export const CommentProfilePlantCard = (props: CommentProfilePlantCardTypes) => 
         <div className="sub font-gray">{content}</div>
         </ColumnWrapper>
       <ColumnWrapper>
-        <div className="sub font-gray">{createdAt}</div>
+        <div className="sub font-gray mt-1">{createdAt}</div>
         </ColumnWrapper>
       </CommentColumnWrapper>
       <SpaceEnd></SpaceEnd>
-    </CommentPlantCardWrapper>
+    </CommentCardWrapper>
   );
 };
 

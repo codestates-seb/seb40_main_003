@@ -110,6 +110,9 @@ input:focus, textarea:focus{
   font-size: 1.8rem;
 }
 /* 마진 설정 */
+.mt-1 {
+  margin-top: 1px;
+}
 .mt-4 {
   margin-top: 4px;
 }
