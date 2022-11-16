@@ -209,7 +209,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         </ColumnWrapper>
       </RowWrapper>
 
-      {tag && <SigTag className='active'>{tag}번 고용</SigTag>}
+      {tag && <SigTag className='active sub'>{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
@@ -217,10 +217,12 @@ export const ProfileCard = (props: ProfileCardTypes) => {
 // 프로필 반려식물
 export const ProfilePlantCardWrapper = styled.div`
   width: 100%;
-  padding: 8px 0;
+  padding: 8px;
   border: 1px solid var(--line-light-gray);
   display: flex;
   align-items: center;
+  border-radius: 8px 0px;
+
 `;
 type ProfilePlantCardTypes = {
   size?: string;
@@ -238,7 +240,7 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
       <ImageWrapper
         src={src}
         alt={alt}
-        size={size === "sm" ? "16" : "36"}
+        size={size === "sm" ? "36" : "66"}
         className='mr-16'
       ></ImageWrapper>
       <ColumnWrapper>

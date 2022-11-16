@@ -57,7 +57,7 @@ const CareDetail = () => {
             />
           </Link>
           <SectionWrapper content={data.simpleContent}></SectionWrapper>
-          <SectionWrapper title="안녕">
+          <SectionWrapper title="반려 식물">
             <>
               {data.plant.map((e) => {
                 return (
