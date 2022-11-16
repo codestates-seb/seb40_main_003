@@ -26,7 +26,7 @@ import axios from "axios";
 //   like: number;
 //   nickname: string;
 // };
-axios.defaults.baseURL="https://testserver.com"
+axios.defaults.baseURL = "https://testserver.com";
 
 function App() {
   return (
@@ -35,7 +35,6 @@ function App() {
       <DevTools />
       <Navbar />
       {/* 양옆 Padding을 제공하는 Wrapper 입니다 */}
-
       <Routes>
         {/* 보호된 라우팅 */}
         <Route element={<AuthProvider />}>
