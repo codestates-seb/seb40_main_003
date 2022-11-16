@@ -30,7 +30,8 @@ export const DescriptionColumnWrapper = styled.div`
   flex-direction: column;
   justify-content: space-between;
 `;
-export const SpaceEnd = styled.div`
+
+const SpaceEnd = styled.div`
   display: flex;
   flex-direction: column;
   align-self: end;
@@ -48,10 +49,10 @@ const ProductCard = ({ data }: any) => {
         />
         <DescriptionColumnWrapper>
           <ColumnWrapper>
-            <span className="medium">{data.title}</span>
-            <span className="sub">{data.createdAt}</span>
+            <span className='medium'>{data.title}</span>
+            <span className='sub'>{data.createdAt}</span>
           </ColumnWrapper>
-          <Price className="bold">{data.price.toLocaleString()}원</Price>
+          <Price className='bold'>{data.price.toLocaleString()}원</Price>
         </DescriptionColumnWrapper>
       </ProductDescription>
       <SpaceEnd>
@@ -70,7 +71,7 @@ export const ProductPlaceHolder = () => {
           <ColumnWrapper>
             <Skeleton width={150} height={20} />
           </ColumnWrapper>
-          <Price className="bold h4">
+          <Price className='bold h4'>
             <Skeleton width={80} height={20} />
           </Price>
         </DescriptionColumnWrapper>
