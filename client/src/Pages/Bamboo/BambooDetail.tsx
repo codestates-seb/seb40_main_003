@@ -52,3 +52,7 @@ const { id } = useParams();
     };
 
 export default BambooDetail;
+
+
+
+
