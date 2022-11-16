@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import { SpaceEnd } from "./product/ProductCard";
+import { UserStateType } from "../Recoil/atoms/atom";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -147,15 +148,15 @@ export const ViewCounter = ({
   return (
     <ViewCounterWrapper>
       {view && (
-        <ViewCounterColumn className="text-align-center mr-16">
-          <SubText className="medium font-gray mr-8">{renameView}</SubText>
-          <SubText className="font-gray ">{overKillo(view)}</SubText>
+        <ViewCounterColumn className='text-align-center mr-16'>
+          <SubText className='medium font-gray mr-8'>{renameView}</SubText>
+          <SubText className='font-gray '>{overKillo(view)}</SubText>
         </ViewCounterColumn>
       )}
       {like && (
-        <ViewCounterColumn className="text-align-center ">
-          <SubText className="medium font-gray mr-8">{renameLike}</SubText>
-          <SubText className="font-gray">{overKillo(like)}</SubText>
+        <ViewCounterColumn className='text-align-center '>
+          <SubText className='medium font-gray mr-8'>{renameLike}</SubText>
+          <SubText className='font-gray'>{overKillo(like)}</SubText>
         </ViewCounterColumn>
       )}
     </ViewCounterWrapper>
@@ -238,18 +239,18 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
         src={src}
         alt={alt}
         size={size === "sm" ? "16" : "36"}
-        className="mr-16"
+        className='mr-16'
       ></ImageWrapper>
       <ColumnWrapper>
-        <span className="medium">{name}</span>
-        <span className="sub font-gray">{type}</span>
-        <div className="sub font-gray ml-54">{age}년차</div>
+        <span className='medium'>{name}</span>
+        <span className='sub font-gray'>{type}</span>
+        <div className='sub font-gray ml-54'>{age}년차</div>
       </ColumnWrapper>
     </ProfilePlantCardWrapper>
   );
 };
 
-// Comment 컴포넌트
+// Comment 컴포넌트, 돌봄리뷰
 export const CommentCardWrapper = styled.div`
   width: 100%;
   padding: 8px 0;
@@ -271,25 +272,38 @@ type CommentCardTypes = {
   name: string;
   createdAt: string;
   content: string;
+  tag?: [{ techId: number; name: string }];
+  user: UserStateType;
+  author: string;
 };
 export const CommentCard = (props: CommentCardTypes) => {
   // 비구조화할당
-  const { size, src, alt, name, createdAt, content } = props;
+  const { size, src, alt, name, createdAt, content, tag, user, author } = props;
   return (
     <CommentCardWrapper>
       <ImageWrapper
         src={src}
         alt={alt}
         size={size === "sm" ? "16" : "36"}
-        className="mr-16"
+        className='mr-16'
       ></ImageWrapper>
       <CommentColumnWrapper>
         <ColumnWrapper>
-          <span className="medium">{name}</span>
-          <div className="sub font-gray">{content}</div>
+          <span className='medium'>{name}</span>
+          {tag ? (
+            <TagWrapper>
+              {tag.map((e) => {
+                return <SigTag key={e.techId}>{e.name}</SigTag>;
+              })}
+            </TagWrapper>
+          ) : null}
+          {String(author) === String(user.userId) ? (
+            <span> 수정 삭제</span>
+          ) : null}
+          <div className='sub font-gray'>{content}</div>
         </ColumnWrapper>
         <ColumnWrapper>
-          <div className="sub font-gray mt-1">{createdAt}</div>
+          <div className='sub font-gray mt-1'>{createdAt}</div>
         </ColumnWrapper>
       </CommentColumnWrapper>
       <SpaceEnd></SpaceEnd>
