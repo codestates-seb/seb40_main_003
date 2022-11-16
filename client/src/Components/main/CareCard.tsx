@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper } from "../Wrapper";
-import {SpaceEnd, DescriptionColumnWrapper} from"../../Components/product/ProductCard"
+import { DescriptionColumnWrapper} from"../../Components/product/ProductCard"
 import { SigTag, TagWrapper} from "../GlobalComponents";
 
 
@@ -25,6 +25,11 @@ const CareDescription = styled.div`
   align-items: center;
 `;
 
+const EndWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 const CareCard = ({ data }: any) => {
     console.log(data)
 
@@ -45,16 +50,16 @@ const CareCard = ({ data }: any) => {
                   <TagWrapper>
                     {data.techTag.map((e:any) => {
                       return (
-                        <SigTag key={e.techTagId}>{e.techTagName}</SigTag>
+                        <SigTag className="disabled sub" key={e.techTagId}>{e.techTagName}</SigTag>
                     )})}
                   </TagWrapper>
               </ColumnWrapper>
+              <EndWrapper>
               <span className="medium font-gray sub">{data.address}</span>
+              <ViewCounter view={data.view} like={data.like} />                
+              </EndWrapper>          
             </DescriptionColumnWrapper>
             </CareDescription>
-            <SpaceEnd>
-              <ViewCounter view={data.view} like={data.like} />
-            </SpaceEnd>
         </CardWrapper>
         </> 
     );
