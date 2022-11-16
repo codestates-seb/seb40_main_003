@@ -45,6 +45,7 @@ const ProductDetail = () => {
             alt={`${data.member.nickname}의 대표사진`}
             name={data.member.nickname}
             location={data.areaTag[0].areaTagName}
+            circle={true}
           />
         </Link>
         <h1 className="h4 bold mt-16">{data.title}</h1>

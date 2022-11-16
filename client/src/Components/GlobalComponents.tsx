@@ -101,7 +101,6 @@ const BambooImageElem = styled.img`
   border-radius: 8px 0px;
   display: block;
   object-fit: cover;
-  margin-right: 16px;
   padding-bottom: 5px;
 `;
 
@@ -297,6 +296,3 @@ export const CommentCard = (props: CommentCardTypes) => {
   );
 };
 
-const GlobalComponents = () => {};
-
-export default GlobalComponents;
