@@ -166,12 +166,13 @@ export const ViewCounter = ({
 type centeringWrapper = {
   pb?: number;
   pt?: number;
+  border?: boolean
 };
 export const CenteringWrapper = styled.section`
   width: 100%;
   padding-top: ${(props: centeringWrapper) => (props.pt ? props.pt : 8)}px;
   padding-bottom: ${(props: centeringWrapper) => (props.pb ? props.pb : 8)}px;
-  border-bottom: 1px solid var(--line-light-gray);
+  border-bottom: ${((props:centeringWrapper)=>(props.border?"1px solid var(--line-light-gray)":"none"))};
   display: flex;
   align-items: center;
   &.space-between {
@@ -188,12 +189,13 @@ type ProfileCardTypes = {
   location: string;
   circle?: boolean;
   tag?: number;
+  border?:boolean
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
-  const { size = "36", src, alt, name, location, circle = false, tag } = props;
+  const { size = "36", src, alt, name, location, circle = false, tag} = props;
   return (
-    <CenteringWrapper className='space-between'>
+    <CenteringWrapper className='space-between' border={false}>
       <RowWrapper className='align-center'>
         <ImageWrapper
           src={src}
