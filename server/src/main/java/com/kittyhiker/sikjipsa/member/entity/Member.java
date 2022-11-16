@@ -91,4 +91,8 @@ public class Member extends AuditingEntity {
 	public void encryptingPassword(PasswordEncoder passwordEncoder) {
 		this.password = passwordEncoder.encode(this.getPassword());
 	}
+
+	public void likeDeal(MemberLikeDeal likeDeal) {
+		this.memberLikeDeals.add(likeDeal);
+	}
 }
