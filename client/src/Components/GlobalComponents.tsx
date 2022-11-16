@@ -244,6 +244,44 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
   );
 };
 
+// 코멘트 컴포넌트
+export const CommentPlantCardWrapper = styled.div`
+  width: 100%;
+  padding: 8px 0;
+  margin-top: 8px;
+  border: 1px solid var(--line-light-gray);
+  display: flex;
+  align-items: center;
+`;
+type CommentProfilePlantCardTypes = {
+  size?: string;
+  src: string;
+  alt: string;
+  name: string;
+  createdAt: string;
+  content: string;
+};
+export const CommentProfilePlantCard = (props: CommentProfilePlantCardTypes) => {
+  // 비구조화할당
+  const { size, src, alt, name, createdAt, content } = props;
+  return (
+    <CommentPlantCardWrapper>
+      <ImageWrapper
+        src={src}
+        alt={alt}
+        size={size === "sm" ? "16" : "36"}
+        className="mr-16"
+      ></ImageWrapper>
+      <ColumnWrapper>
+        <span className="medium">{name}</span>
+        <div className="sub font-gray">{createdAt}</div>
+        <div className="sub font-gray">{content}</div>
+      </ColumnWrapper>
+      <SpaceEnd></SpaceEnd>
+    </CommentPlantCardWrapper>
+  );
+};
+
 const GlobalComponents = () => {};
 
 export default GlobalComponents;

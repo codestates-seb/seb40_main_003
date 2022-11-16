@@ -1,8 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import BambooCard from '../../Components/bamboo/BambooCard';
-import { BambooImageWrapper, ProfileCard, ViewCounter } from "../../Components/GlobalComponents";
+import { BambooImageWrapper, CommentProfilePlantCard, ViewCounter } from "../../Components/GlobalComponents";
 import { SpaceEnd } from '../../Components/product/ProductCard';
 import { bambooDetailTypes } from "../../types/bambooDetailTypes";
 
@@ -39,6 +38,13 @@ const { id } = useParams();
         <SpaceEnd>
           <ViewCounter view={data.view} like={data.likeNum}/>
         </SpaceEnd>
+        <CommentProfilePlantCard 
+        src={data.member.image.imgUrl}
+        alt={`${data.member.nickname}의 반려식물`}
+        name={data.member.nickname}
+        createdAt={data.createdAt}
+        content={data.comment[0].content}
+        />
         </>
     ) : (
         <>loading...</>
