@@ -193,23 +193,23 @@ export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
   const { size = "36", src, alt, name, location, circle = false, tag } = props;
   return (
-    <CenteringWrapper className="space-between">
-      <RowWrapper className="align-center">
+    <CenteringWrapper className='space-between'>
+      <RowWrapper className='align-center'>
         <ImageWrapper
           src={src}
           alt={alt}
           size={size}
-          className="mr-16"
+          className='mr-16'
           circle={circle}
         />
 
         <ColumnWrapper>
-          <span className="medium">{name}</span>
-          <span className="sub font-gray">{location}</span>
+          <span className='medium'>{name}</span>
+          <span className='sub font-gray'>{location}</span>
         </ColumnWrapper>
       </RowWrapper>
 
-      {tag && <SigTag className="active">{tag}번 고용</SigTag>}
+      {tag && <SigTag className='active'>{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
@@ -257,14 +257,11 @@ export const CommentCardWrapper = styled.div`
   margin-top: 8px;
   border: 1px solid var(--line-light-gray);
   display: flex;
-  /* align-items: center; */
-  align-content: space-between;
-  
-
 `;
 
 export const CommentButtonWrapper = styled.div`
   display: flex;
+  justify-content: space-around;
 `;
 
 export const CommentColumnWrapper = styled.div`
@@ -305,19 +302,18 @@ export const CommentCard = (props: CommentCardTypes) => {
             </TagWrapper>
           ) : null}
           <div className='sub font-gray'>{content}</div>
-          <CommentColumnWrapper>
-          </CommentColumnWrapper>
+          <CommentColumnWrapper></CommentColumnWrapper>
         </ColumnWrapper>
         <ColumnWrapper>
           <div className='sub font-gray mt-1 mb-25'>{createdAt}</div>
           <CommentButtonWrapper>
-          {String(author) === String(user?.userId) ? (
-            <span className='sub font-gray'> 수정</span>
-          ) : null}
-          {String(author) === String(user?.userId) ? (
-            <span className='sub font-gray ml-24'> 삭제</span>
-          ) : null}
-        </CommentButtonWrapper>
+            {String(author) === String(user?.userId) ? (
+              <span className='sub font-gray'> 수정</span>
+            ) : null}
+            {String(author) === String(user?.userId) ? (
+              <span className='sub font-gray'> 삭제</span>
+            ) : null}
+          </CommentButtonWrapper>
         </ColumnWrapper>
       </CommentColumnWrapper>
     </CommentCardWrapper>
