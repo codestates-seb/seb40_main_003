@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Getter
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class MemberInformation extends AuditingEntity {
 
 	@Id

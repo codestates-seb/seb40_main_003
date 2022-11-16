@@ -27,7 +27,6 @@ import java.util.stream.Collectors;
 @Getter
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class Member extends AuditingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
