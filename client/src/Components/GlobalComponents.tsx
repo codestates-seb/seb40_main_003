@@ -108,7 +108,7 @@ type ViewCounterProps = {
 const ViewCounterWrapper = styled.div`
   display: flex;
   max-width: 100px;
-  justify-content: space-between;
+  justify-content: flex-end;
 `;
 const IconElem = styled.img`
   width: 16px;

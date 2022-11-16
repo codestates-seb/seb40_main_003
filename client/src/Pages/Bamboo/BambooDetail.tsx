@@ -51,7 +51,7 @@ const BambooDetail = () => {
         <span className="sub font-gray">{data.createdAt}</span>
         <span className="sub font-gray ml-4">{data.member.nickname}</span>
         <SpaceEnd>
-          <ViewCounter view={data.view} like={data.likeNum} />
+          <ViewCounter view={data.view} renameLike="좋아요" like={data.likeNum} />
         </SpaceEnd>
         {data.comment.map((e) => {
           return (

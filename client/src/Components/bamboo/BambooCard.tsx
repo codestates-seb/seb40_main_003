@@ -17,7 +17,7 @@ const BambooCard = ({ data }: any) => {
           ) : <></>
           }
           <SpaceEnd className="mt-8">
-            <ViewCounter view={data.view} like={data.likes} />
+            <ViewCounter view={data.view} renameLike="좋아요" like={data.likes} />
           </SpaceEnd>
         </>
       </SectionWrapper>
