@@ -5,7 +5,6 @@ import { useRecoilValue } from "recoil";
 import {
   ProfileCard,
   ProfilePlantCard,
-  CardWrapper,
   SigTag,
   ViewCounter,
   TagWrapper,
@@ -15,6 +14,7 @@ import {
   MainContentContainer,
   MainCenterWrapper,
   MainRightWrapper,
+  SectionWrapper,
 } from "../../Components/main/Wrapper";
 import { userState } from "../../Recoil/atoms/atom";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
@@ -55,41 +55,30 @@ const CareDetail = () => {
               // <ViewCounter like={data.userLikeExpert} view={data.view} />
             />
           </Link>
-          <CardWrapper>{data.simpleContent}</CardWrapper>
-          <CardWrapper>
-            <h2 className="h4 bold">반려식물</h2>
-          </CardWrapper>
-          {/* 반려식물 컴포넌트 */}
-          <ProfilePlantCard
-            src={data.member.image.imgUrl}
-            alt={`${data.member.name}의 반려식물`}
-            name={data.plant[0].name}
-            type={data.plant[0].plantType}
-            age={data.plant[0].year}
-          />
-          <CardWrapper>
-            <h2 className="h4 bold">보유 기술</h2>
-          </CardWrapper>
-          <TagWrapper>
-            {data.techTag.map((e) => (
-              <SigTag>{e.techTagName}</SigTag>
-            ))}
-          </TagWrapper>
-          <CardWrapper>
-            <h2 className="h4 bold">소개합니다</h2>
-            <p>{data.detailContent}</p>
-          </CardWrapper>
-          <CardWrapper>
-            <h2 className="h4 bold">기본 비용</h2>
-            <p>{data.price}</p>
-          </CardWrapper>
-          <CardWrapper>
-            <h2 className="h4 bold">추가 비용</h2>
-            <p>{data.extra}</p>
-          </CardWrapper>
-          <CardWrapper>
-            <h2 className="h4 bold">돌봄 리뷰</h2>
-          </CardWrapper>
+          <SectionWrapper content={data.simpleContent}></SectionWrapper>
+          <SectionWrapper title="안녕">
+            {/* 반려식물 컴포넌트 */}
+            <>
+              {data.plant.map((e) => {
+                return (
+                  <ProfilePlantCard
+                    src={data.member.image.imgUrl}
+                    alt={`${data.member.name}의 반려식물`}
+                    name={e.name}
+                    type={e.plantType}
+                    age={e.year}
+                  />
+                );
+              })}
+            </>
+          </SectionWrapper>
+          <SectionWrapper title="보유기술" tag={data.techTag} />
+          <SectionWrapper title="소개합니다" content={data.detailContent} />
+          <SectionWrapper title="기본비용" content={data.price} />
+          <SectionWrapper title="추가비용" content={data.extra} />
+          <SectionWrapper title="돌봄 리뷰">
+            <div>하이</div>
+          </SectionWrapper>
         </section>
       </MainCenterWrapper>
       <MainRightWrapper>

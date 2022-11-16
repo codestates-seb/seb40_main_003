@@ -37,7 +37,7 @@ const InputContainer = styled.div`
 `;
 
 const Errormsg = styled.p`
-  color: #bf1650;
+  color:  var(--alert-red);
   margin: 3px;
   font-size: 13px;
 `;
@@ -59,14 +59,14 @@ const SubmitBtn = styled.input`
   height: 35px;
   font-size: 13.6px;
   font-weight: 600;
-  color: white;
-  background-color: #127C56;
+  color:  var(--pure-white);
+  background-color: var(--main);
   border: 0;
   border-radius: 3px;
   padding: 0;
   margin-bottom: 5px;
   &:hover {
-    background-color: #0d5d40;
+    background-color:  var(--main);
   }
 `;
 

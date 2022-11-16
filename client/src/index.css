@@ -169,6 +169,12 @@ input:focus, textarea:focus{
 .ml-54{
   margin-left: 54px;
 }
+.pb-16{
+  padding-bottom: 16px;
+}
+.pt-16{
+  padding-top: 16px;
+}
 .sig-border16 {
   border-radius: 16px 0px 16px 0px;
 }

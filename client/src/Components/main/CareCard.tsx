@@ -11,7 +11,7 @@ const CardWrapper = styled.div`
   width: 100%;
   min-width: 312px;
   max-width: 730px;
-  padding: 24px 8px;
+  padding: 8px 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;

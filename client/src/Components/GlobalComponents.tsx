@@ -85,8 +85,6 @@ type imageWrapperProps = {
   alt: string;
   circle?: boolean;
 };
-
-
 // 커뮤니티 이미지 랩퍼
 const BambooImageElem = styled.img`
   /* width: ${(props: BambooimageWrapperProps) =>
@@ -162,18 +160,15 @@ export const ViewCounter = ({
   );
 };
 
-export const ProfileCardWrapper = styled.div`
+type centeringWrapper= {
+  pb?: number
+  pt?: number
+}
+export const CenteringWrapper = styled.section`
   width: 100%;
-  padding: 8px 0;
+  padding-top: ${(props:centeringWrapper)=>props.pt?props.pt:8}px;
+  padding-bottom: ${(props:centeringWrapper)=>props.pb?props.pb:8}px;
   border-bottom: 1px solid var(--line-light-gray);
-  display: flex;
-  align-items: center;
-`;
-
-export const CardWrapper = styled.div`
-  width: 100%;
-  padding: 8px 0;
-  border-top: 1px solid var(--line-light-gray);
   display: flex;
   align-items: center;
 `;
@@ -191,7 +186,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
   const { size = "36", src, alt, name, location, circle=false } = props;
   return (
-    <ProfileCardWrapper>
+    <CenteringWrapper>
       <ImageWrapper
         src={src}
         alt={alt}
@@ -203,7 +198,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         <span className="medium">{name}</span>
         <span className="sub font-gray">{location}</span>
       </ColumnWrapper>
-    </ProfileCardWrapper>
+    </CenteringWrapper>
   );
 };
 
