@@ -21,8 +21,6 @@
 ✔️ 반려식물에 대한 지식 공유
 
 
-
-
 ## :family_man_woman_girl_boy: 멤버
 
 ### Front-end
@@ -60,12 +58,13 @@
 ### Back-end
 
 **언어**<br>
-
+<img src="https://img.shields.io/badge/Java-007396?style=flat-square&logoColor=white"/><br>
 **프레임워크/라이브러리**<br>
-
-
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=spring-boot&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=Spring-Security&logoColor=white"/><br>
 **데이터베이스**<br>
-
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/><br>
 **배포 및 관리**<br>
 <img src="https://img.shields.io/badge/Amazon_AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white"/>
 <br>

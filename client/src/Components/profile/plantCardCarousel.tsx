@@ -13,6 +13,14 @@ const CarouselWrapper = styled.div`
   display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--main); /*스크롤바의 색상*/
+  }
+  ::-webkit-scrollbar-track {
+    background-color: var(--bg-light-gray);
+    background-clip: padding-box;
+    border: 4px solid transparent;
+  }
 `;
 
 function PlantCardCarousel({ width, children }: Props) {
