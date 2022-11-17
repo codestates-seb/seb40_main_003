@@ -35,12 +35,12 @@ export const SubText = styled.span`
 // 태그 랩퍼
 export const TagWrapper = styled.div`
   width: 100%;
-  height: 30px;
+  height: 21px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   overflow: hidden;
-  /* background-color: aliceblue; */
+  background-color: aliceblue;
 `;
 
 // 태그 앨리먼트
@@ -247,9 +247,10 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
 // Comment 컴포넌트, 돌봄리뷰
 export const CommentCardWrapper = styled.div`
   width: 100%;
-  padding: 8px 0;
+  padding: 8px;
   margin-top: 8px;
   border: 1px solid var(--line-light-gray);
+  border-radius: var(--sig-border-8);
   display: flex;
 `;
 
