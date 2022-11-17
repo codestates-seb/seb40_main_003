@@ -22,8 +22,9 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      working-directory: ./server
+    defaults:
+      run:
+        working-directory: ./server
 
     steps:
     - uses: actions/checkout@v3
@@ -41,7 +42,6 @@ jobs:
     - name: Make zip file
       run: zip -r ./plant-hiker-deploy.zip .
       shell: bash
-      working-directory: ${{ env.working-directory }}
     
     # Access Key와 Secret Access Key를 통해 권한을 확인 
     - name: Configure AWS credentials
