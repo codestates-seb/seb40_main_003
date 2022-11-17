@@ -2,6 +2,7 @@ import { rest } from "msw";
 import {ProductDetailHandler,ProductListHandler} from "./productHandler"
 import {CaringListHandler, profileExpertDetail, expertProfileDetail} from "./caringHandler"
 import { BambooListHandler,BambooDetailHandler } from "./bambooHandler"
+import { Profile } from './profileHandler';
 export const handlers = [
   // 로그인 테스트
   rest.post("https://testserver.com/auth/token", async (req, res, ctx) => {
@@ -41,6 +42,11 @@ BambooListHandler(),
 BambooDetailHandler(1),
 BambooDetailHandler(2),
 BambooDetailHandler(3),
+
+// 일반 유저 프로필 핸들러
+Profile(1),
+Profile(2),
+Profile(3),
 
 ];
 
