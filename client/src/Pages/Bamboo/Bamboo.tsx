@@ -1,11 +1,11 @@
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import BambooCard from '../Components/bamboo/BambooCard';
-import { bambooTypes } from '../types/bambooTypes'
+import BambooCard from '../../Components/bamboo/BambooCard';
+import { bambooTypes } from '../../types/bambooTypes'
 import { Link } from 'react-router-dom';
-import { MainCenterWrapper, MainContentContainer, MainRightWrapper } from '../Components/Wrapper';
-import { SigButton } from '../Components/GlobalComponents';
+import { MainCenterWrapper, MainContentContainer, MainRightWrapper } from '../../Components/Wrapper';
+import { SigButton } from '../../Components/GlobalComponents';
 
 const Community = () => {
   const [data, setData] = useState<bambooTypes>();

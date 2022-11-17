@@ -74,7 +74,7 @@ export const SectionWrapper = ({
     >
       <ColumnWrapper width={width}>
         {title ? <h2 className="bold font-main">{title}</h2> : null}
-        {content ? <p className="mt-8">{content}</p> : null}
+        {content ? <p className="mt-8 text-overflow2">{content}</p> : null}
         {tag?
           <TagWrapper>
             <>
