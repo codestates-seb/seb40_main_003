@@ -51,7 +51,6 @@ type sigtagProps = {
 export const SigTag= styled.div`
   width: ${(props:sigtagProps)=>(props.width?props.width+"px":"auto")};
   height: ${(props:sigtagProps)=>(props.height?props.height+"px":"auto")};
-
   padding: 2px 4px;
   background-color: var(--main);
   color: var(--pure-white);
@@ -61,6 +60,11 @@ export const SigTag= styled.div`
   padding:2px 4px;
   margin-right: 4px;
 
+  &.ghostgray {
+    color: var(--line-gray);
+    background-color: var(--pure-white);
+    border:1px solid var(--line-gray);
+  }
   &.ghost {
     color: var(--main);
     background-color: var(--pure-white);
