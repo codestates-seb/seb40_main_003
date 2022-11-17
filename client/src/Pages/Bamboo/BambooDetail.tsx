@@ -39,7 +39,7 @@ const BambooDetail = () => {
   return !isLoading && data !== null ? (
     <MainContentContainer>
       <MainCenterWrapper>
-        <span className='h4 bold font-main'>{data.title}</span>
+        <span className='h4 bold font-main mb-16'>{data.title}</span>
         {data.image[0] ? (
           <ImageWrapper
             className='bambooImage'
