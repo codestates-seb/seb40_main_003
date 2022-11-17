@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
-import { UserStateType } from "../Recoil/atoms/atom";
+import { UserStateType } from "../Recoil/atoms/user";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`

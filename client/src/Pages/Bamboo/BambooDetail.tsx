@@ -14,7 +14,7 @@ import {
   MainRightWrapper,
   RowWrapper,
 } from "../../Components/Wrapper";
-import { userState } from "../../Recoil/atoms/atom";
+import { userState } from "../../Recoil/atoms/user";
 import { bambooDetailTypes } from "../../types/bambooDetailTypes";
 import { BambooWrapper } from "../../Components/bamboo/BambooCard";
 

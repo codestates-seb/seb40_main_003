@@ -1,7 +1,7 @@
 import { Routes } from "react-router";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import AuthProvider from "./Route";
+import AuthProvider, { HeaderLayout } from "./Route";
 import Product from "./Pages/Product/Product";
 import Navbar from "./Components/Navbar";
 import Profile from "./Pages/Profile/Profile";
@@ -43,28 +43,32 @@ function App() {
         {/* 보호된 라우팅 */}
         <Route element={<AuthProvider />}>
           <Route path="/talk" element={<Talk />} />
-          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/profile" element={<DefaultLayout />}>
+            <Route path=":id" element={<Profile />} />
+          </Route>
         </Route>
+        
         {/* 오픈된 라우팅 */}
-        <Route path="/" element={<Care />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route element={<HeaderLayout />}>
+          <Route path="/" element={<Care />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
 
-        <Route path="/careing" element={<DefaultLayout />}>
-          <Route index element={<Care />} />
-          <Route path=":id" element={<CareDetail />} />
+          <Route path="/careing" element={<DefaultLayout />}>
+            <Route index element={<Care />} />
+            <Route path=":id" element={<CareDetail />} />
+          </Route>
+
+          <Route path="/product" element={<DefaultLayout />}>
+            <Route index element={<Product />} />
+            <Route path=":id" element={<ProductDetail />} />
+          </Route>
+
+          <Route path="/bamboo" element={<DefaultLayout />}>
+            <Route index element={<Community />} />
+            <Route path=":id" element={<CommunityDetail />} />
+          </Route>
         </Route>
-
-        <Route path="/product" element={<DefaultLayout />}>
-          <Route index element={<Product />} />
-          <Route path=":id" element={<ProductDetail />} />
-        </Route>
-
-        <Route path="/bamboo" element={<DefaultLayout />}>
-          <Route index element={<Community />} />
-          <Route path=":id" element={<CommunityDetail />} />
-        </Route>
-
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />
       </Routes>

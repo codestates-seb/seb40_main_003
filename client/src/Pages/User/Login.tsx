@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { userState } from "../../Recoil/atoms/atom";
+import { userState } from "../../Recoil/atoms/user";
 import { SigButton } from "../../Components/GlobalComponents";
 
 const Container = styled.div`

@@ -10,7 +10,7 @@ import { ReactComponent as Market } from "../images/marketIcon.svg";
 import { ReactComponent as Login } from "../images/loginIcon.svg";
 import ProfileIcon from "../images/emptyProfileIcon.svg";
 import { useRecoilValue } from "recoil";
-import { userState } from "../Recoil/atoms/atom";
+import { userState } from "../Recoil/atoms/user";
 
 const NavContainer = styled.nav`
   width: 100%;

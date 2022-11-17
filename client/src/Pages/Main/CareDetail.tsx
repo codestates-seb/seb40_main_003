@@ -17,7 +17,7 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import useWindowSize from "../../Hooks/windowSize";
-import { userState } from "../../Recoil/atoms/atom";
+import { userState } from "../../Recoil/atoms/user";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
 
 

@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import axios from "axios";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { userState } from "../Recoil/atoms/atom";
+import { userState } from "../Recoil/atoms/user";
 import { SigButton } from "./GlobalComponents";
 import Pattern from "../images/pattern.png"
 
@@ -15,6 +15,10 @@ const DevBack = styled.section`
   align-items:center;
   justify-content:center;
   padding: 20px;
+  opacity: 0;
+  :hover{
+    opacity: 1;
+  }
 `
 
 type Props = {};

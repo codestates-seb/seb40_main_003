@@ -13,7 +13,7 @@ import {
   MainContentContainer,
   MainRightWrapper,
 } from "../../Components/Wrapper";
-import { userState } from "../../Recoil/atoms/atom";
+import { userState } from "../../Recoil/atoms/user";
 import { ProductDetailType } from "../../types/productTypes";
 
 

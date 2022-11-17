@@ -7,7 +7,7 @@ import { ProfileCard, ProfilePlantCard } from '../../Components/GlobalComponents
 import PlantCardCarousel from '../../Components/profile/plantCardCarousel';
 import { MainCenterWrapper, MainContentContainer, SectionWrapper } from '../../Components/Wrapper';
 import useWindowSize from '../../Hooks/windowSize';
-import { userState } from '../../Recoil/atoms/atom';
+import { userState } from '../../Recoil/atoms/user';
 import { profileTypes } from '../../types/profile';
 
 
