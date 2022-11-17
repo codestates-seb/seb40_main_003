@@ -48,7 +48,7 @@ const BambooDetail = () => {
             alt={`상품명 ${data.title}의 대표이미지`}
           />
         ) : null}
-        <p className='font-black mt-8'>{data.content}</p>
+        <p className='font-black mt-8 text-overflow'>{data.content}</p>
         <BambooWrapper>
           <RowWrapper>
             <span className='sub font-gray'>{data.createdAt}</span>

@@ -128,15 +128,15 @@ export const ViewCounter = ({
   return (
     <ViewCounterWrapper>
       {view && (
-        <ViewCounterColumn className="text-align-center mr-16">
-          <SubText className="medium font-gray mr-8">{renameView}</SubText>
-          <SubText className="font-gray ">{overKillo(view)}</SubText>
+        <ViewCounterColumn className='text-align-center mr-16'>
+          <SubText className='medium font-gray mr-8'>{renameView}</SubText>
+          <SubText className='font-gray '>{overKillo(view)}</SubText>
         </ViewCounterColumn>
       )}
       {like && (
-        <ViewCounterColumn className="text-align-center ">
-          <SubText className="medium font-gray mr-8">{renameLike}</SubText>
-          <SubText className="font-gray">{overKillo(like)}</SubText>
+        <ViewCounterColumn className='text-align-center '>
+          <SubText className='medium font-gray mr-8'>{renameLike}</SubText>
+          <SubText className='font-gray'>{overKillo(like)}</SubText>
         </ViewCounterColumn>
       )}
     </ViewCounterWrapper>
@@ -176,23 +176,23 @@ export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
   const { size = "36", src, alt, name, location, circle = false, tag } = props;
   return (
-    <CenteringWrapper className="space-between" borderNone={true}>
-      <RowWrapper className="align-center">
+    <CenteringWrapper className='space-between' borderNone={true}>
+      <RowWrapper className='align-center'>
         <ImageWrapper
           src={src}
           alt={alt}
           size={size}
-          className="mr-16"
+          className='mr-16'
           circle={circle}
         />
 
         <ColumnWrapper>
-          <span className="medium">{name}</span>
-          <span className="sub font-gray">{location}</span>
+          <span className='medium'>{name}</span>
+          <span className='sub font-gray'>{location}</span>
         </ColumnWrapper>
       </RowWrapper>
 
-      {tag && <SigTag className="active sub">{tag}번 고용</SigTag>}
+      {tag && <SigTag className='active sub'>{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
@@ -201,7 +201,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
 export const ProfilePlantCardWrapper = styled.div`
   max-width: 250px;
   padding: 8px;
-  margin-right:8px;
+  margin-right: 8px;
   border: 1px solid var(--line-light-gray);
   display: flex;
   align-items: center;
@@ -224,12 +224,12 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
         src={src}
         alt={alt}
         size={size === "sm" ? "36" : "66"}
-        className="mr-16"
+        className='mr-16'
       ></ImageWrapper>
       <ColumnWrapper>
-        <span className="medium">{name}</span>
-        <span className="sub font-gray">{type}</span>
-        <div className="sub font-gray ml-54">{age}년차</div>
+        <span className='medium'>{name}</span>
+        <span className='sub font-gray'>{type}</span>
+        <div className='sub font-gray ml-54'>{age}년차</div>
       </ColumnWrapper>
     </ProfilePlantCardWrapper>
   );
@@ -270,18 +270,18 @@ export const CommentCard = (props: CommentCardTypes) => {
   const { size, src, alt, name, createdAt, content, tag, user, author } = props;
   return (
     <CommentCardWrapper>
-      {src&&alt!==undefined ? (
+      {src && alt !== undefined ? (
         <ImageWrapper
           src={src}
           alt={alt}
           size={size === "sm" ? "16" : "36"}
-          className="mr-16 mt-8"
+          className='mr-16 mt-8'
         />
       ) : null}
 
       <CommentColumnWrapper>
         <ColumnWrapper>
-          <span className="medium mt-8">{name}</span>
+          <span className='medium mt-8'>{name}</span>
           {tag ? (
             <TagWrapper>
               {tag.map((e) => {
@@ -289,22 +289,16 @@ export const CommentCard = (props: CommentCardTypes) => {
               })}
             </TagWrapper>
           ) : null}
-          <div className="sub font-gray">{content}</div>
-          {/* =================================무쓸모 래퍼 =================================*/}
-          <CommentColumnWrapper></CommentColumnWrapper>
+          <div className='sub font-gray'>{content}</div>
         </ColumnWrapper>
         <ColumnWrapper>
-          <div className="sub font-gray mt-7 mb-20">{createdAt}</div>
-
-          {/* ===================두개다 안보이게 해야되니까 얘네 두개를 묶는 최상위 래퍼를 안보이게 하면됨 똑같은 코드 2번 반복 ㄴㄴ ================*/}
-          <CommentButtonWrapper>
-            {String(author) === String(user?.userId) ? (
-              <span className="sub font-gray"> 수정</span>
-            ) : null}
-            {String(author) === String(user?.userId) ? (
-              <span className="sub font-gray"> 삭제</span>
-            ) : null}
-          </CommentButtonWrapper>
+          <div className='sub font-gray mt-7 mb-20'>{createdAt}</div>
+          {String(author) === String(user?.userId) ? (
+            <CommentButtonWrapper>
+              <span className='sub font-gray'> 수정</span>
+              <span className='sub font-gray'> 삭제</span>
+            </CommentButtonWrapper>
+          ) : null}
         </ColumnWrapper>
       </CommentColumnWrapper>
     </CommentCardWrapper>
