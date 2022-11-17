@@ -17,4 +17,6 @@ export const overKillo =(number:number)=>{
   }
 }
 
+
+
 export default isOdd
