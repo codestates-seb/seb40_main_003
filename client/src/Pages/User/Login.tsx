@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { userState } from "../../Recoil/atoms/user";
 import { SigButton } from "../../Components/GlobalComponents";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 300px;
@@ -154,8 +155,10 @@ function Login() {
             )}
           </InputContainer>
           
-          <button className="font-gray sub">ID / PW 찾기</button>
-          <button className="font-main sub bold">회원 가입</button>
+            <button className="font-gray sub">ID / PW 찾기</button>
+          <Link to={`/signup/`}>
+            <button className="font-main sub bold">회원 가입</button>
+          </Link>
           <SigButton className="disable" type="submit" value={'Login'}>로그인</SigButton>
           {error && <Errormsg> {error}</Errormsg>}
         </Form>
