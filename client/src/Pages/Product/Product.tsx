@@ -15,21 +15,17 @@ import { SigButton } from "../../Components/GlobalComponents";
 
 type elemMaps = [ProductPreviewType];
 
-const Product = () => {
-  const [data, setData] = useState<elemMaps>();
-  const [isLoading, setIsLoading] = useState(true);
-  const [hidingTime, setHidingTime] = useState(true);
+type ProductMainType = {
+  data: elemMaps | undefined;
+  hidingTime: boolean;
+  isLoading: boolean;
+};
 
-  useEffect(() => {
-    setTimeout(() => {
-      setHidingTime(false);
-    }, 200);
-    axios.get("/shopping").then(({ data }) => {
-      setData(data.shopping);
-      setIsLoading(false);
-    });
-  }, []);
-
+export const ProductMain = ({
+  isLoading,
+  data,
+  hidingTime,
+}: ProductMainType) => {
   return !isLoading && data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
@@ -52,6 +48,28 @@ const Product = () => {
       <ProductPlaceHolder />
       <ProductPlaceHolder />
     </div>
+  );
+};
+
+const Product = () => {
+  const [data, setData] = useState<elemMaps>();
+  const [isLoading, setIsLoading] = useState(true);
+  const [hidingTime, setHidingTime] = useState(true);
+  // 초기 로딩
+  useEffect(() => {
+    setTimeout(() => {
+      setHidingTime(false);
+    }, 200);
+    axios.get("/shopping").then(({ data }) => {
+      setData(data.shopping);
+      setIsLoading(false);
+    });
+  }, []);
+
+  return (
+    <>
+      <ProductMain data={data} hidingTime={hidingTime} isLoading={isLoading} />
+    </>
   );
 };
 
