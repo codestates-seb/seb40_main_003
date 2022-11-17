@@ -42,21 +42,24 @@ function App() {
       <Routes>
         {/* 보호된 라우팅 */}
         <Route element={<AuthProvider />}>
+
           <Route path="/talk" element={<Talk />} />
+
           <Route path="/profile" element={<DefaultLayout />}>
             <Route path=":id" element={<Profile />} />
           </Route>
+
         </Route>
         
         {/* 오픈된 라우팅 */}
         <Route element={<HeaderLayout />}>
-          <Route path="/" element={<Care />} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
-          <Route path="/careing" element={<DefaultLayout />}>
+          <Route path="/" element={<DefaultLayout />}>
             <Route index element={<Care />} />
-            <Route path=":id" element={<CareDetail />} />
+            <Route path="/caring/:id" element={<CareDetail />} />
           </Route>
 
           <Route path="/product" element={<DefaultLayout />}>
@@ -69,6 +72,7 @@ function App() {
             <Route path=":id" element={<CommunityDetail />} />
           </Route>
         </Route>
+
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />
       </Routes>

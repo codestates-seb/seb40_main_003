@@ -30,6 +30,7 @@ const CareDetail = () => {
   const width = useWindowSize().width;
 
   useEffect(() => {
+    console.log(id)
     try {
       axios.get(`/caring/${id}`).then((res) => {
         setData(res.data);
