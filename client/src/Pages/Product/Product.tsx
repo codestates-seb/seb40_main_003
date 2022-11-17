@@ -31,8 +31,8 @@ export const ProductMain = ({
       <MainCenterWrapper>
         {data.map((e) => {
           return (
-            <Link to={`/product/${e.dealId}`}>
-              <ProductCard key={e.dealId} data={e} />
+            <Link to={`/product/${e.dealId}`} key={e.dealId}>
+              <ProductCard data={e} />
             </Link>
           );
         })}
