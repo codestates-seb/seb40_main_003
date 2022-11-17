@@ -46,6 +46,7 @@ const ProductCard = ({ data }: any) => {
           size={"100"}
           src={data.pictures[0].picture}
           alt={`상품명 ${data.title}의 대표이미지`}
+          loading="lazy"
         />
         <DescriptionColumnWrapper>
           <ColumnWrapper>

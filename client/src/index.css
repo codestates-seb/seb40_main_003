@@ -49,9 +49,6 @@ textarea {
   color: inherit;
   border: none;
 }
-image {
-  loading: lazy;
-}
 input,
 textarea {
   padding: 8px;

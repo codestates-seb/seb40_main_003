@@ -225,6 +225,7 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
         alt={alt}
         size={size === "sm" ? "36" : "66"}
         className="mr-16"
+        loading="lazy"
       ></ImageWrapper>
       <ColumnWrapper>
         <span className="medium">{name}</span>
@@ -276,6 +277,7 @@ export const CommentCard = (props: CommentCardTypes) => {
           alt={alt}
           size={size === "sm" ? "16" : "36"}
           className="mr-16 mt-8"
+          loading="lazy"
         />
       ) : null}
 
