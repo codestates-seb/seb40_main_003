@@ -7,6 +7,8 @@ import com.kittyhiker.sikjipsa.deal.mapper.DealMapper;
 import com.kittyhiker.sikjipsa.deal.respository.DealRepository;
 import com.kittyhiker.sikjipsa.deal.respository.DealReviewRepository;
 import com.kittyhiker.sikjipsa.deal.respository.LikeDealRepository;
+import com.kittyhiker.sikjipsa.image.entity.Image;
+import com.kittyhiker.sikjipsa.image.service.ImageService;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,7 @@ public class DealService {
 
     private final DealRepository dealRepository;
     private final DealMapper mapper;
+    private final ImageService imageService;
     private final MemberRepository memberRepository;
     private final DealReviewRepository reviewRepository;
     private final LikeDealRepository likeDealRepository;
@@ -44,12 +47,14 @@ public class DealService {
         File saveFile = new File(projectPath, fileName); //빈껍데기 생성 (경로, 파일이름)
         file.transferTo(saveFile);
 
-        //이미지저장
-
         Deal deal = mapper.dealPostDtoToDeal(dealPostDto);
         Member findMember = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
         deal.setMember(findMember);
         dealRepository.save(deal);
+
+        //이미지저장
+        Image image = Image.builder().originalName(file.getOriginalFilename()).imgName(fileName).deal(deal).imgUrl(projectPath).build();
+        imageService.postImage(image);
         return mapper.dealToDealResponseDto(deal);
     }
 

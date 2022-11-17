@@ -21,7 +21,7 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/shopping")
+@RequestMapping("/deal")
 @Validated
 public class DealController {
 
@@ -68,7 +68,7 @@ public class DealController {
     /**
      * 거래글 좋아요(찜)
      */
-    @PostMapping("/shopping/like/{deal-id}")
+    @PostMapping("/{deal-id}/like")
     public ResponseEntity likeDeal(@PathVariable("deal-id") Long dealId,
                                    @RequestHeader("Authorization") String token) {
         Long userId = jwtTokenizer.getUserIdFromToken(token);

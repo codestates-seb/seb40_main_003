@@ -1,6 +1,7 @@
 package com.kittyhiker.sikjipsa.member.entity;
 
-import com.kittyhiker.sikjipsa.plant.entity.Image;
+
+import com.kittyhiker.sikjipsa.image.entity.Image;
 import lombok.Getter;
 
 import javax.persistence.*;
