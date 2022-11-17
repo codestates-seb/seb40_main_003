@@ -47,6 +47,9 @@ class MemberControllerTest {
     private Gson gson;
 
     @MockBean
+    private JwtTokenizer jwtTokenizer;
+
+    @MockBean
     private MemberService memberService;
 
     @MockBean
@@ -65,7 +68,7 @@ class MemberControllerTest {
 
         //when
         ResultActions perform = mockMvc.perform(
-                RestDocumentationRequestBuilders.post("/auth")
+                RestDocumentationRequestBuilders.post("/signup")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(content)
@@ -108,7 +111,7 @@ class MemberControllerTest {
 
         //when
         ResultActions perform = mockMvc.perform(
-                RestDocumentationRequestBuilders.post("/auth/token")
+                RestDocumentationRequestBuilders.post("/login")
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(content)
@@ -166,7 +169,7 @@ class MemberControllerTest {
 
         //when
         ResultActions perform = mockMvc.perform(
-                RestDocumentationRequestBuilders.post("/auth/information")
+                RestDocumentationRequestBuilders.post("/users")
                         .accept(MediaType.APPLICATION_JSON)
                         .header("Authorization", token)
                         .contentType(MediaType.APPLICATION_JSON)

@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class MemberInformation extends AuditingEntity {
 
 	@Id
@@ -28,5 +29,9 @@ public class MemberInformation extends AuditingEntity {
 	private String birth;
 	private Integer gender;
 	private String address;
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
 
 }

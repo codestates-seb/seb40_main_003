@@ -1,8 +1,8 @@
 package com.kittyhiker.sikjipsa.community.enitity;
 
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
+import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.member.entity.Member;
-import com.kittyhiker.sikjipsa.plant.entity.Image;
 import lombok.Getter;
 
 import javax.persistence.*;

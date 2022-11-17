@@ -21,38 +21,38 @@ public class MemberController {
     private final MemberService memberService;
     private final JwtTokenizer jwtTokenizer;
 
-    @PostMapping("/auth")
+    @PostMapping("/signup")
     public ResponseEntity signUp(@RequestBody @Valid MemberSignupDto signUpDto) {
         Long userId = memberService.signUpUser(signUpDto);
         return new ResponseEntity(userId, HttpStatus.CREATED);
     }
 
-    @PostMapping("/auth/token")
+    @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid MemberLoginDto loginDto) {
         MemberLoginResponseDto loginResponse = memberService.login(loginDto);
         return new ResponseEntity(loginResponse, HttpStatus.OK);
     }
 
-    @DeleteMapping("/auth/token")
+    @DeleteMapping("/logout")
     public ResponseEntity logout(@RequestHeader("Authorization") String token) {
         memberService.logoutUser(token);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/auth/token/refresh")
+    @PostMapping("/users/refresh")
     public ResponseEntity requestRefresh(@RequestHeader("Authorization") String token) {
         TokenDto tokenDto = memberService.reissueToken(token);
         return new ResponseEntity(tokenDto, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/auth/token/byebye")
+    @DeleteMapping("/users")
     public ResponseEntity byeUser(@RequestHeader("Authorization") String token) {
         //회원정보와 연관된 모든 정보 삭제
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @PostMapping("/auth/information")
+    @PostMapping("/users")
     public ResponseEntity setProfile(@RequestHeader("Authorization") String token,
                                      @RequestBody MemberInfoPostDto infoPostDto) {
         Long userId = jwtTokenizer.getUserIdFromToken(token);
