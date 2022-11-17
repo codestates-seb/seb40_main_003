@@ -6,6 +6,8 @@ export const MainContentContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  background-color: var(--bg-gray);
+  min-height: 100vh;
   @media screen and (max-width: 1024px) {
     flex-direction: column;
     align-items: center;
@@ -17,9 +19,11 @@ export const MainCenterWrapper = styled.main`
   flex-direction: column;
   width: 100%;
   min-width: 312px;
+  min-height: 100vh;
   max-width: 730px;
   padding: 24px;
   margin-bottom: 156px;
+  background-color: var(--pure-white);
   border: 1px solid var(--line-light-gray);
   border-radius: var(--sig-border-16);
   @media screen and (max-width: 1024px) {
@@ -28,6 +32,7 @@ export const MainCenterWrapper = styled.main`
 `;
 export const MainRightWrapper = styled.aside`
   min-width: 298px;
+  max-height: 50vh;
   display: flex;
   margin-left: 18px;
   flex-direction: column;

@@ -41,6 +41,7 @@ const CareCard = ({ data }: any) => {
               size={"100"}
               src={data.member.image.imgUrl}
               alt={`상품명 ${data.member.name}의 대표이미지`}
+              loading="lazy"
             />
             <DescriptionColumnWrapper>
               <ColumnWrapper>

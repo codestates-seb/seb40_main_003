@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import React from "react";
 
 type Props = {
-  children: JSX.Element[];
+  children: JSX.Element[]|JSX.Element;
   width: number | undefined;
 };
 const CarouselWrapper = styled.div`
@@ -13,14 +13,6 @@ const CarouselWrapper = styled.div`
   display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
-  ::-webkit-scrollbar-thumb {
-    background-color: var(--main); /*스크롤바의 색상*/
-  }
-  ::-webkit-scrollbar-track {
-    background-color: var(--bg-light-gray);
-    background-clip: padding-box;
-    border: 4px solid transparent;
-  }
 `;
 
 function PlantCardCarousel({ width, children }: Props) {

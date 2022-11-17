@@ -19,6 +19,7 @@ const BambooCard = ({ data }: any) => {
               size={"112"}
               src={data.image[0].imgUrl}
               alt={`상품명 ${data.title}의 대표이미지`}
+              loading="lazy"
             />
           ) : (
             <></>

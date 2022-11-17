@@ -7,6 +7,7 @@ import {
   ProfilePlantCard,
   SigButton,
   CommentCard,
+  SigTag,
 } from "../../Components/GlobalComponents";
 import PlantCardCarousel from "../../Components/profile/plantCardCarousel";
 import {
@@ -19,12 +20,14 @@ import useWindowSize from "../../Hooks/windowSize";
 import { userState } from "../../Recoil/atoms/atom";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
 
+
+
 const CareDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<CareDetailTypes | null>(null);
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
-  const width= useWindowSize().width
+  const width = useWindowSize().width;
 
   useEffect(() => {
     try {
@@ -59,17 +62,20 @@ const CareDetail = () => {
           <SectionWrapper content={data.simpleContent} pb={8} />
           <SectionWrapper title="반려 식물">
             <PlantCardCarousel width={width}>
-              {data.plant.map((e) => {
-                return (
-                  <ProfilePlantCard
-                    src={data.member.image.imgUrl}
-                    alt={`${data.member.name}의 반려식물`}
-                    name={e.name}
-                    type={e.plantType}
-                    age={e.year}
-                  />
-                );
-              })}
+              <>
+                {data.plant.map((e) => {
+                  return (
+                    <ProfilePlantCard
+                      src={data.member.image.imgUrl}
+                      alt={`${data.member.name}의 반려식물`}
+                      name={e.name}
+                      type={e.plantType}
+                      key={e.plantId}
+                      age={e.year}
+                    />
+                  );
+                })}
+              </>
             </PlantCardCarousel>
           </SectionWrapper>
           <SectionWrapper
