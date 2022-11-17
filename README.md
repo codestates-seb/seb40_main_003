@@ -5,16 +5,20 @@
 식집사들을 위한 **플랜트하이커** 🙆🏻‍♂️
 
 💡 급하게 오래 집을 비워야하는데 우리 난초가 죽으면 어떡하지 고민이신가요?  
+
 💡 희귀 몬스테라를 키워낸 당신, 당당하게 자랑하고 싶은데 마땅한 곳이 없으셨나요?
+
 💡 잘 키워낸 희귀식물로 '식테크'를 해보고싶은데 어디서 해야 할 지 고민이신가요?
 
 **이런 고민들! 플랜트하이커 에서 한번에 해결하세요**❗️ 
 
-✔️ 소중한 가족인 반려동물의 추억 공유  
-✔️ 반려동물과 동반하여 갈 수 있는 플레이스 정보 제공  
-✔️ 소셜링 매칭을 통한 반려동물의 사회성 교육  
-✔️ 반려동물에 대한 지식 공유
+✔️ 반려식물, 관련 용품 거래
 
+✔️ 나의 반려식물을 위한 전문가를 고용해보세요!
+
+✔️ 나도 할 수 있다! 전문가가 되어 도움을 제공해보세요!
+
+✔️ 반려식물에 대한 지식 공유
 
 
 ## :family_man_woman_girl_boy: 멤버
@@ -54,12 +58,13 @@
 ### Back-end
 
 **언어**<br>
-
+<img src="https://img.shields.io/badge/Java-007396?style=flat-square&logoColor=white"/><br>
 **프레임워크/라이브러리**<br>
-
-
+<img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=spring-boot&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=Spring-Security&logoColor=white"/><br>
 **데이터베이스**<br>
-
+<img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/><br>
 **배포 및 관리**<br>
 <img src="https://img.shields.io/badge/Amazon_AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white"/>
 <br>
