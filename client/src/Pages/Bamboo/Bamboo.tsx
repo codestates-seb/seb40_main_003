@@ -17,9 +17,7 @@ const Community = () => {
 
   useEffect(() => {
     axios.get("/bamboo").then((res) => {
-      console.log(res.data);
       setData(res.data);
-      console.log(`저장된 값 ${data}`);
       setIsLoading(false);
     });
   }, []);
