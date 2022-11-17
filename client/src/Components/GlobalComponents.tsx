@@ -1,8 +1,9 @@
-import styled from '@emotion/styled'
-import React from 'react'
+import styled from "@emotion/styled";
+import { overKillo } from "../utils/controller";
+import { ColumnWrapper, RowWrapper } from "./Wrapper";
+import { UserStateType } from "../Recoil/atoms/atom";
 
-type Props = {}
-
+// 버튼앨리먼트
 export const SigButton = styled.button`
   padding: 16px 0;
   background-color: var(--main);
@@ -10,23 +11,302 @@ export const SigButton = styled.button`
   font-weight: var(--bold);
   text-align: center;
   min-width: 173px;
-  border-radius: 16px 0 16px 0;
+  border-radius: var(--sig-border-16);
+  transition-duration: 300ms;
   cursor: pointer;
-  &.ghost{
-    color : var(--main);
+  &.ghost {
+    color: var(--main);
     background-color: var(--pure-white);
     border: 2px solid var(--main);
   }
-  &.disable{
+  &.disable {
     background-color: var(--line-gray);
-    color:var(--pure-white);
+    color: var(--pure-white);
+    &:hover {
+      background-color: var(--main);
+    }
   }
-`
+`;
+export const SubText = styled.span`
+  display: block;
+  font-size: var(--sub-font-size);
+`;
 
-const GlobalComponents = (props: Props) => {
+// 태그 랩퍼
+export const TagWrapper = styled.div`
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  overflow: hidden;
+  /* background-color: aliceblue; */
+`;
+
+// 태그 앨리먼트
+export const SigTag = styled.div`
+  padding: 2px 4px;
+  background-color: var(--main);
+  color: var(--pure-white);
+  font-weight: var(--sub);
+  text-align: center;
+  min-width: 33px;
+  border-radius: 4px 0px;
+  margin: 4px 4px 4px 0px;
+  overflow: hidden;
+  &.ghost {
+    color: var(--pure-white);
+    font-weight: var(--sub);
+    text-align: center;
+    min-width: 33px;
+    border-radius: var(--sig-border-4);
+    margin: 4px 4px 4px 0px;
+  }
+  &.active {
+    color: var(--main);
+    background-color: var(--pure-white);
+    border: 1px solid var(--main);
+  }
+  &.disabled {
+    color: var(--line-black);
+    background-color: var(--pure-white);
+    border: 1px solid var(--line-black);
+  }
+`;
+// 이미지 랩퍼
+export const ImageWrapper = styled.img`
+  width: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
+  height: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
+  background-color: var(--bg-gray);
+  border-radius: ${(props: imageWrapperProps) =>
+    props.circle ? `${props.size}px` : "8px 0px"};
+  display: block;
+  object-fit: cover;
+  margin-right: 16px;
+  &.bambooImage {
+    width: 100%;
+    margin-right: 0;
+  }
+`;
+
+type imageWrapperProps = {
+  src: string;
+  size?: string;
+  alt: string;
+  circle?: boolean;
+  width?: number;
+  height?: number;
+};
+
+// 좋아요 카운트
+type ViewCounterProps = {
+  view?: number;
+  like?: number;
+  renameView?: string;
+  renameLike?: string;
+};
+const ViewCounterWrapper = styled.div`
+  display: flex;
+  max-width: 100px;
+  justify-content: flex-end;
+`;
+const IconElem = styled.img`
+  width: 16px;
+  height: 16px;
+`;
+const ViewCounterColumn = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+export const ViewCounter = ({
+  view,
+  like,
+  renameView = "조회수",
+  renameLike = "찜",
+}: ViewCounterProps) => {
   return (
-    <div>GlobalComponents</div>
-  )
-}
+    <ViewCounterWrapper>
+      {view && (
+        <ViewCounterColumn className="text-align-center mr-16">
+          <SubText className="medium font-gray mr-8">{renameView}</SubText>
+          <SubText className="font-gray ">{overKillo(view)}</SubText>
+        </ViewCounterColumn>
+      )}
+      {like && (
+        <ViewCounterColumn className="text-align-center ">
+          <SubText className="medium font-gray mr-8">{renameLike}</SubText>
+          <SubText className="font-gray">{overKillo(like)}</SubText>
+        </ViewCounterColumn>
+      )}
+    </ViewCounterWrapper>
+  );
+};
 
-export default GlobalComponents
+type centeringWrapper = {
+  pb?: number;
+  pt?: number;
+  borderNone?: boolean;
+};
+export const CenteringWrapper = styled.section`
+  width: 100%;
+  padding-top: ${(props: centeringWrapper) => (props.pt ? props.pt : 8)}px;
+  padding-bottom: ${(props: centeringWrapper) => (props.pb ? props.pb : 8)}px;
+  border-bottom: ${(props: centeringWrapper) =>
+    props.borderNone ? "none" : "1px solid var(--line-light-gray)"};
+  display: flex;
+  align-items: center;
+  &.space-between {
+    justify-content: space-between;
+  }
+`;
+
+// 프로필
+type ProfileCardTypes = {
+  size?: "16" | "36" | "56" | "66" | "100";
+  src: string;
+  alt: string;
+  name: string;
+  location: string;
+  circle?: boolean;
+  tag?: number;
+  border?: boolean;
+};
+export const ProfileCard = (props: ProfileCardTypes) => {
+  // 비구조화할당
+  const { size = "36", src, alt, name, location, circle = false, tag } = props;
+  return (
+    <CenteringWrapper className="space-between" borderNone={true}>
+      <RowWrapper className="align-center">
+        <ImageWrapper
+          src={src}
+          alt={alt}
+          size={size}
+          className="mr-16"
+          circle={circle}
+        />
+
+        <ColumnWrapper>
+          <span className="medium">{name}</span>
+          <span className="sub font-gray">{location}</span>
+        </ColumnWrapper>
+      </RowWrapper>
+
+      {tag && <SigTag className="active sub">{tag}번 고용</SigTag>}
+    </CenteringWrapper>
+  );
+};
+
+// 프로필 반려식물
+export const ProfilePlantCardWrapper = styled.div`
+  max-width: 250px;
+  padding: 8px;
+  margin-right:8px;
+  border: 1px solid var(--line-light-gray);
+  display: flex;
+  align-items: center;
+  border-radius: var(--sig-border-8);
+`;
+type ProfilePlantCardTypes = {
+  size?: string;
+  src: string;
+  alt: string;
+  name: string;
+  type: string;
+  age: number;
+};
+export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
+  // 비구조화할당
+  const { size, src, alt, name, type, age } = props;
+  return (
+    <ProfilePlantCardWrapper>
+      <ImageWrapper
+        src={src}
+        alt={alt}
+        size={size === "sm" ? "36" : "66"}
+        className="mr-16"
+      ></ImageWrapper>
+      <ColumnWrapper>
+        <span className="medium">{name}</span>
+        <span className="sub font-gray">{type}</span>
+        <div className="sub font-gray ml-54">{age}년차</div>
+      </ColumnWrapper>
+    </ProfilePlantCardWrapper>
+  );
+};
+
+// Comment 컴포넌트, 돌봄리뷰
+export const CommentCardWrapper = styled.div`
+  width: 100%;
+  padding: 8px 0;
+  margin-top: 8px;
+  border: 1px solid var(--line-light-gray);
+  display: flex;
+`;
+
+export const CommentButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-around;
+`;
+
+export const CommentColumnWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+type CommentCardTypes = {
+  size?: string;
+  src?: string;
+  alt?: string;
+  name: string;
+  createdAt: string;
+  content: string;
+  tag?: [{ techId: number; name: string }];
+  user: UserStateType | null;
+  author: number;
+};
+export const CommentCard = (props: CommentCardTypes) => {
+  // 비구조화할당
+  const { size, src, alt, name, createdAt, content, tag, user, author } = props;
+  return (
+    <CommentCardWrapper>
+      {src&&alt!==undefined ? (
+        <ImageWrapper
+          src={src}
+          alt={alt}
+          size={size === "sm" ? "16" : "36"}
+          className="mr-16 mt-8"
+        />
+      ) : null}
+
+      <CommentColumnWrapper>
+        <ColumnWrapper>
+          <span className="medium mt-8">{name}</span>
+          {tag ? (
+            <TagWrapper>
+              {tag.map((e) => {
+                return <SigTag key={e.techId}>{e.name}</SigTag>;
+              })}
+            </TagWrapper>
+          ) : null}
+          <div className="sub font-gray">{content}</div>
+          {/* =================================무쓸모 래퍼 =================================*/}
+          <CommentColumnWrapper></CommentColumnWrapper>
+        </ColumnWrapper>
+        <ColumnWrapper>
+          <div className="sub font-gray mt-7 mb-20">{createdAt}</div>
+
+          {/* ===================두개다 안보이게 해야되니까 얘네 두개를 묶는 최상위 래퍼를 안보이게 하면됨 똑같은 코드 2번 반복 ㄴㄴ ================*/}
+          <CommentButtonWrapper>
+            {String(author) === String(user?.userId) ? (
+              <span className="sub font-gray"> 수정</span>
+            ) : null}
+            {String(author) === String(user?.userId) ? (
+              <span className="sub font-gray"> 삭제</span>
+            ) : null}
+          </CommentButtonWrapper>
+        </ColumnWrapper>
+      </CommentColumnWrapper>
+    </CommentCardWrapper>
+  );
+};
