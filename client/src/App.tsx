@@ -1,7 +1,7 @@
 import { Routes } from "react-router";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import AuthProvider from "./AuthProvider";
+import AuthProvider from "./Route";
 import Product from "./Pages/Product/Product";
 import Navbar from "./Components/Navbar";
 import Profile from "./Pages/Profile/Profile";
@@ -16,6 +16,7 @@ import Talk from "./Pages/Talk";
 import DevTools from "./Components/DevTools";
 import ProductDetail from "./Pages/Product/ProductDetail";
 import axios from "axios";
+import { DefaultLayout } from "./Route";
 // type Props = {
 //   id: number;
 //   vote: number;
@@ -27,6 +28,9 @@ import axios from "axios";
 //   nickname: string;
 // };
 axios.defaults.baseURL = "https://testserver.com";
+// axios.defaults.baseURL = "";
+// axios.defaults.baseURL = "https://fbc9-121-162-186-109.jp.ngrok.io";
+axios.defaults.withCredentials = false;
 
 function App() {
   return (
@@ -45,12 +49,21 @@ function App() {
         <Route path="/" element={<Care />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/careing" element={<Care />} />
-        <Route path="/caring/:id" element={<CareDetail />} />
-        <Route path="/product" element={<Product />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
-        <Route path="/bamboo" element={<Community />} />
-        <Route path="/bamboo/:id" element={<CommunityDetail />} />
+
+        <Route path="/careing" element={<DefaultLayout />}>
+          <Route index element={<Care />} />
+          <Route path=":id" element={<CareDetail />} />
+        </Route>
+
+        <Route path="/product" element={<DefaultLayout />}>
+          <Route index element={<Product />} />
+          <Route path=":id" element={<ProductDetail />} />
+        </Route>
+
+        <Route path="/bamboo" element={<DefaultLayout />}>
+          <Route index element={<Community />} />
+          <Route path=":id" element={<CommunityDetail />} />
+        </Route>
 
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />

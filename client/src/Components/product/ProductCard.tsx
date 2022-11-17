@@ -48,7 +48,7 @@ const ProductCard = ({ data }: any) => {
         />
         <DescriptionColumnWrapper>
           <span className="medium">{data.title}</span>
-          <span className="sub">{data.createdAt}</span>
+          <span className="sub mb-8">{data.createdAt}</span>
           {data.state === 1 ? null : (
             <SigTag
               width={80}
