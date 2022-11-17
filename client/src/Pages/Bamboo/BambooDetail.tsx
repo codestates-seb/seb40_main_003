@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
   CommentCard,
@@ -8,14 +8,15 @@ import {
   SigButton,
   ViewCounter,
 } from "../../Components/GlobalComponents";
-import { SpaceEnd } from "../../Components/product/ProductCard";
 import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
+  RowWrapper,
 } from "../../Components/Wrapper";
-import { userState, UserStateType } from "../../Recoil/atoms/atom";
+import { userState } from "../../Recoil/atoms/atom";
 import { bambooDetailTypes } from "../../types/bambooDetailTypes";
+import { BambooWrapper } from "../../Components/bamboo/BambooCard";
 
 const BambooDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -38,25 +39,31 @@ const BambooDetail = () => {
   return !isLoading && data !== null ? (
     <MainContentContainer>
       <MainCenterWrapper>
-        <span className="h4 bold font-main">{data.title}</span>
+        <span className='h4 bold font-main'>{data.title}</span>
         {data.image[0] ? (
           <ImageWrapper
-            className="bambooImage"
+            className='bambooImage'
             size={"360"}
             src={data.image[0].imgUrl}
             alt={`상품명 ${data.title}의 대표이미지`}
           />
         ) : null}
-        <p className="font-black">{data.content}</p>
-        <span className="sub font-gray">{data.createdAt}</span>
-        <span className="sub font-gray ml-4">{data.member.nickname}</span>
-        <SpaceEnd>
-          <ViewCounter view={data.view} like={data.likeNum} />
-        </SpaceEnd>
+        <p className='font-black mt-8'>{data.content}</p>
+        <BambooWrapper>
+          <RowWrapper>
+            <span className='sub font-gray'>{data.createdAt}</span>
+            <span className='sub font-gray ml-16'>{data.member.nickname}</span>
+          </RowWrapper>
+          <ViewCounter
+            view={data.view}
+            renameLike='좋아요'
+            like={data.likeNum}
+          />
+        </BambooWrapper>
         {data.comment.map((e) => {
           return (
             <CommentCard
-            // 댓글 이미지 안날아옴
+              // 댓글 이미지 안날아옴
               // src={data.comment}
               name={e.member.nickname}
               createdAt={e.createdAt}

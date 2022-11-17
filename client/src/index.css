@@ -16,77 +16,83 @@
   text-decoration: none;
   color: var(--font-black);
 }
-:root{
-  --main: #127C56;
-  --sub-color:#EAB64D;
-  --font-main:#365331;
-  --alert-green : #31A215;
-  --alert-amber : #EF8523;
-  --alert-red: #F14646;
-  --font-black:#393939;
+:root {
+  --main: #127c56;
+  --sub-color: #eab64d;
+  --font-main: #365331;
+  --alert-green: #31a215;
+  --alert-amber: #ef8523;
+  --alert-red: #f14646;
+  --font-black: #393939;
   --font-gray: #737373;
-  --bg-gray : #F8F8F8;
-  --pure-white : #FFFFFF;
-  --line-black:#777777;
-  --line-gray: #BABABA;
-  --line-light-gray:#EDEDED;
-  --bold:700;
-  --medium:500;
-  --light:200;
+  --bg-gray: #f8f8f8;
+  --pure-white: #ffffff;
+  --line-black: #777777;
+  --line-gray: #bababa;
+  --line-light-gray: #ededed;
+  --bold: 700;
+  --medium: 500;
+  --light: 200;
   --sub-font-size: 0.8rem;
   --sig-border-4: 4px 0px 4px 0px;
-  --sig-border-8: 8px 0 8px 0 ;
+  --sig-border-8: 8px 0 8px 0;
   --sig-border-16: 16px 0px 16px 0px;
-
 }
 
-a, input, button, select, textarea{
+a,
+input,
+button,
+select,
+textarea {
   text-decoration: none;
   outline-style: none;
   color: inherit;
   border: none;
 }
-image{
-  loading:lazy;
+image {
+  loading: lazy;
 }
-input, textarea{
+input,
+textarea {
   padding: 8px;
-  outline-style: solid;  
+  outline-style: solid;
   outline-width: 1px;
   outline-color: var(--line-light-gray);
   border-radius: 6px;
 }
-input:focus, textarea:focus{
-  filter: drop-shadow(0px 0px 2px #127C56);
-  color: var(--font-main)
+input:focus,
+textarea:focus {
+  filter: drop-shadow(0px 0px 2px #127c56);
+  color: var(--font-main);
 }
-
 
 /* 아이콘 active */
-.activeIcon span{
-    color: var(--main);
-    font-weight: var(--bold)
+.activeIcon span {
+  color: var(--main);
+  font-weight: var(--bold);
 }
-.activeIcon svg,.activeIcon p{
-    fill: var(--main);
+.activeIcon svg,
+.activeIcon p {
+  fill: var(--main);
 }
-.disableIcon svg,.activeIcon p{
+.disableIcon svg,
+.activeIcon p {
   fill: var(--font-gray);
 }
 
 /* 폰트 색깔 설정 */
-.font-gray{
+.font-gray {
   color: var(--font-gray);
 }
-.font-main{
+.font-main {
   color: var(--font-main);
 }
 
 /* 폰트 두께 설정 */
-.light{
+.light {
   font-weight: 200;
 }
-.medium{
+.medium {
   font-weight: 500;
 }
 .bold {
@@ -122,7 +128,10 @@ input:focus, textarea:focus{
 .mt-8 {
   margin-top: 8px;
 }
-.mt-16{
+.mt-12 {
+  margin-top: 12px;
+}
+.mt-16 {
   margin-top: 16px;
 }
 .mb-3 {
@@ -165,7 +174,7 @@ input:focus, textarea:focus{
 .mr-24 {
   margin-right: 24px;
 }
-.mr-36{
+.mr-36 {
   margin-right: 36px;
 }
 
@@ -181,16 +190,16 @@ input:focus, textarea:focus{
 .ml-24 {
   margin-left: 24px;
 }
-.ml-36{
+.ml-36 {
   margin-left: 36px;
 }
-.ml-54{
+.ml-54 {
   margin-left: 54px;
 }
-.pb-16{
+.pb-16 {
   padding-bottom: 16px;
 }
-.pt-16{
+.pt-16 {
   padding-top: 16px;
 }
 .sig-border16 {
@@ -203,14 +212,13 @@ input:focus, textarea:focus{
   border-radius: 4px 0px 4px 0px;
 }
 
-.text-align-center{
+.text-align-center {
   text-align: center;
 }
 
-.display-none{
+.display-none {
   display: none;
 }
-
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
