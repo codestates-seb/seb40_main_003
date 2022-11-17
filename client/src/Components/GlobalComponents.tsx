@@ -45,12 +45,13 @@ export const TagWrapper = styled.div`
 
 // 태그 앨리먼트
 type sigtagProps = {
-  width?: number
-  height?: number
-}
-export const SigTag= styled.div`
-  width: ${(props:sigtagProps)=>(props.width?props.width+"px":"auto")};
-  height: ${(props:sigtagProps)=>(props.height?props.height+"px":"auto")};
+  width?: number;
+  height?: number;
+};
+export const SigTag = styled.div`
+  width: ${(props: sigtagProps) => (props.width ? props.width + "px" : "auto")};
+  height: ${(props: sigtagProps) =>
+    props.height ? props.height + "px" : "auto"};
 
   padding: 2px 4px;
   background-color: var(--main);
@@ -58,18 +59,18 @@ export const SigTag= styled.div`
   font-size: var(--sub-font-size);
   text-align: center;
   border-radius: var(--sig-border-4);
-  padding:2px 4px;
+  padding: 2px 4px;
   margin-right: 4px;
 
   &.ghost {
     color: var(--main);
     background-color: var(--pure-white);
-    border:1px solid var(--main);
+    border: 1px solid var(--main);
   }
   &.ghostgray {
     color: var(--line-black);
     background-color: var(--pure-white);
-    border:1px solid var(--line-gray);
+    border: 1px solid var(--line-gray);
   }
   &.disabled {
     color: var(--pure-white);
@@ -80,8 +81,10 @@ export const SigTag= styled.div`
 export const ImageWrapper = styled.img`
   width: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
   height: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
-  min-width: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
-  min-height: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
+  min-width: ${(props: imageWrapperProps) =>
+    props.size ? props.size : "36"}px;
+  min-height: ${(props: imageWrapperProps) =>
+    props.size ? props.size : "36"}px;
   background-color: var(--bg-gray);
   border-radius: ${(props: imageWrapperProps) =>
     props.circle ? `${props.size}px` : "8px 0px"};
@@ -92,8 +95,8 @@ export const ImageWrapper = styled.img`
     width: 100%;
     margin-right: 0;
   }
-  &.soldOut{
-    opacity: 0.5
+  &.soldOut {
+    opacity: 0.5;
   }
 `;
 
@@ -136,15 +139,15 @@ export const ViewCounter = ({
   return (
     <ViewCounterWrapper>
       {view && (
-        <ViewCounterColumn className='text-align-center mr-16'>
-          <SubText className='medium font-gray mr-8'>{renameView}</SubText>
-          <SubText className='font-gray '>{overKillo(view)}</SubText>
+        <ViewCounterColumn className="text-align-center mr-16">
+          <SubText className="medium font-gray mr-8">{renameView}</SubText>
+          <SubText className="font-gray ">{overKillo(view)}</SubText>
         </ViewCounterColumn>
       )}
       {like && (
-        <ViewCounterColumn className='text-align-center '>
-          <SubText className='medium font-gray mr-8'>{renameLike}</SubText>
-          <SubText className='font-gray'>{overKillo(like)}</SubText>
+        <ViewCounterColumn className="text-align-center ">
+          <SubText className="medium font-gray mr-8">{renameLike}</SubText>
+          <SubText className="font-gray">{overKillo(like)}</SubText>
         </ViewCounterColumn>
       )}
     </ViewCounterWrapper>
@@ -184,23 +187,23 @@ export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
   const { size = "36", src, alt, name, location, circle = false, tag } = props;
   return (
-    <CenteringWrapper className='space-between' borderNone={true}>
-      <RowWrapper className='align-center'>
+    <CenteringWrapper className="space-between" borderNone={true}>
+      <RowWrapper className="align-center">
         <ImageWrapper
           src={src}
           alt={alt}
           size={size}
-          className='mr-16'
+          className="mr-16"
           circle={circle}
         />
 
         <ColumnWrapper>
-          <span className='medium'>{name}</span>
-          <span className='sub font-gray'>{location}</span>
+          <span className="medium">{name}</span>
+          <span className="sub font-gray">{location}</span>
         </ColumnWrapper>
       </RowWrapper>
 
-      {tag && <SigTag className='ghost sub'>{tag}번 고용</SigTag>}
+      {tag && <SigTag className="ghost sub">{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
@@ -236,9 +239,9 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
         loading="lazy"
       ></ImageWrapper>
       <ColumnWrapper>
-        <span className='medium'>{name}</span>
-        <span className='sub font-gray'>{type}</span>
-        <div className='sub font-gray ml-54'>{age}년차</div>
+        <span className="medium">{name}</span>
+        <span className="sub font-gray">{type}</span>
+        <div className="sub font-gray ml-54">{age}년차</div>
       </ColumnWrapper>
     </ProfilePlantCardWrapper>
   );
@@ -256,7 +259,7 @@ export const CommentCardWrapper = styled.div`
 
 export const CommentButtonWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
 export const CommentColumnWrapper = styled.div`
@@ -292,7 +295,7 @@ export const CommentCard = (props: CommentCardTypes) => {
 
       <CommentColumnWrapper>
         <ColumnWrapper>
-          <span className='medium mt-8'>{name}</span>
+          <span className="medium mt-8">{name}</span>
           {tag ? (
             <TagWrapper>
               {tag.map((e) => {
@@ -300,18 +303,46 @@ export const CommentCard = (props: CommentCardTypes) => {
               })}
             </TagWrapper>
           ) : null}
-          <div className='sub font-gray'>{content}</div>
+          <div className="sub font-gray">{content}</div>
         </ColumnWrapper>
         <ColumnWrapper>
-          <div className='sub font-gray mt-7 mb-20'>{createdAt}</div>
-          {String(author) === String(user?.userId) ? (
-            <CommentButtonWrapper>
-              <span className='sub font-gray'> 수정</span>
-              <span className='sub font-gray'> 삭제</span>
-            </CommentButtonWrapper>
-          ) : null}
+          <div className="sub font-gray mt-7 mb-20">{createdAt}</div>
+          <CommentEdit
+            userId={user!==null?user.userId:""}
+            author={author?author:""}
+            callback1={undefined}
+            callback2={undefined}
+          />
         </ColumnWrapper>
       </CommentColumnWrapper>
     </CommentCardWrapper>
+  );
+};
+
+
+// 댓글 수정삭제 버튼
+type CommentEditType = {
+  userId: string | number | null ;
+  author: string | number;
+  callback1?: Function;
+  callback2?: Function;
+};
+export const CommentEdit = ({
+  userId,
+  author,
+  callback1,
+  callback2,
+}: CommentEditType) => {
+  return  String(userId) === String(author) ?(
+    <CommentButtonWrapper>
+      <span className="sub font-gray" onClick={callback1 && callback1()}>
+        수정
+      </span>
+      <span className="sub font-gray" onClick={callback2 && callback2()}>
+        삭제
+      </span>
+    </CommentButtonWrapper>
+  ) : (
+    <></>
   );
 };
