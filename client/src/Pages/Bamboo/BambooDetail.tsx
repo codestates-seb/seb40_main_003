@@ -39,7 +39,7 @@ const BambooDetail = () => {
   return !isLoading && data !== null ? (
     <MainContentContainer>
       <MainCenterWrapper>
-        <span className='h4 bold font-main'>{data.title}</span>
+        <span className='h4 bold font-main mb-16'>{data.title}</span>
         {data.image[0] ? (
           <ImageWrapper
             className='bambooImage'
@@ -48,7 +48,7 @@ const BambooDetail = () => {
             alt={`상품명 ${data.title}의 대표이미지`}
           />
         ) : null}
-        <p className='font-black mt-8'>{data.content}</p>
+        <p className='font-black mt-8 text-overflow'>{data.content}</p>
         <BambooWrapper>
           <RowWrapper>
             <span className='sub font-gray'>{data.createdAt}</span>
