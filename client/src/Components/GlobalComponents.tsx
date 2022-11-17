@@ -44,39 +44,39 @@ export const TagWrapper = styled.div`
 `;
 
 // 태그 앨리먼트
-export const SigTag = styled.div`
+type sigtagProps = {
+  width?: number
+  height?: number
+}
+export const SigTag= styled.div`
+  width: ${(props:sigtagProps)=>(props.width?props.width+"px":"auto")};
+  height: ${(props:sigtagProps)=>(props.height?props.height+"px":"auto")};
+
   padding: 2px 4px;
   background-color: var(--main);
   color: var(--pure-white);
-  font-weight: var(--sub);
+  font-size: var(--sub-font-size);
   text-align: center;
-  min-width: 33px;
-  border-radius: 4px 0px;
-  margin: 4px 4px 4px 0px;
-  overflow: hidden;
+  border-radius: var(--sig-border-4);
+  padding:2px 4px;
+  margin-right: 4px;
+
   &.ghost {
-    color: var(--pure-white);
-    font-weight: var(--sub);
-    text-align: center;
-    min-width: 33px;
-    border-radius: var(--sig-border-4);
-    margin: 4px 4px 4px 0px;
-  }
-  &.active {
     color: var(--main);
     background-color: var(--pure-white);
-    border: 1px solid var(--main);
+    border:1px solid var(--main);
   }
   &.disabled {
-    color: var(--line-black);
-    background-color: var(--pure-white);
-    border: 1px solid var(--line-black);
+    color: var(--pure-white);
+    background-color: var(--line-gray);
   }
 `;
 // 이미지 랩퍼
 export const ImageWrapper = styled.img`
   width: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
   height: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
+  min-width: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
+  min-height: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
   background-color: var(--bg-gray);
   border-radius: ${(props: imageWrapperProps) =>
     props.circle ? `${props.size}px` : "8px 0px"};
@@ -86,6 +86,9 @@ export const ImageWrapper = styled.img`
   &.bambooImage {
     width: 100%;
     margin-right: 0;
+  }
+  &.soldOut{
+    opacity: 0.5
   }
 `;
 
