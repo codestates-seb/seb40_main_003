@@ -116,8 +116,7 @@ function Login() {
   return (
     <MainContentContainer>
       <MainCenterWrapper>
-        <CenteringWrapper onSubmit={handleSubmit(onLogin)}>
-          <FormWrapper>
+        <FormWrapper onSubmit={handleSubmit(onLogin)}>
           <InputContainer>
             <Label htmlFor={'Email'}>Email</Label>
             <Input
@@ -164,7 +163,6 @@ function Login() {
           <SigButton className="disable" type="submit" value={'Login'}>로그인</SigButton>
           {error && <Errormsg> {error}</Errormsg>}
           </FormWrapper>
-        </CenteringWrapper>
       </MainCenterWrapper>
       <MainRightWrapper>
       </MainRightWrapper>

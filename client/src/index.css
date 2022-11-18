@@ -84,6 +84,9 @@ textarea:focus {
 .font-main {
   color: var(--font-main);
 }
+.font-alert-red {
+  color: var(--alert-red);
+}
 
 /* 폰트 두께 설정 */
 .light {
