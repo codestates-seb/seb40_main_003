@@ -69,8 +69,6 @@ const CareDetail = () => {
             size={"66"}
             tag={data.useNum}
 
-            // 태그
-            // <ViewCounter like={data.userLikeExpert} view={data.view} />
           />
 
           <SectionWrapper content={data.simpleContent} pb={8} />
@@ -78,7 +76,6 @@ const CareDetail = () => {
               {isOpenModal && (
                 <Modal onClickModal={onClickModal}>asdfasdfasg</Modal>
               )}
-              
             </>
           <SigButton onClick={onClickModal}>반려식물 등록하기</SigButton>
           <SectionWrapper title="반려 식물">
