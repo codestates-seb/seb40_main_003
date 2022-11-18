@@ -38,6 +38,8 @@ export const MainRightWrapper = styled.aside`
   flex-direction: column;
   background-color: var(--pure-white);
   padding: 16px 24px;
+  position: sticky;
+  top: 70px;
 
   @media screen and (max-width: 1024px) {
     margin-left: 0;
@@ -45,6 +47,7 @@ export const MainRightWrapper = styled.aside`
     justify-content: space-between;
     position: fixed;
     width: 100%;
+    top: auto;
     bottom: 52px;
     align-items: center;
     border-top: 1px solid var(--line-light-gray);
