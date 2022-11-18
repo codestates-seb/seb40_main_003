@@ -56,15 +56,6 @@ const CareDetail = () => {
       console.log(err);
     }
   }, [id]);
-
-  const Main = styled.main`
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  `;
-
   return !isLoading && data !== null ? (
     <MainContentContainer>
       <MainCenterWrapper>
@@ -83,14 +74,12 @@ const CareDetail = () => {
           />
 
           <SectionWrapper content={data.simpleContent} pb={8} />
-          <Main>
             <>
               {isOpenModal && (
                 <Modal onClickModal={onClickModal}>asdfasdfasg</Modal>
               )}
               
             </>
-          </Main>
           <SigButton onClick={onClickModal}>반려식물 등록하기</SigButton>
           <SectionWrapper title="반려 식물">
             <PlantCardCarousel key={"reactCarousel"}>
