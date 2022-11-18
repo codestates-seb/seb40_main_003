@@ -2,36 +2,36 @@ import React from "react";
 import styled from "@emotion/styled";
 
 interface ModalDefaultType {
-    onClickModal: () => void;
-    children: string;
+  onClickModal: () => void;
+  children: string;
 }
 
-function Modal({
-    onClickModal,
-    children,
-}: ModalDefaultType) {
-    return (
-        <ModalContainer>
-        <DialogBox>{children}</DialogBox>
-        <Backdrop
+function Modal({ onClickModal, children }: ModalDefaultType) {
+  return (
+    <ModalContainer>
+      <DialogBox>{children}</DialogBox>
+      <Backdrop
         onClick={(e: React.MouseEvent) => {
-            e.preventDefault();
+          e.preventDefault();
 
-            if (onClickModal) {
+          if (onClickModal) {
             onClickModal();
-            }
+          }
         }}
-        />
+      />
     </ModalContainer>
-    );
+  );
 }
 
 const ModalContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    margin: auto;
-    display: flex;
-    justify-content: center;
+  position: absolute;
+  display: flex;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
 `;
 
 const DialogBox = styled.dialog`
@@ -49,12 +49,12 @@ const DialogBox = styled.dialog`
 `;
 
 const Backdrop = styled.div`
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    top: 0;
-    z-index: 9999;
-    background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.2);
 `;
 
 export default Modal;
