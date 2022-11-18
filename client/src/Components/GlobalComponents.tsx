@@ -40,7 +40,7 @@ export const TagWrapper = styled.div`
   align-items: center;
   flex-wrap: wrap;
   overflow: hidden;
-  background-color: aliceblue;
+  /* background-color: aliceblue; */
 `;
 
 // 태그 앨리먼트
@@ -269,7 +269,7 @@ export const CommentColumnWrapper = styled.div`
 
 export type CommentCardTypes = {
   size?: string;
-  src?: string;
+  src: string;
   alt?: string;
   name?: string;
   createdAt?: string;
