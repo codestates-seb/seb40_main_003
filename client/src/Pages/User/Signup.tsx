@@ -2,6 +2,7 @@ import React from 'react';import { FieldErrors, useForm } from "react-hook-form"
 import { CenteringWrapper, SigButton } from '../../Components/GlobalComponents';
 import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
 import styled from "@emotion/styled";
+import { Link } from "react-router-dom";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -112,8 +113,10 @@ const Signup = (props: Props) => {
         />        
         <p className='font-alert-red sub'>{errors.password?.message}</p>
         </>
-      </SectionWrapper>  
+      </SectionWrapper> 
+      <Link to={`/login/`}>
         <SigButton type='submit' value="Create Account">계정 생성</SigButton>
+      </Link>
       </section>
       </MainCenterWrapper>
       <MainRightWrapper>
