@@ -33,8 +33,9 @@ public class DealController {
      */
     @PostMapping
     public ResponseEntity postDeal(@RequestBody DealPostDto dealPostDto,
+                                   @RequestParam(name = "images", required = false) List<MultipartFile> images,
                                    @RequestHeader("Authorization") String token) throws IOException {
-        DealResponseDto response = dealService.postDeal(dealPostDto, jwtTokenizer.getUserIdFromToken(token));
+        DealResponseDto response = dealService.postDeal(dealPostDto, images, jwtTokenizer.getUserIdFromToken(token));
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
@@ -43,8 +44,9 @@ public class DealController {
      */
     @PatchMapping("/{deal-id}")
     public ResponseEntity patchDeal(@PathVariable("deal-id") Long dealId,
+                                    @RequestParam(name = "images", required = false) List<MultipartFile> images,
                                     @RequestBody DealPostDto dealPatchDto) throws IOException {
-        DealResponseDto response = dealService.patchDeal(dealId, dealPatchDto);
+        DealResponseDto response = dealService.patchDeal(dealId, images, dealPatchDto);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -52,8 +54,10 @@ public class DealController {
      * 거래글 전체 조회
      */
     @GetMapping
-    public ResponseEntity getDealList(@Positive @RequestParam int page, @Positive @RequestParam int size) {
-        return dealService.getDealList(page, size);
+    public ResponseEntity getDealList(@RequestParam String keyword,
+                                      @Positive @RequestParam int page,
+                                      @Positive @RequestParam int size) {
+        return dealService.getDealList(keyword, page, size);
     }
 
     /**
@@ -65,16 +69,6 @@ public class DealController {
         return new ResponseEntity(dealDetail, HttpStatus.OK);
     }
 
-    /**
-     * 거래글 좋아요(찜)
-     */
-    @PostMapping("/{deal-id}/like")
-    public ResponseEntity likeDeal(@PathVariable("deal-id") Long dealId,
-                                   @RequestHeader("Authorization") String token) {
-        Long userId = jwtTokenizer.getUserIdFromToken(token);
-        LikeDealResponseDto response = dealService.likeDeal(userId, dealId);
-        return new ResponseEntity(response, HttpStatus.CREATED);
-    }
 
 
     /**

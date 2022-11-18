@@ -5,7 +5,10 @@ import com.kittyhiker.sikjipsa.deal.dto.DealPostDto;
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.member.entity.Member;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,11 +16,14 @@ import java.util.List;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Deal extends AuditingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "deal_id")
-	private Long id;
+	private Long dealId;
 
 	private String title;
 
@@ -46,11 +52,12 @@ public class Deal extends AuditingEntity {
 	@OneToMany(mappedBy = "deal")
 	private List<DealChat> dealChats = new ArrayList<>();
 
-	@OneToMany(mappedBy = "deal")
-	private List<AreaTag> areaTags = new ArrayList<>();
+//	@OneToMany(mappedBy = "deal")
+//	private List<AreaTag> areaTags = new ArrayList<>();
+	private int area;
 
-	@OneToMany(mappedBy = "deal")
-	private List<Image> images = new ArrayList<>();
+//	@OneToMany(mappedBy = "deal")
+//	private List<Image> images = new ArrayList<>();
 
 	public void likeDeal(MemberLikeDeal likeDeal) {
 		likes+=1;
