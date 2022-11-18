@@ -28,8 +28,8 @@ const ModalContainer = styled.div`
   display: flex;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   justify-content: center;
   align-items: center;
 `;
@@ -40,7 +40,10 @@ const DialogBox = styled.dialog`
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+    position: fixed;
     border: none;
+    left: calc(50% - 160px);
     border-radius: 8px;
     box-shadow: 0 0 30px rgba(30, 30, 30, 0.185);
     box-sizing: border-box;

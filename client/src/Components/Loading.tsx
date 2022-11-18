@@ -93,28 +93,20 @@ const spin = keyframes`
   }
   `
 
-const Container = styled.div`
-  width: 80px;
-  height: 80px;
-  margin: 0 auto;
-`;
 
-const LoadindSpinner = styled.div`
+// loading 컴포넌트
+type LoadingSpinnerProps = {
+  size?:number
+}
+export const LoadingSpinner = styled.div`
   display: block;
-  width: 100%;
-  height: 100%;
+  width: ${(props:LoadingSpinnerProps)=>(props.size?props.size:"70")}px;
+  height: ${(props:LoadingSpinnerProps)=>(props.size?props.size:"70")}px;
   border: 7px solid var(--line-gray);
   border-Radius: 100%;
   border-Top-Color: var(--main);
   animation: ${spin} 500ms linear infinite;
   `;
 
-export function Loading() {
-  return (
-    <Container>
-      <LoadindSpinner />
-    </Container>
-  );
-};
 
 export default Skeleton;

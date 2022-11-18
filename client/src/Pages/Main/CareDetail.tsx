@@ -27,6 +27,7 @@ import { userState } from "../../Recoil/atoms/user";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
 import Modal from "../../Components/Modal";
 import { useCallback } from "react";
+import { LoadingSpinner } from "../../Components/Loading";
 
 const CareDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -68,15 +69,14 @@ const CareDetail = () => {
             circle={true}
             size={"66"}
             tag={data.useNum}
-
           />
 
           <SectionWrapper content={data.simpleContent} pb={8} />
-            <>
-              {isOpenModal && (
-                <Modal onClickModal={onClickModal}>asdfasdfasg</Modal>
-              )}
-            </>
+          <>
+            {isOpenModal && (
+              <Modal onClickModal={onClickModal}>asdfasdfasg</Modal>
+            )}
+          </>
           <SigButton onClick={onClickModal}>반려식물 등록하기</SigButton>
           <SectionWrapper title="반려 식물">
             <PlantCardCarousel key={"reactCarousel"}>
@@ -135,12 +135,13 @@ const CareDetail = () => {
           </SectionWrapper>
         </section>
       </MainCenterWrapper>
+
       <MainRightWrapper>
         <SigButton>문의 하기</SigButton>
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
-    <>loading...</>
+    <LoadingSpinner />
   );
 };
 
