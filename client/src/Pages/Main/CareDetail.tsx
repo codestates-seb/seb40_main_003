@@ -2,7 +2,12 @@ import axios from "axios";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilStateLoadable, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  useRecoilState,
+  useRecoilStateLoadable,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 import {
   ProfileCard,
   ProfilePlantCard,
@@ -30,72 +35,67 @@ const CareDetail = () => {
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
 
-  const setTitle= useSetRecoilState(currentPage)
-    useEffect(()=>{
-    if(data!==null){
-      setTitle({title:`${data.member.name} 님의 프로필`})
+  const setTitle = useSetRecoilState(currentPage);
+  useEffect(() => {
+    if (data !== null) {
+      setTitle({ title: `${data.member.name} 님의 프로필` });
     }
-  },[data])
+  }, [data]);
 
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-  
+
   useEffect(() => {
     try {
       axios.get(`/caring/${id}`).then((res) => {
         setData(res.data);
         setIsLoading(false);
-      })
+      });
     } catch (err) {
       console.log(err);
     }
   }, [id]);
 
-
   const Main = styled.main`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`;
-
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `;
 
   return !isLoading && data !== null ? (
     <MainContentContainer>
       <MainCenterWrapper>
         <section>
-          <Link to={isLogin ? `/caring/${data.member.memberId}` : ""}>
-            <ProfileCard
-              src={data.member.image.imgUrl}
-              alt={`${data.expertReview[0].writer.nickname}의 대표사진`}
-              name={data.expertReview[0].writer.nickname}
-              location={data.address}
-              circle={true}
-              size={"66"}
-              tag={data.useNum}
+          <ProfileCard
+            src={data.member.image.imgUrl}
+            alt={`${data.expertReview[0].writer.nickname}의 대표사진`}
+            name={data.expertReview[0].writer.nickname}
+            location={data.address}
+            circle={true}
+            size={"66"}
+            tag={data.useNum}
 
-              // 태그
-              // <ViewCounter like={data.userLikeExpert} view={data.view} />
-            />
-          </Link>
+            // 태그
+            // <ViewCounter like={data.userLikeExpert} view={data.view} />
+          />
+
           <SectionWrapper content={data.simpleContent} pb={8} />
           <Main>
             <>
-            {isOpenModal && (
-                  <Modal onClickModal={onClickModal}>
-                  asdfasdfasg
-                  </Modal>
-                )}
-                  <SigButton onClick={onClickModal}>반려식물 등록하기</SigButton>
+              {isOpenModal && (
+                <Modal onClickModal={onClickModal}>asdfasdfasg</Modal>
+              )}
+              
             </>
-              </Main>  
+          </Main>
+          <SigButton onClick={onClickModal}>반려식물 등록하기</SigButton>
           <SectionWrapper title="반려 식물">
             <PlantCardCarousel key={"reactCarousel"}>
-              <>              
-              
-              {data.plant.map((e) => {
+              <>
+                {data.plant.map((e) => {
                   return (
                     <ProfilePlantCard
                       src={data.member.image.imgUrl}
