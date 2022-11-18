@@ -269,7 +269,7 @@ export const CommentColumnWrapper = styled.div`
 
 export type CommentCardTypes = {
   size?: string;
-  src?: string;
+  src: string;
   alt?: string;
   name?: string;
   createdAt?: string;

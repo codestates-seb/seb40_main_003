@@ -228,6 +228,7 @@ return rest.get("https://testserver.com/profile-expert", async (req, res, ctx) =
           writerInfo: {
             userId: "작성자아이디",
             userNickname: "초보집사",
+            image:"https://picsum.photos/seed/picsum/400/600"
           },
         },
       ],
