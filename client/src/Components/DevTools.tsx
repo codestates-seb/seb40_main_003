@@ -45,10 +45,17 @@ const DevTools = (props: Props) => {
         setUser(null);
       });
   };
+  // const handleModal = async (e: React.SyntheticEvent) => {
+  //   e.preventDefault();
+  //   axios
+  //   .post("")
+  // }
+
   return (
     <DevBack>
       <SigButton onClick={forceLogin} className={user?"disable":""}>개발용 강제로그인</SigButton>
       <SigButton onClick={forceLogout} className={user?"":"disable"}>개발용 강제로그아웃</SigButton>
+      {/* <SigButton onClick={handleModal} className={user?"":"disable"}>모달 열기</SigButton> */}
     </DevBack>
   );
 };
