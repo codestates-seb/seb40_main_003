@@ -5,7 +5,6 @@ import { ColumnWrapper, RowWrapper, SectionWrapper } from "../Wrapper";
 export const BambooWrapper = styled.footer`
   display: flex;
   justify-content: space-between;
-  margin-top: 8px;
 `;
 
 const BambooCard = ({ data }: any) => {
