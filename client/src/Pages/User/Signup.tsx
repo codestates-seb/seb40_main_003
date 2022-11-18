@@ -41,8 +41,8 @@ const Signup = (props: Props) => {
   return (
     <MainContentContainer>
       <MainCenterWrapper>
-        <CenteringWrapper onSubmit={handleSubmit(onValid, onInValid)}>
-          <FormWrapper>
+        <section onSubmit={handleSubmit(onValid, onInValid)}>
+
           {/* <SectionWrapper title={"이름"} borderNone={true}>
           <input 
             {...register("username", { 
@@ -61,11 +61,11 @@ const Signup = (props: Props) => {
           />
         </SectionWrapper>
       <p>{errors.username?.message}</p> */}
-
       <SectionWrapper title="닉네임" borderNone={true}>
+      <>
       <input 
         {...register("nickname", { 
-          required: "닉네임을 입력해주세요.",
+          required: "",
           minLength: {
             message: "닉네임은 2글자 이상이어야 합니다.",
             value: 2
@@ -74,16 +74,18 @@ const Signup = (props: Props) => {
             message: "닉네임은 12글자를 넘을 수 없습니다.",
             value: 12
           }
-        })} 
+        })}
         type="Text" 
         placeholder="닉네임을 입력해주세요."
       />
+      <p className='font-alert-red sub'>{errors.nickname?.message}</p>
+      </>
       </SectionWrapper>
-      <p>{errors.nickname?.message}</p>
 
       <SectionWrapper title={"이메일"} borderNone={true}>
+        <>
         <input {...register("email", { 
-          required: "이메일을 입력해주세요.",
+          required: "",
           validate: {
             dotinclude: (value) =>
           value.includes(".") || "이메일 형식이 아닙니다.",
@@ -92,12 +94,14 @@ const Signup = (props: Props) => {
           type="email" 
           placeholder="이메일을 입력해주세요."
         />
-        </SectionWrapper>
-        <p>{errors.email?.message}</p>
+        <p className='font-alert-red sub'>{errors.email?.message}</p>
+      </>
+      </SectionWrapper>
 
       <SectionWrapper title={"비밀번호"} borderNone={true}>
+        <>
         <input {...register("password", { 
-          required: "비밀번호를 입력해주세요.",
+          required: "",
           minLength: {
             message: "비밀번호는 8자 이상이어야 합니다.",
             value: 8
@@ -106,16 +110,15 @@ const Signup = (props: Props) => {
           type="password" 
           placeholder="비밀번호를 입력해주세요."
         />        
+        <p className='font-alert-red sub'>{errors.password?.message}</p>
+        </>
       </SectionWrapper>  
-      <p>{errors.password?.message}</p>
-
-    <SigButton type='submit' value="Create Account">계정 생성</SigButton>
-          </FormWrapper>
-  </CenteringWrapper>
-  </MainCenterWrapper>
-  <MainRightWrapper>
-  </MainRightWrapper>
-  </MainContentContainer>
+        <SigButton type='submit' value="Create Account">계정 생성</SigButton>
+      </section>
+      </MainCenterWrapper>
+      <MainRightWrapper>
+      </MainRightWrapper>
+    </MainContentContainer>
   )
 
 }
