@@ -1,4 +1,5 @@
 import axios from "axios";
+import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilStateLoadable, useRecoilValue, useSetRecoilState } from "recoil";
@@ -19,10 +20,13 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import { currentPage } from "../../Recoil/atoms/currentPage";
 import { userState } from "../../Recoil/atoms/user";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
+import Modal from "../../Components/Modal";
+import { useCallback } from "react";
 
 const CareDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<CareDetailTypes | null>(null);
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
 
@@ -32,6 +36,10 @@ const CareDetail = () => {
       setTitle({title:`${data.member.name} 님의 프로필`})
     }
   },[data])
+
+  const onClickModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
   
   useEffect(() => {
     try {
@@ -45,7 +53,13 @@ const CareDetail = () => {
   }, [id]);
 
 
-  
+  const Main = styled.main`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
 
 
   return !isLoading && data !== null ? (
@@ -67,10 +81,21 @@ const CareDetail = () => {
             />
           </Link>
           <SectionWrapper content={data.simpleContent} pb={8} />
+          <Main>
+            <>
+            {isOpenModal && (
+                  <Modal onClickModal={onClickModal}>
+                  asdfasdfasg
+                  </Modal>
+                )}
+                  <SigButton onClick={onClickModal}>반려식물 등록하기</SigButton>
+            </>
+              </Main>  
           <SectionWrapper title="반려 식물">
             <PlantCardCarousel key={"reactCarousel"}>
-              <>
-                {data.plant.map((e) => {
+              <>              
+              
+              {data.plant.map((e) => {
                   return (
                     <ProfilePlantCard
                       src={data.member.image.imgUrl}

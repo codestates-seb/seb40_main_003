@@ -1,6 +1,6 @@
 import { rest } from "msw";
 import {ProductDetailHandler,ProductListHandler} from "./productHandler"
-import {CaringListHandler, profileExpertDetail, expertProfileDetail} from "./caringHandler"
+import {CaringListHandler, expertProfileHandler, expertProfileDetail} from "./caringHandler"
 import { BambooListHandler,BambooDetailHandler } from "./bambooHandler"
 import { Profile } from './profileHandler';
 export const handlers = [
@@ -34,7 +34,7 @@ export const handlers = [
   expertProfileDetail(1),
   expertProfileDetail(2),
   expertProfileDetail(3),
-  profileExpertDetail(),
+  expertProfileHandler(),
 
 
 // 커뮤니티 핸들러
