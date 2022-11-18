@@ -102,7 +102,7 @@ const CareDetail = () => {
                       alt={`${data.member.name}의 반려식물`}
                       name={e.name}
                       type={e.plantType}
-                      key={e.plantId}
+                      key={`profilePlantCard ${e.plantId}`}
                       age={e.year}
                     />
                   );
@@ -141,7 +141,7 @@ const CareDetail = () => {
                     content={e.content}
                     user={isLogin}
                     author={e.writer.memberId}
-                    key={e.expertReviewId}
+                    key={`돌봄 ${e.expertReviewId}`}
                   />
                 );
               })}

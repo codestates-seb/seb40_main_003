@@ -6,7 +6,6 @@ import { caringTypes } from "../../types/caringTypes";
 import { Link } from "react-router-dom";
 import { MainContentContainer, MainCenterWrapper, MainRightWrapper } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import useFetch from "../../Hooks/basicFetching";
 
 
 type props = [caringTypes];
@@ -30,8 +29,8 @@ const Care = (props:any) => {
       <MainCenterWrapper>
       {data.map((e) => {
         return (
-        <Link to={`/caring/${e.expertProfileId}`}>
-          <CareCard key={e.expertProfileId} data={e} />
+        <Link key={e.expertProfileId} to={`/caring/${e.expertProfileId}`}>
+          <CareCard  data={e} />
         </Link>
         )
     })}
