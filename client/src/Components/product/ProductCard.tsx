@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, SigTag, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper, RowWrapper } from "../Wrapper";
-import Skeleton from "../Skeleton";
+import Skeleton from "../Loading";
 
 const ProductWrapper = styled.div`
   width: 100%;

@@ -85,4 +85,36 @@ const Skeleton: React.FC<Props> = ({
   );
 };
 
+
+
+const spin = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+  `
+
+const Container = styled.div`
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+`;
+
+const LoadindSpinner = styled.div`
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 7px solid var(--line-gray);
+  border-Radius: 100%;
+  border-Top-Color: var(--main);
+  animation: ${spin} 500ms linear infinite;
+  `;
+
+export function Loading() {
+  return (
+    <Container>
+      <LoadindSpinner />
+    </Container>
+  );
+};
+
 export default Skeleton;

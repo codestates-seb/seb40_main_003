@@ -11,6 +11,7 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
+import { Loading } from '../../Components/Loading';
 
 const Community = () => {
   const [data, setData] = useState<bambooTypes>();
@@ -43,7 +44,7 @@ const Community = () => {
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
-    <>loading...</>
+    <Loading />
   );
 };
 
