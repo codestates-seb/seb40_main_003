@@ -45,7 +45,7 @@ const BambooDetail = () => {
         {data.image[0] ? (
           <ImageWrapper
             className='bambooImage'
-            size={"360"}
+            size={"240"}
             src={data.image[0].imgUrl}
             alt={`상품명 ${data.title}의 대표이미지`}
           />
