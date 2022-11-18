@@ -1,18 +1,7 @@
 import React from 'react';import { FieldErrors, useForm } from "react-hook-form";
-import { CenteringWrapper, SigButton } from '../../Components/GlobalComponents';
+import { SigButton } from '../../Components/GlobalComponents';
 import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
-import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-
-const FormWrapper = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
-  height: 100%;
-  width: 100%;
-  padding: 10px;
-`;
 
 type Props = {}
 
@@ -44,24 +33,6 @@ const Signup = (props: Props) => {
       <MainCenterWrapper>
         <section onSubmit={handleSubmit(onValid, onInValid)}>
 
-          {/* <SectionWrapper title={"이름"} borderNone={true}>
-          <input 
-            {...register("username", { 
-              required: "이름을 입력해주세요.",
-              minLength: {
-                message: "이름은 2글자 이상이어야 합니다.",
-                value: 2
-              },
-              maxLength: {
-                message: "이름은 12글자를 넘을 수 없습니다.",
-                value: 12
-              }
-            })} 
-            type="Text" 
-            placeholder="이름을 입력해주세요."
-          />
-        </SectionWrapper>
-      <p>{errors.username?.message}</p> */}
       <SectionWrapper title="닉네임" borderNone={true}>
       <>
       <input 
@@ -113,7 +84,25 @@ const Signup = (props: Props) => {
         />        
         <p className='font-alert-red sub'>{errors.password?.message}</p>
         </>
+      </SectionWrapper>
+
+      
+      <SectionWrapper title={"비밀번호 확인"} borderNone={true}>
+        <>
+        <input {...register("password", { 
+          required: "",
+          minLength: {
+            message: "비밀번호는 8자 이상이어야 합니다.",
+            value: 8
+          },
+          })}
+          type="password" 
+          placeholder="비밀번호를 다시 입력해주세요."
+        />        
+        <p className='font-alert-red sub'>{errors.password?.message}</p>
+        </>
       </SectionWrapper> 
+
       <Link to={`/login/`}>
         <SigButton type='submit' value="Create Account">계정 생성</SigButton>
       </Link>

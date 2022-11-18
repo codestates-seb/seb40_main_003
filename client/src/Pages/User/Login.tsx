@@ -117,25 +117,18 @@ function Login() {
     <MainContentContainer>
       <MainCenterWrapper>
         <section onSubmit={handleSubmit(onLogin)}>
-        <SectionWrapper title={"이메일"} borderNone={true}>
-        <>
-        <input {...register("email", { 
-          required: "",
-          pattern: /^\S+@\S+$/i,
-          validate: {
-            dotinclude: (value) =>
-          value.includes(".") || "이메일 형식이 아닙니다.",
-            },
-          })}
-          type="email" 
-          placeholder="이메일을 입력해주세요."
-        />
-        <p className='font-alert-red sub'>{errors.email?.message}</p>
-      </>
-      </SectionWrapper>
-
+<FormWrapper>
           <InputContainer>
-
+            <Label htmlFor={'Email'}>Email</Label>
+            <Input
+              type={'email'}
+              id="Email"
+              {...register('email', {
+                required: true,
+                pattern: /^\S+@\S+$/i,
+                maxLength: 50,
+              })}
+            />
             {errors.email && errors.email.type === 'required' && (
               <Errormsg> 이메일을 입력해주세요.</Errormsg>
             )}
@@ -170,6 +163,8 @@ function Login() {
           </Link>
           <SigButton className="disable" type="submit" value={'Login'}>로그인</SigButton>
           {error && <Errormsg> {error}</Errormsg>}
+          </FormWrapper>
+
           </section>
       </MainCenterWrapper>
       <MainRightWrapper>
