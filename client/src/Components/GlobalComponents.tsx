@@ -295,7 +295,7 @@ export const CommentCard = (props: CommentCardTypes) => {
 
       <CommentColumnWrapper>
         <ColumnWrapper>
-          <span className="medium mt-8">{name}</span>
+          <span className="sub mt-8">{name}</span>
           {tag ? (
             <TagWrapper>
               {tag.map((e) => {
@@ -303,7 +303,7 @@ export const CommentCard = (props: CommentCardTypes) => {
               })}
             </TagWrapper>
           ) : null}
-          <div className="sub font-gray">{content}</div>
+          <span className="font-gray medium">{content}</span>
         </ColumnWrapper>
         <ColumnWrapper>
           <div className="sub font-gray mt-7 mb-20">{createdAt}</div>
