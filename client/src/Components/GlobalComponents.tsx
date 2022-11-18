@@ -271,9 +271,9 @@ type CommentCardTypes = {
   size?: string;
   src?: string;
   alt?: string;
-  name: string;
-  createdAt: string;
-  content: string;
+  name?: string;
+  createdAt?: string;
+  content?: string;
   tag?: [{ techId: number; name: string }];
   user: UserStateType | null;
   author: number;
@@ -322,7 +322,7 @@ export const CommentCard = (props: CommentCardTypes) => {
 
 // 댓글 수정삭제 버튼
 type CommentEditType = {
-  userId: string | number | null ;
+  userId: string | number | null | UserStateType;
   author: string | number;
   callback1?: Function;
   callback2?: Function;

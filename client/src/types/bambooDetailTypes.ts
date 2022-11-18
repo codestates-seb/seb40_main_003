@@ -37,6 +37,11 @@ type bambooDetailTypes =
           member: {
               memberId: number,
               nickname: string
+              image : {
+                imageId : string,
+                imgUrl : string,
+                isRepImg : number,
+            }
           }
       }
   ]

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
   CommentCard,
+  CommentEdit,
   ImageWrapper,
   SigButton,
   ViewCounter,
@@ -29,16 +30,19 @@ const BambooDetail = () => {
       axios.get(`/bamboo/${id}`).then((res) => {
         setData(res.data);
         setIsLoading(false);
-        console.log(res.data);
       });
     } catch (err) {
-      console.log(err);
     }
   }, []);
 
   return !isLoading && data !== null ? (
     <MainContentContainer>
       <MainCenterWrapper>
+        
+      <CommentEdit
+        userId={user}
+        author={data.member.memberId}
+        />
         <span className='h4 bold font-main mb-16'>{data.title}</span>
         {data.image[0] ? (
           <ImageWrapper
