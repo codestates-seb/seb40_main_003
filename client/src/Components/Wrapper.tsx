@@ -19,7 +19,7 @@ export const MainCenterWrapper = styled.main`
   flex-direction: column;
   width: 100%;
   min-width: 312px;
-  min-height: 100vh;
+  min-height: 80vh;
   max-width: 730px;
   padding: 24px;
   margin-bottom: 156px;

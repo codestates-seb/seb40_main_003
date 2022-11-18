@@ -32,6 +32,7 @@ const BambooDetail = () => {
       });
     } catch (err) {}
   }, []);
+
   return !isLoading && data !== null ? (
     <MainContentContainer>
       <MainCenterWrapper>

@@ -31,8 +31,6 @@ const EndWrapper = styled.div`
 `
 
 const CareCard = ({ data }: any) => {
-    console.log(data)
-
   return (
         <>
       <CardWrapper>

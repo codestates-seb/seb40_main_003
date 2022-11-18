@@ -12,6 +12,7 @@ import {
   MainRightWrapper,
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
+import usePageTitle from "../../Hooks/usePageTitle";
 
 type elemMaps = [ProductPreviewType];
 
@@ -56,10 +57,12 @@ const Product = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hidingTime, setHidingTime] = useState(true);
   // 초기 로딩
+  usePageTitle("거래")
   useEffect(() => {
     setTimeout(() => {
       setHidingTime(false);
     }, 200);
+
     axios.get("/shopping").then(({ data }) => {
       setData(data.shopping);
       setIsLoading(false);

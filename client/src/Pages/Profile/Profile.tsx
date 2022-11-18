@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { ProfileCard, ProfilePlantCard } from '../../Components/GlobalComponents';
 import PlantCardCarousel from '../../Components/profile/plantCardCarousel';
 import { MainCenterWrapper, MainContentContainer, SectionWrapper } from '../../Components/Wrapper';
-import useWindowSize from '../../Hooks/windowSize';
+import usePageTitle from '../../Hooks/usePageTitle';
 import { userState } from '../../Recoil/atoms/user';
 import { profileTypes } from '../../types/profile';
 
@@ -18,7 +18,6 @@ const Profile = () => {
   const [data, setData] = useState<profileTypes | null>(null);
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
-  const width = useWindowSize().width
 
   useEffect(() => {
     try {
@@ -31,6 +30,7 @@ const Profile = () => {
       console.log(err);
     }
   }, [id]);
+  usePageTitle("프로필")
 
   return !isLoading && data !== null ? (
     <MainContentContainer>
@@ -45,7 +45,7 @@ const Profile = () => {
           size={"66"}
           />
           <SectionWrapper title='반려 식물'>
-            <PlantCardCarousel width={width}>
+            <PlantCardCarousel>
               {data.plant.map((e) => {
                 return (
                   <ProfilePlantCard

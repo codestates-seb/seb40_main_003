@@ -3,17 +3,19 @@ import React, {useState,useEffect} from 'react'
 
 type useFetchtypes ={
   url:string,
-  types:any
+  method?:string
 }
-function useFetch({url}:useFetchtypes) {
-
+function useFetch({url,method="get"}:useFetchtypes) {
   const [data, setData] = useState();
+  const [isLoading,setIsLoadng] = useState(true)
+
   useEffect(() => {
     axios.get(`${url}}`).then((res) => {
       setData(res.data)
+      setIsLoadng(false)
     })
     }, []);
-  return data;
+  return ({data,isLoading});
 }
 
 export default useFetch

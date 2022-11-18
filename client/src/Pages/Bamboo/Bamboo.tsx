@@ -10,11 +10,12 @@ import {
   MainRightWrapper,
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
+import usePageTitle from "../../Hooks/usePageTitle";
 
 const Community = () => {
   const [data, setData] = useState<bambooTypes>();
   const [isLoading, setIsLoading] = useState(true);
-
+  usePageTitle("게시판")
   useEffect(() => {
     axios.get("/bamboo").then((res) => {
       setData(res.data);

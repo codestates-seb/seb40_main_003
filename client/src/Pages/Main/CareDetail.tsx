@@ -1,13 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilStateLoadable, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   ProfileCard,
   ProfilePlantCard,
   SigButton,
   CommentCard,
-  SigTag,
 } from "../../Components/GlobalComponents";
 import PlantCardCarousel from "../../Components/profile/plantCardCarousel";
 import {
@@ -16,31 +15,38 @@ import {
   MainRightWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
-import useWindowSize from "../../Hooks/windowSize";
+import usePageTitle from "../../Hooks/usePageTitle";
+import { currentPage } from "../../Recoil/atoms/currentPage";
 import { userState } from "../../Recoil/atoms/user";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
-
-
 
 const CareDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<CareDetailTypes | null>(null);
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
-  const width = useWindowSize().width;
 
+  const setTitle= useSetRecoilState(currentPage)
+    useEffect(()=>{
+    if(data!==null){
+      setTitle({title:`${data.member.name} 님의 프로필`})
+    }
+  },[data])
+  
   useEffect(() => {
-    console.log(id)
     try {
       axios.get(`/caring/${id}`).then((res) => {
         setData(res.data);
         setIsLoading(false);
-        console.log(res.data.techTag[2].techTagName);
-      });
+      })
     } catch (err) {
       console.log(err);
     }
   }, [id]);
+
+
+  
+
 
   return !isLoading && data !== null ? (
     <MainContentContainer>
@@ -62,7 +68,7 @@ const CareDetail = () => {
           </Link>
           <SectionWrapper content={data.simpleContent} pb={8} />
           <SectionWrapper title="반려 식물">
-            <PlantCardCarousel width={width}>
+            <PlantCardCarousel key={"reactCarousel"}>
               <>
                 {data.plant.map((e) => {
                   return (
