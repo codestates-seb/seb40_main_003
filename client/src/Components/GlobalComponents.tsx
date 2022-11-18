@@ -267,7 +267,7 @@ export const CommentColumnWrapper = styled.div`
   justify-content: center;
 `;
 
-type CommentCardTypes = {
+export type CommentCardTypes = {
   size?: string;
   src?: string;
   alt?: string;
@@ -321,8 +321,8 @@ export const CommentCard = (props: CommentCardTypes) => {
 
 
 // 댓글 수정삭제 버튼
-type CommentEditType = {
-  userId: string | number | null | UserStateType;
+export type CommentEditType = {
+  userId: string | number | null;
   author: string | number;
   callback1?: Function;
   callback2?: Function;

@@ -24,7 +24,6 @@ const BambooDetail = () => {
   const [data, setData] = useState<bambooDetailTypes | null>(null);
   const { id } = useParams();
   const user = useRecoilValue(userState);
-
   useEffect(() => {
     try {
       axios.get(`/bamboo/${id}`).then((res) => {
@@ -34,13 +33,11 @@ const BambooDetail = () => {
     } catch (err) {
     }
   }, []);
-
   return !isLoading && data !== null ? (
     <MainContentContainer>
       <MainCenterWrapper>
-        
       <CommentEdit
-        userId={user}
+        userId={user!==null?user.userId:""}
         author={data.member.memberId}
         />
         <span className='h4 bold font-main mb-16'>{data.title}</span>
