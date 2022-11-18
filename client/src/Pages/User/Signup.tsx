@@ -1,5 +1,6 @@
 import React from 'react';import { FieldErrors, useForm } from "react-hook-form";
 import { SigButton } from '../../Components/GlobalComponents';
+import { MainContentContainer, MainCenterWrapper, MainRightWrapper } from "../../Components/Wrapper";
 
 type Props = {}
 
@@ -26,10 +27,12 @@ const Signup = (props: Props) => {
   // console.log(watch());
   
   return (
+    <MainContentContainer>
+      <MainCenterWrapper>
     <form onSubmit={handleSubmit(onValid, onInValid)}>
       <input 
         {...register("username", { 
-          required: "Username is required",
+          required: "이름을 입력해주세요.",
           minLength: {
             message: "이름은 2글자 이상이어야 합니다.",
             value: 2
@@ -42,10 +45,10 @@ const Signup = (props: Props) => {
         type="Text" 
         placeholder="이름"
       />
-      {errors.username?.message}
+      <p>{errors.username?.message}</p>
       <input 
         {...register("nickname", { 
-          required: "Nickname is required",
+          required: "닉네임을 입력해주세요.",
           minLength: {
             message: "닉네임은 2글자 이상이어야 합니다.",
             value: 2
@@ -58,19 +61,37 @@ const Signup = (props: Props) => {
         type="Text" 
         placeholder="닉네임"
       />
-
-      <input {...register("email", { required: "Email is required" })}
+      <p>{errors.nickname?.message}</p>
+      <input {...register("email", { 
+        required: "이메일을 입력해주세요.",
+        validate: {
+          dotinclude: (value) =>
+        value.includes(".") || "이메일 형식이 아닙니다.",
+        },
+      })}
       type="email" 
       placeholder="Email"
       />
-      <input {...register("password", { required: "Password is required" })}
+      <p>{errors.email?.message}</p>
+      <input {...register("password", { 
+        required: "비밀번호를 입력해주세요",
+        minLength: {
+          message: "비밀번호는 8자 이상이어야 합니다.",
+          value: 8
+        },
+      })}
       type="password" 
       placeholder="Password"
       />
+      <p>{errors.password?.message}</p>
     <SigButton type='submit' value="Create Account"> 계정 생성</SigButton>
   </form>
+  </MainCenterWrapper>
+  <MainRightWrapper>
+  </MainRightWrapper>
+  </MainContentContainer>
   )
 
 }
 
-export default Signup
+export default Signup;

@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from "../../Recoil/atoms/user";
 import { SigButton } from "../../Components/GlobalComponents";
 import { Link } from "react-router-dom";
+import { MainContentContainer, MainCenterWrapper, MainRightWrapper } from "../../Components/Wrapper";
 
 const Container = styled.div`
   width: 300px;
@@ -113,8 +114,8 @@ function Login() {
   };
 
   return (
-    <MainContainer>
-      <Container>
+    <MainContentContainer>
+      <MainCenterWrapper>
         <Form onSubmit={handleSubmit(onLogin)}>
           <InputContainer>
             <Label htmlFor={'Email'}>Email</Label>
@@ -162,8 +163,11 @@ function Login() {
           <SigButton className="disable" type="submit" value={'Login'}>로그인</SigButton>
           {error && <Errormsg> {error}</Errormsg>}
         </Form>
-      </Container>
-    </MainContainer>
+      </MainCenterWrapper>
+      <MainRightWrapper>
+      </MainRightWrapper>
+      </MainContentContainer>
+      
   );
 }
 
