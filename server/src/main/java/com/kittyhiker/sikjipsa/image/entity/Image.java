@@ -7,6 +7,7 @@ import com.kittyhiker.sikjipsa.member.entity.MemberProfile;
 import com.kittyhiker.sikjipsa.plant.entity.Plant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ import javax.persistence.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 @Builder
 public class Image {
 
