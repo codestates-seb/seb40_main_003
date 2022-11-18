@@ -46,7 +46,7 @@ const Header = () => {
     <HeaderWrapper className="bold h4">
       <HeaderContent>
         <BackButton />
-        <span className="display-none-pc">{title}</span>
+        <span className="display-none-pc h4 bold">{title}</span>
         <BackButton />
         {width!==undefined&&width>1024?<NavContent/>:null}
       </HeaderContent>
