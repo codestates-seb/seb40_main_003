@@ -74,9 +74,6 @@ const NavElem = ({ title = "Untitled", children }: NavElemProps) => {
 
 const Navbar = () => {
   const user = useRecoilValue(userState);
-  const {currentLocation} = useParams()
-  console.log(currentLocation)
-
   return (
     <>
       <NavContainer>

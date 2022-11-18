@@ -5,7 +5,8 @@ import  CareCard  from "../../Components/main/CareCard";
 import { caringTypes } from "../../types/caringTypes";
 import { Link } from "react-router-dom";
 import { MainContentContainer, MainCenterWrapper, MainRightWrapper } from "../../Components/Wrapper";
-import { SigButton } from "../../Components/GlobalComponents";
+import usePageTitle from "../../Hooks/usePageTitle";
+import useFetch from "../../Hooks/basicFetching";
 
 
 type props = [caringTypes];
@@ -13,7 +14,7 @@ type props = [caringTypes];
 const Care = (props:any) => {
   const [data, setData] = useState<props>();
   const [isLoading, setIsLoading] = useState(true);
-
+  usePageTitle("돌봄")
   useEffect(() => {
     axios.get("/caring")
     .then(( res ) => {

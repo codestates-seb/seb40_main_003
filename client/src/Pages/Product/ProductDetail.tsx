@@ -13,6 +13,7 @@ import {
   MainContentContainer,
   MainRightWrapper,
 } from "../../Components/Wrapper";
+import usePageTitle from "../../Hooks/usePageTitle";
 import { userState } from "../../Recoil/atoms/user";
 import { ProductDetailType } from "../../types/productTypes";
 
@@ -22,7 +23,6 @@ const ProductDetail = () => {
   const [data, setData] = useState<ProductDetailType | null>(null);
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
-
   useEffect(() => {
     try {
       axios.get(`/shopping/${id}`).then((res) => {
@@ -43,8 +43,8 @@ const ProductDetail = () => {
         <TopCarousel>
           {data.image.map((e, i) => {
             return (
-              <div>
-                <img src={e.imgUrl} alt={`${data.title}의 ${i}번째사진`} key={i}/>
+              <div key={i}>
+                <img src={e.imgUrl} alt={`${data.title}의 ${i}번째사진`} />
               </div>
             );
           })}

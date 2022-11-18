@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
-import React from 'react'
-import { useRecoilValue } from 'recoil'
+import React, { useState } from 'react'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import { currentPage } from '../Recoil/atoms/currentPage'
 
 const HeaderWrapper = styled.header`

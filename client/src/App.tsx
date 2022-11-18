@@ -42,21 +42,17 @@ function App() {
       <Routes>
         {/* 보호된 라우팅 */}
         <Route element={<AuthProvider />}>
-
           <Route path="/talk" element={<Talk />} />
-
-          <Route path="/profile" element={<DefaultLayout />}>
+          <Route path="/profile" element={<HeaderLayout />}>
             <Route path=":id" element={<Profile />} />
           </Route>
-
         </Route>
-        
+
         {/* 오픈된 라우팅 */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        {/* 헤더가 있는 컴포넌트들 */}
         <Route element={<HeaderLayout />}>
-
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-
           <Route path="/" element={<DefaultLayout />}>
             <Route index element={<Care />} />
             <Route path="/caring/:id" element={<CareDetail />} />
