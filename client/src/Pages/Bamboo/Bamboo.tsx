@@ -24,7 +24,7 @@ const Community = () => {
     });
   }, []);
 
-  return isLoading && data !== undefined ? (
+  return !isLoading && data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
         {data.data.map((e) => {
