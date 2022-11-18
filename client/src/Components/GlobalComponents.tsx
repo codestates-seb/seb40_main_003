@@ -1,3 +1,5 @@
+
+
 import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
@@ -52,7 +54,6 @@ export const SigTag = styled.div`
   width: ${(props: sigtagProps) => (props.width ? props.width + "px" : "auto")};
   height: ${(props: sigtagProps) =>
     props.height ? props.height + "px" : "auto"};
-
   padding: 2px 4px;
   background-color: var(--main);
   color: var(--pure-white);
@@ -61,7 +62,6 @@ export const SigTag = styled.div`
   border-radius: var(--sig-border-4);
   padding: 2px 4px;
   margin-right: 4px;
-
   &.ghost {
     color: var(--main);
     background-color: var(--pure-white);
