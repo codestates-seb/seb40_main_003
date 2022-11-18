@@ -246,8 +246,17 @@ code {
   text-overflow: ellipsis;
   overflow: hidden;
   word-break: break-word;
-
-  display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
+}
+@media screen and(max-width:1024px)   {
+  .display-none-from-tablet{
+    display: none !important;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .display-none-pc{
+    display: none;
+  }
 }
