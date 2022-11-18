@@ -322,7 +322,7 @@ export const CommentCard = (props: CommentCardTypes) => {
 
 // 댓글 수정삭제 버튼
 type CommentEditType = {
-  userId: string | number | null | UserStateType;
+  userId: string | number | UserStateType;
   author: string | number;
   callback1?: Function;
   callback2?: Function;
@@ -333,6 +333,8 @@ export const CommentEdit = ({
   callback1,
   callback2,
 }: CommentEditType) => {
+  console.log(userId)
+  console.log(author)
   return  String(userId) === String(author) ?(
     <CommentButtonWrapper>
       <span className="sub font-gray" onClick={callback1 && callback1()}>
