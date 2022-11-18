@@ -4,9 +4,9 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
 import { userState } from "../../Recoil/atoms/user";
-import { CenteringWrapper, SigButton } from "../../Components/GlobalComponents";
+import { SigButton } from "../../Components/GlobalComponents";
 import { Link } from "react-router-dom";
-import { MainContentContainer, MainCenterWrapper, MainRightWrapper } from "../../Components/Wrapper";
+import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
 
 // const Container = styled.div`
 //   width: 300px;
@@ -115,7 +115,8 @@ function Login() {
   return (
     <MainContentContainer>
       <MainCenterWrapper>
-        <FormWrapper onSubmit={handleSubmit(onLogin)}>
+        <section onSubmit={handleSubmit(onLogin)}>
+<FormWrapper>
           <InputContainer>
             <Label htmlFor={'Email'}>Email</Label>
             <Input
@@ -162,6 +163,8 @@ function Login() {
           <SigButton className="disable" type="submit" value={'Login'}>로그인</SigButton>
           {error && <Errormsg> {error}</Errormsg>}
           </FormWrapper>
+
+          </section>
       </MainCenterWrapper>
       <MainRightWrapper>
       </MainRightWrapper>

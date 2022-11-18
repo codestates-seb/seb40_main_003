@@ -35,19 +35,17 @@ const ModalContainer = styled.div`
 `;
 
 const DialogBox = styled.dialog`
-  width: 360px;
-  height: 400px;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 0 30px rgba(30, 30, 30, 0.185);
-  box-sizing: border-box;
-  background-color: white;
-  z-index: 10000;
+    width: 320px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(30, 30, 30, 0.185);
+    box-sizing: border-box;
+    background-color: white;
+    z-index: 10000;
 `;
 
 const Backdrop = styled.div`
