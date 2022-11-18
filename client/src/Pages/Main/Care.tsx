@@ -40,7 +40,7 @@ const Care = (props:any) => {
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
-    <> loading... 로딩 그만하고 이제 내보내줘 살려줘 </>
+    <> loading... </>
   );
 };
 
