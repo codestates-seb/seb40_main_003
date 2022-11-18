@@ -65,8 +65,9 @@ const BambooDetail = () => {
         {data.comment.map((e) => {
           return (
             <CommentCard
-              // 댓글 이미지 안날아옴
-              // src={data.comment}
+              src={e.member.image.imgUrl}
+              alt={`${e.member.nickname}의 대표이미지`}
+              size={"36"}
               name={e.member.nickname}
               createdAt={e.createdAt}
               content={e.content}
