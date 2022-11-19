@@ -71,6 +71,18 @@ input.content {
   height: 300px;
 }
 
+input.border-none {
+  outline: none;
+}
+
+input.checkbox-20 {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  accent-color: var(--main);
+  cursor: pointer;
+}
+
 
 /* 아이콘 active */
 .activeIcon span {
