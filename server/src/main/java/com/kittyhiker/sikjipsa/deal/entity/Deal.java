@@ -3,7 +3,6 @@ package com.kittyhiker.sikjipsa.deal.entity;
 import com.kittyhiker.sikjipsa.caring.entity.AreaTag;
 import com.kittyhiker.sikjipsa.deal.dto.DealPostDto;
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
-import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,11 +42,11 @@ public class Deal extends AuditingEntity {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
-	@OneToMany(mappedBy = "deal")
-	private List<MemberLikeDeal> memberLikeDeals = new ArrayList<>();
+//	@OneToMany(mappedBy = "deal")
+//	private List<MemberLikeDeal> memberLikeDeals = new ArrayList<>();
 
-	@OneToMany(mappedBy = "deal")
-	private List<MemberReview> memberReviews = new ArrayList<>();
+//	@OneToMany(mappedBy = "deal")
+//	private List<MemberReview> memberReviews = new ArrayList<>();
 
 	@OneToMany(mappedBy = "deal")
 	private List<DealChat> dealChats = new ArrayList<>();
@@ -59,9 +58,9 @@ public class Deal extends AuditingEntity {
 //	@OneToMany(mappedBy = "deal")
 //	private List<Image> images = new ArrayList<>();
 
-	public void likeDeal(MemberLikeDeal likeDeal) {
+	public void likeDeal() {
 		likes+=1;
-		this.memberLikeDeals.add(likeDeal);
+//		this.memberLikeDeals.add(likeDeal);
 	}
 
 	public void setMember(Member member){

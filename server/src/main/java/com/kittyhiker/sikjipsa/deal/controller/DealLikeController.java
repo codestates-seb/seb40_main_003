@@ -30,7 +30,7 @@ public class DealLikeController {
                                           @PathVariable @Positive int size,
                                           @RequestHeader("Authorization") String token) {
         Long userId = jwtTokenizer.getUserIdFromToken(token);
-        DealPagingDto likeDealList = dealLikeService.getLikeDealList(userId, page, size);
+        DealPagingDto likeDealList = dealLikeService.getLikeDealList(userId, page-1, size);
         return new ResponseEntity(likeDealList, HttpStatus.OK);
     }
 
@@ -49,9 +49,10 @@ public class DealLikeController {
      * 찜 취소
      */
     @DeleteMapping("/{deal-like-id}")
-    public ResponseEntity cancelLikeDeal(@RequestParam(("deal-like-id")) Long dealLikeId,
+    public ResponseEntity cancelLikeDeal(@RequestParam(("deal-id")) Long dealId,
                                          @RequestHeader("Authorization") String token) {
         Long userId = jwtTokenizer.getUserIdFromToken(token);
+        dealLikeService.cancelLikeDeal(userId, dealId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 

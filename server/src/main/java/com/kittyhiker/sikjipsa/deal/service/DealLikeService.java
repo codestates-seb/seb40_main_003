@@ -6,8 +6,11 @@ import com.kittyhiker.sikjipsa.deal.dto.LikeDealResponseDto;
 import com.kittyhiker.sikjipsa.deal.dto.PageInfo;
 import com.kittyhiker.sikjipsa.deal.entity.Deal;
 import com.kittyhiker.sikjipsa.deal.entity.MemberLikeDeal;
+import com.kittyhiker.sikjipsa.deal.mapper.DealMapper;
 import com.kittyhiker.sikjipsa.deal.respository.DealRepository;
 import com.kittyhiker.sikjipsa.deal.respository.LikeDealRepository;
+import com.kittyhiker.sikjipsa.image.entity.Image;
+import com.kittyhiker.sikjipsa.image.service.ImageService;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +22,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,33 +32,49 @@ public class DealLikeService {
 
     private final MemberRepository memberRepository;
     private final DealRepository dealRepository;
+    private final ImageService imageService;
+    private final DealMapper mapper;
     private final LikeDealRepository likeDealRepository;
 
     public DealPagingDto getLikeDealList(Long userId, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Member member = verifiedMember(userId);
         Page<MemberLikeDeal> likeDeal = likeDealRepository.findByMember(member, pageable);
-        List<Deal> collect = likeDeal.stream().map(like -> dealRepository.findByMemberLikeDeals(like))
-                .collect(Collectors.toList());
+        List<DealResponseDto> dealList = new ArrayList<>();
+        likeDeal.stream().forEach(
+                like -> {
+                    List<Image> image = imageService.findImage(like.getDeal());
+                    List<String> imageUrlList = image.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(like.getDeal(), imageUrlList);
+                    dealList.add(dealResponseDto);
+                }
+        );
 
         PageInfo pageInfo = new PageInfo(page, size, (int) likeDeal.getTotalElements(), likeDeal.getTotalPages());
-        return new DealPagingDto<>(collect, pageInfo);
+        return new DealPagingDto<>(dealList, pageInfo);
     }
 
 
     public LikeDealResponseDto likeDeal(Long userId, Long dealId) {
-        Member findMember = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+        Member findMember = verifiedMember(userId);
         Deal findDeal = verifiedDeal(dealId);
         MemberLikeDeal likeDeal = MemberLikeDeal.builder()
                 .member(findMember)
                 .deal(findDeal).build();
         MemberLikeDeal savedLike = likeDealRepository.save(likeDeal);
-        findDeal.likeDeal(savedLike);
-        findMember.likeDeal(savedLike);
-        memberRepository.save(findMember);
+        findDeal.likeDeal();
+        findMember.likeDeal(likeDeal);
+//        memberRepository.save(findMember);
         return LikeDealResponseDto.builder().memberId(userId)
                 .dealId(dealId)
                 .likeDealId(savedLike.getId()).build();
+    }
+
+    public void cancelLikeDeal (Long userId, Long dealId) {
+        Member member = verifiedMember(userId);
+        Deal deal = verifiedDeal(dealId);
+        MemberLikeDeal likeDeal = likeDealRepository.findByMemberAndDeal(member, deal).orElseThrow(() -> new IllegalArgumentException("NOT LIKE STATE"));
+        likeDealRepository.delete(likeDeal);
     }
 
     public Member verifiedMember(Long memberId) {
@@ -64,5 +84,4 @@ public class DealLikeService {
     public Deal verifiedDeal(Long dealId) {
         return dealRepository.findById(dealId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND DEAL"));
     }
-
 }
