@@ -81,9 +81,9 @@ const BambooEditor = (props: Props) => {
             </MainCenterWrapper>
             <MainRightWrapper>
                 <SectionWrapper>
-                    <p className='h5 bold font-main'>귀여운 반려식물을 자랑하거나, 우리 동네의 숨겨진 식물 박사들에게 궁금한 점들을 물어보세요.🌱
+                    <p className='h5 bold font-main mr-16'>귀여운 반려식물을 자랑하거나, 우리 동네의 숨겨진 식물 박사들에게 궁금한 점들을 물어보세요.🌱
                     </p></SectionWrapper>
-                <SigButton type='submit'>계정 생성</SigButton>
+                <SigButton type='submit'>새 글쓰기</SigButton>
             </MainRightWrapper>
         </MainContentContainer>
     )
