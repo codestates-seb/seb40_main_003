@@ -3,7 +3,7 @@ package com.kittyhiker.sikjipsa.image.entity;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
 import com.kittyhiker.sikjipsa.community.enitity.Community;
 import com.kittyhiker.sikjipsa.deal.entity.Deal;
-import com.kittyhiker.sikjipsa.member.entity.MemberProfile;
+import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.plant.entity.Plant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,8 +48,12 @@ public class Image {
     @JoinColumn(name = "plant_id")
     private Plant plant;
 
+//    @OneToOne
+//    @JoinColumn(name = "member_profile_id")
+//    private MemberProfile memberProfile;
+
     @OneToOne
-    @JoinColumn(name = "member_profile_id")
-    private MemberProfile memberProfile;
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 }

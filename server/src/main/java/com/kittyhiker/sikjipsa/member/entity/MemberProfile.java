@@ -1,7 +1,5 @@
 package com.kittyhiker.sikjipsa.member.entity;
 
-
-import com.kittyhiker.sikjipsa.image.entity.Image;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -20,6 +18,4 @@ public class MemberProfile {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
-	@OneToOne(mappedBy = "memberProfile")
-	private Image image;
 }

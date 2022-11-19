@@ -49,9 +49,9 @@ public class DealService {
         Deal deal = mapper.dealPostDtoToDeal(dealPostDto);
         Member findMember = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
         deal.setMember(findMember);
+        Deal savedDeal = dealRepository.save(deal);
 
         List<String> responseImages=new ArrayList<>();
-//        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
         if (images!=null) {
             UUID uuid = UUID.randomUUID();
             images.stream().forEach(
@@ -64,7 +64,7 @@ public class DealService {
                             amazonS3.putObject(bucket, fileName, image.getInputStream(), objMeta);
                             String filePath = amazonS3.getUrl(bucket, originalFilename).toString();
                             Image newImage = Image.builder().originalName(originalFilename)
-                                    .imgName(fileName).deal(deal).imgUrl(filePath).build();
+                                    .imgName(fileName).deal(savedDeal).imgUrl(filePath).build();
                             imageService.postImage(newImage);
                             responseImages.add(filePath);
                         } catch (IOException e) {
@@ -74,17 +74,18 @@ public class DealService {
             );
         }
 
-        Deal savedDeal = dealRepository.save(deal);
         return mapper.dealToDealResponseDto(savedDeal, responseImages);
     }
 
     public DealResponseDto patchDeal(Long dealId, List<MultipartFile> images, DealPostDto dealPatchDto) throws IOException {
 
         Deal findDeal = verifiedDeal(dealId);
-
-        List<String> responseImages=new ArrayList<>();
-//        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-        if (images!=null) {
+        List<Image> findImage = imageService.findImage(findDeal);
+        List<String> responseImages;
+        if (images == null) {
+            responseImages=findImage.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+        } else {
+            responseImages = new ArrayList<>();
             UUID uuid = UUID.randomUUID();
             images.stream().forEach(
                     (image) -> {
@@ -111,11 +112,38 @@ public class DealService {
         return mapper.dealToDealResponseDto(findDeal, responseImages);
     }
 
-    public ResponseEntity getDealList(String keyword, int page, int size) {
+    public DealPagingDto<List> getDealList(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<Deal> dealList = dealRepository.findAll(pageable);
+        List<DealResponseDto> response = new ArrayList<>();
+        dealList.stream().forEach(
+                deal -> {
+                    List<Image> images = imageService.findImage(deal);
+                    List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(deal, responseImage);
+                    response.add(dealResponseDto);
+                }
+        );
+
+        PageInfo pageInfo = new PageInfo(page, size, (int) dealList.getTotalElements(), dealList.getTotalPages());
+        return new DealPagingDto<List>(response, pageInfo);
+    }
+
+    public DealPagingDto<List> getDealList(String keyword, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
         Page<Deal> dealList = dealRepository.findByTitleContaining(keyword, pageable);
+        List<DealResponseDto> response = new ArrayList<>();
+        dealList.stream().forEach(
+                deal -> {
+                    List<Image> images = imageService.findImage(deal);
+                    List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(deal, responseImage);
+                    response.add(dealResponseDto);
+                }
+        );
+
         PageInfo pageInfo = new PageInfo(page, size, (int) dealList.getTotalElements(), dealList.getTotalPages());
-        return new ResponseEntity(new DealPagingDto<>(dealList, pageInfo), HttpStatus.OK);
+        return new DealPagingDto<List>(response, pageInfo);
     }
 
     public DealResponseDto getDealDetail(Long dealId) {

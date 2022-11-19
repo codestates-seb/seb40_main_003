@@ -1,5 +1,6 @@
 package com.kittyhiker.sikjipsa.deal.controller;
 
+import com.kittyhiker.sikjipsa.deal.dto.DealPagingDto;
 import com.kittyhiker.sikjipsa.deal.dto.DealPostDto;
 import com.kittyhiker.sikjipsa.deal.dto.DealResponseDto;
 import com.kittyhiker.sikjipsa.deal.dto.LikeDealResponseDto;
@@ -9,6 +10,7 @@ import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +33,9 @@ public class DealController {
     /**
      * 거래글 등록
      */
-    @PostMapping
-    public ResponseEntity postDeal(@RequestBody DealPostDto dealPostDto,
-                                   @RequestParam(name = "images", required = false) List<MultipartFile> images,
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
+    public ResponseEntity postDeal(@RequestPart DealPostDto dealPostDto,
+                                   @RequestPart(required = false) List<MultipartFile> images,
                                    @RequestHeader("Authorization") String token) throws IOException {
         DealResponseDto response = dealService.postDeal(dealPostDto, images, jwtTokenizer.getUserIdFromToken(token));
         return new ResponseEntity(response, HttpStatus.CREATED);
@@ -42,22 +44,31 @@ public class DealController {
     /**
      * 거래글 수정
      */
-    @PatchMapping("/{deal-id}")
+    @PatchMapping(value = "/{deal-id}",
+            consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity patchDeal(@PathVariable("deal-id") Long dealId,
-                                    @RequestParam(name = "images", required = false) List<MultipartFile> images,
-                                    @RequestBody DealPostDto dealPatchDto) throws IOException {
+                                    @RequestPart DealPostDto dealPatchDto,
+                                    @RequestPart(required = false) List<MultipartFile> images) throws IOException {
         DealResponseDto response = dealService.patchDeal(dealId, images, dealPatchDto);
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
     /**
-     * 거래글 전체 조회
+     * 거래글 리스트 조회
      */
     @GetMapping
-    public ResponseEntity getDealList(@RequestParam String keyword,
+    public ResponseEntity getDealList(@RequestParam(required = false) String keyword,
                                       @Positive @RequestParam int page,
                                       @Positive @RequestParam int size) {
-        return dealService.getDealList(keyword, page, size);
+
+        DealPagingDto<List> response;
+        if (keyword==null) {
+            response = dealService.getDealList(page-1, size);
+        } else {
+            response = dealService.getDealList(keyword, page-1, size);
+        }
+
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
     /**
@@ -68,7 +79,6 @@ public class DealController {
         DealResponseDto dealDetail = dealService.getDealDetail(dealId);
         return new ResponseEntity(dealDetail, HttpStatus.OK);
     }
-
 
 
     /**
