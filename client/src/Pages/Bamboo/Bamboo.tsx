@@ -40,7 +40,9 @@ const Community = () => {
       </MainCenterWrapper>
       <MainRightWrapper>
         <span className="h4 bold">새글을 적어보아요~</span>
-        <SigButton>새글 쓰기</SigButton>
+        <Link to={"/bamboo/write"}>
+          <SigButton>새글 쓰기</SigButton>
+        </Link>
       </MainRightWrapper>
     </MainContentContainer>
   ) : (

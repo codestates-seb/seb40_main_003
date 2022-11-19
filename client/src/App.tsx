@@ -12,6 +12,7 @@ import Care from "./Pages/Main/Care";
 import CareDetail from "./Pages/Main/CareDetail";
 import Community from "./Pages/Bamboo/Bamboo";
 import CommunityDetail from "./Pages/Bamboo/BambooDetail";
+import CommunityEditor from "./Pages/Bamboo/BambooEditor";
 import Talk from "./Pages/Talk";
 import DevTools from "./Components/DevTools";
 import ProductDetail from "./Pages/Product/ProductDetail";
@@ -37,7 +38,7 @@ function App() {
     <BrowserRouter>
       {/* Navbar는 리랜더링 되지않고, URL에 따라 하위 컴포넌트만 리랜더링 되게하기 위한 구조입니다 */}
       <DevTools />
-      <Navbar/>
+      <Navbar />
       {/* 양옆 Padding을 제공하는 Wrapper 입니다 */}
       <Routes>
         {/* 보호된 라우팅 */}
@@ -66,6 +67,7 @@ function App() {
           <Route path="/bamboo" element={<DefaultLayout />}>
             <Route index element={<Community />} />
             <Route path=":id" element={<CommunityDetail />} />
+            <Route path="/bamboo/write" element={<CommunityEditor />} />
           </Route>
         </Route>
 

@@ -18,6 +18,7 @@ import {
 import { userState } from "../../Recoil/atoms/user";
 import { bambooDetailTypes } from "../../types/bambooDetailTypes";
 import { BambooWrapper } from "../../Components/bamboo/BambooCard";
+import { Link } from "react-router-dom";
 
 const BambooDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,7 +31,7 @@ const BambooDetail = () => {
         setData(res.data);
         setIsLoading(false);
       });
-    } catch (err) {}
+    } catch (err) { }
   }, []);
 
   return !isLoading && data !== null ? (
@@ -80,7 +81,9 @@ const BambooDetail = () => {
         })}
       </MainCenterWrapper>
       <MainRightWrapper>
-        <SigButton>글작성</SigButton>
+        <Link to={"/bamboo/write"}>
+          <SigButton>글작성</SigButton>
+        </Link>
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
