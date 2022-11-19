@@ -3,6 +3,12 @@ import { FieldErrors, useForm } from "react-hook-form";
 import { SigButton } from '../../Components/GlobalComponents';
 import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
 import { Link } from "react-router-dom";
+import styled from "@emotion/styled";
+
+const ConfirmWrapper = styled.span`
+    display: flex;
+    justify-content: row;
+`
 
 type Props = {}
 
@@ -61,17 +67,22 @@ const BambooEditor = (props: Props) => {
                                 required: "",
                             })}
                                 type="content"
-                                placeholder="귀여운 반려식물을 자랑하거나, 우리 동네의 숨겨진 식물 고수들에게 궁금한 점들을 물어보세요."
+                                placeholder="글쓰기"
                             />
                             <p className='font-alert-red sub'>{errors.email?.message}</p>
                         </>
                     </SectionWrapper>
-
-                    <p>식물처럼 싱그럽고 예쁜 말을 써주세요.
-                        <br />욕설이나 선동성 글과 같은 부적절한 내용은 삭제처리될 수 있습니다.</p>
+                    <ConfirmWrapper>
+                        <input type="checkbox" className='border-none checkbox-20'></input>
+                        <p className='sub font-gray'>식물처럼 싱그럽고 예쁜 말을 써주세요.
+                            <br />욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.</p>
+                    </ConfirmWrapper>
                 </section>
             </MainCenterWrapper>
             <MainRightWrapper>
+                <SectionWrapper>
+                    <p className='h5 bold font-main'>귀여운 반려식물을 자랑하거나, 우리 동네의 숨겨진 식물 박사들에게 궁금한 점들을 물어보세요.🌱
+                    </p></SectionWrapper>
                 <SigButton type='submit'>계정 생성</SigButton>
             </MainRightWrapper>
         </MainContentContainer>
