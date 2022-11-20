@@ -10,6 +10,7 @@ import com.kittyhiker.sikjipsa.deal.entity.Deal;
 import com.kittyhiker.sikjipsa.deal.entity.MemberLikeDeal;
 import com.kittyhiker.sikjipsa.deal.entity.MemberReview;
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
+import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.plant.entity.Plant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,6 +45,9 @@ public class Member extends AuditingEntity {
 
 	@OneToOne(mappedBy = "member")
 	private MemberProfile memberProfile;
+
+	@OneToOne(mappedBy = "member")
+	private Image image;
 
 	@OneToOne(mappedBy = "member")
 	private ExpertProfile expertProfile;

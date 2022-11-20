@@ -23,6 +23,6 @@ public class CommentResponseDto {
     private int isDeleted;
     private int depth;
     private Long parent;
-    private MemberResponseDto member;
+    private MemberResponseDto writer;
 
 }
