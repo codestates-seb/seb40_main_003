@@ -2,6 +2,7 @@ package com.kittyhiker.sikjipsa.community.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.kittyhiker.sikjipsa.community.dto.CommentResponseDto;
 import com.kittyhiker.sikjipsa.community.dto.CommunityPagingDto;
 import com.kittyhiker.sikjipsa.community.dto.CommunityPostDto;
 import com.kittyhiker.sikjipsa.community.dto.CommunityResponseDto;
@@ -35,6 +36,7 @@ public class CommunityService {
     private final CommunityRepository communityRepository;
     private final CommunityMapper mapper;
     private final ImageService imageService;
+    private final CommentService commentService;
     private final MemberRepository memberRepository;
 
     @Value("${cloud.aws.s3.bucket}")
@@ -149,10 +151,12 @@ public class CommunityService {
         findCommunity.updateView();
         communityRepository.save(findCommunity);
 
+        List<CommentResponseDto> comments = commentService.getComments(communityId);
+
         List<Image> image = imageService.findImage(findCommunity);
         List<String> responseImage = image.stream().map(img -> img.getImgUrl()).collect(Collectors.toList());
 
-        return mapper.communityToResponseDto(findCommunity, responseImage);
+        return mapper.communityToResponseDto(findCommunity, responseImage, comments);
     }
 
 

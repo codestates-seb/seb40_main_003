@@ -5,9 +5,10 @@ import com.kittyhiker.sikjipsa.community.enitity.Comment;
 import com.kittyhiker.sikjipsa.community.enitity.Community;
 import com.kittyhiker.sikjipsa.community.mapper.CommentMapper;
 import com.kittyhiker.sikjipsa.community.repository.CommentRepository;
+import com.kittyhiker.sikjipsa.community.repository.CommunityRepository;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.mapper.MemberMapper;
-import com.kittyhiker.sikjipsa.member.service.MemberService;
+import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +22,13 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final CommentMapper mapper;
     private final MemberMapper memberMapper;
-    private final CommunityService communityService;
-    private final MemberService memberService;
+    private final CommunityRepository communityRepository;
+    private final MemberRepository memberRepository;
 
 
     public CommentResponseDto postComment(Long communityId, Long memberId, String content) {
-        Community community = communityService.verifiedCommunity(communityId);
-        Member member = memberService.verifyMember(memberId);
+        Community community = verifiedCommunity(communityId);
+        Member member = verifiedMember(memberId);
 
         Comment newComment = Comment.builder().community(community).member(member)
                 .content(content).depth(0).parent(0L).build();
@@ -38,8 +39,8 @@ public class CommentService {
     }
 
     public CommentResponseDto postComment(Long communityId, Long memberId, Long commentId, String content) {
-        Community community = communityService.verifiedCommunity(communityId);
-        Member member = memberService.verifyMember(memberId);
+        Community community = verifiedCommunity(communityId);
+        Member member = verifiedMember(memberId);
 
         Comment newComment = Comment.builder().community(community).member(member)
                 .content(content).depth(1).parent(commentId).build();
@@ -68,7 +69,7 @@ public class CommentService {
     }
 
     public List<CommentResponseDto> getComments(Long communityId) {
-        Community community = communityService.verifiedCommunity(communityId);
+        Community community = verifiedCommunity(communityId);
         List<Comment> commentList = commentRepository.findAllByCommunity(community);
         List<CommentResponseDto> comments = commentList.stream().map(
                 c -> mapper.commentToResponseDto(c,
@@ -79,6 +80,14 @@ public class CommentService {
 
     public Comment verifiedComment(Long commentId) {
         return commentRepository.findById(commentId).orElseThrow(()-> new IllegalArgumentException("NOT FOUND COMMENT"));
+    }
+
+    public Community verifiedCommunity(Long communityId) {
+        return communityRepository.findById(communityId).orElseThrow(()-> new IllegalArgumentException("NOT FOUND COMMUNITY"));
+    }
+
+    public Member verifiedMember(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(()-> new IllegalArgumentException("NOT FOUND MEMBER"));
     }
 
 }
