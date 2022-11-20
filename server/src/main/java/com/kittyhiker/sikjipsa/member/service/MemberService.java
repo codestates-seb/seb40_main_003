@@ -69,7 +69,7 @@ public class MemberService {
 
     public MemberInfoResponseDto postMemberInfo(Long userId, MemberInfoPostDto infoPostDto) {
         MemberInformation info = memberMapper.memberInfoPostDtoToMemberInfo(infoPostDto);
-        Member registerMember = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+        Member registerMember = verifyMember(userId);
         info.setMember(registerMember);
         MemberInformation savedInfo = memberInfoRepository.save(info);
         return memberMapper.memberInfoToResponseDto(savedInfo);
@@ -98,6 +98,9 @@ public class MemberService {
                 .build();
     }
 
+    public Member verifyMember(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+    }
 
     private void verifyPassword(Member user, Member findUser) {
         if (!passwordEncoder.matches(user.getPassword(), findUser.getPassword())) {
