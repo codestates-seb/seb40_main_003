@@ -20,12 +20,20 @@ import { userState } from "../../Recoil/atoms/user";
 import { bambooDetailTypes } from "../../types/bambooDetailTypes";
 import { BambooWrapper } from "../../Components/bamboo/BambooCard";
 import { Link } from "react-router-dom";
+import CommentInput from '../../Components/UserInput';
 
 const BambooDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<bambooDetailTypes | null>(null);
   const { id } = useParams();
   const user = useRecoilValue(userState);
+
+  const [comment, setComment] = useState('')
+  const HandleSubmit=()=>{
+    console.log(`유저가 작성한 코멘트는 ${comment}입니다.`);
+  }
+  
+
   useEffect(() => {
     try {
       axios.get(`/bamboo/${id}`).then((res) => {
@@ -65,6 +73,9 @@ const BambooDetail = () => {
             like={data.likeNum}
           />
         </BambooWrapper>
+
+        {/* 댓글창 */}
+        <CommentInput onChange={setComment} onSubmit={HandleSubmit}/>
         {data.comment.map((e) => {
           return (
             <CommentCard
