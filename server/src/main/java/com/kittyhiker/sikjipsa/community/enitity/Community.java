@@ -1,5 +1,6 @@
 package com.kittyhiker.sikjipsa.community.enitity;
 
+import com.kittyhiker.sikjipsa.community.dto.CommunityPostDto;
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.member.entity.Member;
@@ -21,11 +22,11 @@ public class Community extends AuditingEntity {
 
 	private String content;
 
-	private int category;
+//	private int category;
 
-	private Long view;
+	private int view=0;
 
-	private Long likes;
+	private int likes=0;
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")
@@ -39,4 +40,17 @@ public class Community extends AuditingEntity {
 
 	@OneToMany(mappedBy = "community")
 	private List<Image> images = new ArrayList<>();
+
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
+	public void update(CommunityPostDto patchDto) {
+		this.title = patchDto.getTitle();
+		this.content = patchDto.getContent();
+	}
+
+	public void updateView() {
+		this.view+=1;
+	}
 }
