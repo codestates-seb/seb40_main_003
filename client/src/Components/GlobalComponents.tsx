@@ -274,7 +274,7 @@ export const CommentButtonWrapper = styled.div`
 
 export const GridWrapper = styled.div`
   display: grid;
-  align-items: center;
+  align-content: space-between;
 `;
 
 export type CommentCardTypes = {
@@ -316,7 +316,7 @@ export const CommentCard = (props: CommentCardTypes) => {
         </RowWrapper>
         <GridWrapper>
         <ColumnWrapper>
-          <div className="sub font-gray mb-3">{createdAt}</div>
+          <div className="sub font-gray mb-6">{createdAt}</div>
           <CommentEdit
             userId={user!==null?user.userId:""}
             author={author?author:""}

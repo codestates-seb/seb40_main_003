@@ -305,6 +305,10 @@ input.checkbox-20 {
   display: none;
 }
 
+.space-between{
+  align-content: space-between;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
