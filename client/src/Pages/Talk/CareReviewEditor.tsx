@@ -4,6 +4,7 @@ import { SigButton } from '../../Components/GlobalComponents';
 import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
+import usePageTitle from '../../Hooks/usePageTitle'
 
 const ConfirmWrapper = styled.span`
     display: flex;
@@ -26,6 +27,7 @@ const CareReviewEditor = (props: Props) => {
     }
     const onInValid = (errors: FieldErrors) => {
     };
+    usePageTitle("돌봄 후기 글 쓰기")
 
     console.log(errors);
 
@@ -39,10 +41,15 @@ const CareReviewEditor = (props: Props) => {
 
                     <SectionWrapper>
                         <>
-                            거래글 불러오기
+                            돌봄프로필
                         </>
                     </SectionWrapper>
 
+                    <SectionWrapper>
+                        <>
+                            받은 서비스 태그
+                        </>
+                    </SectionWrapper>
                     <SectionWrapper width={100} borderNone={true}>
                         <>
                             <input className='content' {...register("content", {

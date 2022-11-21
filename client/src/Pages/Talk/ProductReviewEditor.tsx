@@ -27,7 +27,7 @@ const ProductReviewEditor = (props: Props) => {
     }
     const onInValid = (errors: FieldErrors) => {
     };
-    usePageTitle("대화")
+    usePageTitle("거래 후기 글 쓰기")
 
     console.log(errors);
 
@@ -41,7 +41,7 @@ const ProductReviewEditor = (props: Props) => {
 
                     <SectionWrapper>
                         <>
-                            거래글 불러오기
+                            거래글
                         </>
                     </SectionWrapper>
 
