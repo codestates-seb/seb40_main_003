@@ -25,6 +25,11 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
         
+    - uses: actions/checkout@v3
+    - run: touch ./server/src/main/resources/application.properties
+    - run: echo "${{ secrets.APPLICATION }}" > ./server/src/main/resources/application.properties
+    - run: cat ./server/src/main/resources/application.properties
+        
     # https://cheese10yun.github.io/github-action-1/
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
