@@ -23,10 +23,6 @@ const Signup = (props: Props) => {
   const onInValid = (errors: FieldErrors) => {
   };
 
-  console.log(errors);
-  
-  // console.log(register("name"));
-  // console.log(watch());
   
   return (
     <MainContentContainer>

@@ -50,6 +50,7 @@ textarea {
   outline-style: none;
   color: inherit;
   border: none;
+  background-color: var(--pure-white);
 }
 
 input,
@@ -337,10 +338,16 @@ code {
   }
 }
 
+@media screen and(max-width:500px) {
+  .display-none-mobile {
+    display: none !important;
+  }
+}
+
 .z-index-9999 {
   z-index: 9999;
 }
 
 .cursor {
-  cursor: pointer
+  cursor: pointer;
 }

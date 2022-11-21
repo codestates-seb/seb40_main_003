@@ -20,16 +20,7 @@ import ProductDetail from "./Pages/Product/ProductDetail";
 import ProductEditor from "./Pages/Product/ProductEditor";
 import axios from "axios";
 import { DefaultLayout } from "./Route";
-// type Props = {
-//   id: number;
-//   vote: number;
-//   title: string;
-//   content: string;
-//   createdAt: string;
-//   view: number;
-//   like: number;
-//   nickname: string;
-// };
+
 axios.defaults.baseURL = "https://testserver.com";
 // axios.defaults.baseURL = "";
 // axios.defaults.baseURL = "https://fbc9-121-162-186-109.jp.ngrok.io";
@@ -38,10 +29,9 @@ axios.defaults.withCredentials = false;
 function App() {
   return (
     <BrowserRouter>
-      {/* Navbar는 리랜더링 되지않고, URL에 따라 하위 컴포넌트만 리랜더링 되게하기 위한 구조입니다 */}
       <DevTools />
+      {/* 모바일용 navbar*/}
       <Navbar />
-      {/* 양옆 Padding을 제공하는 Wrapper 입니다 */}
       <Routes>
         {/* 보호된 라우팅 */}
         <Route element={<AuthProvider />}>
@@ -71,12 +61,11 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Route>
-
+        {/* 수정 필요 */}
         <Route>
           <Route path="/talk" element={<Talk />} />
           <Route path="/talk/write" element={<ReviewEditor />} />
         </Route>
-        
 
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />

@@ -15,7 +15,7 @@ type Props = {}
 interface BambooEditorForm {
     title: string;
     content: string;
-    email: string;
+    image: string;
     password: string;
     errors?: string;
 }
@@ -63,7 +63,13 @@ const BambooEditor = (props: Props) => {
 
                     <SectionWrapper>
                         <>
-                            사진 추가
+                        <input className='image'
+                                {...register("image"
+                                    )}
+                                id="picture"
+                                type="file"
+                            />
+                            <p className='font-alert-red sub'>{errors.image?.message}</p>
                         </>
                     </SectionWrapper>
 
@@ -75,7 +81,7 @@ const BambooEditor = (props: Props) => {
                                 type="content"
                                 placeholder="글쓰기"
                             />
-                            <p className='font-alert-red sub'>{errors.email?.message}</p>
+                            <p className='font-alert-red sub'>{errors.content?.message}</p>
                         </>
                     </SectionWrapper>
                     <ConfirmWrapper>
