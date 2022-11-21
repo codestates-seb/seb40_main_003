@@ -69,7 +69,9 @@ const ProductDetail = () => {
 
       <MainRightWrapper>
         <span className="h4 bold">{data.price.toLocaleString()}원</span>
-        <SigButton>채팅하기</SigButton>
+        <Link to={"/talk"}>
+          <SigButton>채팅하기</SigButton>
+        </Link>
       </MainRightWrapper>
     </MainContentContainer>
   ) : (

@@ -16,6 +16,7 @@ import CommunityEditor from "./Pages/Bamboo/BambooEditor";
 import Talk from "./Pages/Talk";
 import DevTools from "./Components/DevTools";
 import ProductDetail from "./Pages/Product/ProductDetail";
+import ProductEditor from "./Pages/Product/ProductEditor";
 import axios from "axios";
 import { DefaultLayout } from "./Route";
 // type Props = {
@@ -62,6 +63,7 @@ function App() {
           <Route path="/product" element={<DefaultLayout />}>
             <Route index element={<Product />} />
             <Route path=":id" element={<ProductDetail />} />
+            <Route path="/product/write" element={<ProductEditor />} />
           </Route>
 
           <Route path="/bamboo" element={<DefaultLayout />}>
