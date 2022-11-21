@@ -41,7 +41,7 @@ const Community = () => {
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
-          <p className='h5 bold font-main mr-16'>귀여운 반려식물을 자랑하거나, 우리 동네의 숨겨진 식물 박사들에게 궁금한 점들을 물어보세요.🌱
+          <p className='h5 bold font-main mr-16'>반려식물을 자랑하거나, 궁금한 점들을 물어보세요.🌱
           </p></SectionWrapper>
         <Link to={"/bamboo/write"}>
           <SigButton type='submit'>새 글쓰기</SigButton>
