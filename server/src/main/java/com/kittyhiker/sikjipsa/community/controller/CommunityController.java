@@ -28,7 +28,7 @@ public class CommunityController {
      * 커뮤니티글 등록
      */
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity postDeal(@RequestPart CommunityPostDto postDto,
+    public ResponseEntity postCommunity(@RequestPart CommunityPostDto postDto,
                                    @RequestPart(required = false) List<MultipartFile> images,
                                    @RequestHeader("Authorization") String token) throws IOException {
         CommunityResponseDto response = communityService.postCommunity(postDto, images, jwtTokenizer.getUserIdFromToken(token));
@@ -40,7 +40,7 @@ public class CommunityController {
      */
     @PatchMapping(value = "/{community-id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity patchDeal(@PathVariable("community-id") Long communityId,
+    public ResponseEntity patchCommunity(@PathVariable("community-id") Long communityId,
                                     @RequestPart CommunityPostDto patchDto,
                                     @RequestPart(required = false) List<MultipartFile> images) throws IOException {
         CommunityResponseDto response = communityService.patchCommunity(communityId, images, patchDto);
@@ -51,7 +51,7 @@ public class CommunityController {
      * 커뮤니티 리스트 조회
      */
     @GetMapping
-    public ResponseEntity getDealList(@RequestParam(required = false) String keyword,
+    public ResponseEntity getCommunityList(@RequestParam(required = false) String keyword,
                                       @Positive @RequestParam int page,
                                       @Positive @RequestParam int size) {
 

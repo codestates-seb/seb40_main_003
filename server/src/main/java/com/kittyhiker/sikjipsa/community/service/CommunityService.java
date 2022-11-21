@@ -76,7 +76,7 @@ public class CommunityService {
             );
         }
 
-        return mapper.communityToResponseDto(community, responseImages);
+        return mapper.communityToResponseDto(savedCommunity, responseImages);
     }
 
     public CommunityResponseDto patchCommunity(Long communityId, List<MultipartFile> images, CommunityPostDto patchDto) throws IOException {
@@ -110,8 +110,8 @@ public class CommunityService {
         }
 
         findCommunity.update(patchDto);
-        communityRepository.save(findCommunity);
-        return mapper.communityToResponseDto(findCommunity, responseImages);
+        Community saved = communityRepository.save(findCommunity);
+        return mapper.communityToResponseDto(saved, responseImages);
     }
 
     public CommunityPagingDto<List> getPostList(int page, int size) {

@@ -4,7 +4,10 @@ import com.kittyhiker.sikjipsa.community.dto.CommunityPostDto;
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.member.entity.Member;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -12,6 +15,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Community extends AuditingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,7 +28,7 @@ public class Community extends AuditingEntity {
 
 	private String content;
 
-//	private int category;
+//	private int category=1;
 
 	private int view=0;
 
