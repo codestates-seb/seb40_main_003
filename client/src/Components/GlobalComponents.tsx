@@ -121,10 +121,7 @@ const ViewCounterWrapper = styled.div`
   max-width: 100px;
   justify-content: flex-end;
 `;
-const IconElem = styled.img`
-  width: 16px;
-  height: 16px;
-`;
+
 const ViewCounterColumn = styled.div`
   display: flex;
   flex-direction: row;
