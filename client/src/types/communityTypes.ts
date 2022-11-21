@@ -1,4 +1,4 @@
-type bambooTypes = 
+type communityTypes = 
     {
 data:[
     {   communityId: number,
@@ -20,4 +20,4 @@ data:[
             nickname: string
         }}]
     }
-  export type {bambooTypes}
+  export type {communityTypes}

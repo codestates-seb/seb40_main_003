@@ -96,7 +96,7 @@ export const NavContent = () => {
         </NavElem>
       </NavLink>
       <NavLink
-        to="/bamboo"
+        to="/community"
         className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
       >
         <NavElem title="커뮤니티">

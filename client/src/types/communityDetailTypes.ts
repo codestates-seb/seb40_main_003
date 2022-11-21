@@ -1,4 +1,4 @@
-type bambooDetailTypes = {
+type communityDetailTypes = {
   communityId: number;
   title: string;
   content: string;
@@ -46,4 +46,4 @@ type bambooDetailTypes = {
   ];
 };
 
-export type { bambooDetailTypes };
+export type { communityDetailTypes };

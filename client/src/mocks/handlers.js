@@ -1,7 +1,7 @@
 import { rest } from "msw";
 import {ProductDetailHandler,ProductListHandler} from "./productHandler"
 import {CaringListHandler, expertProfileHandler, expertProfileDetail} from "./caringHandler"
-import { BambooListHandler,BambooDetailHandler } from "./bambooHandler"
+import { CommunityListHandler,CommunityDetailHandler } from "./communityHandler"
 import { Profile } from './profileHandler';
 export const handlers = [
   // 로그인 테스트
@@ -38,10 +38,10 @@ export const handlers = [
 
 
 // 커뮤니티 핸들러
-BambooListHandler(),
-BambooDetailHandler(1),
-BambooDetailHandler(2),
-BambooDetailHandler(3),
+CommunityListHandler(),
+CommunityDetailHandler(1),
+CommunityDetailHandler(2),
+CommunityDetailHandler(3),
 
 // 일반 유저 프로필 핸들러
 Profile(1),

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
-import BambooCard from "../../Components/bamboo/BambooCard";
-import { bambooTypes } from "../../types/bambooTypes";
+import CommunityCard from "../../Components/community/CommunityCard";
+import { communityTypes } from "../../types/communityTypes";
 import { Link } from "react-router-dom";
 import {
   MainCenterWrapper,
@@ -15,11 +15,11 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import { LoadingSpinner } from '../../Components/Loading';
 
 const Community = () => {
-  const [data, setData] = useState<bambooTypes>();
+  const [data, setData] = useState<communityTypes>();
   const [isLoading, setIsLoading] = useState(true);
   usePageTitle("커뮤니티")
   useEffect(() => {
-    axios.get("/bamboo").then((res) => {
+    axios.get("/community").then((res) => {
       setData(res.data);
       setIsLoading(false);
     });
@@ -31,10 +31,10 @@ const Community = () => {
         {data.data.map((e) => {
           return (
             <Link
-              to={`/bamboo/${e.communityId}`}
-              key={"menber" + e.communityId}
+              to={`/community/${e.communityId}`}
+              key={"member" + e.communityId}
             >
-              <BambooCard data={e} />
+              <CommunityCard data={e} />
             </Link>
           );
         })}
@@ -43,7 +43,7 @@ const Community = () => {
         <SectionWrapper borderNone={true}>
           <p className='h5 bold font-main mr-16'>반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
           </p></SectionWrapper>
-        <Link to={"/bamboo/write"}>
+        <Link to={"/community/write"}>
           <SigButton type='submit'>새 글쓰기</SigButton>
         </Link>
       </MainRightWrapper>

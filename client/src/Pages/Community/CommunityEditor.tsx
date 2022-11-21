@@ -13,7 +13,7 @@ const ConfirmWrapper = styled.span`
 
 type Props = {}
 
-interface BambooEditorForm {
+interface CommunityEditorForm {
     title: string;
     content: string;
     image: string;
@@ -21,11 +21,11 @@ interface BambooEditorForm {
     errors?: string;
 }
 
-const BambooEditor = (props: Props) => {
+const CommunityEditor = (props: Props) => {
     const { register, handleSubmit, watch, formState: { errors },
-    } = useForm<BambooEditorForm>();
+    } = useForm<CommunityEditorForm>();
 
-    const onValid = (data: BambooEditorForm) => {
+    const onValid = (data: CommunityEditorForm) => {
         console.log("나 발리드됨")
     }
     const onInValid = (errors: FieldErrors) => {
@@ -108,4 +108,4 @@ const BambooEditor = (props: Props) => {
 
 }
 
-export default BambooEditor;
+export default CommunityEditor;

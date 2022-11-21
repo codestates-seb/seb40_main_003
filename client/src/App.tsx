@@ -10,9 +10,9 @@ import Signup from "./Pages/User/Signup";
 import Missing from "./Pages/Missing";
 import Care from "./Pages/Main/Care";
 import CareDetail from "./Pages/Main/CareDetail";
-import Community from "./Pages/Bamboo/Bamboo";
-import CommunityDetail from "./Pages/Bamboo/BambooDetail";
-import CommunityEditor from "./Pages/Bamboo/BambooEditor";
+import Community from "./Pages/Community/Community";
+import CommunityDetail from "./Pages/Community/CommunityDetail";
+import CommunityEditor from "./Pages/Community/CommunityEditor";
 import Talk from "./Pages/Talk/Talk";
 import ProductReviewEditor from "./Pages/Talk/ProductReviewEditor";
 import CareReviewEditor from "./Pages/Talk/CareReviewEditor";
@@ -53,10 +53,10 @@ function App() {
             <Route path=":id" element={<ProductDetail />} />
             <Route path="/product/write" element={<ProductEditor />} />
           </Route>
-          <Route path="/bamboo" element={<DefaultLayout />}>
+          <Route path="/community" element={<DefaultLayout />}>
             <Route index element={<Community />} />
             <Route path=":id" element={<CommunityDetail />} />
-            <Route path="/bamboo/write" element={<CommunityEditor />} />
+            <Route path="/community/write" element={<CommunityEditor />} />
           </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
