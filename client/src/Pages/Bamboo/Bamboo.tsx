@@ -17,7 +17,7 @@ import { LoadingSpinner } from '../../Components/Loading';
 const Community = () => {
   const [data, setData] = useState<bambooTypes>();
   const [isLoading, setIsLoading] = useState(true);
-  usePageTitle("게시판")
+  usePageTitle("커뮤니티")
   useEffect(() => {
     axios.get("/bamboo").then((res) => {
       setData(res.data);

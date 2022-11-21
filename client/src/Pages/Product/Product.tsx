@@ -10,6 +10,7 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
+  SectionWrapper,
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
@@ -39,16 +40,26 @@ export const ProductMain = ({
         })}
       </MainCenterWrapper>
       <MainRightWrapper>
+        <SectionWrapper borderNone={true}>
+          <p className="h5 bold font-main mr-16">
+            애지중지 키운 식물을 우리 동네 식집사에게 분양하세요. 더 이상 쓰지
+            않는 원예 용품도 판매해보세요.🌿
+          </p>
+        </SectionWrapper>
         <span className="h4 bold"></span>
-        <SigButton>새글 쓰기</SigButton>
+        <Link to={"/product/write"}>
+          <SigButton type="submit">새 글쓰기</SigButton>
+        </Link>
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
-    <div className={hidingTime ? "display-none" : ""}>
-      <ProductPlaceHolder />
-      <ProductPlaceHolder />
-      <ProductPlaceHolder />
-    </div>
+    <MainContentContainer className={hidingTime ? "display-none" : ""}>
+      <MainCenterWrapper>
+        <ProductPlaceHolder />
+        <ProductPlaceHolder />
+        <ProductPlaceHolder />
+      </MainCenterWrapper>
+    </MainContentContainer>
   );
 };
 
@@ -57,7 +68,7 @@ const Product = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [hidingTime, setHidingTime] = useState(true);
   // 초기 로딩
-  usePageTitle("거래")
+  usePageTitle("거래");
   useEffect(() => {
     setTimeout(() => {
       setHidingTime(false);

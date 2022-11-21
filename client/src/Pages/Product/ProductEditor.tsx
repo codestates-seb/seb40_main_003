@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import usePageTitle from "../../Hooks/usePageTitle";
 
+
 const ConfirmWrapper = styled.span`
     display: flex;
     justify-content: row;
@@ -13,24 +14,26 @@ const ConfirmWrapper = styled.span`
 
 type Props = {}
 
-interface BambooEditorForm {
+interface ProductEditorForm {
     title: string;
-    content: string;
     image: string;
-    password: string;
+    category: number;
+    content: string;
+    price: string;
     errors?: string;
 }
 
-const BambooEditor = (props: Props) => {
-    const { register, handleSubmit, watch, formState: { errors },
-    } = useForm<BambooEditorForm>();
+const ProductEditor = (props: Props) => {
+    const { register, handleSubmit, formState: { errors },
+    } = useForm<ProductEditorForm>();
 
-    const onValid = (data: BambooEditorForm) => {
+    const onValid = (data: ProductEditorForm) => {
         console.log("나 발리드됨")
     }
     const onInValid = (errors: FieldErrors) => {
     };
-    usePageTitle("커뮤니티 글 쓰기")
+    usePageTitle("거래 글 쓰기")
+
 
     console.log(errors);
 
@@ -64,7 +67,7 @@ const BambooEditor = (props: Props) => {
                     </SectionWrapper>
 
                     <SectionWrapper>
-                        <>
+                    <>
                         <input className='image'
                                 {...register("image"
                                     )}
@@ -75,6 +78,23 @@ const BambooEditor = (props: Props) => {
                         </>
                     </SectionWrapper>
 
+                    <SectionWrapper>
+                        <>
+                            카테고리 선택
+                        </>
+                    </SectionWrapper>
+
+                    <SectionWrapper width={100} borderNone={true}>
+                        <>
+                            <input className='price' {...register("price", {
+                                required: "",
+                            })}
+                                type="price"
+                                placeholder="가격"
+                            />
+                            <p className='font-alert-red sub'>{errors.price?.message}</p>
+                        </>
+                    </SectionWrapper>
                     <SectionWrapper width={100} borderNone={true}>
                         <>
                             <input className='content' {...register("content", {
@@ -86,6 +106,7 @@ const BambooEditor = (props: Props) => {
                             <p className='font-alert-red sub'>{errors.content?.message}</p>
                         </>
                     </SectionWrapper>
+
                     <ConfirmWrapper>
                         <input type="checkbox" className='border-none checkbox-20'></input>
                         <p className='sub font-gray'>식물처럼 싱그럽고 예쁜 말을 써주세요.
@@ -95,7 +116,7 @@ const BambooEditor = (props: Props) => {
             </MainCenterWrapper>
             <MainRightWrapper>
                 <SectionWrapper borderNone={true}>
-                    <p className='h5 bold font-main mr-16'>귀여운 반려식물을 자랑하거나, 우리 동네의 숨겨진 식물 박사들에게 궁금한 점들을 물어보세요.🌱
+                    <p className='h5 bold font-main mr-16'>애지중지 키운 식물을 우리 동네 식집사에게 분양하세요. 더 이상 쓰지 않는 원예 용품도 판매해보세요.🌿
                     </p></SectionWrapper>
                 <Link to={"../"}>
                     <SigButton type='submit'>작성 완료</SigButton>
@@ -108,4 +129,4 @@ const BambooEditor = (props: Props) => {
 
 }
 
-export default BambooEditor;
+export default ProductEditor;

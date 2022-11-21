@@ -21,16 +21,18 @@ import { bambooDetailTypes } from "../../types/bambooDetailTypes";
 import { BambooWrapper } from "../../Components/bamboo/BambooCard";
 import { Link } from "react-router-dom";
 import CommentInput from '../../Components/UserInput';
+import usePageTitle from "../../Hooks/usePageTitle";
 
 const BambooDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<bambooDetailTypes | null>(null);
   const { id } = useParams();
   const user = useRecoilValue(userState);
+  usePageTitle("커뮤니티")
 
-  const [comment, setComment] = useState('')
-  const HandleSubmit=()=>{
-    console.log(`유저가 작성한 코멘트는 ${comment}입니다.`);
+
+  const onSubmit = (form : {description: string;}) => {
+    console.log(form)
   }
   
 
@@ -73,9 +75,7 @@ const BambooDetail = () => {
             like={data.likeNum}
           />
         </BambooWrapper>
-
-        {/* 댓글창 */}
-        <CommentInput onChange={setComment} onSubmit={HandleSubmit}/>
+        <CommentInput onSubmit={onSubmit}/>
         {data.comment.map((e) => {
           return (
             <CommentCard

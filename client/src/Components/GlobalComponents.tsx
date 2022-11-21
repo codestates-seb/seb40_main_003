@@ -244,6 +244,18 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
   );
 };
 
+export const AddProfilePlantCard = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background-color: var(--pure-white);
+  border-radius: var(--sig-border-8);
+  border: 1px solid var(--main);
+  color: var(--main);
+  cursor: pointer;
+`
+
 // Comment 컴포넌트, 돌봄리뷰
 export const CommentCardWrapper = styled.div`
   width: 100%;
