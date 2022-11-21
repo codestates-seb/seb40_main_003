@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 env:
-  S3_BUCKET_NAME: plant-hiker-bucket
+  S3_BUCKET_NAME: plant-hiker-buket
 
 jobs:
   build:
@@ -50,4 +50,4 @@ jobs:
         
     # 압축한 프로젝트를 S3로 전송합니다.
     - name: Upload to S3
-      run: aws s3 cp --region ap-northeast-2 ./plant-hiker.zip s3://plant-hiker-bucket/plant-hiker.zip
+      run: aws s3 cp --region ap-northeast-2 ./plant-hiker.zip s3://$S3_BUCKET_NAME/plant-hiker.zip
