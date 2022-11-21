@@ -160,6 +160,10 @@ input.checkbox-20 {
   margin-top: 4px;
 }
 
+.mt-5 {
+  margin-top: 5px;
+}
+
 .mt-7 {
   margin-top: 7px;
 }
@@ -260,12 +264,20 @@ input.checkbox-20 {
   margin-left: 54px;
 }
 
+.ml--40 {
+  margin-left: -40px;
+}
+
 .pb-16 {
   padding-bottom: 16px;
 }
 
 .pt-16 {
   padding-top: 16px;
+}
+
+.pt-5 {
+  padding-bottom: 9px;
 }
 
 .sig-border16 {
@@ -323,4 +335,12 @@ code {
   .display-none-pc {
     display: none;
   }
+}
+
+.z-index-9999 {
+  z-index: 9999;
+}
+
+.cursor {
+  cursor: pointer
 }
