@@ -57,5 +57,5 @@ jobs:
       run: >
         aws deploy create-deployment --application-name plant-hiker
         --deployment-config-name CodeDeployDefault.AllAtOnce
-        --deployment-group-name plant-hiker-deploy-group
+        --deployment-group-name plant-hiker-code-deploy-group
         --s3-location bucket=$S3_BUCKET_NAME,bundleType=zip,key=plant-hiker.zip
