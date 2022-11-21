@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import useWindowSize from "../Hooks/windowSize";
 import { currentPage } from "../Recoil/atoms/currentPage";
 import gobackIcon from "../images/gobackIcon.svg"
-import Navbar, { NavContent } from "./Navbar";
+import { NavContent } from "./Navbar";
 
 const HeaderWrapper = styled.header`
   width: 100%;
@@ -41,7 +41,7 @@ const BackButton = () => {
 
   return (
     <button onClick={NavigateBack}>
-      <img src={gobackIcon} alt="뒤로가기버튼" className="cursor"></img>
+      <img src={gobackIcon} alt="뒤로가기버튼"></img>
     </button>
   );
 };

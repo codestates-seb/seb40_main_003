@@ -56,6 +56,7 @@ const Label = styled.label`
   margin-bottom: 3px;
 `;
 
+
 interface LoginForm {
   password: string;
   email: string;
@@ -74,7 +75,7 @@ function Login() {
   } = useForm<LoginForm>({
     mode: "onChange",
   });
-  usePageTitle("로그인");
+  usePageTitle("로그인")
   useEffect(() => {
     setFocus("email");
   }, []);
@@ -83,6 +84,7 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  
 
   // 로그인버튼 클릭시 동작하는 함수
   const onLogin = async (data: LoginForm) => {
@@ -97,9 +99,13 @@ function Login() {
         })
         .then((res) => {
           // 전역상태로 로그인 관련정보, 토큰 받아야함
-          setUser(res.data);
-          navigate(from, { replace: true });
+          console.log(res);
         })
+        .then(() => {
+          // 원래있던 페이지로 되돌림
+          navigate(from, { replace: true });
+        });
+
     } catch (err: any) {
       console.log(err);
       if (!err?.response) {
@@ -118,8 +124,7 @@ function Login() {
   return (
     <MainContentContainer>
       <MainCenterWrapper>
-        <form onSubmit={handleSubmit(onLogin)}>
-          <FormWrapper>
+          <FormWrapper onSubmit={handleSubmit(onLogin)}>
             <InputContainer>
               <Label htmlFor={"Email"}>Email</Label>
               <input
@@ -166,10 +171,8 @@ function Login() {
             <SigButton className="disable" type="submit" value={"Login"}>
               로그인
             </SigButton>
-
             {error && <Errormsg>{error}</Errormsg>}
           </FormWrapper>
-        </form>
       </MainCenterWrapper>
       <MainRightWrapper></MainRightWrapper>
     </MainContentContainer>
