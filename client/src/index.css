@@ -50,6 +50,7 @@ textarea {
   outline-style: none;
   color: inherit;
   border: none;
+  background-color: var(--pure-white);
 }
 
 input,
@@ -322,5 +323,11 @@ code {
 @media screen and (min-width:1024px) {
   .display-none-pc {
     display: none;
+  }
+}
+
+@media screen and(max-width:500px) {
+  .display-none-mobile {
+    display: none !important;
   }
 }

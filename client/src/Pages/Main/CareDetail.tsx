@@ -1,10 +1,10 @@
 import axios from "axios";
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
+
   useRecoilState,
-  useRecoilStateLoadable,
   useRecoilValue,
   useSetRecoilState,
 } from "recoil";
@@ -21,9 +21,9 @@ import {
   MainRightWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
-import usePageTitle from "../../Hooks/usePageTitle";
+
 import { currentPage } from "../../Recoil/atoms/currentPage";
-import { userState } from "../../Recoil/atoms/user";
+import { userRole, userState } from "../../Recoil/atoms/user";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
 import Modal from "../../Components/Modal";
 import { useCallback } from "react";
@@ -70,14 +70,22 @@ const CareDetail = () => {
             size={"66"}
             tag={data.useNum}
           />
-
-          <SectionWrapper content={data.simpleContent} pb={8} />
+          {
+          // isLogin?.userId===id?
+          <SectionWrapper content={data.simpleContent} pt={0} pb={8} />
+          // :<></>
+        }
+          {/* 모달창 */}
           <>
             {isOpenModal && (
               <Modal onClickModal={onClickModal}>asdfasdfasg</Modal>
             )}
           </>
-          <SigButton onClick={onClickModal}>반려식물 등록하기</SigButton>
+          {
+          // isLogin?.userId===id?
+          <SigButton className="mt-16" onClick={onClickModal}>반려식물 등록하기</SigButton>
+          // :<></>
+          }
           <SectionWrapper title="반려 식물">
             <PlantCardCarousel key={"reactCarousel"}>
               <>

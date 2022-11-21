@@ -31,7 +31,7 @@ export const MainCenterWrapper = styled.main`
   }
 `;
 export const MainRightWrapper = styled.aside`
-  min-width: 298px;
+  width: 298px;
   max-height: 50vh;
   display: flex;
   margin-left: 18px;
@@ -40,6 +40,8 @@ export const MainRightWrapper = styled.aside`
   padding: 16px 24px;
   position: sticky;
   top: 70px;
+  border-top: 1px solid var(--line-light-gray);
+  
 
   @media screen and (max-width: 1024px) {
     margin-left: 0;
