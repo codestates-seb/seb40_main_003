@@ -13,9 +13,13 @@ import {
   MainContentContainer,
   MainRightWrapper,
 } from "../../Components/Wrapper";
+import { useSetRecoilState } from "recoil";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { userState } from "../../Recoil/atoms/user";
 import { ProductDetailType } from "../../types/productTypes";
+import { currentPage } from "../../Recoil/atoms/currentPage";
+
+
 
 
 const ProductDetail = () => {
@@ -23,6 +27,14 @@ const ProductDetail = () => {
   const [data, setData] = useState<ProductDetailType | null>(null);
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
+
+  const setTitle = useSetRecoilState(currentPage);
+  useEffect(() => {
+    if (data !== null) {
+      setTitle({ title: `${data.member.nickname} 님의 거래글` });
+    }
+  }, [data]);
+
   useEffect(() => {
     try {
       axios.get(`/shopping/${id}`).then((res) => {

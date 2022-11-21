@@ -21,12 +21,15 @@ import { bambooDetailTypes } from "../../types/bambooDetailTypes";
 import { BambooWrapper } from "../../Components/bamboo/BambooCard";
 import { Link } from "react-router-dom";
 import CommentInput from '../../Components/UserInput';
+import usePageTitle from "../../Hooks/usePageTitle";
 
 const BambooDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<bambooDetailTypes | null>(null);
   const { id } = useParams();
   const user = useRecoilValue(userState);
+  usePageTitle("커뮤니티")
+
 
   const [comment, setComment] = useState('')
   const HandleSubmit=()=>{

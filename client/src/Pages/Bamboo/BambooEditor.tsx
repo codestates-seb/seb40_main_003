@@ -4,6 +4,7 @@ import { SigButton } from '../../Components/GlobalComponents';
 import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
+import usePageTitle from "../../Hooks/usePageTitle";
 
 const ConfirmWrapper = styled.span`
     display: flex;
@@ -21,7 +22,7 @@ interface BambooEditorForm {
 }
 
 const BambooEditor = (props: Props) => {
-    const { register, handleSubmit, formState: { errors },
+    const { register, handleSubmit, watch, formState: { errors },
     } = useForm<BambooEditorForm>();
 
     const onValid = (data: BambooEditorForm) => {
@@ -29,6 +30,7 @@ const BambooEditor = (props: Props) => {
     }
     const onInValid = (errors: FieldErrors) => {
     };
+    usePageTitle("커뮤니티 글 쓰기")
 
     console.log(errors);
 
@@ -66,7 +68,7 @@ const BambooEditor = (props: Props) => {
                         <input className='image'
                                 {...register("image"
                                     )}
-                                id="picture"
+                                id="image"
                                 type="file"
                             />
                             <p className='font-alert-red sub'>{errors.image?.message}</p>
