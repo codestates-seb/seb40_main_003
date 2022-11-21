@@ -3,27 +3,28 @@ import { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
-import { userState } from "../../Recoil/atoms/atom";
+import { userState } from "../../Recoil/atoms/user";
 import { SigButton } from "../../Components/GlobalComponents";
+import { Link } from "react-router-dom";
+import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
 
-const Container = styled.div`
-  width: 300px;
+// const Container = styled.div`
+//   width: 300px;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+//   margin-bottom: 10px;
+//   align-items: center;
+//   background-color: #f1f2f3;
+//   box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 24px 0px,
+//     rgba(0, 0, 0, 0.05) 0px 20px 48px 0px, rgba(0, 0, 0, 0.1) 0px 1px 4px 0px;
+//   border-radius: 10px;
+// `;
+
+const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-bottom: 10px;
   align-items: center;
-  background-color: #f1f2f3;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 24px 0px,
-    rgba(0, 0, 0, 0.05) 0px 20px 48px 0px, rgba(0, 0, 0, 0.1) 0px 1px 4px 0px;
-  border-radius: 10px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-evenly;
   height: 100%;
   width: 100%;
   padding: 10px;
@@ -54,13 +55,13 @@ const Input = styled.input`
   padding: 0;
 `;
 
-const MainContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: calc(100vh - 90px);
-`;
+// const MainContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   height: calc(100vh - 90px);
+// `;
 
 interface LoginForm {
   password: string;
@@ -112,9 +113,10 @@ function Login() {
   };
 
   return (
-    <MainContainer>
-      <Container>
-        <Form onSubmit={handleSubmit(onLogin)}>
+    <MainContentContainer>
+      <MainCenterWrapper>
+        <section onSubmit={handleSubmit(onLogin)}>
+<FormWrapper>
           <InputContainer>
             <Label htmlFor={'Email'}>Email</Label>
             <Input
@@ -154,13 +156,20 @@ function Login() {
             )}
           </InputContainer>
           
-          <button className="font-gray sub">ID / PW 찾기</button>
-          <button className="font-main sub bold">회원 가입</button>
+            <button className="font-gray sub">ID / PW 찾기</button>
+              <Link to={`/signup/`}>
+            <button className="font-main sub bold">회원 가입</button>
+          </Link>
           <SigButton className="disable" type="submit" value={'Login'}>로그인</SigButton>
           {error && <Errormsg> {error}</Errormsg>}
-        </Form>
-      </Container>
-    </MainContainer>
+          </FormWrapper>
+
+          </section>
+      </MainCenterWrapper>
+      <MainRightWrapper>
+      </MainRightWrapper>
+      </MainContentContainer>
+      
   );
 }
 
