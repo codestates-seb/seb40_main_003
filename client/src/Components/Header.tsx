@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import useWindowSize from "../Hooks/windowSize";
 import { currentPage } from "../Recoil/atoms/currentPage";
 import gobackIcon from "../images/gobackIcon.svg"
-import Navbar, { NavContent } from "./Navbar";
+import { NavContent } from "./Navbar";
 
 const HeaderWrapper = styled.header`
   width: 100%;
