@@ -16,13 +16,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      working-directory: ./server
 
     steps:
     - name: check path
       run: echo $PWD
-      
-    - name: change path
-      run: cd ./server
       
     - uses: actions/checkout@v3
     - name: Set up JDK 11
