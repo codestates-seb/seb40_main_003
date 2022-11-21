@@ -41,7 +41,7 @@ const BackButton = () => {
 
   return (
     <button onClick={NavigateBack}>
-      <img src={gobackIcon} alt="뒤로가기버튼" className="cursor"></img>
+      <img src={gobackIcon} alt="뒤로가기버튼"></img>
     </button>
   );
 };
