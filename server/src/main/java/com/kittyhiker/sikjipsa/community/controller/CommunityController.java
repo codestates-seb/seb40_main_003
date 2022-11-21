@@ -74,6 +74,22 @@ public class CommunityController {
         return new ResponseEntity(communityDetail, HttpStatus.OK);
     }
 
+    @PostMapping("/like")
+    public ResponseEntity likeCommunity(@PathVariable("community-id") Long communityId,
+                                        @RequestHeader("Authorization") String token) {
+        communityService.likeCommunity(communityId, jwtTokenizer.getUserIdFromToken(token));
+
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/like")
+    public ResponseEntity cancelLikeCommunity(@PathVariable("community-id") Long communityId,
+                                              @RequestHeader("Authorization") String token) {
+        communityService.cancelLikeCommunity(communityId, jwtTokenizer.getUserIdFromToken(token));
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
 
     /**
      * 커뮤니티글 삭제

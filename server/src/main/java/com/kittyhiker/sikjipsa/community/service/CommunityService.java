@@ -7,7 +7,9 @@ import com.kittyhiker.sikjipsa.community.dto.CommunityPagingDto;
 import com.kittyhiker.sikjipsa.community.dto.CommunityPostDto;
 import com.kittyhiker.sikjipsa.community.dto.CommunityResponseDto;
 import com.kittyhiker.sikjipsa.community.enitity.Community;
+import com.kittyhiker.sikjipsa.community.enitity.CommunityLike;
 import com.kittyhiker.sikjipsa.community.mapper.CommunityMapper;
+import com.kittyhiker.sikjipsa.community.repository.CommunityLikeRepository;
 import com.kittyhiker.sikjipsa.community.repository.CommunityRepository;
 import com.kittyhiker.sikjipsa.deal.dto.PageInfo;
 import com.kittyhiker.sikjipsa.image.entity.Image;
@@ -34,6 +36,7 @@ import java.util.stream.Collectors;
 public class CommunityService {
 
     private final CommunityRepository communityRepository;
+    private final CommunityLikeRepository communityLikeRepository;
     private final CommunityMapper mapper;
     private final ImageService imageService;
     private final CommentService commentService;
@@ -46,7 +49,7 @@ public class CommunityService {
     public CommunityResponseDto postCommunity(CommunityPostDto postDto, List<MultipartFile> images, Long userId) throws IOException {
 
         Community community = mapper.communityPostDtoToCommunity(postDto);
-        Member findMember = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+        Member findMember = verifiedMember(userId);
         community.setMember(findMember);
         Community savedCommunity = communityRepository.save(community);
 
@@ -159,6 +162,25 @@ public class CommunityService {
         return mapper.communityToResponseDto(findCommunity, responseImage, comments);
     }
 
+    public void likeCommunity(Long communityId, Long userId) {
+        Community community = verifiedCommunity(communityId);
+        Member member = verifiedMember(userId);
+        if (communityLikeRepository.findByMemberAndCommunity(community, member).isPresent()) {
+            throw new IllegalArgumentException("ALREADY LIKE");
+        }
+
+        CommunityLike like = CommunityLike.builder().community(community).member(member).build();
+        communityLikeRepository.save(like);
+    }
+
+    public void cancelLikeCommunity(Long communityId, Long userId) {
+        Community community = verifiedCommunity(communityId);
+        Member member = verifiedMember(userId);
+        CommunityLike likeCommunity = communityLikeRepository.findByMemberAndCommunity(community, member)
+                .orElseThrow(() -> new IllegalArgumentException("NOT FOUND LIKE POST"));
+        communityLikeRepository.delete(likeCommunity);
+    }
+
 
     public void removeCommunityPost(Long communityId) {
         Community findCommunity = verifiedCommunity(communityId);
@@ -167,5 +189,9 @@ public class CommunityService {
 
     public Community verifiedCommunity(Long communityId) {
         return communityRepository.findById(communityId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND COMMUNITY POST"));
+    }
+
+    public Member verifiedMember(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
     }
 }
