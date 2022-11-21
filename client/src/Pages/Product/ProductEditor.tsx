@@ -14,7 +14,7 @@ type Props = {}
 
 interface ProductEditorForm {
     title: string;
-    photo: string;
+    image: string;
     category: number;
     content: string;
     price: string;
@@ -63,8 +63,14 @@ const ProductEditor = (props: Props) => {
                     </SectionWrapper>
 
                     <SectionWrapper>
-                        <>
-                            사진 추가
+                    <>
+                        <input className='image'
+                                {...register("image"
+                                    )}
+                                id="picture"
+                                type="file"
+                            />
+                            <p className='font-alert-red sub'>{errors.image?.message}</p>
                         </>
                     </SectionWrapper>
 
