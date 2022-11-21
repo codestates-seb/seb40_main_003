@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 
 interface ModalDefaultType {
   onClickModal: () => void;
-  children: string;
+  children: JSX.Element|JSX.Element[];
 }
 
 function Modal({ onClickModal, children }: ModalDefaultType) {
@@ -13,9 +13,11 @@ function Modal({ onClickModal, children }: ModalDefaultType) {
       <Backdrop
         onClick={(e: React.MouseEvent) => {
           e.preventDefault();
-
-          if (onClickModal) {
-            onClickModal();
+          
+          if(onClickModal){
+            if(window.confirm("작성을 취소하시겠습니까?")){
+              onClickModal();
+            }
           }
         }}
       />
@@ -35,15 +37,16 @@ const ModalContainer = styled.div`
 `;
 
 const DialogBox = styled.dialog`
-    width: 320px;
-    height: 400px;
+    min-width: 320px;
+    padding: 32px;
+    min-height: 400px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     position: fixed;
     border: none;
-    left: calc(50% - 160px);
+    left: calc(50% - 192px);
     border-radius: 8px;
     box-shadow: 0 0 30px rgba(30, 30, 30, 0.185);
     box-sizing: border-box;

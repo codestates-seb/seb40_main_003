@@ -13,6 +13,7 @@ import {
 } from "../../Components/Wrapper";
 import { NaviateToFrom } from "../../Hooks/navigationHooks";
 import { currentPage } from "../../Recoil/atoms/currentPage";
+import usePageTitle from "../../Hooks/usePageTitle";
 
 // const Container = styled.div`
 //   width: 300px;
@@ -66,7 +67,6 @@ function Login() {
   // const url = 'https://testserver.com/';
   const [error, setErrMsg] = useState("");
   const [user, setUser] = useRecoilState(userState);
-  const setPageName = useSetRecoilState(currentPage)
   const {
     register,
     formState: { errors },
@@ -75,10 +75,8 @@ function Login() {
   } = useForm<LoginForm>({
     mode: "onChange",
   });
-
-
+  usePageTitle("로그인")
   useEffect(() => {
-    setPageName({title: "로그인"})
     setFocus("email");
   }, []);
 
@@ -126,7 +124,7 @@ function Login() {
   return (
     <MainContentContainer>
       <MainCenterWrapper>
-        <section onSubmit={handleSubmit(onLogin)}>
+        <form onSubmit={handleSubmit(onLogin)}>
           <FormWrapper>
             <InputContainer>
               <Label htmlFor={"Email"}>Email</Label>
@@ -177,7 +175,7 @@ function Login() {
             
             {error && <Errormsg>{error}</Errormsg>}
           </FormWrapper>
-        </section>
+        </form>
       </MainCenterWrapper>
       <MainRightWrapper></MainRightWrapper>
     </MainContentContainer>

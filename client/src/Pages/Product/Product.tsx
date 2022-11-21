@@ -53,11 +53,13 @@ export const ProductMain = ({
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
-    <div className={hidingTime ? "display-none" : ""}>
-      <ProductPlaceHolder />
-      <ProductPlaceHolder />
-      <ProductPlaceHolder />
-    </div>
+    <MainContentContainer className={hidingTime ? "display-none" : ""}>
+      <MainCenterWrapper>
+        <ProductPlaceHolder />
+        <ProductPlaceHolder />
+        <ProductPlaceHolder />
+      </MainCenterWrapper>
+    </MainContentContainer>
   );
 };
 

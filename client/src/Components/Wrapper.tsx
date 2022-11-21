@@ -41,7 +41,6 @@ export const MainRightWrapper = styled.aside`
   position: sticky;
   top: 70px;
   border-top: 1px solid var(--line-light-gray);
-  
 
   @media screen and (max-width: 1024px) {
     margin-left: 0;
@@ -85,21 +84,21 @@ export const SectionWrapper = ({
       <ColumnWrapper width={width}>
         {title ? <h2 className="bold font-main">{title}</h2> : null}
         {content ? <p className="mt-8">{content}</p> : null}
-        {tag ?
+        {tag ? (
           <TagWrapper>
             <>
               {tag
                 ? tag.map((e) => {
-                  return (
-                    <SigTag className="sub" key={e.techTagId}>
-                      {e.techTagName}
-                    </SigTag>
-                  );
-                })
+                    return (
+                      <SigTag className="sub" key={e.techTagId}>
+                        {e.techTagName}
+                      </SigTag>
+                    );
+                  })
                 : null}
             </>
-          </TagWrapper> : null
-        }
+          </TagWrapper>
+        ) : null}
         {children && children}
       </ColumnWrapper>
     </CenteringWrapper>
@@ -114,13 +113,19 @@ const MainLeftWrapper = styled.aside`
 `;
 type columnWrapperType = {
   width?: number;
+  center?: boolean;
 };
 export const ColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: ${(props: columnWrapperType) =>
     props.width ? `${props.width}%` : "auto"};
+  align-items: ${(props: columnWrapperType) =>
+    props.center ? `center` : "auto"};
+  justify-content: ${(props: columnWrapperType) =>
+    props.center ? `center` : "auto"};
 `;
+
 export const RowWrapper = styled.div`
   display: flex;
   flex-direction: row;
