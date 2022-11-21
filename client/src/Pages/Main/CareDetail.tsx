@@ -103,7 +103,7 @@ const CareDetail = () => {
                   isLogin?.userId===id? */}
               <ColumnWrapper center={true}>
                 <AddProfilePlantCard onClick={onClickModal}>
-                  추가
+                  +
                 </AddProfilePlantCard>
               </ColumnWrapper>
               {/* :<></>
