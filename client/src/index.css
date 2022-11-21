@@ -52,6 +52,9 @@ textarea {
   border: none;
   background-color: var(--pure-white);
 }
+button{
+  cursor: pointer;
+}
 
 input,
 textarea {
