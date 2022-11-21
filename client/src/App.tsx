@@ -51,26 +51,24 @@ function App() {
         </Route>
 
         {/* 오픈된 라우팅 */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
         {/* 헤더가 있는 컴포넌트들 */}
         <Route element={<HeaderLayout />}>
           <Route path="/" element={<DefaultLayout />}>
             <Route index element={<Care />} />
             <Route path="/caring/:id" element={<CareDetail />} />
           </Route>
-
           <Route path="/product" element={<DefaultLayout />}>
             <Route index element={<Product />} />
             <Route path=":id" element={<ProductDetail />} />
             <Route path="/product/write" element={<ProductEditor />} />
           </Route>
-
           <Route path="/bamboo" element={<DefaultLayout />}>
             <Route index element={<Community />} />
             <Route path=":id" element={<CommunityDetail />} />
             <Route path="/bamboo/write" element={<CommunityEditor />} />
           </Route>
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
         </Route>
 
         {/* 잘못된 경로일때 보내는 곳*/}
