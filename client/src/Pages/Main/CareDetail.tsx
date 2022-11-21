@@ -1,7 +1,13 @@
 import axios from "axios";
+import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import {
+  useRecoilState,
+  useRecoilStateLoadable,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 import {
   ProfileCard,
   ProfilePlantCard,
@@ -15,61 +21,79 @@ import {
   MainRightWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
-import useWindowSize from "../../Hooks/windowSize";
-import { userState } from "../../Recoil/atoms/atom";
+import usePageTitle from "../../Hooks/usePageTitle";
+import { currentPage } from "../../Recoil/atoms/currentPage";
+import { userState } from "../../Recoil/atoms/user";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
+import Modal from "../../Components/Modal";
+import { useCallback } from "react";
+import { LoadingSpinner } from "../../Components/Loading";
 
 const CareDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState<CareDetailTypes | null>(null);
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
-  const width= useWindowSize().width
+
+  const setTitle = useSetRecoilState(currentPage);
+  useEffect(() => {
+    if (data !== null) {
+      setTitle({ title: `${data.member.name} 님의 프로필` });
+    }
+  }, [data]);
+
+  const onClickModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
 
   useEffect(() => {
     try {
       axios.get(`/caring/${id}`).then((res) => {
         setData(res.data);
         setIsLoading(false);
-        console.log(res.data.techTag[2].techTagName);
       });
     } catch (err) {
       console.log(err);
     }
   }, [id]);
-
   return !isLoading && data !== null ? (
     <MainContentContainer>
       <MainCenterWrapper>
         <section>
-          <Link to={isLogin ? `/caring/${data.member.memberId}` : ""}>
-            <ProfileCard
-              src={data.member.image.imgUrl}
-              alt={`${data.expertReview[0].writer.nickname}의 대표사진`}
-              name={data.expertReview[0].writer.nickname}
-              location={data.address}
-              circle={true}
-              size={"66"}
-              tag={data.useNum}
+          <ProfileCard
+            src={data.member.image.imgUrl}
+            alt={`${data.expertReview[0].writer.nickname}의 대표사진`}
+            name={data.expertReview[0].writer.nickname}
+            location={data.address}
+            circle={true}
+            size={"66"}
+            tag={data.useNum}
+          />
 
-              // 태그
-              // <ViewCounter like={data.userLikeExpert} view={data.view} />
-            />
-          </Link>
           <SectionWrapper content={data.simpleContent} pb={8} />
+          <>
+            {isOpenModal && (
+              <Modal onClickModal={onClickModal}>asdfasdfasg</Modal>
+            )}
+          </>
+          <SigButton onClick={onClickModal}>반려식물 등록하기</SigButton>
           <SectionWrapper title="반려 식물">
-            <PlantCardCarousel width={width}>
-              {data.plant.map((e) => {
-                return (
-                  <ProfilePlantCard
-                    src={data.member.image.imgUrl}
-                    alt={`${data.member.name}의 반려식물`}
-                    name={e.name}
-                    type={e.plantType}
-                    age={e.year}
-                  />
-                );
-              })}
+            <PlantCardCarousel key={"reactCarousel"}>
+              <>
+                {data.plant.map((e) => {
+                  return (
+                    <ProfilePlantCard
+                      src={data.member.image.imgUrl}
+                      alt={`${data.member.name}의 반려식물`}
+                      name={e.name}
+                      type={e.plantType}
+                      key={`profilePlantCard ${e.plantId}`}
+                      age={e.year}
+                    />
+                  );
+                })}
+              </>
             </PlantCardCarousel>
           </SectionWrapper>
           <SectionWrapper
@@ -103,7 +127,7 @@ const CareDetail = () => {
                     content={e.content}
                     user={isLogin}
                     author={e.writer.memberId}
-                    key={e.expertReviewId}
+                    key={`돌봄 ${e.expertReviewId}`}
                   />
                 );
               })}
@@ -111,12 +135,13 @@ const CareDetail = () => {
           </SectionWrapper>
         </section>
       </MainCenterWrapper>
+
       <MainRightWrapper>
         <SigButton>문의 하기</SigButton>
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
-    <>loading...</>
+    <LoadingSpinner />
   );
 };
 

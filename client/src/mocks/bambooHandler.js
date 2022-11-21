@@ -89,24 +89,13 @@ export const BambooDetailHandler = (pageNumber) => {
             ],
             member: {
                 memberId: 1,
-                nickname: "전교수님",
+                nickname: "나태주",
                 image: {
                     imageId: 1,
                     imgUrl: "https://cdn.discordapp.com/attachments/1032514339682402359/1040541403249397860/DSC_3003.JPG",
                     isRepImg: 1
                     }
             },
-            communityLike: [
-                {
-                    likeId: 1,
-                    member: [
-                        {
-                            memberId: 1
-                        }
-                    ],
-                    likeNum: 1
-                }
-            ],
             comment: [
                 {
                     commentId: 1,
@@ -119,7 +108,12 @@ export const BambooDetailHandler = (pageNumber) => {
                     parent: 0,
                     member: {
                         memberId: 1,
-                        nickname: "Phillip Jeong"
+                        nickname: "전교수님",
+                        image : {
+                          imageId : "sdf2344",
+                          imgUrl : "https://cdn.discordapp.com/attachments/1032514339682402359/1040541403249397860/DSC_3003.JPG",
+                          isRepImg : 1,
+                      }
                     }
                 }
             ]

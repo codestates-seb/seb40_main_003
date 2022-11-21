@@ -1,4 +1,5 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+
 * {
   margin: 0;
   padding: 0;
@@ -16,6 +17,7 @@
   text-decoration: none;
   color: var(--font-black);
 }
+
 :root {
   --main: #127c56;
   --sub-color: #eab64d;
@@ -49,9 +51,7 @@ textarea {
   color: inherit;
   border: none;
 }
-image {
-  loading: lazy;
-}
+
 input,
 textarea {
   padding: 8px;
@@ -60,21 +60,41 @@ textarea {
   outline-color: var(--line-light-gray);
   border-radius: 6px;
 }
+
 input:focus,
 textarea:focus {
   filter: drop-shadow(0px 0px 2px #127c56);
   color: var(--font-main);
 }
 
+input.content {
+  height: 300px;
+}
+
+input.border-none {
+  outline: none;
+}
+
+input.checkbox-20 {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
+  accent-color: var(--main);
+  cursor: pointer;
+}
+
+
 /* 아이콘 active */
 .activeIcon span {
   color: var(--main);
   font-weight: var(--bold);
 }
+
 .activeIcon svg,
 .activeIcon p {
   fill: var(--main);
 }
+
 .disableIcon svg,
 .activeIcon p {
   fill: var(--font-gray);
@@ -84,17 +104,24 @@ textarea:focus {
 .font-gray {
   color: var(--font-gray);
 }
+
 .font-main {
   color: var(--font-main);
+}
+
+.font-alert-red {
+  color: var(--alert-red);
 }
 
 /* 폰트 두께 설정 */
 .light {
   font-weight: 200;
 }
+
 .medium {
   font-weight: 500;
 }
+
 .bold {
   font-weight: 700;
 }
@@ -103,61 +130,88 @@ textarea:focus {
 .sub {
   font-size: 0.8rem;
 }
+
+.h5 {
+  font-size: 1.0rem;
+}
+
 .h4 {
   font-size: 1.2rem;
 }
+
 .h3 {
   font-size: 1.4rem;
 }
+
 .h2 {
   font-size: 1.6rem;
 }
+
 .h1 {
   font-size: 1.8rem;
 }
+
 /* 마진 설정 */
 .mt-1 {
   margin-top: 1px;
 }
+
 .mt-4 {
   margin-top: 4px;
 }
+
 .mt-7 {
   margin-top: 7px;
 }
+
 .mt-8 {
   margin-top: 8px;
 }
+
 .mt-12 {
   margin-top: 12px;
 }
+
 .mt-16 {
   margin-top: 16px;
 }
+
 .mb-3 {
   margin-bottom: 3px;
 }
+
 .mb-5 {
   margin-bottom: 5px;
 }
+
 .mb-6 {
   margin-bottom: 6px;
 }
+
 .mb-7 {
   margin-bottom: 7px;
 }
+
 .mb-8 {
   margin-bottom: 8px;
 }
+
 .mb-10 {
   margin-bottom: 10px;
 }
+
 .mb-15 {
   margin-bottom: 15px;
 }
+
+.mb-16 {
+  margin-bottom: 16px;
+}
+
 .mb-20 {
   margin-bottom: 20px;
 }
+
 .mb-25 {
   margin-bottom: 25px;
 }
@@ -165,15 +219,19 @@ textarea:focus {
 .mr-4 {
   margin-right: 4px;
 }
+
 .mr-8 {
   margin-right: 8px;
 }
+
 .mr-16 {
   margin-right: 16px;
 }
+
 .mr-24 {
   margin-right: 24px;
 }
+
 .mr-36 {
   margin-right: 36px;
 }
@@ -181,33 +239,43 @@ textarea:focus {
 .ml-4 {
   margin-left: 4px;
 }
+
 .ml-8 {
   margin-left: 8px;
 }
+
 .ml-16 {
   margin-left: 16px;
 }
+
 .ml-24 {
   margin-left: 24px;
 }
+
 .ml-36 {
   margin-left: 36px;
 }
+
 .ml-54 {
   margin-left: 54px;
 }
+
 .pb-16 {
   padding-bottom: 16px;
 }
+
 .pt-16 {
   padding-top: 16px;
 }
+
 .sig-border16 {
   border-radius: 16px 0px 16px 0px;
 }
+
 .sig-border8 {
   border-radius: 8px 0px 8px 0px;
 }
+
 .sig-border4 {
   border-radius: 4px 0px 4px 0px;
 }
@@ -223,4 +291,36 @@ textarea:focus {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+/* 말 줄임 표시 */
+.text-overflow2 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.text-overflow3 {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  word-break: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+@media screen and(max-width:1024px) {
+  .display-none-from-tablet {
+    display: none;
+  }
+}
+
+@media screen and (min-width:1024px) {
+  .display-none-pc {
+    display: none;
+  }
 }

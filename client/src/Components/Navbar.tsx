@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 // 이미지의 경우, 상단에 변수로 Import해서 사용할 시 자동으로 경로를 관리해줍니다
 // 아래와같이 변수로 import시 이미지의 경로를 string 형태로 리턴해줍니다
-import { Link, Outlet, useParams,NavLink  } from "react-router-dom";
+import { Link, Outlet, useParams, NavLink } from "react-router-dom";
 import { SubText } from "./GlobalComponents";
 import { ReactComponent as Home } from "../images/homeIcon.svg";
 import { ReactComponent as Community } from "../images/communityIcon.svg";
@@ -10,7 +10,7 @@ import { ReactComponent as Market } from "../images/marketIcon.svg";
 import { ReactComponent as Login } from "../images/loginIcon.svg";
 import ProfileIcon from "../images/emptyProfileIcon.svg";
 import { useRecoilValue } from "recoil";
-import { userState } from "../Recoil/atoms/atom";
+import { userState } from "../Recoil/atoms/user";
 
 const NavContainer = styled.nav`
   width: 100%;
@@ -23,6 +23,9 @@ const NavContainer = styled.nav`
   padding: 0 24px;
   position: fixed;
   bottom: 0;
+  @media screen and (min-width:1024px) {
+    display: none;
+}
 `;
 const NavElemWrapper = styled.ul`
   width: 100%;
@@ -71,48 +74,65 @@ const NavElem = ({ title = "Untitled", children }: NavElemProps) => {
     </ButtonWrapper>
   );
 };
+export const NavContent = () => {
+  const user = useRecoilValue(userState);
+  return (<>
+    <NavElemWrapper>
+      <NavLink
+        to="/"
+        className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
+      >
+        <NavElem title="홈">
+          <Home />
+        </NavElem>
+      </NavLink>
+
+      <NavLink
+        to="/product"
+        className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
+      >
+        <NavElem title="장터">
+          <Market />
+        </NavElem>
+      </NavLink>
+      <NavLink
+        to="/bamboo"
+        className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
+      >
+        <NavElem title="커뮤니티">
+          <Community />
+        </NavElem>
+      </NavLink>
+      <NavLink
+        to="/talk"
+        className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
+      >
+        <NavElem title="대화">
+          <Chat />
+        </NavElem>
+      </NavLink>
+      <NavLink
+        to={user ? `/profile/${user.userId}` : "/login"}
+        className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
+      >
+        <NavElem title={user ? "프로필" : "로그인"}>
+          {user ? (
+            <ProfilePhotoWrapper userImage={user.userImage} />
+          ) : (
+            <Login />
+          )}
+        </NavElem>
+      </NavLink>
+    </NavElemWrapper>
+    </>
+  );
+};
 
 const Navbar = () => {
-  const user = useRecoilValue(userState);
-  const {currentLocation} = useParams()
-  console.log(currentLocation)
-
   return (
     <>
       <NavContainer>
-        <NavElemWrapper>
-
-          <NavLink to="/" className={({isActive}) =>isActive?"activeIcon":"disableIcon"}>
-            <NavElem title="홈">
-              <Home />
-            </NavElem>
-          </NavLink>
-
-          <NavLink to="/product" className={({isActive}) =>isActive?"activeIcon":"disableIcon"}>
-            <NavElem title="장터">
-              <Market />
-            </NavElem>
-          </NavLink>
-          <NavLink to="/bamboo" className={({isActive}) =>isActive?"activeIcon":"disableIcon"}>
-            <NavElem title="커뮤니티">
-              <Community />
-            </NavElem>
-          </NavLink>
-          <NavLink to="/talk" className={({isActive}) =>isActive?"activeIcon":"disableIcon"}>
-            <NavElem title="대화">
-              <Chat />
-            </NavElem>
-          </NavLink>
-          <NavLink to={user ? `/profile/${user.userId}` : "/login"} className={({isActive}) =>isActive?"activeIcon":"disableIcon"}>
-            <NavElem title={user ? "프로필" : "로그인"}>
-              {user ? (
-                <ProfilePhotoWrapper userImage={user.userImage} />
-              ) : (
-                <Login />
-              )}
-            </NavElem>
-          </NavLink>
-        </NavElemWrapper>
+        <NavContent></NavContent>
       </NavContainer>
       <Outlet />
     </>
