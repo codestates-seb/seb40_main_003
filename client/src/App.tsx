@@ -13,7 +13,8 @@ import CareDetail from "./Pages/Main/CareDetail";
 import Community from "./Pages/Bamboo/Bamboo";
 import CommunityDetail from "./Pages/Bamboo/BambooDetail";
 import CommunityEditor from "./Pages/Bamboo/BambooEditor";
-import Talk from "./Pages/Talk";
+import Talk from "./Pages/Talk/Talk";
+import ReviewEditor from "./Pages/Talk/ReviewEditor";
 import DevTools from "./Components/DevTools";
 import ProductDetail from "./Pages/Product/ProductDetail";
 import ProductEditor from "./Pages/Product/ProductEditor";
@@ -72,6 +73,12 @@ function App() {
             <Route path="/bamboo/write" element={<CommunityEditor />} />
           </Route>
         </Route>
+
+        <Route>
+          <Route path="/talk" element={<Talk />} />
+          <Route path="/talk/write" element={<ReviewEditor />} />
+        </Route>
+        
 
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />
