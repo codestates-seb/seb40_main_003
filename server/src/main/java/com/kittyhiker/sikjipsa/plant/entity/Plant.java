@@ -1,5 +1,6 @@
 package com.kittyhiker.sikjipsa.plant.entity;
 
+import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import lombok.Getter;
 
