@@ -11,22 +11,28 @@ import {
   SectionWrapper
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
-import { currentPage } from "../../Recoil/atoms/currentPage";
 
 
 type Props = {}
 
 const Talk = (props: Props) => {
-  usePageTitle("채팅")
+  usePageTitle("대화")
   return (
     <>
     <MainContentContainer>
       <MainCenterWrapper>
-        채팅 리스트
+        <SectionWrapper>
+          <>
+            채팅 리스트
+          </>
+        </SectionWrapper>
       </MainCenterWrapper>
       <MainRightWrapper>
-        <Link to={"/Talk/Write"}>
-          <SigButton type='submit'>후기 쓰기</SigButton>
+        <Link to={"/Talk/care-write"}>
+          <SigButton type='submit'>돌봄 후기 쓰기</SigButton>
+        </Link>
+        <Link to={"/Talk/product-write"}>
+          <SigButton type='submit'>거래 후기 쓰기</SigButton>
         </Link>
       </MainRightWrapper>
     </MainContentContainer>
@@ -34,4 +40,4 @@ const Talk = (props: Props) => {
   )
 }
 ;
-export default Talk
+export default Talk;

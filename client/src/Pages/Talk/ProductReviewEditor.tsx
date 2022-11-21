@@ -4,6 +4,7 @@ import { SigButton } from '../../Components/GlobalComponents';
 import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
+import usePageTitle from '../../Hooks/usePageTitle'
 
 const ConfirmWrapper = styled.span`
     display: flex;
@@ -12,20 +13,21 @@ const ConfirmWrapper = styled.span`
 
 type Props = {}
 
-interface ReviewEditorForm {
+interface ProductReviewEditorForm {
     content: string;
     errors?: string;
 }
 
-const ReviewEditor = (props: Props) => {
+const ProductReviewEditor = (props: Props) => {
     const { register, handleSubmit, formState: { errors },
-    } = useForm<ReviewEditorForm>();
+    } = useForm<ProductReviewEditorForm>();
 
-    const onValid = (data: ReviewEditorForm) => {
+    const onValid = (data: ProductReviewEditorForm) => {
         console.log("나 발리드됨")
     }
     const onInValid = (errors: FieldErrors) => {
     };
+    usePageTitle("대화")
 
     console.log(errors);
 
@@ -66,8 +68,8 @@ const ReviewEditor = (props: Props) => {
                 <SectionWrapper borderNone={true}>
                     <p className='h5 bold font-main mr-16'>
                     </p></SectionWrapper>
-                <Link to={"../"}>
-                    <SigButton type='submit'>후기 작성 완료</SigButton>
+                <Link to={"/talk"}>
+                    <SigButton type='submit' className='disable'>후기 작성 완료</SigButton>
                 </Link>
             </MainRightWrapper>
 
@@ -77,4 +79,4 @@ const ReviewEditor = (props: Props) => {
 
 }
 
-export default ReviewEditor;
+export default ProductReviewEditor;

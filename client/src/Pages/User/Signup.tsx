@@ -2,6 +2,7 @@ import React from 'react';import { FieldErrors, useForm } from "react-hook-form"
 import { SigButton } from '../../Components/GlobalComponents';
 import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
 import { Link } from "react-router-dom";
+import usePageTitle from "../../Hooks/usePageTitle";
 
 type Props = {}
 
@@ -22,8 +23,8 @@ const Signup = (props: Props) => {
   }
   const onInValid = (errors: FieldErrors) => {
   };
+  usePageTitle("회원 가입")
 
-  
   return (
     <MainContentContainer>
       <MainCenterWrapper>
@@ -100,7 +101,7 @@ const Signup = (props: Props) => {
       </SectionWrapper> 
 
       <Link to={`/login/`}>
-        <SigButton type='submit' value="Create Account">계정 생성</SigButton>
+        <SigButton type='submit' value="Create Account" className='disable'>계정 생성</SigButton>
       </Link>
       </section>
       </MainCenterWrapper>

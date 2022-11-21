@@ -42,8 +42,7 @@ export const ProductMain = ({
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
           <p className="h5 bold font-main mr-16">
-            반려식물을 분양하거나, 쓰지
-            않는 원예 용품을 판매해보세요.🌿
+            반려식물을 분양하고 원예 용품을 판매해보세요.🌿
           </p>
         </SectionWrapper>
         <span className="h4 bold"></span>

@@ -14,7 +14,8 @@ import Community from "./Pages/Bamboo/Bamboo";
 import CommunityDetail from "./Pages/Bamboo/BambooDetail";
 import CommunityEditor from "./Pages/Bamboo/BambooEditor";
 import Talk from "./Pages/Talk/Talk";
-import ReviewEditor from "./Pages/Talk/ReviewEditor";
+import ProductReviewEditor from "./Pages/Talk/ProductReviewEditor";
+import CareReviewEditor from "./Pages/Talk/CareReviewEditor";
 import DevTools from "./Components/DevTools";
 import ProductDetail from "./Pages/Product/ProductDetail";
 import ProductEditor from "./Pages/Product/ProductEditor";
@@ -35,7 +36,6 @@ function App() {
       <Routes>
         {/* 보호된 라우팅 */}
         <Route element={<AuthProvider />}>
-          <Route path="/talk" element={<Talk />} />
           <Route path="/profile" element={<HeaderLayout />}>
             <Route path=":id" element={<Profile />} />
           </Route>
@@ -58,15 +58,15 @@ function App() {
             <Route path=":id" element={<CommunityDetail />} />
             <Route path="/bamboo/write" element={<CommunityEditor />} />
           </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+          <Route>
+            <Route path="/talk" element={<Talk />} />
+            <Route path="/talk/product-write" element={<ProductReviewEditor />} />
+            <Route path="/talk/care-write" element={<CareReviewEditor />} />
+          </Route>
         </Route>
         {/* 수정 필요 */}
-        <Route>
-          <Route path="/talk" element={<Talk />} />
-          <Route path="/talk/write" element={<ReviewEditor />} />
-        </Route>
-
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />
       </Routes>
