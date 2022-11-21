@@ -22,6 +22,7 @@ import { BambooWrapper } from "../../Components/bamboo/BambooCard";
 import { Link } from "react-router-dom";
 import CommentInput from '../../Components/UserInput';
 import usePageTitle from "../../Hooks/usePageTitle";
+import { LoadingSpinner } from '../../Components/Loading';
 
 const BambooDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -102,7 +103,7 @@ const BambooDetail = () => {
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
-    <>loading...</>
+    <LoadingSpinner />
   );
 };
 
