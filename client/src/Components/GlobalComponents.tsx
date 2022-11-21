@@ -259,11 +259,12 @@ export const AddProfilePlantCard = styled.button`
 // Comment 컴포넌트, 돌봄리뷰
 export const CommentCardWrapper = styled.div`
   width: 100%;
-  padding: 8px;
-  margin-top: 8px;
+  padding: 6px 10px;
+  margin-top: 16px;
   border: 1px solid var(--line-light-gray);
   border-radius: var(--sig-border-8);
   display: flex;
+  justify-content: space-between;
 `;
 
 export const CommentButtonWrapper = styled.div`
@@ -271,9 +272,9 @@ export const CommentButtonWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const CommentColumnWrapper = styled.div`
-  display: flex;
-  justify-content: center;
+export const GridWrapper = styled.div`
+  display: grid;
+  align-items: center;
 `;
 
 export type CommentCardTypes = {
@@ -292,19 +293,17 @@ export const CommentCard = (props: CommentCardTypes) => {
   const { size, src, alt, name, createdAt, content, tag, user, author } = props;
   return (
     <CommentCardWrapper>
+      <RowWrapper className='align-center'>
       {src && alt !== undefined ? (
         <ImageWrapper
           src={src}
           alt={alt}
           size={size === "sm" ? "16" : "36"}
-          className="mr-16 mt-8"
           loading="lazy"
         />
       ) : null}
-
-      <CommentColumnWrapper>
-        <ColumnWrapper>
-          <span className="sub mt-8">{name}</span>
+    <GridWrapper>
+          <span className="sub bold font-gray mb-3">{name}</span>
           {tag ? (
             <TagWrapper>
               {tag.map((e) => {
@@ -312,10 +311,12 @@ export const CommentCard = (props: CommentCardTypes) => {
               })}
             </TagWrapper>
           ) : null}
-          <span className="font-gray medium">{content}</span>
-        </ColumnWrapper>
+          <p className="font-gray medium">{content}</p>
+          </GridWrapper>
+        </RowWrapper>
+        <GridWrapper>
         <ColumnWrapper>
-          <div className="sub font-gray mt-7 mb-20">{createdAt}</div>
+          <div className="sub font-gray mb-3">{createdAt}</div>
           <CommentEdit
             userId={user!==null?user.userId:""}
             author={author?author:""}
@@ -323,7 +324,7 @@ export const CommentCard = (props: CommentCardTypes) => {
             callback2={undefined}
           />
         </ColumnWrapper>
-      </CommentColumnWrapper>
+      </GridWrapper>
     </CommentCardWrapper>
   );
 };
