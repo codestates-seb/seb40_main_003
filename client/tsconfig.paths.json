@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-      // 또는 "@components/*": ["src/components/*"] 처럼 지정 가능
-    }
-  }
-}
