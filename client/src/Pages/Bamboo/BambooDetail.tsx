@@ -31,9 +31,8 @@ const BambooDetail = () => {
   usePageTitle("커뮤니티")
 
 
-  const [comment, setComment] = useState('')
-  const HandleSubmit=()=>{
-    console.log(`유저가 작성한 코멘트는 ${comment}입니다.`);
+  const onSubmit = (form : {description: string;}) => {
+    console.log(form)
   }
   
 
@@ -76,9 +75,7 @@ const BambooDetail = () => {
             like={data.likeNum}
           />
         </BambooWrapper>
-
-        {/* 댓글창 */}
-        <CommentInput onChange={setComment} onSubmit={HandleSubmit}/>
+        <CommentInput onSubmit={onSubmit}/>
         {data.comment.map((e) => {
           return (
             <CommentCard
