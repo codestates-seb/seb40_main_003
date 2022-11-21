@@ -12,20 +12,32 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 
+
 type Props = {}
 
 const Talk = (props: Props) => {
-  usePageTitle("채팅")
+  usePageTitle("대화")
   return (
     <>
-    <div>Talk</div>
-    <Link to={"/Talk/Write"}>
-      <SigButton type='submit'>후기 쓰기</SigButton>
-    </Link>
-
-    </>
-
+    <MainContentContainer>
+      <MainCenterWrapper>
+        <SectionWrapper>
+          <>
+            채팅 리스트
+          </>
+        </SectionWrapper>
+      </MainCenterWrapper>
+      <MainRightWrapper>
+        <Link to={"/Talk/care-write"}>
+          <SigButton type='submit'>돌봄 후기 쓰기</SigButton>
+        </Link>
+        <Link to={"/Talk/product-write"}>
+          <SigButton type='submit'>거래 후기 쓰기</SigButton>
+        </Link>
+      </MainRightWrapper>
+    </MainContentContainer>
+  </>
   )
 }
-
-export default Talk
+;
+export default Talk;

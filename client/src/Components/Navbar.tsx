@@ -91,7 +91,7 @@ export const NavContent = () => {
         to="/product"
         className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
       >
-        <NavElem title="장터">
+        <NavElem title="거래">
           <Market />
         </NavElem>
       </NavLink>

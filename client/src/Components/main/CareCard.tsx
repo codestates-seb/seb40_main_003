@@ -8,7 +8,6 @@ import { SigTag, TagWrapper} from "../GlobalComponents";
 
 const CardWrapper = styled.div`
 /* background-color: aliceblue; */
-  width: 100%;
   min-width: 312px;
   max-width: 730px;
   padding: 8px 8px;
@@ -18,6 +17,7 @@ const CardWrapper = styled.div`
 `;
 const CareDescription = styled.div`
   /* background-color: yellow; */
+  width: 100%;
   height: 100px;
   display: flex;
   align-items: center;

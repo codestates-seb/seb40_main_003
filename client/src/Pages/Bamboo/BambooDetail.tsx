@@ -22,6 +22,7 @@ import { BambooWrapper } from "../../Components/bamboo/BambooCard";
 import { Link } from "react-router-dom";
 import CommentInput from '../../Components/UserInput';
 import usePageTitle from "../../Hooks/usePageTitle";
+import { LoadingSpinner } from '../../Components/Loading';
 
 const BambooDetail = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -94,7 +95,7 @@ const BambooDetail = () => {
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
-          <p className='h5 bold font-main mr-16'>반려식물을 자랑하거나, 궁금한 점들을 물어보세요.🌱
+          <p className='h5 bold font-main mr-16'>반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
           </p></SectionWrapper>
         <Link to={"/bamboo/write"}>
           <SigButton type='submit'>새 글쓰기</SigButton>
@@ -102,7 +103,7 @@ const BambooDetail = () => {
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
-    <>loading...</>
+    <LoadingSpinner />
   );
 };
 
