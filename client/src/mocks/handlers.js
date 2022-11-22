@@ -12,10 +12,10 @@ export const handlers = [
   rest.post("https://testserver.com/login", async (req, res, ctx) => {
     return res(
       ctx.json({
-        userId: 1,
-        userImage:
+        memberId: 1,
+        image:
           "https://learnenglish.britishcouncil.org/sites/podcasts/files/2021-10/RS6715_492969113-hig.jpg",
-        userNickname: "준구짱",
+        nickname: "준구짱",
       })
     );
   }),

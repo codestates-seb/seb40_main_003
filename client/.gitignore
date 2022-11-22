@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/src/mocks
+# /src/mocks
 /.pnp
 .pnp.js
 

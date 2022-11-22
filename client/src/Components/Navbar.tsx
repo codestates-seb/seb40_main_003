@@ -112,11 +112,11 @@ export const NavContent = () => {
         </NavElem>
       </NavLink>
       <NavLink
-        to={user.memberId ? `/profile/${user.memberId}` : "/login"}
+        to={user?.memberId ? `/profile/${user.memberId}` : "/login"}
         className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
       >
-        <NavElem title={user ? "프로필" : "로그인"}>
-          {user.image ? (
+        <NavElem title={user?.memberId ? "프로필" : "로그인"}>
+          {user?.image ? (
             <ProfilePhotoWrapper userImage={user.image} />
           ) : (
             <Login />
