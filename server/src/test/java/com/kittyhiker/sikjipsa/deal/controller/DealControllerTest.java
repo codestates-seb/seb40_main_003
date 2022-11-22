@@ -50,6 +50,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @Import(SecurityTestConfig.class)
 @AutoConfigureRestDocs
 class DealControllerTest {
+    /*
 
     String token = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkYXNvbEBhc2RmaWouY29tIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sInVzZXJJZCI6MSwiaWF0IjoxNjY4MDYwNTk1LCJleHAiOjE2NjgwNjIzOTV9.HRSvPRI1eKIfVnhlSKQQwZf0CkN1-HMbp3AASVITIos";
     LocalDateTime time = LocalDateTime.of(2022, 11, 17, 11, 17, 56);
@@ -302,5 +303,5 @@ class DealControllerTest {
                 ))
                 .andReturn();
     }
-
+*/
 }
