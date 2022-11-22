@@ -5,6 +5,7 @@ import com.kittyhiker.sikjipsa.community.enitity.Community;
 import com.kittyhiker.sikjipsa.deal.entity.Deal;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.repository.ImageRepository;
+import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.entity.MemberProfile;
 import com.kittyhiker.sikjipsa.plant.entity.Plant;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,8 @@ public class ImageService {
         return image;
     }
 
-    public Image findImage(MemberProfile memberProfile) {
-        Image image = imageRepository.findByMemberProfile(memberProfile).orElseThrow(()
+    public Image findImage(Member member) {
+        Image image = imageRepository.findByMember(member).orElseThrow(()
                 -> new IllegalArgumentException("NOT FOUND IMAGE"));
         return image;
     }
