@@ -22,7 +22,7 @@ public class Community extends AuditingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "community_id")
-	private Long id;
+	private Long communityId;
 
 	private String title;
 

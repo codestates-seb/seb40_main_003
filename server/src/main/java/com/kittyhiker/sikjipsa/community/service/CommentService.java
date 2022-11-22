@@ -34,8 +34,13 @@ public class CommentService {
                 .content(content).depth(0).parent(0L).build();
         Comment savedComment = commentRepository.save(newComment);
 
+        String memberProfile;
+        if (member.getImage().getImgUrl()==null) {
+            memberProfile="";
+        } else memberProfile = member.getImage().getImgUrl();
+
         return mapper.commentToResponseDto(savedComment,
-                memberMapper.memberToMemberResponseDto(member, member.getImage().getImgUrl()));
+                memberMapper.memberToMemberResponseDto(member, memberProfile));
     }
 
     public CommentResponseDto postComment(Long communityId, Long memberId, Long commentId, String content) {
@@ -46,17 +51,27 @@ public class CommentService {
                 .content(content).depth(1).parent(commentId).build();
         Comment savedComment = commentRepository.save(newComment);
 
+        String memberProfile;
+        if (member.getImage().getImgUrl()==null) {
+            memberProfile="";
+        } else memberProfile = member.getImage().getImgUrl();
+
         return mapper.commentToResponseDto(savedComment,
-                memberMapper.memberToMemberResponseDto(member, member.getImage().getImgUrl()));
+                memberMapper.memberToMemberResponseDto(member, memberProfile));
     }
 
     public CommentResponseDto patchComment(Long commentId, String content) {
         Comment comment = verifiedComment(commentId);
         comment.modifyComment(content);
         Comment savedComment = commentRepository.save(comment);
+
+        String memberProfile;
+        if (savedComment.getMember().getImage().getImgUrl()==null) {
+            memberProfile="";
+        } else memberProfile = savedComment.getMember().getImage().getImgUrl();
+
         return mapper.commentToResponseDto(savedComment,
-                memberMapper.memberToMemberResponseDto(savedComment.getMember(),
-                        savedComment.getMember().getImage().getImgUrl()));
+                memberMapper.memberToMemberResponseDto(savedComment.getMember(), memberProfile));
     }
 
     public void deleteComment(Long commentId) {
@@ -72,8 +87,14 @@ public class CommentService {
         Community community = verifiedCommunity(communityId);
         List<Comment> commentList = commentRepository.findAllByCommunity(community);
         List<CommentResponseDto> comments = commentList.stream().map(
-                c -> mapper.commentToResponseDto(c,
-                            memberMapper.memberToMemberResponseDto(c.getMember(), c.getMember().getImage().getImgUrl()))
+                c -> {
+                    String memberProfile;
+                    if (c.getMember().getImage().getImgUrl()==null) {
+                        memberProfile="";
+                    } else memberProfile = c.getMember().getImage().getImgUrl();
+                    return mapper.commentToResponseDto(c,
+                            memberMapper.memberToMemberResponseDto(c.getMember(), memberProfile));
+                }
         ).collect(Collectors.toList());
         return comments;
     }
