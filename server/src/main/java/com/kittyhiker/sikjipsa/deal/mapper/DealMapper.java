@@ -10,6 +10,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface DealMapper {
     Deal dealPostDtoToDeal(DealPostDto dealPostDto);
-    DealResponseDto dealToDealResponseDto(Deal deal);
-    List<DealResponseDto> dealListToResponseList(List<Deal> dealList);
+    DealResponseDto dealToDealResponseDto(Deal deal, List<String> images);
+//    List<DealResponseDto> dealListToResponseList(List<Deal> dealList);
 }

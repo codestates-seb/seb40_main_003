@@ -1,4 +1,4 @@
-package com.kittyhiker.sikjipsa.deal.dto;
+package com.kittyhiker.sikjipsa.member.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,12 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DealPostDto {
+public class MemberResponseDto {
 
-    String title;
-    String content;
-    int price;
-    int category;
-    int area;
-
+    private Long memberId;
+    private String nickname;
+    private String image;
 }
