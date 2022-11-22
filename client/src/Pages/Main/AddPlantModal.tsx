@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
-import { ColumnWrapper, SectionWrapper } from "../../Components/Wrapper";
+import { ColumnWrapper} from "../../Components/Wrapper";
 
 
 type FormData = {

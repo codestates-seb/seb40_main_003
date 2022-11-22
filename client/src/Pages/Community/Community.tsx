@@ -1,6 +1,3 @@
-import { useState } from "react";
-import axios from "axios";
-import { useEffect } from "react";
 import CommunityCard from "../../Components/community/CommunityCard";
 import { communityTypes } from "../../types/communityTypes";
 import { Link } from "react-router-dom";
@@ -12,20 +9,13 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { LoadingSpinner } from '../../Components/Loading';
+import useFetch from "../../Hooks/basicFetching";
 
 const Community = () => {
-  const [data, setData] = useState<communityTypes>();
-  const [isLoading, setIsLoading] = useState(true);
   usePageTitle("커뮤니티")
-  useEffect(() => {
-    axios.get("/community").then((res) => {
-      setData(res.data);
-      setIsLoading(false);
-    });
-  }, []);
+  const data = useFetch<communityTypes>("/community")
 
-  return !isLoading && data !== undefined ? (
+  return data?(
     <MainContentContainer>
       <MainCenterWrapper>
         {data.data.map((e) => {
@@ -48,9 +38,7 @@ const Community = () => {
         </Link>
       </MainRightWrapper>
     </MainContentContainer >
-  ) : (
-    <LoadingSpinner />
-  );
+  ):<></>
 };
 
 export default Community;

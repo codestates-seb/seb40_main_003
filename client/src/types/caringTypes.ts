@@ -1,33 +1,36 @@
-type caringTypes = 
+type caringTypes = {
+  data: [
     {
-        expertProfileId: number,
-        simpleContent: string,
-        address: string,
-        userLikeExpert: number,
-        member: {
-            memberId: number,
-            image: {
-                    imageId: number,
-                    imgUrl: string,
-                    isRepImg: number
-                },
-            name: string,
-            age: number,
-            gender: number
-        },
-        
-        techTag:[
-            {
-                techTagId: number,
-                techTagName: string
-            }
-        ],
-        areaTag:[
-            {
-                areaTagId: number,
-                ateaTagName: string
-            }
-        ]
-    }
+      expertProfileId: number;
+      simpleContent: string;
+      address: string;
+      userLikeExpert: number;
+      member: {
+        memberId: number;
+        image: {
+          imageId: number;
+          imgUrl: string;
+          isRepImg: number;
+        };
+        name: string;
+        age: number;
+        gender: number;
+      };
 
-export type {caringTypes}
+      techTag: [
+        {
+          techTagId: number;
+          techTagName: string;
+        }
+      ];
+      areaTag: [
+        {
+          areaTagId: number;
+          ateaTagName: string;
+        }
+      ];
+    }
+  ];
+};
+
+export type { caringTypes };

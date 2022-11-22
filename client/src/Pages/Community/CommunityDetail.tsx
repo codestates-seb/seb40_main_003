@@ -22,31 +22,20 @@ import { CommunityWrapper } from "../../Components/community/CommunityCard";
 import { Link } from "react-router-dom";
 import CommentInput from '../../Components/UserInput';
 import usePageTitle from "../../Hooks/usePageTitle";
-import { LoadingSpinner } from '../../Components/Loading';
+import useFetch from "../../Hooks/basicFetching";
 
 const CommunityDetail = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<communityDetailTypes | null>(null);
   const { id } = useParams();
   const user = useRecoilValue(userState);
+  const data = useFetch<communityDetailTypes>(`/community/${id}`)
   usePageTitle("커뮤니티")
 
 
   const onSubmit = (form : {description: string;}) => {
     console.log(form)
   }
-  
 
-  useEffect(() => {
-    try {
-      axios.get(`/community/${id}`).then((res) => {
-        setData(res.data);
-        setIsLoading(false);
-      });
-    } catch (err) { }
-  }, []);
-
-  return !isLoading && data !== null ? (
+  return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
         <CommunityWrapper>
@@ -102,9 +91,7 @@ const CommunityDetail = () => {
         </Link>
       </MainRightWrapper>
     </MainContentContainer>
-  ) : (
-    <LoadingSpinner />
-  );
+  ):<></>
 };
 
 export default CommunityDetail;

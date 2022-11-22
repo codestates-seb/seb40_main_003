@@ -1,8 +1,6 @@
-import axios from "axios";
-import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue} from "recoil";
 import {
   ProfileCard,
   ProfilePlantCard,
@@ -19,43 +17,30 @@ import {
   ColumnWrapper,
 } from "../../Components/Wrapper";
 
-import { currentPage } from "../../Recoil/atoms/currentPage";
-import { userRole, userState } from "../../Recoil/atoms/user";
+import { userState } from "../../Recoil/atoms/user";
 import { CareDetailTypes } from "../../types/CareDetailTypes";
 import Modal from "../../Components/Modal";
 import { useCallback } from "react";
 import { LoadingSpinner } from "../../Components/Loading";
 import AddPlantModal from "./AddPlantModal";
+import usePageTitle from "../../Hooks/usePageTitle";
+import useFetch from "../../Hooks/basicFetching";
 
 const CareDetail = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<CareDetailTypes | null>(null);
+
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
-
-  const setTitle = useSetRecoilState(currentPage);
-  useEffect(() => {
-    if (data !== null) {
-      setTitle({ title: `${data.member.name} 님의 프로필` });
-    }
-  }, [data]);
 
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
 
-  useEffect(() => {
-    try {
-      axios.get(`/caring/${id}`).then((res) => {
-        setData(res.data);
-        setIsLoading(false);
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }, [id]);
-  return !isLoading && data !== null ? (
+  const  data = useFetch<CareDetailTypes>(`/caring/${id}`)
+  usePageTitle(data!==undefined?`${data.member.name} 님의 프로필`:"프로필")
+
+
+  return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
         <ProfileCard
@@ -145,7 +130,6 @@ const CareDetail = () => {
           </>
         </SectionWrapper>
       </MainCenterWrapper>
-
       <MainRightWrapper>
         <SigButton>문의 하기</SigButton>
       </MainRightWrapper>

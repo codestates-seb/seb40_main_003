@@ -3,7 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 type carousel ={
-    children:React.ReactChild[]
+    children:JSX.Element[]
 }
 export const TopCarousel= (props:carousel) =>{
     return (
