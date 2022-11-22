@@ -14,19 +14,8 @@ import {
 import { NaviateToFrom } from "../../Hooks/navigationHooks";
 import { currentPage } from "../../Recoil/atoms/currentPage";
 import usePageTitle from "../../Hooks/usePageTitle";
+import { axiosPrivate } from "../../Hooks/api";
 
-// const Container = styled.div`
-//   width: 300px;
-//   display: flex;
-//   flex-direction: column;
-//   justify-content: center;
-//   margin-bottom: 10px;
-//   align-items: center;
-//   background-color: #f1f2f3;
-//   box-shadow: rgba(0, 0, 0, 0.05) 0px 10px 24px 0px,
-//     rgba(0, 0, 0, 0.05) 0px 20px 48px 0px, rgba(0, 0, 0, 0.1) 0px 1px 4px 0px;
-//   border-radius: 10px;
-// `;
 
 const FormWrapper = styled.form`
   display: flex;
@@ -89,11 +78,8 @@ function Login() {
   // 로그인버튼 클릭시 동작하는 함수
   const onLogin = async (data: LoginForm) => {
     try {
-      axios
+      axiosPrivate
         .post("/auth/token", {
-          headers: {
-            "Content-Type": "application/json",
-          },
           email: data.email,
           password: data.password,
         })

@@ -318,7 +318,7 @@ export const CommentCard = (props: CommentCardTypes) => {
         <ColumnWrapper>
           <div className="sub font-gray mb-6">{createdAt}</div>
           <CommentEdit
-            userId={user!==null?user.userId:""}
+            userId={user!==null?user.memberId:""}
             author={author?author:""}
             callback1={undefined}
             callback2={undefined}

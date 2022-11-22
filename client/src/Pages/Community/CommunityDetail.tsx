@@ -52,7 +52,7 @@ const CommunityDetail = () => {
         <CommunityWrapper>
           <span className='h4 bold font-main mb-16'>{data.title}</span>
           <CommentEdit
-            userId={user !== null ? user.userId : ""}
+            userId={user !== null ? user.memberId : ""}
             author={data.member.memberId}
           />
         </CommunityWrapper>

@@ -1,22 +1,27 @@
-import {atom} from 'recoil'
+import { atom } from "recoil";
 
 // 로그인 정보 저장 상태
 export interface UserStateType {
-  userId: string
-  userImage: string
-  userNickname: string
-  accessToken?: string
-  refreshToken?: string
+  memberId: string|null;
+  image: string|null;
+  nickname: string|null;
+  accessToken?: string|null;
+  refreshToken?: string|null;
 }
 
-export const userState = atom<UserStateType|null>({
-  key:"userState",
-  default:null
-})
-
+export const userState = atom<UserStateType>({
+  key: "userState",
+  default: {
+    memberId: null,
+    image: null,
+    nickname: null,
+    accessToken: null,
+    refreshToken: null,
+  },
+});
 
 // 유저 role 저장 상태
 export const userRole = atom<boolean>({
-  key:"userRole",
-  default:false
-})
+  key: "userRole",
+  default: false,
+});

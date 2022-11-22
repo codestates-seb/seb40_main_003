@@ -42,7 +42,13 @@ const DevTools = (props: Props) => {
       .post("https://testserver.com/logout", { id: 123, password: 123 })
       .then((res) => {
         console.log(res.status);
-        setUser(null);
+        setUser({
+          memberId:null,
+          image:null,
+          nickname:null,
+          accessToken:null,
+          refreshToken:null
+        });
       });
   };
   // const handleModal = async (e: React.SyntheticEvent) => {
