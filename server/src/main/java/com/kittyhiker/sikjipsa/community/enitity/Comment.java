@@ -2,12 +2,18 @@ package com.kittyhiker.sikjipsa.community.enitity;
 
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
 import com.kittyhiker.sikjipsa.member.entity.Member;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Comment extends AuditingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,13 +22,13 @@ public class Comment extends AuditingEntity {
 
 	private String content;
 
-	private int isModified;
+	private int isModified=0;
 
-	private int isDeleted;
+	private int isDeleted=0;
 
 	private int depth;
 
-	private int parent;
+	private Long parent;
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")
@@ -31,4 +37,14 @@ public class Comment extends AuditingEntity {
 	@ManyToOne
 	@JoinColumn(name = "community_id")
 	private Community community;
+
+	public void modifyComment(String content) {
+		this.content = content;
+		this.isModified = 1;
+	}
+
+	public void deleteComment() {
+		this.content = "삭제된 댓글입니다";
+		this.isDeleted = 1;
+	}
 }

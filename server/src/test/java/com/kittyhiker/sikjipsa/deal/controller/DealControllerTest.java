@@ -31,6 +31,7 @@ import org.springframework.restdocs.request.RequestDocumentation;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.LinkedMultiValueMap;
@@ -81,14 +82,18 @@ class DealControllerTest {
                 .category(1).area(3).state(0).images(new ArrayList<>()).memberLikeNum(0).view(0).build();
 
         BDDMockito.given(dealService.postDeal(Mockito.any(DealPostDto.class), Mockito.anyList(), Mockito.anyLong())).willReturn(response);
+//        MockMvcRequestBuilders.multipart("/deal")\
+//                .part()   //DTO, Image를 변환해서 넣어보기 **
 
         //when
         ResultActions perform = mockMvc.perform(
                 RestDocumentationRequestBuilders.post("/deal")
                         .accept(MediaType.APPLICATION_JSON)
                         .header("Authorization", token)
-                        .contentType(MediaType.APPLICATION_JSON)
+//                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(MediaType.MULTIPART_FORM_DATA_VALUE)
                         .content(content)
+
         );
 
         //then
