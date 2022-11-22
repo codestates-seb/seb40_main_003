@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
   CommentCard,
-  CommentEdit,
   ImageWrapper,
   SigButton,
   ViewCounter,
@@ -31,11 +30,10 @@ const CommunityDetail = () => {
   const user = useRecoilValue(userState);
   usePageTitle("커뮤니티")
 
-
   const onSubmit = (form : {description: string;}) => {
     console.log(form)
   }
-  
+
 
   useEffect(() => {
     try {
@@ -51,10 +49,6 @@ const CommunityDetail = () => {
       <MainCenterWrapper>
         <CommunityWrapper>
           <span className='h4 bold font-main mb-16'>{data.title}</span>
-          <CommentEdit
-            userId={user !== null ? user.userId : ""}
-            author={data.member.memberId}
-          />
         </CommunityWrapper>
         {data.image[0] ? (
           <ImageWrapper

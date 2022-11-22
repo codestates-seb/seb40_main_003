@@ -1,9 +1,8 @@
-
-
 import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import { UserStateType } from "../Recoil/atoms/user";
+import { useRef, useState, useEffect } from "react";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -136,15 +135,15 @@ export const ViewCounter = ({
   return (
     <ViewCounterWrapper>
       {view && (
-        <ViewCounterColumn className="text-align-center mr-16">
-          <SubText className="medium font-gray mr-8">{renameView}</SubText>
-          <SubText className="font-gray ">{overKillo(view)}</SubText>
+        <ViewCounterColumn className='text-align-center mr-16'>
+          <SubText className='medium font-gray mr-8'>{renameView}</SubText>
+          <SubText className='font-gray '>{overKillo(view)}</SubText>
         </ViewCounterColumn>
       )}
       {like && (
-        <ViewCounterColumn className="text-align-center ">
-          <SubText className="medium font-gray mr-8">{renameLike}</SubText>
-          <SubText className="font-gray">{overKillo(like)}</SubText>
+        <ViewCounterColumn className='text-align-center '>
+          <SubText className='medium font-gray mr-8'>{renameLike}</SubText>
+          <SubText className='font-gray'>{overKillo(like)}</SubText>
         </ViewCounterColumn>
       )}
     </ViewCounterWrapper>
@@ -184,23 +183,23 @@ export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
   const { size = "36", src, alt, name, location, circle = false, tag } = props;
   return (
-    <CenteringWrapper className="space-between" borderNone={true}>
-      <RowWrapper className="align-center">
+    <CenteringWrapper className='space-between' borderNone={true}>
+      <RowWrapper className='align-center'>
         <ImageWrapper
           src={src}
           alt={alt}
           size={size}
-          className="mr-16"
+          className='mr-16'
           circle={circle}
         />
 
         <ColumnWrapper>
-          <span className="medium">{name}</span>
-          <span className="sub font-gray">{location}</span>
+          <span className='medium'>{name}</span>
+          <span className='sub font-gray'>{location}</span>
         </ColumnWrapper>
       </RowWrapper>
 
-      {tag && <SigTag className="ghost sub">{tag}번 고용</SigTag>}
+      {tag && <SigTag className='ghost sub'>{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
@@ -232,13 +231,13 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
         src={src}
         alt={alt}
         size={size === "sm" ? "36" : "66"}
-        className="mr-16"
-        loading="lazy"
+        className='mr-16'
+        loading='lazy'
       ></ImageWrapper>
       <ColumnWrapper>
-        <span className="medium">{name}</span>
-        <span className="sub font-gray">{type}</span>
-        <div className="sub font-gray ml-54">{age}년차</div>
+        <span className='medium'>{name}</span>
+        <span className='sub font-gray'>{type}</span>
+        <div className='sub font-gray ml-54'>{age}년차</div>
       </ColumnWrapper>
     </ProfilePlantCardWrapper>
   );
@@ -254,7 +253,7 @@ export const AddProfilePlantCard = styled.button`
   border: 1px solid var(--main);
   color: var(--main);
   cursor: pointer;
-`
+`;
 
 // Comment 컴포넌트, 돌봄리뷰
 export const CommentCardWrapper = styled.div`
@@ -277,6 +276,11 @@ export const GridWrapper = styled.div`
   align-content: space-between;
 `;
 
+export const CommentInput = styled.input`
+  width: 200%;
+  height: 30px;
+`;
+
 export type CommentCardTypes = {
   size?: string;
   src?: string;
@@ -288,22 +292,43 @@ export type CommentCardTypes = {
   user: UserStateType | null;
   author: number;
 };
+
 export const CommentCard = (props: CommentCardTypes) => {
-  // 비구조화할당
   const { size, src, alt, name, createdAt, content, tag, user, author } = props;
+  const ref = useRef<any>(null);
+  const [text, setText] = useState(content);
+  const [editable, setEditable] = useState(false);
+  const editOn = () => {
+    setEditable(true);
+  };
+  const handleChange = (e: any) => {
+    setText(e.target.value);
+  };
+  const handleKeyDown = () => {
+    setEditable(!editable);
+  };
+  const handleClickOutside = (e: any) => {
+    if (editable === true && !ref.current.contains(e.target))
+      setEditable(false);
+  };
+  useEffect(() => {
+    window.addEventListener("click", handleClickOutside, true);
+  });
+
+  // 비구조화할당
   return (
     <CommentCardWrapper>
       <RowWrapper className='align-center'>
-      {src && alt !== undefined ? (
-        <ImageWrapper
-          src={src}
-          alt={alt}
-          size={size === "sm" ? "16" : "36"}
-          loading="lazy"
-        />
-      ) : null}
-    <GridWrapper>
-          <span className="sub bold font-gray mb-3">{name}</span>
+        {src && alt !== undefined ? (
+          <ImageWrapper
+            src={src}
+            alt={alt}
+            size={size === "sm" ? "16" : "36"}
+            loading='lazy'
+          />
+        ) : null}
+        <GridWrapper>
+          <span className='sub bold font-gray mb-3'>{name}</span>
           {tag ? (
             <TagWrapper>
               {tag.map((e) => {
@@ -311,18 +336,32 @@ export const CommentCard = (props: CommentCardTypes) => {
               })}
             </TagWrapper>
           ) : null}
-          <p className="font-gray medium">{content}</p>
-          </GridWrapper>
-        </RowWrapper>
-        <GridWrapper>
+          <>
+            <div ref={ref}>
+              {editable ? (
+                <CommentInput
+                  type='text'
+                  value={text}
+                  onChange={(e) => handleChange(e)}
+                />
+              ) : (
+                <p className='font-gray medium'>
+                  {text}
+                </p>
+              )}
+            </div>
+          </>
+        </GridWrapper>
+      </RowWrapper>
+      <GridWrapper>
         <ColumnWrapper>
-          <div className="sub font-gray mb-6">{createdAt}</div>
-          <CommentEdit
-            userId={user!==null?user.userId:""}
-            author={author?author:""}
-            callback1={undefined}
-            callback2={undefined}
-          />
+          <div className='sub font-gray mb-6'>{createdAt}</div>
+          {String(author) === String(user?.userId) ? (
+            <CommentButtonWrapper>
+              <span onClick={() => editOn()} onKeyDown={handleKeyDown}  className='sub font-gray cursor'> 수정</span>
+              <span className='sub font-gray cursor'> 삭제</span>
+            </CommentButtonWrapper>
+          ) : null}
         </ColumnWrapper>
       </GridWrapper>
     </CommentCardWrapper>
@@ -330,30 +369,3 @@ export const CommentCard = (props: CommentCardTypes) => {
 };
 
 
-// 댓글 수정삭제 버튼
-export type CommentEditType = {
-  userId: string | number | null;
-
-  author: string | number;
-  callback1?: Function;
-  callback2?: Function;
-};
-export const CommentEdit = ({
-  userId,
-  author,
-  callback1,
-  callback2,
-}: CommentEditType) => {
-  return  String(userId) === String(author) ?(
-    <CommentButtonWrapper>
-      <span className="sub font-gray mr-8" onClick={callback1 && callback1()}>
-        수정
-      </span>
-      <span className="sub font-gray" onClick={callback2 && callback2()}>
-        삭제
-      </span>
-    </CommentButtonWrapper>
-  ) : (
-    <></>
-  );
-};
