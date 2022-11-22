@@ -3,7 +3,8 @@ import axios from "../../node_modules/axios/index";
 // axios.defaults.baseURL = "https://fbc9-121-162-186-109.jp.ngrok.io";
 
 // 베이스 URL (기본으로 설정할 백엔드 api 주소)
-const BASE_URL = "https://testserver.com/";
+const BASE_URL = "https://testserver.com";
+axios.defaults.baseURL= BASE_URL
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "x-CSRFToken";
 
