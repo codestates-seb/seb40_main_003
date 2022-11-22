@@ -6,6 +6,8 @@ export const MainContentContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  background-color: var(--bg-gray);
+  min-height: 100vh;
   @media screen and (max-width: 1024px) {
     flex-direction: column;
     align-items: center;
@@ -17,9 +19,11 @@ export const MainCenterWrapper = styled.main`
   flex-direction: column;
   width: 100%;
   min-width: 312px;
+  min-height: 80vh;
   max-width: 730px;
   padding: 24px;
   margin-bottom: 156px;
+  background-color: var(--pure-white);
   border: 1px solid var(--line-light-gray);
   border-radius: var(--sig-border-16);
   @media screen and (max-width: 1024px) {
@@ -27,12 +31,16 @@ export const MainCenterWrapper = styled.main`
   }
 `;
 export const MainRightWrapper = styled.aside`
-  min-width: 298px;
+  width: 298px;
+  max-height: 50vh;
   display: flex;
   margin-left: 18px;
   flex-direction: column;
   background-color: var(--pure-white);
   padding: 16px 24px;
+  position: sticky;
+  top: 70px;
+  border-top: 1px solid var(--line-light-gray);
 
   @media screen and (max-width: 1024px) {
     margin-left: 0;
@@ -40,6 +48,7 @@ export const MainRightWrapper = styled.aside`
     justify-content: space-between;
     position: fixed;
     width: 100%;
+    top: auto;
     bottom: 52px;
     align-items: center;
     border-top: 1px solid var(--line-light-gray);
@@ -74,8 +83,8 @@ export const SectionWrapper = ({
     >
       <ColumnWrapper width={width}>
         {title ? <h2 className="bold font-main">{title}</h2> : null}
-        {content ? <p className="mt-8">{content}</p> : null}
-        {tag?
+        {content ? <p className="mt-8 text-overflow3">{content}</p> : null}
+        {tag ? (
           <TagWrapper>
             <>
               {tag
@@ -88,8 +97,8 @@ export const SectionWrapper = ({
                   })
                 : null}
             </>
-          </TagWrapper>:null
-        }
+          </TagWrapper>
+        ) : null}
         {children && children}
       </ColumnWrapper>
     </CenteringWrapper>
@@ -104,13 +113,19 @@ const MainLeftWrapper = styled.aside`
 `;
 type columnWrapperType = {
   width?: number;
+  center?: boolean;
 };
 export const ColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: ${(props: columnWrapperType) =>
     props.width ? `${props.width}%` : "auto"};
+  align-items: ${(props: columnWrapperType) =>
+    props.center ? `center` : "auto"};
+  justify-content: ${(props: columnWrapperType) =>
+    props.center ? `center` : "auto"};
 `;
+
 export const RowWrapper = styled.div`
   display: flex;
   flex-direction: row;

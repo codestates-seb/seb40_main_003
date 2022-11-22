@@ -8,7 +8,6 @@ import { SigTag, TagWrapper} from "../GlobalComponents";
 
 const CardWrapper = styled.div`
 /* background-color: aliceblue; */
-  width: 100%;
   min-width: 312px;
   max-width: 730px;
   padding: 8px 8px;
@@ -18,6 +17,7 @@ const CardWrapper = styled.div`
 `;
 const CareDescription = styled.div`
   /* background-color: yellow; */
+  width: 100%;
   height: 100px;
   display: flex;
   align-items: center;
@@ -31,8 +31,6 @@ const EndWrapper = styled.div`
 `
 
 const CareCard = ({ data }: any) => {
-    console.log(data)
-
   return (
         <>
       <CardWrapper>
@@ -41,6 +39,7 @@ const CareCard = ({ data }: any) => {
               size={"100"}
               src={data.member.image.imgUrl}
               alt={`상품명 ${data.member.name}의 대표이미지`}
+              loading="lazy"
             />
             <DescriptionColumnWrapper>
               <ColumnWrapper>
@@ -50,7 +49,7 @@ const CareCard = ({ data }: any) => {
                   <TagWrapper>
                     {data.techTag.map((e:any) => {
                       return (
-                        <SigTag className="disabled sub" key={e.techTagId}>{e.techTagName}</SigTag>
+                        <SigTag className="ghostgray sub" key={e.techTagId}>{e.techTagName}</SigTag>
                     )})}
                   </TagWrapper>
               </ColumnWrapper>

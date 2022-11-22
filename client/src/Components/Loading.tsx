@@ -12,9 +12,9 @@ interface Props {
   animation?: boolean; // 애니메이션 유무
   color?: string; // 스켈레톤 색상
   style?: React.CSSProperties; // 추가 스타
-  children?: JSX.Element
-  ml?:number;
-  mr?:number;
+  children?: JSX.Element;
+  ml?: number;
+  mr?: number;
 }
 
 const pulseKeyframe = keyframes`
@@ -82,6 +82,41 @@ const Skeleton: React.FC<Props> = ({
     >
       <Content>{content}</Content>
     </Base>
+  );
+};
+
+const spin = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+  `;
+
+// loading 컴포넌트
+type LoadingSpinnerProps = {
+  size?: number;
+};
+const LoadingWrapper = styled.section`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const LoadingElem = styled.div`
+  display: block;
+  width: ${(props: LoadingSpinnerProps) => (props.size ? props.size : "70")}px;
+  height: ${(props: LoadingSpinnerProps) => (props.size ? props.size : "70")}px;
+  border: 7px solid var(--line-gray);
+  border-radius: 100%;
+  border-top-color: var(--main);
+  animation: ${spin} 500ms linear infinite;
+`;
+
+export const LoadingSpinner = () => {
+  return (
+    <LoadingWrapper>
+      <LoadingElem />
+    </LoadingWrapper>
   );
 };
 
