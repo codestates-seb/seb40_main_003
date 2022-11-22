@@ -18,11 +18,7 @@ export const HeaderLayout = () => {
 };
 
 export const DefaultLayout = () => {
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 };
 export const SearchLayout = () => {
   return (

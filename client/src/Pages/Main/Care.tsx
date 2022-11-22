@@ -28,10 +28,7 @@ const Care = () => {
         })}
       </MainCenterWrapper>
       <MainRightWrapper>
-        <Link to={"/caring/category"}>
-          <SigButton>돌봄 카테고리</SigButton>
-        </Link>
-          
+      
       </MainRightWrapper>
     </MainContentContainer>
   ) :<></>
