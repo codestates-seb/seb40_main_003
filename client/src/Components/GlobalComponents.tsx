@@ -91,7 +91,7 @@ export const ImageWrapper = styled.img`
   display: block;
   object-fit: cover;
   margin-right: 16px;
-  &.bambooImage {
+  &.communityImage {
     width: 100%;
     margin-right: 0;
   }
