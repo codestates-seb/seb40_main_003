@@ -39,60 +39,68 @@ import DevTools from "./Components/DevTools";
 
 import { DefaultLayout } from "./Route";
 
-
-
 function App() {
   return (
     <BrowserRouter>
       <DevTools />
       {/* 모바일용 navbar*/}
-        <Navbar />
+      <Navbar />
+      
       <Routes>
         {/* 보호된 라우팅 */}
-        <Route element={<AuthProvider />}>
+        
+        {/* <Route element={<AuthProvider />}> */}
           <Route path="/profile" element={<HeaderLayout />}>
             <Route path=":id" element={<Profile />} />
           </Route>
-        </Route>
+        {/* </Route> */}
 
         {/* 오픈된 라우팅 */}
         {/* 헤더가 있는 컴포넌트들 */}
         <Route element={<HeaderLayout />}>
+          {/* 케어 */}
           <Route path="/" element={<DefaultLayout />}>
             <Route index element={<Care />} />
             <Route path="/caring/:id" element={<CareDetail />} />
           </Route>
+          {/* 장터 */}
           <Route path="/product" element={<DefaultLayout />}>
             <Route index element={<Product />} />
             <Route path=":id" element={<ProductDetail />} />
-            <Route path="/product/write" element={<ProductEditor />} />
+            <Route path="write" element={<ProductEditor />} />
           </Route>
+          {/* 커뮤니티 */}
           <Route path="/community" element={<DefaultLayout />}>
             <Route index element={<Community />} />
             <Route path=":id" element={<CommunityDetail />} />
-            <Route path="/community/write" element={<CommunityEditor />} />
+            <Route path="write" element={<CommunityEditor />} />
           </Route>
+
+          {/* 로그인 */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          {/* 대화 */}
+          <Route path="/talk" element={<DefaultLayout />}>
+            <Route index element={<Talk />} />
+            <Route path="product-write" element={<ProductReviewEditor />} />
+            <Route path="care-write" element={<CareReviewEditor />} />
+          </Route>
+          {/* 세팅 */}
           <Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+            <Route path="/setting" element={<DefaultLayout />}>
+              <Route index element={<Setting />} />
+              <Route path="bookmarks" element={<Bookmarks />} />
+              <Route path="sales-history" element={<SalesHistory />} />
+              <Route path="purchase-history" element={<PurchaseHistory />} />
+              <Route path="caring-history" element={<CaringHistory />} />
+              <Route path="my-history" element={<MyHistory />} />
+              <Route path="edit" element={<EditAccount />} />
+              <Route path="logout" element={<Logout />} />
+              <Route path="resign" element={<Resign />} />
+            </Route>
           </Route>
-          <Route>
-            <Route path="/setting" element={<Setting />} />
-            <Route path="/setting/bookmarks" element={<Bookmarks />} />
-            <Route path="/setting/sales-history" element={<SalesHistory />} />
-            <Route path="/setting/purchase-history" element={<PurchaseHistory />} />
-            <Route path="/setting/caring-history" element={<CaringHistory />} />
-            <Route path="/setting/my-history" element={<MyHistory />} />
-            <Route path="/setting/edit" element={<EditAccount />} />
-            <Route path="/setting/logout" element={<Logout />} />
-            <Route path="/setting/resign" element={<Resign />} />
-            
-          </Route>
-            <Route path="/talk" element={<Talk />} />
-            <Route path="/talk/product-write" element={<ProductReviewEditor />} />
-            <Route path="/talk/care-write" element={<CareReviewEditor />} />
-          </Route>
-        
+        </Route>
+
         {/* 수정 필요 */}
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />

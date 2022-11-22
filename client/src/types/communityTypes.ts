@@ -20,4 +20,4 @@ data:[
             nickname: string
         }}]
     }
-  export type {communityTypes}
+export type {communityTypes}

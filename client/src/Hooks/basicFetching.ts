@@ -1,21 +1,23 @@
 import axios from 'axios';
 import {useState,useEffect} from 'react'
+import { useRecoilState} from 'recoil';
+import {loading} from "../Recoil/atoms/loadingStatus"
 
-type useFetchtypes ={
-  url:string,
-}
+
 // URL을 받아서 DATA 를 리턴하는 Hooks
-function useFetch({url}:useFetchtypes) {
-  const [data, setData] = useState();
-  const [isLoading,setIsLoadng] = useState(true)
+const useFetch=<T>(url:string)=>{
+  const [data, setData] = useState<T>();
+  const [isLoading,setIsLoadng] = useRecoilState(loading)
 
   useEffect(() => {
-    axios.get(`${url}}`).then((res) => {
+    setIsLoadng(true)
+    axios.get(url).then((res) => {
       setData(res.data)
+    }).finally(()=>{
       setIsLoadng(false)
     })
-    }, []);
-  return (data);
+    }, [url]);
+  return data;
 }
 
 export default useFetch

@@ -11,7 +11,7 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
 } from "../../Components/Wrapper";
-import { NaviateToFrom } from "../../Hooks/navigationHooks";
+import { useNaviateToFrom } from "../../Hooks/navigationHooks";
 import { currentPage } from "../../Recoil/atoms/currentPage";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { axiosPrivate } from "../../Hooks/api";

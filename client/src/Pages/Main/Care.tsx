@@ -1,6 +1,3 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
 import CareCard from "../../Components/main/CareCard";
 import { caringTypes } from "../../types/caringTypes";
 import { Link } from "react-router-dom";
@@ -11,27 +8,18 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { LoadingSpinner } from "../../Components/Loading";
+import useFetch from "../../Hooks/basicFetching";
 
-type props = [caringTypes];
 
-const Care = (props: any) => {
-  const [data, setData] = useState<props>();
-  const [isLoading, setIsLoading] = useState(true);
+const Care = () => {
   usePageTitle("돌봄");
-  useEffect(() => {
-    axios.get("/caring").then((res) => {
-      // console.log(res.data)
-      setData(res.data.data);
-      // console.log(`저장된값 ${data}`)
-      setIsLoading(false);
-    });
-  }, []);
+  const data=useFetch<caringTypes>("/caring")
+  console.log(data)
 
-  return !isLoading && data !== undefined ? (
+  return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
-        {data.map((e) => {
+        {data.data.map((e) => {
           return (
             <Link key={e.expertProfileId} to={`/caring/${e.expertProfileId}`}>
               <CareCard data={e} />
@@ -39,18 +27,11 @@ const Care = (props: any) => {
           );
         })}
       </MainCenterWrapper>
-
       <MainRightWrapper>
       
       </MainRightWrapper>
     </MainContentContainer>
-  ) : (
-    <MainContentContainer>
-      <MainCenterWrapper>
-        <LoadingSpinner />
-      </MainCenterWrapper>
-    </MainContentContainer>
-  );
+  ) :<></>
 };
 
 export default Care;
