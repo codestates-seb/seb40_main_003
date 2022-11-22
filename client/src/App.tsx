@@ -48,11 +48,12 @@ function App() {
       
       <Routes>
         {/* 보호된 라우팅 */}
-        <Route element={<AuthProvider />}>
+        
+        {/* <Route element={<AuthProvider />}> */}
           <Route path="/profile" element={<HeaderLayout />}>
             <Route path=":id" element={<Profile />} />
           </Route>
-        </Route>
+        {/* </Route> */}
 
         {/* 오픈된 라우팅 */}
         {/* 헤더가 있는 컴포넌트들 */}
@@ -101,7 +102,6 @@ function App() {
         </Route>
 
         {/* 수정 필요 */}
-
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />
       </Routes>
