@@ -1,7 +1,9 @@
+
+
 import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
-import { UserStateType } from "../Recoil/atoms/atom";
+import { UserStateType } from "../Recoil/atoms/user";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -35,7 +37,7 @@ export const SubText = styled.span`
 // 태그 랩퍼
 export const TagWrapper = styled.div`
   width: 100%;
-  height: 30px;
+  height: 21px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -44,39 +46,45 @@ export const TagWrapper = styled.div`
 `;
 
 // 태그 앨리먼트
+type sigtagProps = {
+  width?: number;
+  height?: number;
+};
 export const SigTag = styled.div`
+  width: ${(props: sigtagProps) => (props.width ? props.width + "px" : "auto")};
+  height: ${(props: sigtagProps) =>
+    props.height ? props.height + "px" : "auto"};
   padding: 2px 4px;
   background-color: var(--main);
   color: var(--pure-white);
-  font-weight: var(--sub);
+  font-size: var(--sub-font-size);
   text-align: center;
-  min-width: 33px;
-  border-radius: 4px 0px;
-  margin: 4px 4px 4px 0px;
-  overflow: hidden;
+  border-radius: var(--sig-border-4);
+  padding: 2px 4px;
+  margin-right: 4px;
   &.ghost {
-    color: var(--pure-white);
-    font-weight: var(--sub);
-    text-align: center;
-    min-width: 33px;
-    border-radius: var(--sig-border-4);
-    margin: 4px 4px 4px 0px;
-  }
-  &.active {
     color: var(--main);
     background-color: var(--pure-white);
     border: 1px solid var(--main);
   }
-  &.disabled {
+  &.ghostgray {
     color: var(--line-black);
     background-color: var(--pure-white);
-    border: 1px solid var(--line-black);
+    border: 1px solid var(--line-gray);
+  }
+  &.disabled {
+    color: var(--pure-white);
+    background-color: var(--line-gray);
   }
 `;
 // 이미지 랩퍼
 export const ImageWrapper = styled.img`
   width: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
   height: ${(props: imageWrapperProps) => (props.size ? props.size : "36")}px;
+  min-width: ${(props: imageWrapperProps) =>
+    props.size ? props.size : "36"}px;
+  min-height: ${(props: imageWrapperProps) =>
+    props.size ? props.size : "36"}px;
   background-color: var(--bg-gray);
   border-radius: ${(props: imageWrapperProps) =>
     props.circle ? `${props.size}px` : "8px 0px"};
@@ -86,6 +94,9 @@ export const ImageWrapper = styled.img`
   &.bambooImage {
     width: 100%;
     margin-right: 0;
+  }
+  &.soldOut {
+    opacity: 0.5;
   }
 `;
 
@@ -110,10 +121,7 @@ const ViewCounterWrapper = styled.div`
   max-width: 100px;
   justify-content: flex-end;
 `;
-const IconElem = styled.img`
-  width: 16px;
-  height: 16px;
-`;
+
 const ViewCounterColumn = styled.div`
   display: flex;
   flex-direction: row;
@@ -192,7 +200,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         </ColumnWrapper>
       </RowWrapper>
 
-      {tag && <SigTag className="active sub">{tag}번 고용</SigTag>}
+      {tag && <SigTag className="ghost sub">{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
@@ -201,7 +209,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
 export const ProfilePlantCardWrapper = styled.div`
   max-width: 250px;
   padding: 8px;
-  margin-right:8px;
+  margin-right: 8px;
   border: 1px solid var(--line-light-gray);
   display: flex;
   align-items: center;
@@ -225,6 +233,7 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
         alt={alt}
         size={size === "sm" ? "36" : "66"}
         className="mr-16"
+        loading="lazy"
       ></ImageWrapper>
       <ColumnWrapper>
         <span className="medium">{name}</span>
@@ -235,32 +244,46 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
   );
 };
 
+export const AddProfilePlantCard = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background-color: var(--pure-white);
+  border-radius: var(--sig-border-8);
+  border: 1px solid var(--main);
+  color: var(--main);
+  cursor: pointer;
+`
+
 // Comment 컴포넌트, 돌봄리뷰
 export const CommentCardWrapper = styled.div`
   width: 100%;
-  padding: 8px 0;
-  margin-top: 8px;
+  padding: 6px 10px;
+  margin-top: 16px;
   border: 1px solid var(--line-light-gray);
+  border-radius: var(--sig-border-8);
   display: flex;
+  justify-content: space-between;
 `;
 
 export const CommentButtonWrapper = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 `;
 
-export const CommentColumnWrapper = styled.div`
-  display: flex;
-  justify-content: center;
+export const GridWrapper = styled.div`
+  display: grid;
+  align-content: space-between;
 `;
 
-type CommentCardTypes = {
+export type CommentCardTypes = {
   size?: string;
   src?: string;
   alt?: string;
-  name: string;
-  createdAt: string;
-  content: string;
+  name?: string;
+  createdAt?: string;
+  content?: string;
   tag?: [{ techId: number; name: string }];
   user: UserStateType | null;
   author: number;
@@ -270,18 +293,17 @@ export const CommentCard = (props: CommentCardTypes) => {
   const { size, src, alt, name, createdAt, content, tag, user, author } = props;
   return (
     <CommentCardWrapper>
-      {src&&alt!==undefined ? (
+      <RowWrapper className='align-center'>
+      {src && alt !== undefined ? (
         <ImageWrapper
           src={src}
           alt={alt}
           size={size === "sm" ? "16" : "36"}
-          className="mr-16 mt-8"
+          loading="lazy"
         />
       ) : null}
-
-      <CommentColumnWrapper>
-        <ColumnWrapper>
-          <span className="medium mt-8">{name}</span>
+    <GridWrapper>
+          <span className="sub bold font-gray mb-3">{name}</span>
           {tag ? (
             <TagWrapper>
               {tag.map((e) => {
@@ -289,24 +311,49 @@ export const CommentCard = (props: CommentCardTypes) => {
               })}
             </TagWrapper>
           ) : null}
-          <div className="sub font-gray">{content}</div>
-          {/* =================================무쓸모 래퍼 =================================*/}
-          <CommentColumnWrapper></CommentColumnWrapper>
-        </ColumnWrapper>
+          <p className="font-gray medium">{content}</p>
+          </GridWrapper>
+        </RowWrapper>
+        <GridWrapper>
         <ColumnWrapper>
-          <div className="sub font-gray mt-7 mb-20">{createdAt}</div>
-
-          {/* ===================두개다 안보이게 해야되니까 얘네 두개를 묶는 최상위 래퍼를 안보이게 하면됨 똑같은 코드 2번 반복 ㄴㄴ ================*/}
-          <CommentButtonWrapper>
-            {String(author) === String(user?.userId) ? (
-              <span className="sub font-gray"> 수정</span>
-            ) : null}
-            {String(author) === String(user?.userId) ? (
-              <span className="sub font-gray"> 삭제</span>
-            ) : null}
-          </CommentButtonWrapper>
+          <div className="sub font-gray mb-6">{createdAt}</div>
+          <CommentEdit
+            userId={user!==null?user.userId:""}
+            author={author?author:""}
+            callback1={undefined}
+            callback2={undefined}
+          />
         </ColumnWrapper>
-      </CommentColumnWrapper>
+      </GridWrapper>
     </CommentCardWrapper>
+  );
+};
+
+
+// 댓글 수정삭제 버튼
+export type CommentEditType = {
+  userId: string | number | null;
+
+  author: string | number;
+  callback1?: Function;
+  callback2?: Function;
+};
+export const CommentEdit = ({
+  userId,
+  author,
+  callback1,
+  callback2,
+}: CommentEditType) => {
+  return  String(userId) === String(author) ?(
+    <CommentButtonWrapper>
+      <span className="sub font-gray mr-8" onClick={callback1 && callback1()}>
+        수정
+      </span>
+      <span className="sub font-gray" onClick={callback2 && callback2()}>
+        삭제
+      </span>
+    </CommentButtonWrapper>
+  ) : (
+    <></>
   );
 };

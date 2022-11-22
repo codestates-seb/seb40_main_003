@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@craco/craco": "^7.0.0",
     "@emotion/react": "^11.10.4",
     "@emotion/styled": "^11.10.4",
     "@testing-library/jest-dom": "^5.14.1",
@@ -54,6 +55,7 @@
   },
   "devDependencies": {
     "@emotion/babel-plugin": "^11.10.2",
+    "@emotion/eslint-plugin": "^11.10.0",
     "msw": "^0.47.4",
     "typescript-styled-plugin": "^0.18.2"
   },

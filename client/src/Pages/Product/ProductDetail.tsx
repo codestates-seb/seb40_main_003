@@ -13,8 +13,13 @@ import {
   MainContentContainer,
   MainRightWrapper,
 } from "../../Components/Wrapper";
-import { userState } from "../../Recoil/atoms/atom";
+import { useSetRecoilState } from "recoil";
+import usePageTitle from "../../Hooks/usePageTitle";
+import { userState } from "../../Recoil/atoms/user";
 import { ProductDetailType } from "../../types/productTypes";
+import { currentPage } from "../../Recoil/atoms/currentPage";
+
+
 
 
 const ProductDetail = () => {
@@ -22,6 +27,13 @@ const ProductDetail = () => {
   const [data, setData] = useState<ProductDetailType | null>(null);
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
+
+  const setTitle = useSetRecoilState(currentPage);
+  useEffect(() => {
+    if (data !== null) {
+      setTitle({ title: `${data.member.nickname} 님의 거래글` });
+    }
+  }, [data]);
 
   useEffect(() => {
     try {
@@ -43,8 +55,8 @@ const ProductDetail = () => {
         <TopCarousel>
           {data.image.map((e, i) => {
             return (
-              <div>
-                <img src={e.imgUrl} alt={`${data.title}의 ${i}번째사진`} key={i}/>
+              <div key={i}>
+                <img src={e.imgUrl} alt={`${data.title}의 ${i}번째사진`} />
               </div>
             );
           })}
@@ -69,7 +81,9 @@ const ProductDetail = () => {
 
       <MainRightWrapper>
         <span className="h4 bold">{data.price.toLocaleString()}원</span>
-        <SigButton>채팅하기</SigButton>
+        <Link to={"/talk"}>
+          <SigButton>채팅하기</SigButton>
+        </Link>
       </MainRightWrapper>
     </MainContentContainer>
   ) : (

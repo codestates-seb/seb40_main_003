@@ -1,5 +1,6 @@
 import {atom} from 'recoil'
 
+// 로그인 정보 저장 상태
 export interface UserStateType {
   userId: string
   userImage: string
@@ -7,8 +8,15 @@ export interface UserStateType {
   accessToken?: string
   refreshToken?: string
 }
-// nullable한 값에서 인터페이스 사용법
+
 export const userState = atom<UserStateType|null>({
   key:"userState",
   default:null
+})
+
+
+// 유저 role 저장 상태
+export const userRole = atom<boolean>({
+  key:"userRole",
+  default:false
 })

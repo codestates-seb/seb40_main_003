@@ -5,7 +5,6 @@ import { ColumnWrapper, RowWrapper, SectionWrapper } from "../Wrapper";
 export const BambooWrapper = styled.footer`
   display: flex;
   justify-content: space-between;
-  margin-top: 8px;
 `;
 
 const BambooCard = ({ data }: any) => {
@@ -15,16 +14,17 @@ const BambooCard = ({ data }: any) => {
         <>
           {data.image[0] ? (
             <ImageWrapper
-              className='bambooImage mb-16 mt-8'
+              className='bambooImage mt-8'
               size={"112"}
               src={data.image[0].imgUrl}
               alt={`상품명 ${data.title}의 대표이미지`}
+              loading='lazy'
             />
           ) : (
             <></>
           )}
 
-          <BambooWrapper>
+          <BambooWrapper className='mt-7'>
             <RowWrapper>
               <span className='sub font-gray'>{data.createdAt}</span>
               <span className='sub font-gray ml-16'>
