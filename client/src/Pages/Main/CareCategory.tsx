@@ -14,7 +14,7 @@ import {
 import { userState } from "../../Recoil/atoms/user";
 import { ProductDetailType } from "../../types/productTypes";
 import usePageTitle from "../../Hooks/usePageTitle";
-import useFetch from "../../Hooks/basicFetching";
+import useFetch from "../../Hooks/useFetch";
 
 const CareCategory = () => {
 

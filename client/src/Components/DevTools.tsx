@@ -10,12 +10,15 @@ import Pattern from "../images/pattern.png"
 const DevBack = styled.section`
   background-image: url(${Pattern});
   background-size: 8%;
-  width:100%;
+  width:50%;
   display:flex;
   align-items:center;
   justify-content:center;
   padding: 20px;
-  opacity: 0;
+  opacity: 0.3;
+  position: absolute;
+  bottom: 70px;
+  z-index: 10000;
   :hover{
     opacity: 1;
   }

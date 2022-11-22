@@ -8,9 +8,12 @@ export const MainContentContainer = styled.div`
   justify-content: center;
   background-color: var(--bg-gray);
   min-height: 100vh;
+  padding-bottom: 36px;
+  margin-top: 52px;
   @media screen and (max-width: 1024px) {
     flex-direction: column;
     align-items: center;
+    padding-bottom: 156px;
   }
 `;
 // 내용 영역(모바일~테블릿 크기까지 커짐과 유사)
@@ -22,13 +25,13 @@ export const MainCenterWrapper = styled.main`
   min-height: 80vh;
   max-width: 730px;
   padding: 24px;
-  margin-bottom: 156px;
+  /* margin-bottom: 156px; */
   background-color: var(--pure-white);
   border: 1px solid var(--line-light-gray);
   border-radius: var(--sig-border-16);
-  @media screen and (max-width: 1024px) {
+  /* @media screen and (max-width: 1024px) {
     margin-bottom: 156px;
-  }
+  } */
 `;
 export const MainRightWrapper = styled.aside`
   width: 298px;
@@ -41,9 +44,10 @@ export const MainRightWrapper = styled.aside`
   position: sticky;
   top: 70px;
   border-top: 1px solid var(--line-light-gray);
+  display: ${(props) => !props.children && "none"};
 
   @media screen and (max-width: 1024px) {
-    margin-left: 0;
+    margin: 0;
     flex-direction: row;
     justify-content: space-between;
     position: fixed;

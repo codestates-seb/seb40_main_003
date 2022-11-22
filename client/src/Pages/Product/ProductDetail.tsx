@@ -15,7 +15,7 @@ import { userState } from "../../Recoil/atoms/user";
 import { ProductDetailType } from "../../types/productTypes";
 import { LoadingSpinner } from "../../Components/Loading";
 import usePageTitle from "../../Hooks/usePageTitle";
-import useFetch from "../../Hooks/basicFetching";
+import useFetch from "../../Hooks/useFetch";
 
 
 
@@ -33,7 +33,6 @@ const ProductDetail = () => {
     <MainContentContainer>
       {/* 실제 메인이 되는 내용! */}
       <MainCenterWrapper>
-        {/* 캐로샐로 바꾸기 */}
         <TopCarousel>
           {data.image.map((e, i) => {
             return (
@@ -57,8 +56,6 @@ const ProductDetail = () => {
         <span className="sub font-gray mb-8">{data.createdAt}</span>
         <ViewCounter like={data.memberLikeDeal} view={data.view} />
         <p className="mt-16">{data.content}</p>
-        {/* 반응형으로 바뀌면 하단에 버튼이 생기므로 가려짐, 따라서 길이를 늘려줌 */}
-        {/* <BottomPlaceHolder /> */}
       </MainCenterWrapper>
 
       <MainRightWrapper>

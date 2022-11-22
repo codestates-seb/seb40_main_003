@@ -24,7 +24,7 @@ import { useCallback } from "react";
 import { LoadingSpinner } from "../../Components/Loading";
 import AddPlantModal from "./AddPlantModal";
 import usePageTitle from "../../Hooks/usePageTitle";
-import useFetch from "../../Hooks/basicFetching";
+import useFetch from "../../Hooks/useFetch";
 
 const CareDetail = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);

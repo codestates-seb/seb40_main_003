@@ -21,7 +21,7 @@ import { CommunityWrapper } from "../../Components/community/CommunityCard";
 import { Link } from "react-router-dom";
 import CommentInput from '../../Components/UserInput';
 import usePageTitle from "../../Hooks/usePageTitle";
-import useFetch from "../../Hooks/basicFetching";
+import useFetch from "../../Hooks/useFetch";
 
 const CommunityDetail = () => {
   const { id } = useParams();

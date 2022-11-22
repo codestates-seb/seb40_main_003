@@ -9,14 +9,13 @@ import Profile from "./Pages/Profile/Profile";
 import Login from "./Pages/User/Login";
 import Signup from "./Pages/User/Signup";
 
-import Setting from "./Pages/settingPage/Setting";
+import Setting from "./Pages/settingPage/SettingPage";
 import Bookmarks from "./Pages/settingPage/Bookmarks";
 import SalesHistory from "./Pages/settingPage/SalesHistory";
 import PurchaseHistory from "./Pages/settingPage/PurchaseHistory";
 import CaringHistory from "./Pages/settingPage/CaringHistory";
 import MyHistory from "./Pages/settingPage/MyHistory";
 import EditAccount from "./Pages/settingPage/EditAccount";
-import Logout from "./Pages/settingPage/Logout";
 import Resign from "./Pages/settingPage/Resign";
 
 import Missing from "./Pages/Missing";
@@ -98,7 +97,6 @@ function App() {
               <Route path="caring-history" element={<CaringHistory />} />
               <Route path="my-history" element={<MyHistory />} />
               <Route path="edit" element={<EditAccount />} />
-              <Route path="logout" element={<Logout />} />
               <Route path="resign" element={<Resign />} />
             </Route>
           </Route>

@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { ProfileCard, ProfilePlantCard, SigButton } from '../../Components/GlobalComponents';
 import PlantCardCarousel from '../../Components/profile/plantCardCarousel';
 import { MainCenterWrapper, MainContentContainer, MainRightWrapper, SectionWrapper } from '../../Components/Wrapper';
-import useFetch from '../../Hooks/basicFetching';
+import useFetch from '../../Hooks/useFetch';
 import usePageTitle from '../../Hooks/usePageTitle';
 import { userState } from '../../Recoil/atoms/user';
 import { profileTypes } from '../../types/profile';

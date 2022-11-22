@@ -12,7 +12,7 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
-import useFetch from "../../Hooks/basicFetching";
+import useFetch from "../../Hooks/useFetch";
 
 
 export const ProductMain = ({data}:{data:ProductPreviewType}) => {

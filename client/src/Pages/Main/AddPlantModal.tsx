@@ -31,7 +31,7 @@ const AddPlantModal = () => {
       <p>{errors.name?.message}</p>
       <label className="bold h4 mt-16">식물 종류</label>
       <input
-        {...(register("type"), { required: true, maxLength: 2 })}
+        {...(register("type"), { required: true, minLength: 1 })}
         type="text"
         placeholder="종을 입력해주세요 ex)몬스테라"
       />
