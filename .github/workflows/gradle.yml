@@ -33,15 +33,15 @@ jobs:
       working-directory: ./server
       
     - name: Set application.yml
-      run: touch ./src/main/resources/application.properties
+      run: touch ./src/main/resources/application.yml
       working-directory: ./server
       
     - name: bring application.yml
-      run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.properties
+      run: echo "${{ secrets.APPLICATION }}" > ./src/main/resources/application.yml
       working-directory: ./server
       
     - name: check application.yml
-      run: cat ./src/main/resources/application.properties
+      run: cat ./src/main/resources/application.yml
       working-directory: ./server
       
         
@@ -51,7 +51,7 @@ jobs:
       working-directory: ./server
       
     - name: Build with Gradle
-      run: ./gradlew build -x test #테스트스킵
+      run: ./gradlew build #-x test 테스트스킵
       working-directory: ./server
       
     # build한 후 프로젝트를 압축합니다.
