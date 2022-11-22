@@ -14,7 +14,6 @@ import {
   MainRightWrapper,
 } from "../../Components/Wrapper";
 import { useSetRecoilState } from "recoil";
-import usePageTitle from "../../Hooks/usePageTitle";
 import { userState } from "../../Recoil/atoms/user";
 import { ProductDetailType } from "../../types/productTypes";
 import { currentPage } from "../../Recoil/atoms/currentPage";

@@ -9,6 +9,7 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
 } from "../../Components/Wrapper";
+import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { LoadingSpinner } from "../../Components/Loading";
 
@@ -39,7 +40,12 @@ const Care = (props: any) => {
         })}
       </MainCenterWrapper>
 
-      <MainRightWrapper></MainRightWrapper>
+      <MainRightWrapper>
+        <Link to={"/caring/category"}>
+          <SigButton>돌봄 카테고리</SigButton>
+        </Link>
+          
+      </MainRightWrapper>
     </MainContentContainer>
   ) : (
     <MainContentContainer>
