@@ -11,7 +11,11 @@ import {
 import { userState } from "../../Recoil/atoms/user";
 import { ProductDetailType } from "../../types/productTypes";
 import usePageTitle from "../../Hooks/usePageTitle";
+import { useCallback } from "react";
+
 import styled from "@emotion/styled";
+import AddPlantModal from "../Main/AddPlantModal";
+import Modal from "../../Components/Modal";
 
 const ContentContainer = styled.div`
     
@@ -26,7 +30,11 @@ const Setting = () => {
     const [data, setData] = useState<ProductDetailType | null>(null);
     const { id } = useParams();
     const isLogin = useRecoilValue(userState);
-
+    const [isOpenModal, setOpenModal] = useState<boolean>(false);
+    const onClickModal = useCallback(() => {
+        setOpenModal(!isOpenModal);
+      }, [isOpenModal]);
+    
     useEffect(() => {
         try {
         axios.get(`/shopping/`).then((res) => {
@@ -105,9 +113,14 @@ const Setting = () => {
                     </Link>
                     <Link to={'/setting/logout'}>
                         <SectionWrapper>
-                            <>
-                            로그아웃(1)
-                            </>
+                        <>
+                        {/* {isOpenModal && (
+                            <Modal onClickModal={onClickModal}>
+                                <AddPlantModal />
+                            </Modal>
+                        )} */}
+                        로그아웃(1)
+                        </>
                         </SectionWrapper>
                     </Link>
                     <Link to={'/setting/resign'}>
