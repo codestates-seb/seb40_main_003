@@ -9,6 +9,7 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
 } from "../../Components/Wrapper";
+import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { LoadingSpinner } from "../../Components/Loading";
 
@@ -39,7 +40,9 @@ const Care = (props: any) => {
         })}
       </MainCenterWrapper>
 
-      <MainRightWrapper></MainRightWrapper>
+      <MainRightWrapper>
+      
+      </MainRightWrapper>
     </MainContentContainer>
   ) : (
     <MainContentContainer>

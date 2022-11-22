@@ -28,6 +28,39 @@ export const SigButton = styled.button`
     }
   }
 `;
+
+// 카테고리 버튼(수정 중)
+export const CategoryButton = styled.button`
+  padding: 16px 0;
+  background-color: var(--main);
+  color: var(--pure-white);
+  font-weight: var(--bold);
+  text-align: center;
+  min-width: 173px;
+  border-radius: var(--sig-border-16);
+  transition-duration: 300ms;
+  cursor: pointer;
+  &.ghost {
+    color: var(--main);
+    background-color: var(--pure-white);
+    border: 2px solid var(--main);
+  }
+  &.disable {
+    background-color: var(--line-gray);
+    color: var(--pure-white);
+    &:hover {
+      background-color: var(--main);
+    }
+  }
+`;
+export const CategoryWrapper = styled.div`
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    padding: 16px;
+    width: 100px;
+`
+
 export const SubText = styled.span`
   display: block;
   font-size: var(--sub-font-size);
@@ -90,7 +123,7 @@ export const ImageWrapper = styled.img`
   display: block;
   object-fit: cover;
   margin-right: 16px;
-  &.bambooImage {
+  &.communityImage {
     width: 100%;
     margin-right: 0;
   }

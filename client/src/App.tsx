@@ -4,35 +4,49 @@ import { BrowserRouter, Route } from "react-router-dom";
 import AuthProvider, { HeaderLayout } from "./Route";
 import Product from "./Pages/Product/Product";
 import Navbar from "./Components/Navbar";
+
 import Profile from "./Pages/Profile/Profile";
 import Login from "./Pages/User/Login";
 import Signup from "./Pages/User/Signup";
+
+import Setting from "./Pages/Setting/Setting";
+import Bookmarks from "./Pages/Setting/Bookmarks";
+import SalesHistory from "./Pages/Setting/SalesHistory";
+import PurchaseHistory from "./Pages/Setting/PurchaseHistory";
+import CaringHistory from "./Pages/Setting/CaringHistory";
+import MyHistory from "./Pages/Setting/MyHistory";
+import EditAccount from "./Pages/Setting/EditAccount";
+import Logout from "./Pages/Setting/Logout";
+import Resign from "./Pages/Setting/Resign";
+
 import Missing from "./Pages/Missing";
+
 import Care from "./Pages/Main/Care";
 import CareDetail from "./Pages/Main/CareDetail";
+import CareReviewEditor from "./Pages/Talk/CareReviewEditor";
+
+import ProductDetail from "./Pages/Product/ProductDetail";
+import ProductEditor from "./Pages/Product/ProductEditor";
+import ProductReviewEditor from "./Pages/Talk/ProductReviewEditor";
+
 import Community from "./Pages/Community/Community";
 import CommunityDetail from "./Pages/Community/CommunityDetail";
 import CommunityEditor from "./Pages/Community/CommunityEditor";
+
 import Talk from "./Pages/Talk/Talk";
-import ProductReviewEditor from "./Pages/Talk/ProductReviewEditor";
-import CareReviewEditor from "./Pages/Talk/CareReviewEditor";
+
 import DevTools from "./Components/DevTools";
-import ProductDetail from "./Pages/Product/ProductDetail";
-import ProductEditor from "./Pages/Product/ProductEditor";
-import axios from "axios";
+
 import { DefaultLayout } from "./Route";
 
-axios.defaults.baseURL = "https://testserver.com";
-// axios.defaults.baseURL = "";
-// axios.defaults.baseURL = "https://fbc9-121-162-186-109.jp.ngrok.io";
-axios.defaults.withCredentials = false;
+
 
 function App() {
   return (
     <BrowserRouter>
       <DevTools />
       {/* 모바일용 navbar*/}
-      <Navbar />
+        <Navbar />
       <Routes>
         {/* 보호된 라우팅 */}
         <Route element={<AuthProvider />}>
@@ -58,14 +72,27 @@ function App() {
             <Route path=":id" element={<CommunityDetail />} />
             <Route path="/community/write" element={<CommunityEditor />} />
           </Route>
+          <Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+          </Route>
           <Route>
+            <Route path="/setting" element={<Setting />} />
+            <Route path="/setting/bookmarks" element={<Bookmarks />} />
+            <Route path="/setting/sales-history" element={<SalesHistory />} />
+            <Route path="/setting/purchase-history" element={<PurchaseHistory />} />
+            <Route path="/setting/caring-history" element={<CaringHistory />} />
+            <Route path="/setting/my-history" element={<MyHistory />} />
+            <Route path="/setting/edit" element={<EditAccount />} />
+            <Route path="/setting/logout" element={<Logout />} />
+            <Route path="/setting/resign" element={<Resign />} />
+            
+          </Route>
             <Route path="/talk" element={<Talk />} />
             <Route path="/talk/product-write" element={<ProductReviewEditor />} />
             <Route path="/talk/care-write" element={<CareReviewEditor />} />
           </Route>
-        </Route>
+        
         {/* 수정 필요 */}
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />

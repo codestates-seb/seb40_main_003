@@ -25,11 +25,12 @@ type Props = {};
 
 const DevTools = (props: Props) => {
   const [user, setUser] = useRecoilState(userState);
+  
   const forceLogin = async (e: React.SyntheticEvent) => {
     if(!user){
     e.preventDefault();
     axios
-      .post("https://testserver.com/login", { id: 123, password: 123 })
+      .post("/login", { id: 123, password: 123 })
       .then((res) => {
         console.log(res.data);
         setUser(res.data);
@@ -39,7 +40,7 @@ const DevTools = (props: Props) => {
   const forceLogout = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     axios
-      .post("https://testserver.com/logout", { id: 123, password: 123 })
+      .post("logout", { id: 123, password: 123 })
       .then((res) => {
         console.log(res.status);
         setUser(null);

@@ -1,11 +1,11 @@
 import axios from 'axios';
-import React, {useState,useEffect} from 'react'
+import {useState,useEffect} from 'react'
 
 type useFetchtypes ={
   url:string,
-  method?:string
 }
-function useFetch({url,method="get"}:useFetchtypes) {
+// URL을 받아서 DATA 를 리턴하는 Hooks
+function useFetch({url}:useFetchtypes) {
   const [data, setData] = useState();
   const [isLoading,setIsLoadng] = useState(true)
 
@@ -15,7 +15,7 @@ function useFetch({url,method="get"}:useFetchtypes) {
       setIsLoadng(false)
     })
     }, []);
-  return ({data,isLoading});
+  return (data);
 }
 
 export default useFetch
