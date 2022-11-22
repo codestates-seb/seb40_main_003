@@ -24,7 +24,7 @@ const AddPlantModal = () => {
     <ColumnWrapper width={100} as={"form"} onSubmit={onSubmit}>
       <label className="bold h4 pb-4">식물 이름</label>
       <input
-        {...(register("name"), { required: true, maxLength: 2 })}
+        {...(register("name"), { required: true, mixLength: 2 })}
         type="text"
         placeholder="식물 이름을 입력해 주세요"
       />
