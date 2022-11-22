@@ -1,6 +1,5 @@
 import { Routes } from "react-router";
 import { BrowserRouter, Route } from "react-router-dom";
-
 import AuthProvider, { HeaderLayout } from "./Route";
 import Product from "./Pages/Product/Product";
 import Navbar from "./Components/Navbar";
@@ -13,6 +12,7 @@ import CareDetail from "./Pages/Main/CareDetail";
 import Community from "./Pages/Community/Community";
 import CommunityDetail from "./Pages/Community/CommunityDetail";
 import CommunityEditor from "./Pages/Community/CommunityEditor";
+import ProductCategory from "./Pages/Product/ProductCategory";
 import Talk from "./Pages/Talk/Talk";
 import ProductReviewEditor from "./Pages/Talk/ProductReviewEditor";
 import CareReviewEditor from "./Pages/Talk/CareReviewEditor";
@@ -21,6 +21,7 @@ import ProductDetail from "./Pages/Product/ProductDetail";
 import ProductEditor from "./Pages/Product/ProductEditor";
 import axios from "axios";
 import { DefaultLayout } from "./Route";
+import CareCategory from "./Pages/Main/CareCategory";
 
 axios.defaults.baseURL = "https://testserver.com";
 // axios.defaults.baseURL = "";
@@ -47,11 +48,13 @@ function App() {
           <Route path="/" element={<DefaultLayout />}>
             <Route index element={<Care />} />
             <Route path="/caring/:id" element={<CareDetail />} />
+            <Route path="/caring/category" element={<CareCategory/>} />
           </Route>
           <Route path="/product" element={<DefaultLayout />}>
             <Route index element={<Product />} />
             <Route path=":id" element={<ProductDetail />} />
             <Route path="/product/write" element={<ProductEditor />} />
+            <Route path="/product/category" element={<ProductCategory/>} />
           </Route>
           <Route path="/community" element={<DefaultLayout />}>
             <Route index element={<Community />} />
