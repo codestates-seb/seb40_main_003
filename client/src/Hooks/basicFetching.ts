@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './api';
 import {useState,useEffect} from 'react'
 import { useRecoilState} from 'recoil';
 import {loading} from "../Recoil/atoms/loadingStatus"

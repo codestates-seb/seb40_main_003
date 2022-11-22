@@ -9,15 +9,15 @@ import Profile from "./Pages/Profile/Profile";
 import Login from "./Pages/User/Login";
 import Signup from "./Pages/User/Signup";
 
-import Setting from "./Pages/Setting/Setting";
-import Bookmarks from "./Pages/Setting/Bookmarks";
-import SalesHistory from "./Pages/Setting/SalesHistory";
-import PurchaseHistory from "./Pages/Setting/PurchaseHistory";
-import CaringHistory from "./Pages/Setting/CaringHistory";
-import MyHistory from "./Pages/Setting/MyHistory";
-import EditAccount from "./Pages/Setting/EditAccount";
-import Logout from "./Pages/Setting/Logout";
-import Resign from "./Pages/Setting/Resign";
+import Setting from "./Pages/settingPage/Setting";
+import Bookmarks from "./Pages/settingPage/Bookmarks";
+import SalesHistory from "./Pages/settingPage/SalesHistory";
+import PurchaseHistory from "./Pages/settingPage/PurchaseHistory";
+import CaringHistory from "./Pages/settingPage/CaringHistory";
+import MyHistory from "./Pages/settingPage/MyHistory";
+import EditAccount from "./Pages/settingPage/EditAccount";
+import Logout from "./Pages/settingPage/Logout";
+import Resign from "./Pages/settingPage/Resign";
 
 import Missing from "./Pages/Missing";
 
@@ -38,8 +38,10 @@ import Talk from "./Pages/Talk/Talk";
 import DevTools from "./Components/DevTools";
 
 import { DefaultLayout } from "./Route";
+import ProductCategory from "./Pages/Product/ProductCategory";
 
 function App() {
+
   return (
     <BrowserRouter>
       <DevTools />
@@ -48,7 +50,7 @@ function App() {
       
       <Routes>
         {/* 보호된 라우팅 */}
-        
+
         {/* <Route element={<AuthProvider />}> */}
           <Route path="/profile" element={<HeaderLayout />}>
             <Route path=":id" element={<Profile />} />
@@ -68,6 +70,7 @@ function App() {
             <Route index element={<Product />} />
             <Route path=":id" element={<ProductDetail />} />
             <Route path="write" element={<ProductEditor />} />
+            <Route path="category" element={<ProductCategory/>}/>
           </Route>
           {/* 커뮤니티 */}
           <Route path="/community" element={<DefaultLayout />}>

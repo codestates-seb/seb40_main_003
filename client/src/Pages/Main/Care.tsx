@@ -14,7 +14,6 @@ import useFetch from "../../Hooks/basicFetching";
 const Care = () => {
   usePageTitle("돌봄");
   const data=useFetch<caringTypes>("/caring")
-  console.log(data)
 
   return data !== undefined ? (
     <MainContentContainer>

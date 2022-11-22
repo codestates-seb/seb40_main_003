@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import axios from "axios";
+import axios from "../Hooks/api";
 import React from "react";
 import { useRecoilState } from "recoil";
 import { userState } from "../Recoil/atoms/user";

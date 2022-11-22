@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilValue} from "recoil";
+import { useRecoilValue } from "recoil";
 import {
   ProfileCard,
   ProfilePlantCard,
@@ -27,7 +27,6 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/basicFetching";
 
 const CareDetail = () => {
-
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
@@ -36,10 +35,11 @@ const CareDetail = () => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
 
-  const  data = useFetch<CareDetailTypes>(`/caring/${id}`)
-  usePageTitle(data!==undefined?`${data.member.name} 님의 프로필`:"프로필")
+  const data = useFetch<CareDetailTypes>(`/caring/${id}`);
 
-
+  usePageTitle(
+    data !== undefined ? `${data.member.name} 님의 프로필` : "프로필"
+  );
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
@@ -61,7 +61,7 @@ const CareDetail = () => {
         <>
           {isOpenModal && (
             <Modal onClickModal={onClickModal}>
-                <AddPlantModal />
+              <AddPlantModal />
             </Modal>
           )}
         </>

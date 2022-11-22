@@ -1,8 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
-import { useEffect } from "react";
+
 import ProductCard, {
-  ProductPlaceHolder,
 } from "../../Components/product/ProductCard";
 import { ProductPreviewType } from "../../types/productTypes";
 import { Link } from "react-router-dom";
@@ -14,24 +12,16 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
+import useFetch from "../../Hooks/basicFetching";
 
-type elemMaps = [ProductPreviewType];
 
-type ProductMainType = {
-  data: elemMaps | undefined;
-  hidingTime: boolean;
-  isLoading: boolean;
-};
-
-export const ProductMain = ({
-  isLoading,
-  data,
-  hidingTime,
-}: ProductMainType) => {
-  return !isLoading && data !== undefined ? (
+export const ProductMain = ({data}:{data:ProductPreviewType}) => {
+  const {shopping} = data
+  console.log(data)
+  return (
     <MainContentContainer>
       <MainCenterWrapper>
-        {data.map((e) => {
+        {shopping.map((e) => {
           return (
             <Link to={`/product/${e.dealId}`} key={e.dealId}>
               <ProductCard data={e} />
@@ -54,39 +44,14 @@ export const ProductMain = ({
         </Link>
       </MainRightWrapper>
     </MainContentContainer>
-  ) : (
-    <MainContentContainer className={hidingTime ? "display-none" : ""}>
-      <MainCenterWrapper>
-        <ProductPlaceHolder />
-        <ProductPlaceHolder />
-        <ProductPlaceHolder />
-      </MainCenterWrapper>
-    </MainContentContainer>
   );
 };
 
 const Product = () => {
-  const [data, setData] = useState<elemMaps>();
-  const [isLoading, setIsLoading] = useState(true);
-  const [hidingTime, setHidingTime] = useState(true);
-  // 초기 로딩
+  const data = useFetch<ProductPreviewType>("/shopping")
   usePageTitle("거래");
-  useEffect(() => {
-    setTimeout(() => {
-      setHidingTime(false);
-    }, 200);
 
-    axios.get("/shopping").then(({ data }) => {
-      setData(data.shopping);
-      setIsLoading(false);
-    });
-  }, []);
-
-  return (
-    <>
-      <ProductMain data={data} hidingTime={hidingTime} isLoading={isLoading} />
-    </>
-  );
+  return data!==undefined?(<ProductMain data={data} />):<></>
 };
 
 export default Product;

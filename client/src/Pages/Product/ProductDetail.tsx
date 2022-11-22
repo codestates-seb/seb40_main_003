@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { TopCarousel } from "../../Components/Carousel";
@@ -13,39 +11,24 @@ import {
   MainContentContainer,
   MainRightWrapper,
 } from "../../Components/Wrapper";
-import { useSetRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 import { ProductDetailType } from "../../types/productTypes";
-import { currentPage } from "../../Recoil/atoms/currentPage";
+import { LoadingSpinner } from "../../Components/Loading";
+import usePageTitle from "../../Hooks/usePageTitle";
+import useFetch from "../../Hooks/basicFetching";
 
 
 
 
 const ProductDetail = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState<ProductDetailType | null>(null);
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
+  const data = useFetch<ProductDetailType>(id?`/shopping/${id}`:"")
 
-  const setTitle = useSetRecoilState(currentPage);
-  useEffect(() => {
-    if (data !== null) {
-      setTitle({ title: `${data.member.nickname} 님의 거래글` });
-    }
-  }, [data]);
-
-  useEffect(() => {
-    try {
-      axios.get(`/shopping/${id}`).then((res) => {
-        setData(res.data);
-        setIsLoading(false);
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  }, [id]);
-
-  return !isLoading && data !== null ? (
+  usePageTitle(
+    data !== undefined ? `${data.member.nickname} 님의 거래글` : "거래글"
+  );
+  return data !== undefined ? (
     // 메인 컨테이너 (반응형 제공!)
     <MainContentContainer>
       {/* 실제 메인이 되는 내용! */}
@@ -86,7 +69,7 @@ const ProductDetail = () => {
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
-    <>loading...</>
+    <LoadingSpinner/>
   );
 };
 
