@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CommunityPostDto {
-
     String title;
     String content;
 }
