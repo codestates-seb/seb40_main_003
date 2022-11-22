@@ -21,8 +21,6 @@ import ProductDetail from "./Pages/Product/ProductDetail";
 import ProductEditor from "./Pages/Product/ProductEditor";
 import { DefaultLayout } from "./Route";
 
-
-
 function App() {
   return (
     <BrowserRouter>
@@ -40,29 +38,36 @@ function App() {
         {/* 오픈된 라우팅 */}
         {/* 헤더가 있는 컴포넌트들 */}
         <Route element={<HeaderLayout />}>
+          {/* 케어 */}
           <Route path="/" element={<DefaultLayout />}>
             <Route index element={<Care />} />
             <Route path="/caring/:id" element={<CareDetail />} />
           </Route>
+          {/* 장터 */}
           <Route path="/product" element={<DefaultLayout />}>
             <Route index element={<Product />} />
             <Route path=":id" element={<ProductDetail />} />
-            <Route path="/product/write" element={<ProductEditor />} />
+            <Route path="write" element={<ProductEditor />} />
           </Route>
+          {/* 커뮤니티 */}
           <Route path="/community" element={<DefaultLayout />}>
             <Route index element={<Community />} />
             <Route path=":id" element={<CommunityDetail />} />
-            <Route path="/community/write" element={<CommunityEditor />} />
+            <Route path="write" element={<CommunityEditor />} />
           </Route>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
+          {/* 로그인 */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+          {/* 대화 */}
           <Route>
-            <Route path="/talk" element={<Talk />} />
-            <Route path="/talk/product-write" element={<ProductReviewEditor />} />
-            <Route path="/talk/care-write" element={<CareReviewEditor />} />
+            <Route path="/talk" element={<DefaultLayout />}>
+              <Route index element={<Talk />} />
+              <Route path="product-write" element={<ProductReviewEditor />} />
+              <Route path="care-write" element={<CareReviewEditor />} />
+            </Route>
           </Route>
         </Route>
-        {/* 수정 필요 */}
+
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />
       </Routes>
