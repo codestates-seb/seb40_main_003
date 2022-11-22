@@ -6,6 +6,7 @@ import Navbar from "./Components/Navbar";
 import Profile from "./Pages/Profile/Profile";
 import Login from "./Pages/User/Login";
 import Signup from "./Pages/User/Signup";
+import Setting from "./Pages/User/Setting";
 import Missing from "./Pages/Missing";
 import Care from "./Pages/Main/Care";
 import CareDetail from "./Pages/Main/CareDetail";
@@ -63,6 +64,7 @@ function App() {
           </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/setting" element={<Setting />} />
           <Route>
             <Route path="/talk" element={<Talk />} />
             <Route path="/talk/product-write" element={<ProductReviewEditor />} />
