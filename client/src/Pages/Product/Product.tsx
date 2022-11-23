@@ -1,7 +1,6 @@
-import ProductCard from "../../Components/product/ProductCard";
+import ProductCard, { ProductPlaceHolder } from "../../Components/product/ProductCard";
 import {
   ProductPreviewMappingType,
-  ProductPreviewType,
 } from "../../types/productTypes";
 import { Link } from "react-router-dom";
 import {
@@ -12,23 +11,24 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
-import useFetch, { Fetch } from "../../Hooks/useFetch";
+import { Fetch } from "../../Hooks/useFetch";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { LoadingSpinner } from "../../Components/Loading";
+
 import { ErrorMessage } from "../../Components/ErrorHandle";
+
 
 // 쿼리클라이언트
 const productQueryClient = new QueryClient();
 
 const ProductMain = () => {
-  const { data, isLoading, error, isSuccess } = useQuery(
+  const { data, isLoading, error } = useQuery(
     ["productQuery"],
     () => {
       const data = Fetch("/deal", { page: 1, size: 5 });
       return data;
     }
   );
-  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
+  if (isLoading) return <><ProductPlaceHolder/><ProductPlaceHolder/><ProductPlaceHolder/><ProductPlaceHolder/></>;
   if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
   return (
     <>
@@ -43,6 +43,8 @@ const ProductMain = () => {
     </>
   );
 };
+
+
 
 // 전체 페이지
 const Product = () => {
