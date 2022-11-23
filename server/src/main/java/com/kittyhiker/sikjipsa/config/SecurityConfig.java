@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .and()
                 .formLogin().disable()
                 .csrf().disable()
-                .cors().configurationSource(corsConfigurationSource())
+                .cors() //.configurationSource(corsConfigurationSource())
                 .and()
                 .apply(authenticationManagerConfig)
                 .and()
@@ -49,6 +49,7 @@ public class SecurityConfig {
                 .and()
                 .build();
     }
+
 
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
