@@ -1,5 +1,8 @@
 import ProductCard from "../../Components/product/ProductCard";
-import { ProductPreviewMappingType, ProductPreviewType } from "../../types/productTypes";
+import {
+  ProductPreviewMappingType,
+  ProductPreviewType,
+} from "../../types/productTypes";
 import { Link } from "react-router-dom";
 import {
   MainCenterWrapper,
@@ -10,7 +13,7 @@ import {
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch, { Fetch } from "../../Hooks/useFetch";
-import { QueryClient, QueryClientProvider,useQuery } from "react-query";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { LoadingSpinner } from "../../Components/Loading";
 import { ErrorMessage } from "../../Components/ErrorHandle";
 
@@ -18,38 +21,35 @@ import { ErrorMessage } from "../../Components/ErrorHandle";
 const productQueryClient = new QueryClient();
 
 const ProductMain = () => {
-  const {data, isLoading,error,isSuccess} = useQuery(["productQuery"],()=>{
-    const data = Fetch("/deal",{page:1,size:5})
-    return data
-  })
-  if(isLoading)return <LoadingSpinner></LoadingSpinner>
-  if(error)return <ErrorMessage content="컨텐츠를 불러오지 못했습니다"/>
+  const { data, isLoading, error, isSuccess } = useQuery(
+    ["productQuery"],
+    () => {
+      const data = Fetch("/deal", { page: 1, size: 5 });
+      return data;
+    }
+  );
+  if (isLoading) return <LoadingSpinner></LoadingSpinner>;
+  if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
   return (
     <>
-      {data&&data.data.data.map((e:ProductPreviewMappingType) => {
-        return (
-          <Link key={e.dealId} to={`/product/${e.dealId}`}>
-            <ProductCard data={e} />
-          </Link>
-        );
-      })}
+      {data &&
+        data.data.data.map((e: ProductPreviewMappingType) => {
+          return (
+            <Link key={e.dealId} to={`/product/${e.dealId}`}>
+              <ProductCard data={e} />
+            </Link>
+          );
+        })}
     </>
   );
 };
 
 // 전체 페이지
 const Product = () => {
-  const data = useFetch<ProductPreviewType>("/deal", {
-    keyword: null,
-    page: 1,
-    size: 5,
-  });
   usePageTitle("거래");
-
-  return data !== undefined ? (
+  return (
     <MainContentContainer>
       <MainCenterWrapper>
-
         {/* 쿼리클라이언트로 감쌈 */}
         <QueryClientProvider client={productQueryClient}>
           <ProductMain />
@@ -71,8 +71,6 @@ const Product = () => {
         </Link>
       </MainRightWrapper>
     </MainContentContainer>
-  ) : (
-    <></>
   );
 };
 
