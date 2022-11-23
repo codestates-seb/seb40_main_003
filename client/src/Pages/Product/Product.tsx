@@ -11,7 +11,7 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { Fetch } from "../../Hooks/useFetch";
+import { FetchByParams } from "../../Hooks/useFetch";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
 import { ErrorMessage } from "../../Components/ErrorHandle";
@@ -24,7 +24,7 @@ const ProductMain = () => {
   const { data, isLoading, error } = useQuery(
     ["productQuery"],
     () => {
-      const data = Fetch("/deal", { page: 1, size: 5 });
+      const data = FetchByParams("/deal", { page: 1, size: 5 });
       return data;
     }
   );

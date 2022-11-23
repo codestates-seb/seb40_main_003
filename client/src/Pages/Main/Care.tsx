@@ -12,7 +12,7 @@ import useFetch from "../../Hooks/useFetch";
 
 
 const Care = () => {
-  const data = useFetch<caringTypes>("/experts", {keyword:null,page:1,size:5})
+  const data = useFetch<any>("/experts", {"tag-id":null,page:1,size:5})
   usePageTitle("돌봄");
   console.log(data);
 

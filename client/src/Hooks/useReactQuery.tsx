@@ -1,6 +1,6 @@
 
 import {useQuery} from 'react-query'
-import { Fetch } from './useFetch';
+import { FetchByParams } from './useFetch';
 import { LoadingSpinner } from '../Components/Loading';
 import { ErrorMessage } from '../Components/ErrorHandle';
 
@@ -11,7 +11,7 @@ export const UseReactQuery = (
   children: JSX.Element
 ) => {
   const { data, isLoading, error } = useQuery([url], () => {
-    const data = Fetch(url, { parpams });
+    const data = FetchByParams(url, { parpams });
     return data;
   });
   if (isLoading) return <LoadingSpinner />;

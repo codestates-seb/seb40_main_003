@@ -52,6 +52,7 @@ interface LoginForm {
 function Login() {
   const [error, setErrMsg] = useState("");
   const [user, setUser] = useRecoilState(userState);
+
   const {
     register,
     formState: { errors },
@@ -103,7 +104,7 @@ function Login() {
       }
     }
   };
-
+  console.log(errors)
   return (
     <MainContentContainer>
       <MainCenterWrapper>
@@ -151,7 +152,7 @@ function Login() {
             <Link to={`/signup/`}>
               <button className="font-main sub bold">회원 가입</button>
             </Link>
-            <SigButton className="disable" type="submit" value={"Login"}>
+            <SigButton className={errors?.email===undefined &&errors.password===undefined?"active":"disable"} type="submit" value={"Login"}>
               로그인
             </SigButton>
             {error && <Errormsg>{error}</Errormsg>}
