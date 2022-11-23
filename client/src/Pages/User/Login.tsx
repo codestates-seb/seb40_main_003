@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 import { SigButton } from "../../Components/GlobalComponents";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -50,7 +50,6 @@ interface LoginForm {
 }
 
 function Login() {
-  // const url = 'https://testserver.com/';
   const [error, setErrMsg] = useState("");
   const [user, setUser] = useRecoilState(userState);
   const {
@@ -75,7 +74,6 @@ function Login() {
   // 로그인버튼 클릭시 동작하는 함수
   const onLogin = async (data: LoginForm) => {
     console.log(data);
-    
     try {
       axiosPrivate
         .post("/login", {
@@ -84,7 +82,7 @@ function Login() {
         })
         .then((res) => {
           // 전역상태로 로그인 관련정보, 토큰 받아야함
-          setUser(res.data)
+          setUser(res.data);
         })
         .then(() => {
           // 원래있던 페이지로 되돌림
