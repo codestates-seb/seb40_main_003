@@ -1,4 +1,4 @@
-import ProductCard, { ProductPlaceHolder } from "../../Components/product/ProductCard";
+import ProductCard from "../../Components/product/ProductCard";
 import {
   ProductPreviewMappingType,
 } from "../../types/productTypes";
@@ -15,6 +15,7 @@ import { FetchByParams } from "../../Hooks/useFetch";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
 import { ErrorMessage } from "../../Components/ErrorHandle";
+import { LoadingSkeleton } from "../../Components/Loading";
 
 
 // 쿼리클라이언트
@@ -28,7 +29,7 @@ const ProductMain = () => {
       return data;
     }
   );
-  if (isLoading) return <><ProductPlaceHolder/><ProductPlaceHolder/><ProductPlaceHolder/><ProductPlaceHolder/></>;
+  if (isLoading) return <LoadingSkeleton/>;
   if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
   return (
     <>

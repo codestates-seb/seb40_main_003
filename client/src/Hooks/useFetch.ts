@@ -23,7 +23,7 @@ export const FetchByParams = async(url:string,params?:object)=>{
   const data = await axios.get(url,{params})
   return data
 }
-export const FetchByBody = async(url:string,body?:object)=>{
+export const FetchByBody = async<T>(url:string,body?:object)=>{
   const data = await axios.get(url,body)
   return data
 }

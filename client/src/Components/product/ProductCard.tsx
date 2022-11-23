@@ -1,24 +1,11 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, SigTag, ViewCounter } from "../GlobalComponents";
-import { ColumnWrapper, RowWrapper } from "../Wrapper";
-import Skeleton from "../Loading";
+import { ColumnWrapper, RowWrapper, SpaceBetween, SpaceEnd } from "../Wrapper";
+import Skeleton,{ ProductWrapper } from "../Loading";
 import { ProductPreviewMappingType, ProductPreviewType } from "../../types/productTypes";
 import { getDateAgo } from "../../utils/controller";
 
-const ProductWrapper = styled.div`
-  width: 100%;
-  min-width: 312px;
-  max-width: 730px;
-  padding: 8px 8px;
-  display: flex;
-  flex-direction: column;
-  border-bottom: 1px solid var(--line-light-gray);
-`;
 
-const SpaceBetween = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
 const Price = styled.span`
   margin-top: 16px;
   display: block;
@@ -31,11 +18,7 @@ export const DescriptionColumnWrapper = styled.div`
   width: 100%;
 `;
 
-const SpaceEnd = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-self: end;
-`;
+
 
 type props={
   data: ProductPreviewMappingType
@@ -74,26 +57,6 @@ const ProductCard = (props:props) => {
     </ProductWrapper>
   );
 };
-// 스켈레톤 컴포넌트
-export const ProductPlaceHolder = () => {
-  return (
-    <ProductWrapper>
-      <SpaceBetween>
-        <Skeleton width={100} height={100} rounded={true} mr={16} />
-        <DescriptionColumnWrapper>
-          <ColumnWrapper>
-            <Skeleton width={150} height={20} />
-          </ColumnWrapper>
-          <Price className="bold h4">
-            <Skeleton width={80} height={20} />
-          </Price>
-        </DescriptionColumnWrapper>
-      </SpaceBetween>
-      <SpaceEnd>
-        <Skeleton width={80} height={25} />
-      </SpaceEnd>
-    </ProductWrapper>
-  );
-};
+
 
 export default ProductCard;

@@ -4,7 +4,8 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot } from "recoil";
-import { ErrorBoundary } from "./Components/ErrorHandle";
+import { ErrorBoundary } from "react-error-boundary"
+import { ErrorMessage } from "./Components/ErrorHandle";
 
 // if (process.env.NODE_ENV === "development") {
 //   const { worker } = require("./mocks/browser");
@@ -15,7 +16,7 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <ErrorBoundary>
+  <ErrorBoundary fallback={<ErrorMessage content={"컨텐츠를 불러오지 못했습니다"}/>}>
     <RecoilRoot>
       <React.StrictMode>
         <App />

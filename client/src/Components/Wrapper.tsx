@@ -130,6 +130,11 @@ export const ColumnWrapper = styled.div`
   justify-content: ${(props: columnWrapperType) =>
     props.center ? `center` : "auto"};
 `;
+export const SpaceEnd = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-self: end;
+`;
 
 export const RowWrapper = styled.div`
   display: flex;
@@ -138,5 +143,8 @@ export const RowWrapper = styled.div`
     align-items: center;
   }
 `;
-
+export const SpaceBetween = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 export default MainLeftWrapper;
