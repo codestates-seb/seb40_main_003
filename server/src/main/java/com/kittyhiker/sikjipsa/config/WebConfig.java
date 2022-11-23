@@ -13,6 +13,7 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000",
                         "http://plant-hiker.s3-website.ap-northeast-2.amazonaws.com")
-                .allowedMethods("GET", "POST", "PATCH", "PUT", "OPTIONS", "DELETE");
+                .allowedMethods("GET", "POST", "PATCH", "PUT", "OPTIONS", "DELETE")
+                .allowCredentials(true);
     }
 }
