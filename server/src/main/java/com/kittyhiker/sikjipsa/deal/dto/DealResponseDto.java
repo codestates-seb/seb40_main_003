@@ -29,7 +29,7 @@ public class DealResponseDto {
     int category;
     int area;
     int state;
-    int likes;
+    int likeNum;
     MemberResponseDto memberResponse;
 
 //    Map<String, Object> image;

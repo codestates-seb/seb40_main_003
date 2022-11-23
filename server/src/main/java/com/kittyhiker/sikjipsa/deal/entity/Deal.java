@@ -32,7 +32,7 @@ public class Deal extends AuditingEntity {
 
 	private int price;
 
-	private int likes=0;
+	private int likeNum=0;
 
 	private int category;
 
@@ -59,7 +59,7 @@ public class Deal extends AuditingEntity {
 //	private List<Image> images = new ArrayList<>();
 
 	public void likeDeal() {
-		likes+=1;
+		this.likeNum+=1;
 //		this.memberLikeDeals.add(likeDeal);
 	}
 
