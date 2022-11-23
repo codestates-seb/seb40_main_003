@@ -1,19 +1,6 @@
 type ProductPreviewType = {
   data: [
-    {
-      area: number;
-      category: number;
-      content: string;
-      createdAt: string;
-      dealId: number;
-      images: [string];
-      memberLikeNum: number;
-      modifiedAt: string;
-      price: number;
-      state: number;
-      title: string;
-      view: number;
-    }
+      ProductPreviewMappingType
   ],
   pageInfo: {
     page: number;
@@ -22,7 +9,7 @@ type ProductPreviewType = {
     totalElements: number;
   };
 };
-export type ProductPreviewMappingType = {
+export interface ProductPreviewMappingType {
       area: number;
       category: number;
       content: string;

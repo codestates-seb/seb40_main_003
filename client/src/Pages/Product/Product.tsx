@@ -1,5 +1,5 @@
 import ProductCard from "../../Components/product/ProductCard";
-import { ProductPreviewType } from "../../types/productTypes";
+import { ProductPreviewMappingType, ProductPreviewType } from "../../types/productTypes";
 import { Link } from "react-router-dom";
 import {
   MainCenterWrapper,
@@ -9,22 +9,52 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
-import useFetch from "../../Hooks/useFetch";
+import useFetch, { Fetch } from "../../Hooks/useFetch";
+import { QueryClient, QueryClientProvider,useQuery } from "react-query";
+import { LoadingSpinner } from "../../Components/Loading";
+import { ErrorMessage } from "../../Components/ErrorHandle";
 
+// 쿼리클라이언트
+const productQueryClient = new QueryClient();
+
+const ProductMain = () => {
+  const {data, isLoading,error,isSuccess} = useQuery(["productQuery"],()=>{
+    const data = Fetch("/deal",{page:1,size:5})
+    return data
+  })
+  if(isLoading)return <LoadingSpinner></LoadingSpinner>
+  if(error)return <ErrorMessage content="컨텐츠를 불러오지 못했습니다"/>
+  return (
+    <>
+      {data&&data.data.data.map((e:ProductPreviewMappingType) => {
+        return (
+          <Link key={e.dealId} to={`/product/${e.dealId}`}>
+            <ProductCard data={e} />
+          </Link>
+        );
+      })}
+    </>
+  );
+};
+
+// 전체 페이지
 const Product = () => {
-  const data = useFetch<ProductPreviewType>("/deal",{keyword:null,page:1,size:5})
+  const data = useFetch<ProductPreviewType>("/deal", {
+    keyword: null,
+    page: 1,
+    size: 5,
+  });
   usePageTitle("거래");
-  
-  return data!==undefined? (
+
+  return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
-        {data.data.map((e) => {
-          return (
-            <Link key={e.dealId} to={`/product/${e.dealId}`}>
-              <ProductCard data={e} />
-            </Link>
-          );
-        })}
+
+        {/* 쿼리클라이언트로 감쌈 */}
+        <QueryClientProvider client={productQueryClient}>
+          <ProductMain />
+        </QueryClientProvider>
+        {/* 쿼리클라이언트로 감쌈 */}
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
@@ -41,7 +71,9 @@ const Product = () => {
         </Link>
       </MainRightWrapper>
     </MainContentContainer>
-  ):<></>
+  ) : (
+    <></>
+  );
 };
 
 export default Product;
