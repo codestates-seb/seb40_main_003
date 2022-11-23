@@ -13,8 +13,8 @@ import useFetch from "../../Hooks/useFetch";
 
 const Community = () => {
   usePageTitle("커뮤니티")
-  const data = useFetch<communityTypes>("/community")
-
+  const data = useFetch<communityTypes>("/community?page=1&size=5")
+  
   return data?(
     <MainContentContainer>
       <MainCenterWrapper>
