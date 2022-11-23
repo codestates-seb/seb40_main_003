@@ -30,7 +30,7 @@ public class DealResponseDto {
     int area;
     int state;
     int likeNum;
-    MemberResponseDto memberResponse;
+    MemberResponseDto member;
 
 //    Map<String, Object> image;
 //    Map<String, Object> areaTag;
