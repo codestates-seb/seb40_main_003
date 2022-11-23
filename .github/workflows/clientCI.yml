@@ -9,6 +9,11 @@ jobs:
     steps:
       - name: Checkout source code.
         uses: actions/checkout@v2
+      - name: Generate Environment Variables File for Production
+        run: |
+          echo "REACT_APP_BASE_URL=$REACT_APP_BASE_URL" >> .env
+        env:
+          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
       - name: Install dependencies
         run: yarn
         working-directory: ./client
