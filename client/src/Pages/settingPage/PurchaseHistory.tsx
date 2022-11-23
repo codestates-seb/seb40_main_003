@@ -8,6 +8,7 @@ import useFetch from "../../Hooks/useFetch";
 
 const PurchaseHistory = () => {
   const data = useFetch("/");
+  
   return data!==undefined?
   (
     <MainContentContainer>
