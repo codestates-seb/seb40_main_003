@@ -21,7 +21,7 @@ const Care = () => {
       <MainCenterWrapper>
         {data.data.map((e) => {
           return (
-            <Link key={e.expertProfileId} to={`/experts/${e.expertProfileId}`}>
+            <Link key={e.expertId} to={`/experts/${e.expertId}`}>
               <CareCard data={e} />
             </Link>
           );

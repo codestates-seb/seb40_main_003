@@ -1,44 +1,56 @@
 type caringTypes = {
   data: [
     {
-      expertProfileId: number,
+      expertId: number,
       name: string,
       age: number,
       gender: number,
       simpleContent: string,
       address: string,
-      userLikeExpert: number,
+      likes: number,
       view: number,
       member: 
       {
         memberId: number,
-        image: {
-          imageId: number,
-          imgUrl: string,
-          isRepImg: string}
+        plants: [
+          {
+            plantId: number,
+            name: string,
+            years: number,
+            type: string,
+            image: {
+              imageId: number,
+              imgUrl: string,
+              isRepImg: string}
+            }
+          ]
       }, 
-      techTag:
+      techTags:
       [
         {
         techTagId: number,
         techTagName: string
         }
       ],
-      areaTag:
+      areaTags:
       [
                 {
               areaTagId: number,
               ateaTagName: string
                 }
-            ]
+            ],
+            image: {
+              imageId: number,
+              imgUrl: string,
+              isRepImg: string
+            }
         }
     ],
-
   pageInfo: {
-  page: number,
-  size: number,
-  totalPages: number,
-  totalElements: number
+    page: number,
+    size: number,
+    totalElements: number,
+    totalPages: number
         }
 };
 
