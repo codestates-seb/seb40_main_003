@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { ImageWrapper, SigTag, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper, RowWrapper } from "../Wrapper";
 import Skeleton from "../Loading";
+import { ProductPreviewType } from "../../types/productTypes";
 
 const ProductWrapper = styled.div`
   width: 100%;
@@ -35,13 +36,14 @@ const SpaceEnd = styled.div`
   align-self: end;
 `;
 
-const ProductCard = ({ data }: any) => {
+const ProductCard = ({ data }: ProductPreviewType["data"]) => {
+  console.log(data)
   return (
     <ProductWrapper>
       <RowWrapper>
         <ImageWrapper
           size={"100"}
-          src={data.pictures[0].picture}
+          src={data.images[0]}
           alt={`상품명 ${data.title}의 대표이미지`}
           loading="lazy"
           className={data.state === 0 ? "soldOut" : ""}
@@ -60,7 +62,7 @@ const ProductCard = ({ data }: any) => {
           <SpaceBetween>
             <Price className="bold">{data.price.toLocaleString()}원</Price>
             <SpaceEnd>
-              <ViewCounter view={data.view} like={data.like} />
+              <ViewCounter view={data.view} like={data.memberLikeNum} />
             </SpaceEnd>
           </SpaceBetween>
         </DescriptionColumnWrapper>

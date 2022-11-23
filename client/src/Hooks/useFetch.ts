@@ -5,13 +5,13 @@ import {loading} from "../Recoil/atoms/loadingStatus"
 
 
 // URL을 받아서 DATA 를 리턴하는 Hooks
-const useFetch=<T>(url:string)=>{
+const useFetch=<T>(url:string,params?:object)=>{
   const [data, setData] = useState<T>();
   const [isLoading,setIsLoadng] = useRecoilState(loading)
 
   useEffect(() => {
     setIsLoadng(true)
-    axios.get(url).then((res) => {
+    axios.get(url,{params}).then((res) => {
       setData(res.data)
     }).finally(()=>{
       setIsLoadng(false)

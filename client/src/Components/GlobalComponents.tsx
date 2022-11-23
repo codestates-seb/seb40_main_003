@@ -165,17 +165,18 @@ export const ViewCounter = ({
   renameView = "조회수",
   renameLike = "찜",
 }: ViewCounterProps) => {
+  
   return (
     <ViewCounterWrapper>
-      {view && (
+      {view!==undefined && (
         <ViewCounterColumn className="text-align-center mr-16">
-          <SubText className="medium font-gray mr-8">{renameView}</SubText>
+          <SubText className="medium font-gray mr-8">{renameView?renameView:"조회수"}</SubText>
           <SubText className="font-gray ">{overKillo(view)}</SubText>
         </ViewCounterColumn>
       )}
-      {like && (
+      {like!==undefined && (
         <ViewCounterColumn className="text-align-center ">
-          <SubText className="medium font-gray mr-8">{renameLike}</SubText>
+          <SubText className="medium font-gray mr-8">{renameLike?renameLike:"찜"}</SubText>
           <SubText className="font-gray">{overKillo(like)}</SubText>
         </ViewCounterColumn>
       )}
