@@ -50,6 +50,7 @@ public class SecurityConfig {
                 .build();
     }
 
+
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
