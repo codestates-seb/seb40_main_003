@@ -48,13 +48,13 @@ const ProductDetail = () => {
             src={data.member.image.imgUrl}
             alt={`${data.member.nickname}의 대표사진`}
             name={data.member.nickname}
-            location={data.areaTag[0].areaTagName}
+            area={data.area}
             circle={true}
           />
         </Link>
         <h1 className="h4 bold mt-16">{data.title}</h1>
         <span className="sub font-gray mb-8">{data.createdAt}</span>
-        <ViewCounter like={data.memberLikeDeal} view={data.view} />
+        <ViewCounter like={data.likeNum} view={data.view} />
         <p className="mt-16">{data.content}</p>
       </MainCenterWrapper>
 

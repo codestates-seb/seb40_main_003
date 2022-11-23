@@ -207,14 +207,15 @@ type ProfileCardTypes = {
   src: string;
   alt: string;
   name: string;
-  location: string;
+  location?: string;
+  area?: number;
   circle?: boolean;
   tag?: number;
   border?: boolean;
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
-  const { size = "36", src, alt, name, location, circle = false, tag } = props;
+  const { size = "36", src, alt, name, location, area, circle = false, tag } = props;
   return (
     <CenteringWrapper className="space-between" borderNone={true}>
       <RowWrapper className="align-center">
@@ -229,6 +230,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         <ColumnWrapper>
           <span className="medium">{name}</span>
           <span className="sub font-gray">{location}</span>
+          <span className="sub font-gray">{area}</span>
         </ColumnWrapper>
       </RowWrapper>
 
