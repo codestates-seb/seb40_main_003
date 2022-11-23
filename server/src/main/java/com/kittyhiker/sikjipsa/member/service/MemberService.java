@@ -7,7 +7,9 @@ import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
 import com.kittyhiker.sikjipsa.member.dto.*;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.entity.MemberInformation;
+import com.kittyhiker.sikjipsa.member.entity.MemberProfile;
 import com.kittyhiker.sikjipsa.member.mapper.MemberMapper;
+import com.kittyhiker.sikjipsa.member.memberprofile.repository.MemberProfileRepository;
 import com.kittyhiker.sikjipsa.member.repository.MemberInfoRepository;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
@@ -26,6 +28,7 @@ public class MemberService {
     private final JwtTokenizer jwtTokenizer;
     private final PasswordEncoder passwordEncoder;
     private final MemberMapper memberMapper;
+    private final MemberProfileRepository memberProfileRepository;
 
     public Long signUpUser(MemberSignupDto signupDto) {
         if (!checkIfUserExists(signupDto.getEmail())) throw new IllegalArgumentException("ALREADY EXSITS EMAIL");
@@ -34,8 +37,10 @@ public class MemberService {
         member.encryptingPassword(passwordEncoder);
         member.addRole("ROLE_USER,");
         Member savedUser = memberRepository.save(member);
-        MemberInformation newMemberInfo = MemberInformation.builder().member(savedUser).build();
-        memberInfoRepository.save(newMemberInfo);
+//        MemberInformation newMemberInfo = MemberInformation.builder().member(savedUser).build();
+//        memberInfoRepository.save(newMemberInfo);
+        MemberProfile memberProfile = MemberProfile.builder().member(savedUser).content("content").build();
+        memberProfileRepository.save(memberProfile);
         return savedUser.getId();
     }
 

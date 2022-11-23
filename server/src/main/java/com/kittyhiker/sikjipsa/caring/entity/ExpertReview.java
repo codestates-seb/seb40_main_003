@@ -2,11 +2,13 @@ package com.kittyhiker.sikjipsa.caring.entity;
 
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Setter
 public class ExpertReview {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -3,6 +3,7 @@ package com.kittyhiker.sikjipsa.member.mapper;
 import com.kittyhiker.sikjipsa.member.dto.*;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.entity.MemberInformation;
+import com.kittyhiker.sikjipsa.member.memberprofile.dto.MemberPatchDto;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
@@ -25,4 +26,7 @@ public interface MemberMapper {
 
         return memberResponseDto.build();
     }
+
+    // MemberProfile
+	Member toProfile(MemberPatchDto memberPatchDto);
 }
