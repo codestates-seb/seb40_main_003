@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import axios from "axios";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 import { SigButton } from "../../Components/GlobalComponents";
@@ -11,8 +10,6 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
 } from "../../Components/Wrapper";
-import { useNaviateToFrom } from "../../Hooks/navigationHooks";
-import { currentPage } from "../../Recoil/atoms/currentPage";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { axiosPrivate } from "../../Hooks/api";
 
@@ -88,6 +85,7 @@ function Login() {
         .then((res) => {
           // 전역상태로 로그인 관련정보, 토큰 받아야함
           console.log(res);
+          setUser(res.data)
         })
         .then(() => {
           // 원래있던 페이지로 되돌림
