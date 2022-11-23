@@ -3,6 +3,7 @@ import { ImageWrapper, SigTag, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper, RowWrapper } from "../Wrapper";
 import Skeleton from "../Loading";
 import { ProductPreviewMappingType, ProductPreviewType } from "../../types/productTypes";
+import { getDateAgo } from "../../utils/controller";
 
 const ProductWrapper = styled.div`
   width: 100%;
@@ -53,7 +54,7 @@ const ProductCard = (props:props) => {
         />
         <DescriptionColumnWrapper>
           <span className="medium">{data.title}</span>
-          <span className="sub mb-8">{data.createdAt}</span>
+          <span className="sub mb-8">{getDateAgo(data.createdAt)}</span>
           {data.state === 1 ? null : (
             <SigTag
               width={80}
