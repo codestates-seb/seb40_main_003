@@ -14,6 +14,8 @@ import useFetch from "../../Hooks/useFetch";
 const Product = () => {
   const data = useFetch<ProductPreviewType>("/deal",{keyword:null,page:1,size:5})
   usePageTitle("거래");
+  console.log(data);
+  
   
   return data!==undefined? (
     <MainContentContainer>

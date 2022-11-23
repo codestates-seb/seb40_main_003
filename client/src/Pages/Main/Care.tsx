@@ -12,7 +12,7 @@ import useFetch from "../../Hooks/useFetch";
 
 
 const Care = () => {
-  const data=useFetch<caringTypes>("/caring")
+  const data = useFetch<caringTypes>("/experts", {keyword:null,page:1,size:5})
   usePageTitle("돌봄");
   console.log(data);
 
@@ -21,7 +21,7 @@ const Care = () => {
       <MainCenterWrapper>
         {data.data.map((e) => {
           return (
-            <Link key={e.expertProfileId} to={`/caring/${e.expertProfileId}`}>
+            <Link key={e.expertProfileId} to={`/experts/${e.expertProfileId}`}>
               <CareCard data={e} />
             </Link>
           );

@@ -62,6 +62,7 @@ export const MainRightWrapper = styled.aside`
 type SectionWrapperType = {
   title?: string;
   content?: string;
+  price?: number;
   tag?: [{ techTagId: number; techTagName: string }];
   children?: JSX.Element;
   width?: number;
