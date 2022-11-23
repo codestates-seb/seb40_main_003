@@ -20,6 +20,7 @@ import { Link } from "react-router-dom";
 import CommentInput from '../../Components/UserInput';
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
+import { getDateAgo } from "../../utils/controller";
 
 const CommunityDetail = () => {
   const { id } = useParams();
@@ -48,7 +49,7 @@ const CommunityDetail = () => {
         <p className='font-black mt-16 text-overflow'>{data.content}</p>
         <CommunityWrapper className='mt-16'>
           <RowWrapper>
-            <span className='sub font-gray'>{data.createdAt}</span>
+            <span className='sub font-gray'>{getDateAgo(data.createdAt)}</span>
             {/* <span className='sub font-gray ml-16'>{data.member.nickname}</span> */}
           </RowWrapper>
           <ViewCounter

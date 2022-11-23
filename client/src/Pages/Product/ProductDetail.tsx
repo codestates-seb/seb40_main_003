@@ -16,6 +16,7 @@ import { ProductDetailType } from "../../types/productTypes";
 import { LoadingSpinner } from "../../Components/Loading";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
+import { getDateAgo } from "../../utils/controller";
 
 
 
@@ -53,7 +54,7 @@ const ProductDetail = () => {
           />
         </Link>
         <h1 className="h4 bold mt-16">{data.title}</h1>
-        <span className="sub font-gray mb-8">{data.createdAt}</span>
+        <span className="sub font-gray mb-8">{getDateAgo(data.createdAt)}</span>
         <ViewCounter like={data.likeNum} view={data.view} />
         <p className="mt-16">{data.content}</p>
       </MainCenterWrapper>

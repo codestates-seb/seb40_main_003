@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { getDateAgo } from "../../utils/controller";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper, RowWrapper, SectionWrapper } from "../Wrapper";
 
@@ -26,7 +27,7 @@ const CommunityCard = ({ data }: any) => {
 
           <CommunityWrapper className='mt-7'>
             <RowWrapper>
-              <span className='sub font-gray'>{data.createdAt}</span>
+              <span className='sub font-gray'>{getDateAgo(data.createdAt)}</span>
               {/* <span className='sub font-gray ml-16'>
                 {data.member.nickname}
               </span> */}
