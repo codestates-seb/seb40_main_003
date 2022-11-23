@@ -77,9 +77,11 @@ function Login() {
 
   // 로그인버튼 클릭시 동작하는 함수
   const onLogin = async (data: LoginForm) => {
+    console.log(data);
+    
     try {
       axiosPrivate
-        .post("/auth/token", {
+        .post("/login", {
           email: data.email,
           password: data.password,
         })
