@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import { UserStateType } from "../Recoil/atoms/user";
+import { useEffect, useRef, useState } from "react";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -53,12 +54,12 @@ export const CategoryButton = styled.button`
   }
 `;
 export const CategoryWrapper = styled.div`
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-    padding: 16px;
-    width: 100px;
-`
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  padding: 16px;
+  width: 100px;
+`;
 
 export const SubText = styled.span`
   display: block;
@@ -320,8 +321,26 @@ export type CommentCardTypes = {
   author: number;
 };
 export const CommentCard = (props: CommentCardTypes) => {
-  // 비구조화할당
   const { size, src, alt, name, createdAt, content, tag, user, author } = props;
+  const ref = useRef<any>(null);
+  const [text, setText] = useState(content);
+  const [editable, setEditable] = useState(false);
+  const editOn = () => {
+    setEditable(true);
+  }
+  const handleChange = (e:any) => {
+    setText(e.target.value);
+  };
+  const handleKeyDown = (e:any) => {
+    setEditable(!editable);
+  };
+  const handleClickOutside = (e:any) => {
+    if (editable === true && !ref.current.contains(e.target)) setEditable(false);
+  };
+  useEffect(() => {
+    window.addEventListener("click", handleClickOutside, true);
+  });
+  // 비구조화할당
   return (
     <CommentCardWrapper>
       <RowWrapper className='align-center'>
@@ -342,49 +361,38 @@ export const CommentCard = (props: CommentCardTypes) => {
               })}
             </TagWrapper>
           ) : null}
-          <p className="font-gray medium">{content}</p>
-          </GridWrapper>
-        </RowWrapper>
-        <GridWrapper>
+          <>
+            <div ref={ref}>
+              {editable ? (
+                <input
+                  type='text'
+                  value={text}
+                  onChange={(e) => handleChange(e)}
+                />
+              ) : (
+                <p className='font-gray medium'>{text}</p>
+              )}
+            </div>
+          </>
+        </GridWrapper>
+      </RowWrapper>
+      <GridWrapper>
         <ColumnWrapper>
-          <div className="sub font-gray mb-6">{createdAt}</div>
-          <CommentEdit
-            userId={user!==null?user.memberId:""}
-            author={author?author:""}
-            callback1={undefined}
-            callback2={undefined}
-          />
+          <div className='sub font-gray mb-6'>{createdAt}</div>
+          {String(author) === String(user?.memberId) ? (
+            <CommentButtonWrapper>
+              <span
+                onClick={() => editOn()}
+                onKeyDown={handleKeyDown}
+                className='sub font-gray cursor'
+              >
+                수정
+              </span>
+              <span className='sub font-gray cursor'> 삭제</span>
+            </CommentButtonWrapper>
+          ) : null}
         </ColumnWrapper>
       </GridWrapper>
     </CommentCardWrapper>
-  );
-};
-
-
-// 댓글 수정삭제 버튼
-export type CommentEditType = {
-  userId: string | number | null;
-
-  author: string | number;
-  callback1?: Function;
-  callback2?: Function;
-};
-export const CommentEdit = ({
-  userId,
-  author,
-  callback1,
-  callback2,
-}: CommentEditType) => {
-  return  String(userId) === String(author) ?(
-    <CommentButtonWrapper>
-      <span className="sub font-gray mr-8" onClick={callback1 && callback1()}>
-        수정
-      </span>
-      <span className="sub font-gray" onClick={callback2 && callback2()}>
-        삭제
-      </span>
-    </CommentButtonWrapper>
-  ) : (
-    <></>
   );
 };
