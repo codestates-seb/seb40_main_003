@@ -84,7 +84,6 @@ function Login() {
         })
         .then((res) => {
           // 전역상태로 로그인 관련정보, 토큰 받아야함
-          console.log(res);
           setUser(res.data)
         })
         .then(() => {
