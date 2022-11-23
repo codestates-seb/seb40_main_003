@@ -8,7 +8,8 @@ import { ReactComponent as Community } from "../images/communityIcon.svg";
 import { ReactComponent as Chat } from "../images/chatIcon.svg";
 import { ReactComponent as Market } from "../images/marketIcon.svg";
 import { ReactComponent as Login } from "../images/loginIcon.svg";
-import ProfileIcon from "../images/emptyProfileIcon.svg";
+import ProfileIcon from "../images/defaultProfileImage.png";
+
 import { useRecoilValue } from "recoil";
 import { userState } from "../Recoil/atoms/user";
 
@@ -76,6 +77,7 @@ const NavElem = ({ title = "Untitled", children }: NavElemProps) => {
 };
 export const NavContent = () => {
   const user = useRecoilValue(userState);
+  console.log(user)
   return (<>
     <NavElemWrapper>
       <NavLink
@@ -119,7 +121,7 @@ export const NavContent = () => {
           {user?.image ? (
             <ProfilePhotoWrapper userImage={user.image} />
           ) : (
-            <Login />
+            user?.memberId?<ProfilePhotoWrapper userImage={ProfileIcon}/> :<Login />
           )}
         </NavElem>
       </NavLink>
