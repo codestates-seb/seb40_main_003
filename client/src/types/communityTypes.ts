@@ -1,22 +1,25 @@
 type communityTypes = {
-data:[
-    {   communityId: number,
-        title: string,
-        content: string,
-        view: number,
-        createdAt: string,
-        modifiedAt: string,
-        commentNum: number,
-        image: [
-            {
-                imageId: number,
-                imgUrl: string,
-                isRepImg: number
-            }
-        ],
-        member: {
-            memberId: number,
-            nickname: string
-        }}]
+  data: [
+    {
+      communityId: string;
+      title: string;
+      content: string;
+      view: string;
+      createdAt: string;
+      modifiedAt: string;
+      commentNum: string;
+      likeNum: string;
+      image: [
+        {
+          imgUrl: string;
+        }
+      ];
+      member: {
+        memberId: string;
+        nickname: string;
+        image: string;
+      };
     }
-export type {communityTypes}
+  ];
+};
+export type { communityTypes };
