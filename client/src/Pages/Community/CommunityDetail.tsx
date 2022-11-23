@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
@@ -39,11 +37,11 @@ const CommunityDetail = () => {
         <CommunityWrapper>
           <span className='h4 bold font-main mb-16'>{data.title}</span>
         </CommunityWrapper>
-        {data.image[0] ? (
+        {data.images[0] ? (
           <ImageWrapper
             className='communityImage'
             size={"240"}
-            src={data.image[0].imgUrl}
+            src={data.images[0]}
             alt={`상품명 ${data.title}의 대표이미지`}
           />
         ) : null}
@@ -51,28 +49,29 @@ const CommunityDetail = () => {
         <CommunityWrapper className='mt-16'>
           <RowWrapper>
             <span className='sub font-gray'>{data.createdAt}</span>
-            <span className='sub font-gray ml-16'>{data.member.nickname}</span>
+            {/* <span className='sub font-gray ml-16'>{data.member.nickname}</span> */}
           </RowWrapper>
           <ViewCounter
             view={data.view}
             renameLike='좋아요'
-            like={data.likeNum}
+            like={data.likes}
           />
         </CommunityWrapper>
         <CommentInput onSubmit={onSubmit}/>
-        {data.comment.map((e:any) => {
+        {data.comments.map((e:any) => {
           return (
             <CommentCard
-              src={e.member.image.imgUrl}
-              alt={`${e.member.nickname}의 대표이미지`}
+              src={e.writer.image}
+              alt={`${e.writer.nickname}의 대표이미지`}
               size={"36"}
-              name={e.member.nickname}
+              name={e.writer.nickname}
               createdAt={e.createdAt}
               content={e.content}
               key={e.commentId}
-              author={e.member.memberId}
+              author={e.writer.memberId}
               user={user}
             />
+
           );
         })}
       </MainCenterWrapper>
