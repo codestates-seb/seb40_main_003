@@ -33,9 +33,6 @@ import CommunityDetail from "./Pages/Community/CommunityDetail";
 import CommunityEditor from "./Pages/Community/CommunityEditor";
 
 import Talk from "./Pages/Talk/Talk";
-
-import DevTools from "./Components/DevTools";
-
 import { DefaultLayout } from "./Route";
 import ProductCategory from "./Pages/Product/ProductCategory";
 
@@ -43,7 +40,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <DevTools />
       {/* 모바일용 navbar*/}
       <Navbar />
       
