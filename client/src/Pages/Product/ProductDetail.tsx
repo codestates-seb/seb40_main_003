@@ -12,10 +12,11 @@ import {
   MainRightWrapper,
 } from "../../Components/Wrapper";
 import { userState } from "../../Recoil/atoms/user";
-import { ProductDetailType } from "../../types/productTypes";
+import { ProductDetailDataType, ProductDetailType } from "../../types/productTypes";
 import { LoadingSpinner } from "../../Components/Loading";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
+import { getDateAgo } from "../../utils/controller";
 
 
 
@@ -23,27 +24,25 @@ import useFetch from "../../Hooks/useFetch";
 const ProductDetail = () => {
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
-  const data = useFetch<ProductDetailType>(id?`/shopping/${id}`:"")
+  const data = useFetch<ProductDetailDataType>(id?`/deal/${id}`:"")
 
-  usePageTitle(
-    data !== undefined ? `${data.member.nickname} 님의 거래글` : "거래글"
-  );
+  console.log(data)
   return data !== undefined ? (
     // 메인 컨테이너 (반응형 제공!)
     <MainContentContainer>
-      {/* 실제 메인이 되는 내용! */}
       <MainCenterWrapper>
+      {/* 실제 메인이 되는 내용! */}
         <TopCarousel>
-          {data.image.map((e, i) => {
+          {data.images.map((e, i) => {
             return (
               <div key={i}>
-                <img src={e.imgUrl} alt={`${data.title}의 ${i}번째사진`} />
+                <img src={e} alt={`${data.title}의 ${i}번째사진`} />
               </div>
             );
           })}
         </TopCarousel>
 
-        <Link to={isLogin ? `/profile/${data.member.memberId}` : ""}>
+        {/* <Link to={isLogin ? `/profile/${data.member.memberId}` : ""}>
           <ProfileCard
             src={data.member.image.imgUrl}
             alt={`${data.member.nickname}의 대표사진`}
@@ -51,10 +50,11 @@ const ProductDetail = () => {
             area={data.area}
             circle={true}
           />
-        </Link>
+        </Link> */}
+        
         <h1 className="h4 bold mt-16">{data.title}</h1>
-        <span className="sub font-gray mb-8">{data.createdAt}</span>
-        <ViewCounter like={data.likeNum} view={data.view} />
+        <span className="sub font-gray mb-8">{getDateAgo(data.createdAt)}</span>
+        <ViewCounter like={data.memberLikeNum} view={data.view} />
         <p className="mt-16">{data.content}</p>
       </MainCenterWrapper>
 
@@ -65,6 +65,7 @@ const ProductDetail = () => {
         </Link>
       </MainRightWrapper>
     </MainContentContainer>
+
   ) : (
     <LoadingSpinner/>
   );
