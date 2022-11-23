@@ -1,7 +1,5 @@
-type ProductPreviewType = {
-  data: [
-      ProductPreviewMappingType
-  ],
+export type ProductPreviewType = {
+  data: [ProductPreviewMappingType];
   pageInfo: {
     page: number;
     size: number;
@@ -10,50 +8,44 @@ type ProductPreviewType = {
   };
 };
 export interface ProductPreviewMappingType {
-      area: number;
-      category: number;
-      content: string;
-      createdAt: string;
-      dealId: number;
-      images: [string];
-      memberLikeNum: number;
-      modifiedAt: string;
-      price: number;
-      state: number;
-      title: string;
-      view: number;
-};
-
-
-
-type ProductDetailType = {
-  dealId: number;
-  title: string;
-  content: string;
-  view: number;
-  price: number;
-  createdAt: string;
-  modifiedAt: string;
-  state: number;
-  likeNum: number;
-  image: [
-    {
-      imgUrl: string;
-    }
-  ];
   area: number;
-  member: {
-    memberId: number;
-    nickname: string;
-    image: {
-      imageId: number;
-      imgUrl: string;
-      isRepImg: string;
-    };
-  };
+  category: number;
+  content: string;
+  createdAt: string;
+  dealId: number;
+  images: [string];
+  memberLikeNum: number;
+  modifiedAt: string;
+  price: number;
+  state: number;
+  title: string;
+  view: number;
+}
+
+export type ProductDetailType = {
+  data:[ProductDetailDataType]
 };
 
-type ProductLikePreviewType = {
+// 프로덕트 디테일의 내용
+export type ProductDetailDataType = {
+  area: number;
+  category: number;
+  content: string
+  createdAt: string
+  dealId: number;
+  images: [
+    string
+  ];
+  memberLikeNum: number;
+  modifiedAt: string;
+  price: number;
+  state: number;
+  title: string
+  view: number;
+};
+
+// 
+export type ProductLikePreviewType = {
   data: [
     {
       dealId: number;
@@ -82,12 +74,12 @@ type ProductLikePreviewType = {
   };
 };
 
-type ProductLikeAddType = {
+export type ProductLikeAddType = {
   memberLikeDealId: number;
   dealId: number;
 };
 
-type DealReviewType = {
+export type DealReviewType = {
   dealReviewId: number;
   dealId: number;
   buyer: {
@@ -95,11 +87,4 @@ type DealReviewType = {
     nickname: string;
   };
   content: string;
-};
-export type {
-  ProductPreviewType,
-  ProductDetailType,
-  ProductLikePreviewType,
-  ProductLikeAddType,
-  DealReviewType,
 };
