@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot } from "recoil";
-import { ErrorBoundary } from "./Components/ErrorBoundary";
+import { ErrorBoundary } from "./Components/ErrorHandle";
 
 // if (process.env.NODE_ENV === "development") {
 //   const { worker } = require("./mocks/browser");

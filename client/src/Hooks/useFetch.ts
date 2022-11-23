@@ -19,5 +19,9 @@ const useFetch=<T>(url:string,params?:object)=>{
     }, [url]);
   return data;
 }
+export const Fetch = async(url:string,params?:object)=>{
+  const data = await axios.get(url,{params})
+  return data
+}
 
 export default useFetch

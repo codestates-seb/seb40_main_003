@@ -12,11 +12,11 @@ const CommunityCard = ({ data }: any) => {
     <ColumnWrapper>
       <SectionWrapper title={data.title} content={data.content} width={100}>
         <>
-          {data.image[0] ? (
+          {data.images[0] ? (
             <ImageWrapper
               className='communityImage mt-8'
               size={"112"}
-              src={data.image[0].imgUrl}
+              src={data.images[0].imgUrl}
               alt={`상품명 ${data.title}의 대표이미지`}
               loading='lazy'
             />
@@ -27,9 +27,9 @@ const CommunityCard = ({ data }: any) => {
           <CommunityWrapper className='mt-7'>
             <RowWrapper>
               <span className='sub font-gray'>{data.createdAt}</span>
-              <span className='sub font-gray ml-16'>
+              {/* <span className='sub font-gray ml-16'>
                 {data.member.nickname}
-              </span>
+              </span> */}
             </RowWrapper>
             <ViewCounter
               view={data.view}
