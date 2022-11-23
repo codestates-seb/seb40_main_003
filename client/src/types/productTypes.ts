@@ -1,54 +1,106 @@
 type ProductPreviewType = {
-  shopping: [
+  data: [
     {
-      dealId: number;
-      title: string;
-      pictures: [{ picture: string }];
-      createdAt: string;
-      view: number;
-      like: number;
-      price: number;
-      userInfo: {
-        userId: number;
-        nickname: string;
-      };
-      tag: number;
-    }
-  ];
-};
+      dealId: number,
+      title: string,
+      content : string,
+      view: number,
+      price: number,
+      createdAt: string,
+      modifiedAt: string,
+      category: number,
+      state: number, 
+      likeNum: number,
+      image: [
+        {
+          imgUrl: string
+        }
+          ],
+          area: string
+        }
+      ],
+      pageInfo: {
+          page: number,
+          size: number,
+          totalPages: number,
+          totalElements: number
+      }
+  }
+
+
 type ProductDetailType = {
-  dealId: number;
-  title: string;
-  content: string;
-  view: number;
-  price: number;
-  createdAt: string;
-  modifiedAt: string;
-  category: number;
-  state: number;
-  memberLikeDeal: number;
+  dealId: number,
+  title: string,
+  content: string,
+  view: number,
+  price: number,
+  createdAt: string,
+  modifiedAt: string,
+  state: number,
+  likeNum: number,
   image: [
     {
-      imageId: number;
-      imgUrl: string;
-      isRepImg: number;
+      imgUrl: string
     }
-  ];
-  areaTag: [
-    {
-      areaTagId: number;
-      areaTagName: string;
-    }
-  ];
+  ],
+  area: number,
   member: {
-    memberId: number;
-    nickname: string;
-    image: {
-      imageId: number;
-      imgUrl: string;
-      isRepImg: number;
-    };
-  };
-};
+  memberId: number,
+  nickname: string,
+  image: {
+    imageId: number,
+    imgUrl: string,
+    isRepImg: string
+    }
+  }
+}
 
-export type { ProductPreviewType, ProductDetailType };
+type ProductLikePreviewType = {
+  data: [
+    {
+      dealId: number,
+      title: string,
+      content : string,
+      view: number,
+      price: number,
+      createdAt: string,
+      modifiedAt: string,
+      category: number,
+      state: number, 
+      likeNum: number,
+      image: [
+        {
+          imgUrl: string
+        }
+      ],
+      area: number
+    }
+  ],
+  pageInfo: {
+  page: number,
+  size: number,
+  totalPages: number,
+  totalElements: number
+  }
+}
+
+type ProductLikeAddType = {
+  memberLikeDealId : number,
+  dealId : number,
+}
+
+type DealReviewType = {
+  dealReviewId: number,
+  dealId: number,
+  buyer: {
+    memberId: number,
+    nickname: string
+  },
+  content: string
+}
+export type { 
+  ProductPreviewType, 
+  ProductDetailType, 
+  ProductLikePreviewType, 
+  ProductLikeAddType,
+  DealReviewType };

@@ -24,9 +24,13 @@ const SettingPage = () => {
     <MainContentContainer>
       <MainCenterWrapper>
         <ContentContainer>
+        <SectionWrapper title="찜목록">
+                <></>
+              </SectionWrapper>
+
           <ContentWrapper>
             <Link to={"/setting/sales-history"}>
-              <SectionWrapper>
+              <SectionWrapper title="내역">
                 <>판매 내역(3)</>
               </SectionWrapper>
             </Link>

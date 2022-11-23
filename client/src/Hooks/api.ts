@@ -5,7 +5,6 @@ import axios from "../../node_modules/axios/index";
 // 베이스 URL (기본으로 설정할 백엔드 api 주소)
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
 const BASE_URL = "https://testserver.com";
-// axios.defaults.baseURL= BASE_URL
 axios.defaults.xsrfCookieName = "csrftoken";
 axios.defaults.xsrfHeaderName = "x-CSRFToken";
 

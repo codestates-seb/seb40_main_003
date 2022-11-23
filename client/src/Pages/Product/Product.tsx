@@ -1,7 +1,4 @@
-import { useState } from "react";
-
-import ProductCard, {
-} from "../../Components/product/ProductCard";
+import ProductCard from "../../Components/product/ProductCard";
 import { ProductPreviewType } from "../../types/productTypes";
 import { Link } from "react-router-dom";
 import {
@@ -14,16 +11,17 @@ import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
 
-
-export const ProductMain = ({data}:{data:ProductPreviewType}) => {
-  const {shopping} = data
-  console.log(data)
-  return (
+const Product = () => {
+  const data = useFetch<ProductPreviewType>("/product")
+  usePageTitle("거래");
+  console.log(data);
+  
+  return data!==undefined? (
     <MainContentContainer>
       <MainCenterWrapper>
-        {shopping.map((e) => {
+        {data.data.map((e) => {
           return (
-            <Link to={`/product/${e.dealId}`} key={e.dealId}>
+            <Link key={e.dealId} to={`/product/${e.dealId}`}>
               <ProductCard data={e} />
             </Link>
           );
@@ -44,14 +42,7 @@ export const ProductMain = ({data}:{data:ProductPreviewType}) => {
         </Link>
       </MainRightWrapper>
     </MainContentContainer>
-  );
-};
-
-const Product = () => {
-  const data = useFetch<ProductPreviewType>("/shopping")
-  usePageTitle("거래");
-
-  return data!==undefined?(<ProductMain data={data} />):<></>
+  ):<></>
 };
 
 export default Product;

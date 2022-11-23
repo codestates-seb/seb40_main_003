@@ -1,5 +1,4 @@
-type communityTypes = 
-    {
+type communityTypes = {
 data:[
     {   communityId: number,
         title: string,
