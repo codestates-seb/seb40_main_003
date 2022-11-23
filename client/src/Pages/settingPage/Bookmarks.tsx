@@ -7,14 +7,16 @@ import {
 import useFetch from "../../Hooks/useFetch";
 
 const BookMarks = () => {
-  const data = useFetch("/");
-  return data!==undefined?
-  (
+  // const data = useFetch("/");
+
+  // return data!==undefined?(
+  return (
     <MainContentContainer>
       <MainCenterWrapper>북마크 컴포넌트</MainCenterWrapper>
       <MainRightWrapper></MainRightWrapper>
     </MainContentContainer>
-  ):<LoadingSpinner/>
+  );
+  // ):<LoadingSpinner/>
 };
 
 export default BookMarks;
