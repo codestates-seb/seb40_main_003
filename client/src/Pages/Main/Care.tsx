@@ -6,14 +6,13 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
 } from "../../Components/Wrapper";
-import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
 
 
 const Care = () => {
-  const data = useFetch<caringTypes>("/experts", {keyword:null,page:1,size:5})
   usePageTitle("돌봄");
+  const data = useFetch<caringTypes>("/experts?page=1&size=5")
   console.log(data);
 
   return data !== undefined ? (
