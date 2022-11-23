@@ -1,7 +1,7 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
-import { ColumnWrapper, SectionWrapper } from "../../Components/Wrapper";
+import { ColumnWrapper} from "../../Components/Wrapper";
 
 
 type FormData = {
@@ -24,14 +24,14 @@ const AddPlantModal = () => {
     <ColumnWrapper width={100} as={"form"} onSubmit={onSubmit}>
       <label className="bold h4 pb-4">식물 이름</label>
       <input
-        {...(register("name"), { required: true, maxLength: 2 })}
+        {...(register("name"), { required: true, mixLength: 2 })}
         type="text"
         placeholder="식물 이름을 입력해 주세요"
       />
       <p>{errors.name?.message}</p>
       <label className="bold h4 mt-16">식물 종류</label>
       <input
-        {...(register("type"), { required: true, maxLength: 2 })}
+        {...(register("type"), { required: true, minLength: 1 })}
         type="text"
         placeholder="종을 입력해주세요 ex)몬스테라"
       />

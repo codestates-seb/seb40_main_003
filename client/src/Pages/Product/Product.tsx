@@ -1,10 +1,7 @@
-import { useState } from "react";
-import axios from "axios";
-import { useEffect } from "react";
-import ProductCard, {
-  ProductPlaceHolder,
-} from "../../Components/product/ProductCard";
-import { ProductPreviewType } from "../../types/productTypes";
+import ProductCard from "../../Components/product/ProductCard";
+import {
+  ProductPreviewMappingType,
+} from "../../types/productTypes";
 import { Link } from "react-router-dom";
 import {
   MainCenterWrapper,
@@ -14,30 +11,53 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
+import { FetchByParams } from "../../Hooks/useFetch";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
-type elemMaps = [ProductPreviewType];
+import { ErrorMessage } from "../../Components/ErrorHandle";
+import { LoadingSkeleton } from "../../Components/Loading";
 
-type ProductMainType = {
-  data: elemMaps | undefined;
-  hidingTime: boolean;
-  isLoading: boolean;
-};
 
-export const ProductMain = ({
-  isLoading,
-  data,
-  hidingTime,
-}: ProductMainType) => {
-  return !isLoading && data !== undefined ? (
-    <MainContentContainer>
-      <MainCenterWrapper>
-        {data.map((e) => {
+// 쿼리클라이언트
+const productQueryClient = new QueryClient();
+
+const ProductMain = () => {
+  const { data, isLoading, error } = useQuery(
+    ["productQuery"],
+    () => {
+      const data = FetchByParams("/deal", { page: 1, size: 5 });
+      return data;
+    }
+  );
+  if (isLoading) return <LoadingSkeleton/>;
+  if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
+  return (
+    <>
+      {data &&
+        data.data.data.map((e: ProductPreviewMappingType) => {
           return (
-            <Link to={`/product/${e.dealId}`} key={e.dealId}>
+            <Link key={e.dealId} to={`/product/${e.dealId}`}>
               <ProductCard data={e} />
             </Link>
           );
         })}
+    </>
+  );
+};
+
+
+
+// 전체 페이지
+const Product = () => {
+  usePageTitle("거래");
+  return (
+    <MainContentContainer>
+      <MainCenterWrapper>
+        {/* 쿼리클라이언트로 감쌈 */}
+        <QueryClientProvider client={productQueryClient}>
+          <ProductMain />
+        </QueryClientProvider>
+        {/* 쿼리클라이언트로 감쌈 */}
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
@@ -49,40 +69,11 @@ export const ProductMain = ({
         <Link to={"/product/write"}>
           <SigButton type="submit">새 글쓰기</SigButton>
         </Link>
+        <Link to={"/product/category"}>
+          <SigButton>거래 카테고리</SigButton>
+        </Link>
       </MainRightWrapper>
     </MainContentContainer>
-  ) : (
-    <MainContentContainer className={hidingTime ? "display-none" : ""}>
-      <MainCenterWrapper>
-        <ProductPlaceHolder />
-        <ProductPlaceHolder />
-        <ProductPlaceHolder />
-      </MainCenterWrapper>
-    </MainContentContainer>
-  );
-};
-
-const Product = () => {
-  const [data, setData] = useState<elemMaps>();
-  const [isLoading, setIsLoading] = useState(true);
-  const [hidingTime, setHidingTime] = useState(true);
-  // 초기 로딩
-  usePageTitle("거래");
-  useEffect(() => {
-    setTimeout(() => {
-      setHidingTime(false);
-    }, 200);
-
-    axios.get("/shopping").then(({ data }) => {
-      setData(data.shopping);
-      setIsLoading(false);
-    });
-  }, []);
-
-  return (
-    <>
-      <ProductMain data={data} hidingTime={hidingTime} isLoading={isLoading} />
-    </>
   );
 };
 

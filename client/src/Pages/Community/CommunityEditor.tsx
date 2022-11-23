@@ -16,31 +16,27 @@ const ConfirmWrapper = styled.span`
   justify-content: row;
 `;
 
-type Props = {};
-
-interface ProductEditorForm {
+interface CommunityEditorForm {
   title: string;
-  image: string;
-  category: number;
   content: string;
-  price: string;
+  image: string;
+  password: string;
   errors?: string;
 }
 
-const ProductEditor = (props: Props) => {
+const CommunityEditor = () => {
+  usePageTitle("커뮤니티 글 쓰기");
+
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
-  } = useForm<ProductEditorForm>();
-
-  const onValid = (data: ProductEditorForm) => {
+  } = useForm<CommunityEditorForm>();
+  const onValid = (data: CommunityEditorForm) => {
     console.log("나 발리드됨");
   };
   const onInValid = (errors: FieldErrors) => {};
-  usePageTitle("거래 글 쓰기");
-
-  console.log(errors);
 
   return (
     <MainContentContainer>
@@ -80,23 +76,6 @@ const ProductEditor = (props: Props) => {
             </>
           </SectionWrapper>
 
-          <SectionWrapper>
-            <>카테고리 선택</>
-          </SectionWrapper>
-
-          <SectionWrapper width={100} borderNone={true}>
-            <>
-              <input
-                className="price"
-                {...register("price", {
-                  required: "",
-                })}
-                type="price"
-                placeholder="가격"
-              />
-              <p className="font-alert-red sub">{errors.price?.message}</p>
-            </>
-          </SectionWrapper>
           <SectionWrapper width={100} borderNone={true}>
             <>
               <input
@@ -110,7 +89,6 @@ const ProductEditor = (props: Props) => {
               <p className="font-alert-red sub">{errors.content?.message}</p>
             </>
           </SectionWrapper>
-
           <ConfirmWrapper>
             <input type="checkbox" className="border-none checkbox-20"></input>
             <p className="sub font-gray">
@@ -124,7 +102,7 @@ const ProductEditor = (props: Props) => {
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
           <p className="h5 bold font-main mr-16">
-            반려식물을 분양하고 원예 용품을 판매해보세요.🌿
+            반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
           </p>
         </SectionWrapper>
         <Link to={"../"}>
@@ -137,4 +115,4 @@ const ProductEditor = (props: Props) => {
   );
 };
 
-export default ProductEditor;
+export default CommunityEditor;

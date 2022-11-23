@@ -8,7 +8,8 @@ import { ReactComponent as Community } from "../images/communityIcon.svg";
 import { ReactComponent as Chat } from "../images/chatIcon.svg";
 import { ReactComponent as Market } from "../images/marketIcon.svg";
 import { ReactComponent as Login } from "../images/loginIcon.svg";
-import ProfileIcon from "../images/emptyProfileIcon.svg";
+import ProfileIcon from "../images/defaultProfileImage.png";
+
 import { useRecoilValue } from "recoil";
 import { userState } from "../Recoil/atoms/user";
 
@@ -76,6 +77,7 @@ const NavElem = ({ title = "Untitled", children }: NavElemProps) => {
 };
 export const NavContent = () => {
   const user = useRecoilValue(userState);
+  console.log(user)
   return (<>
     <NavElemWrapper>
       <NavLink
@@ -96,7 +98,7 @@ export const NavContent = () => {
         </NavElem>
       </NavLink>
       <NavLink
-        to="/bamboo"
+        to="/community"
         className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
       >
         <NavElem title="커뮤니티">
@@ -112,14 +114,14 @@ export const NavContent = () => {
         </NavElem>
       </NavLink>
       <NavLink
-        to={user ? `/profile/${user.userId}` : "/login"}
+        to={user?.memberId ? `/profile/${user.memberId}` : "/login"}
         className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
       >
-        <NavElem title={user ? "프로필" : "로그인"}>
-          {user ? (
-            <ProfilePhotoWrapper userImage={user.userImage} />
+        <NavElem title={user?.memberId ? "프로필" : "로그인"}>
+          {user?.image ? (
+            <ProfilePhotoWrapper userImage={user.image} />
           ) : (
-            <Login />
+            user?.memberId?<ProfilePhotoWrapper userImage={ProfileIcon}/> :<Login />
           )}
         </NavElem>
       </NavLink>

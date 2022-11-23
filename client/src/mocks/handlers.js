@@ -1,7 +1,7 @@
 import { rest } from "msw";
 import {ProductDetailHandler,ProductListHandler} from "./productHandler"
 import {CaringListHandler, expertProfileHandler, expertProfileDetail} from "./caringHandler"
-import { BambooListHandler,BambooDetailHandler } from "./bambooHandler"
+import { CommunityListHandler,CommunityDetailHandler } from "./communityHandler"
 import { Profile } from './profileHandler';
 export const handlers = [
   // 로그인 테스트
@@ -12,10 +12,10 @@ export const handlers = [
   rest.post("https://testserver.com/login", async (req, res, ctx) => {
     return res(
       ctx.json({
-        userId: 1,
-        userImage:
+        memberId: 1,
+        image:
           "https://learnenglish.britishcouncil.org/sites/podcasts/files/2021-10/RS6715_492969113-hig.jpg",
-        userNickname: "준구짱",
+        nickname: "준구짱",
       })
     );
   }),
@@ -38,10 +38,10 @@ export const handlers = [
 
 
 // 커뮤니티 핸들러
-BambooListHandler(),
-BambooDetailHandler(1),
-BambooDetailHandler(2),
-BambooDetailHandler(3),
+CommunityListHandler(),
+CommunityDetailHandler(1),
+CommunityDetailHandler(2),
+CommunityDetailHandler(3),
 
 // 일반 유저 프로필 핸들러
 Profile(1),
@@ -49,5 +49,3 @@ Profile(2),
 Profile(3),
 
 ];
-
-  

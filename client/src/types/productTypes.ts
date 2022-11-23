@@ -1,53 +1,90 @@
-type ProductPreviewType = 
-  {
-    dealId: number;
-    title: string;
-    pictures: [{picture: string}];
-    createdAt: string;
-    view: number;
-    like: number;
-    price: number;
-    userInfo: {
-      userId: number;
-      nickname: string;
-    };
-    tag: number;
-  }
-;
-type ProductDetailType = {
-  
-    dealId: number
-    title: string
-    content: string
-    view: number
-    price: number
-    createdAt: string
-    modifiedAt: string
-    category: number
-    state: number
-    memberLikeDeal: number
-    image: [
-        {
-            imageId: number
-            imgUrl:string
-            isRepImg: number
-        }
-    ],
-    areaTag:[
-        {
-            areaTagId: number
-            areaTagName: string
-        }
-    ],
-    member: {
-        memberId: number
-        nickname: string
-        image: {
-            imageId: number
-            imgUrl: string
-            isRepImg: number
-        }
-    }
+export type ProductPreviewType = {
+  data: [ProductPreviewMappingType];
+  pageInfo: {
+    page: number;
+    size: number;
+    totalPages: number;
+    totalElements: number;
+  };
+};
+export interface ProductPreviewMappingType {
+  area: number;
+  category: number;
+  content: string;
+  createdAt: string;
+  dealId: number;
+  images: [string];
+  memberLikeNum: number;
+  modifiedAt: string;
+  price: number;
+  state: number;
+  title: string;
+  view: number;
 }
 
-export type {ProductPreviewType, ProductDetailType}
+export type ProductDetailType = {
+  data:[ProductDetailDataType]
+};
+
+// 프로덕트 디테일의 내용
+export type ProductDetailDataType = {
+  area: number;
+  category: number;
+  content: string
+  createdAt: string
+  dealId: number;
+  images: [
+    string
+  ];
+  memberLikeNum: number;
+  modifiedAt: string;
+  price: number;
+  state: number;
+  title: string
+  view: number;
+};
+
+// 
+export type ProductLikePreviewType = {
+  data: [
+    {
+      dealId: number;
+      title: string;
+      content: string;
+      view: number;
+      price: number;
+      createdAt: string;
+      modifiedAt: string;
+      category: number;
+      state: number;
+      likeNum: number;
+      image: [
+        {
+          imgUrl: string;
+        }
+      ];
+      area: number;
+    }
+  ];
+  pageInfo: {
+    page: number;
+    size: number;
+    totalPages: number;
+    totalElements: number;
+  };
+};
+
+export type ProductLikeAddType = {
+  memberLikeDealId: number;
+  dealId: number;
+};
+
+export type DealReviewType = {
+  dealReviewId: number;
+  dealId: number;
+  buyer: {
+    memberId: number;
+    nickname: string;
+  };
+  content: string;
+};

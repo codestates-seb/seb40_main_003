@@ -1,115 +1,187 @@
-import React from 'react';import { FieldErrors, useForm } from "react-hook-form";
-import { SigButton } from '../../Components/GlobalComponents';
-import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
-import { Link } from "react-router-dom";
+import styled from "@emotion/styled";
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { SigButton } from "../../Components/GlobalComponents";
+import { useNavigate } from "react-router-dom";
+import {
+  MainContentContainer,
+  MainCenterWrapper,
+  MainRightWrapper,
+} from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
+import axios from "../../Hooks/api";
 
-type Props = {}
+
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+`;
+
+const InputContainer = styled.div`
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+`;
+
+const Errormsg = styled.p`
+  color: var(--alert-red);
+  margin: 3px;
+  font-size: 13px;
+`;
+
+const Label = styled.label`
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 3px;
+`;
+
 
 interface SignupForm {
-  username: string;
-  nickname: string;
-  email: string;
   password: string;
+  email: string;
+  nickname: string;
+  passwordCheck: string;
   errors?: string;
 }
 
-const Signup = (props: Props) => {
-  const {register, handleSubmit, formState: { errors },
-} = useForm<SignupForm>();
-  
-  const onValid = (data: SignupForm) => {
-    console.log("나 발리드됨")
-  }
-  const onInValid = (errors: FieldErrors) => {
+const Signup =() => {
+  const navigate = useNavigate();
+  const [error, setErrMsg] = useState("");
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    setFocus,
+  } = useForm<SignupForm>({
+    mode: "onChange",
+  });
+  usePageTitle("회원가입")
+  useEffect(() => {
+    setFocus("nickname");
+  }, []);
+// 버튼 클릭시 동작하는 함수
+  const onValid = async (data: SignupForm) => {
+    console.log(data);
+    
+    let userData = {
+      email: data.email,
+      password: data.password,
+      nickname: data.nickname,
+    };
+    console.log({userData});
+    
+     axios.post("/signup", {...userData})
+      .then((response) => {
+        console.log(response);
+        navigate("/login");
+      });
+
+    // } catch (err: any) {
+    //   console.log(err);
+    //   if (!err?.response) {
+    //     setErrMsg("서버로부터 응답이 없습니다");
+    //   } else if (err.response?.status === 400) {
+    //     setErrMsg("이메일 또는 패스워드를 확인해주세요");
+    //     console.log(error);
+    //   } else if (err.response?.status === 401) {
+    //     setErrMsg("허가되지않은 접근입니다");
+    //   } else {
+    //     setErrMsg("Login Failed");
+    //   }
+    // }
   };
-  usePageTitle("회원 가입")
 
   return (
     <MainContentContainer>
       <MainCenterWrapper>
-        <section onSubmit={handleSubmit(onValid, onInValid)}>
+          <FormWrapper onSubmit={handleSubmit(onValid)}>
+          <InputContainer>
+              <Label htmlFor={"nickname"}>닉네임</Label>
+              <input
+                type={"nickname"}
+                id="nickname"
+                {...register("nickname", {
+                  required: true,
+                  minLength: 2,
+                })}
+              />
+              {errors.nickname && errors.nickname.type === "required" && (
+                <Errormsg> 닉네임을 입력해주세요</Errormsg>
+              )}
+              {errors.nickname && errors.nickname.type === "minLength" && (
+                <Errormsg> 최소 길이는 2자 이상이여야 합니다</Errormsg>
+              )}
+            </InputContainer>
+            <InputContainer>
+              <Label htmlFor={"Email"}>이메일</Label>
+              <input
+                type={"email"}
+                id="email"
+                {...register("email", {
+                  required: true,
+                  pattern: /^\S+@\S+$/i,
+                  maxLength: 50,
+                })}
+              />
+              {errors.email && errors.email.type === "required" && (
+                <Errormsg> 이메일을 입력해주세요.</Errormsg>
+              )}
+              {errors.email && errors.email.type === "pattern" && (
+                <Errormsg> 이메일 형식이여야 합니다.</Errormsg>
+              )}
+              {errors.email && errors.email.type === "maxLength" && (
+                <Errormsg> 최대 길이는 50자 이하여야 합니다</Errormsg>
+              )}
+            </InputContainer>
+            <InputContainer>
+              <Label htmlFor={"password"}>비밀번호</Label>
+              <input
+                type={"password"}
+                id="password"
+                {...register("password", {
+                  required: true,
+                  minLength: 8,
 
-      <SectionWrapper title="닉네임" borderNone={true}>
-      <>
-      <input 
-        {...register("nickname", { 
-          required: "",
-          minLength: {
-            message: "닉네임은 2글자 이상이어야 합니다.",
-            value: 2
-          },
-          maxLength: {
-            message: "닉네임은 12글자를 넘을 수 없습니다.",
-            value: 12
-          }
-        })}
-        type="Text" 
-        placeholder="닉네임을 입력해주세요."
-      />
-      <p className='font-alert-red sub'>{errors.nickname?.message}</p>
-      </>
-      </SectionWrapper>
-
-      <SectionWrapper title={"이메일"} borderNone={true}>
-        <>
-        <input {...register("email", { 
-          required: "",
-          validate: {
-            dotinclude: (value) =>
-          value.includes(".") || "이메일 형식이 아닙니다.",
-            },
-          })}
-          type="email" 
-          placeholder="이메일을 입력해주세요."
-        />
-        <p className='font-alert-red sub'>{errors.email?.message}</p>
-      </>
-      </SectionWrapper>
-
-      <SectionWrapper title={"비밀번호"} borderNone={true}>
-        <>
-        <input {...register("password", { 
-          required: "",
-          minLength: {
-            message: "비밀번호는 8자 이상이어야 합니다.",
-            value: 8
-          },
-          })}
-          type="password" 
-          placeholder="비밀번호를 입력해주세요."
-        />        
-        <p className='font-alert-red sub'>{errors.password?.message}</p>
-        </>
-      </SectionWrapper>
-
-      
-      <SectionWrapper title={"비밀번호 확인"} borderNone={true}>
-        <>
-        <input {...register("password", { 
-          required: "",
-          minLength: {
-            message: "비밀번호는 8자 이상이어야 합니다.",
-            value: 8
-          },
-          })}
-          type="password" 
-          placeholder="비밀번호를 다시 입력해주세요."
-        />        
-        <p className='font-alert-red sub'>{errors.password?.message}</p>
-        </>
-      </SectionWrapper> 
-
-      <Link to={`/login/`}>
-        <SigButton type='submit' value="Create Account" className='disable'>계정 생성</SigButton>
-      </Link>
-      </section>
+                })}
+              />
+              {errors.password && errors.password.type === "required" && (
+                <Errormsg> 패스워드를 입력해주세요</Errormsg>
+              )}
+              {errors.password && errors.password.type === "minLength" && (
+                <Errormsg>8자 이상, 영문 대 소문자, 숫자, 특수문자를 사용하세요.</Errormsg>
+              )}
+            </InputContainer>
+            <InputContainer>
+              <Label htmlFor={"passwordCheck"}>비밀번호 재확인</Label>
+              <input
+                type={"password"}
+                id="passwordCheck"
+                {...register("passwordCheck", {
+                  required: true,
+                  minLength: 8,
+                })}
+              />
+              {errors.passwordCheck && errors.passwordCheck.type === "required" && (
+                <Errormsg> 패스워드를 다시 확인해주세요</Errormsg>
+              )}
+              {errors.passwordCheck && errors.passwordCheck.type === "minLength" && (
+                <Errormsg>8자 이상, 영문 대 소문자, 숫자, 특수문자를 사용하세요.</Errormsg>
+              )}
+            </InputContainer>
+            <SigButton className="disable" type="submit" value={"Login"}>
+              계정생성
+            </SigButton>
+            {error && <Errormsg>{error}</Errormsg>}
+          </FormWrapper>
       </MainCenterWrapper>
-      <MainRightWrapper>
-      </MainRightWrapper>
+      <MainRightWrapper></MainRightWrapper>
     </MainContentContainer>
-  )
-
+  );
 }
 
 export default Signup;

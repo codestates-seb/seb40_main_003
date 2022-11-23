@@ -8,21 +8,17 @@ function AuthProvider() {
   return auth ? <Outlet /> : <Navigate to="/login" />;
 }
 
-export const HeaderLayout =()=>{
+export const HeaderLayout = () => {
   return (
     <>
-      <Header/>
+      <Header />
       <Outlet />
     </>
   );
-}
+};
 
 export const DefaultLayout = () => {
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 };
 export const SearchLayout = () => {
   return (

@@ -33,14 +33,8 @@ const HeaderContent = styled.div`
 
 const BackButton = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-  const NavigateBack = () => {
-    navigate(from, { replace: true });
-  };
-
   return (
-    <button onClick={NavigateBack}>
+    <button onClick={()=>{navigate(-1)}}>
       <img src={gobackIcon} alt="뒤로가기버튼"></img>
     </button>
   );

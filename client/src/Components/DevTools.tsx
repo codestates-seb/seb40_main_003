@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import axios from "axios";
+import axios from "../Hooks/api";
 import React from "react";
 import { useRecoilState } from "recoil";
 import { userState } from "../Recoil/atoms/user";
@@ -10,12 +10,15 @@ import Pattern from "../images/pattern.png"
 const DevBack = styled.section`
   background-image: url(${Pattern});
   background-size: 8%;
-  width:100%;
+  width:50%;
   display:flex;
   align-items:center;
   justify-content:center;
   padding: 20px;
-  opacity: 0;
+  opacity: 0.3;
+  position: absolute;
+  bottom: 70px;
+  z-index: 10000;
   :hover{
     opacity: 1;
   }
@@ -25,11 +28,12 @@ type Props = {};
 
 const DevTools = (props: Props) => {
   const [user, setUser] = useRecoilState(userState);
+  
   const forceLogin = async (e: React.SyntheticEvent) => {
     if(!user){
     e.preventDefault();
     axios
-      .post("https://testserver.com/login", { id: 123, password: 123 })
+      .post("/login", { id: 123, password: 123 })
       .then((res) => {
         console.log(res.data);
         setUser(res.data);
@@ -39,7 +43,7 @@ const DevTools = (props: Props) => {
   const forceLogout = async (e: React.SyntheticEvent) => {
     e.preventDefault();
     axios
-      .post("https://testserver.com/logout", { id: 123, password: 123 })
+      .post("logout", { id: 123, password: 123 })
       .then((res) => {
         console.log(res.status);
         setUser(null);
