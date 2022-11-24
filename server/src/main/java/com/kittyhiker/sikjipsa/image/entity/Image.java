@@ -22,7 +22,7 @@ public class Image {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "image_id")
-    private Long id;
+    private Long imageId;
 
     private String imgName;
 
@@ -56,4 +56,27 @@ public class Image {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    public Image(String imgName, String originalName, String imgUrl, String isRepImg, Plant plant) {
+        this.imgName = imgName;
+        this.originalName = originalName;
+        this.imgUrl = imgUrl;
+        this.isRepImg = isRepImg;
+        this.plant = plant;
+    }
+
+    public Image(String imgName, String originalName, String imgUrl, String isRepImg, Member member) {
+        this.imgName = imgName;
+        this.originalName = originalName;
+        this.imgUrl = imgUrl;
+        this.isRepImg = isRepImg;
+        this.member = member;
+    }
+
+    public Image(String imgName, String originalName, String imgUrl, String isRepImg, ExpertProfile expertProfile) {
+        this.imgName = imgName;
+        this.originalName = originalName;
+        this.imgUrl = imgUrl;
+        this.isRepImg = isRepImg;
+        this.expertProfile = expertProfile;
+    }
 }
