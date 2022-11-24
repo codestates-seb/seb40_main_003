@@ -222,7 +222,7 @@ public class ExpertService {
 	}
 
 	public Page<MemberLikeExpert> getExpertLikes(int page, int size) {
-		return memberLikeExpertRepository.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
+		return memberLikeExpertRepository.findAll(PageRequest.of(page, size, Sort.by("memberLikeExpertId").descending()));
 	}
 
 	public void deleteExpertLike(Long expertId, Long memberLikeExpertId, Long memberId) {
