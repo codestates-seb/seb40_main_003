@@ -80,6 +80,8 @@ function Login() {
       .then((res) => {
         // 전역상태로 로그인 관련정보, 토큰 받아야함
         setUser(res.data);
+        localStorage.setItem("accessToken", res.data.accessToken);
+        localStorage.setItem("refreshToken", res.data.refreshToken);
       })
       .then(() => {
         // 원래있던 페이지로 되돌림
@@ -143,8 +145,9 @@ function Login() {
             {error && <Errormsg>{error}</Errormsg>}
           </InputContainer>
 
-          <Link to={`/signup`}>
-            <button className="mb-16"><span className="sub"><span className="font-main bold sub">회원 가입</span>하고 식물전문가가 되어보세요!</span> </button>
+          <Link to={`/signup`} className={"sub mb-10"}>
+              <span className="font-main bold sub">회원 가입</span>하고
+              식물전문가가 되어보세요!
           </Link>
 
           <SigButton
