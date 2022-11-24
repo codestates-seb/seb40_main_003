@@ -46,7 +46,6 @@ const CommunityEditor = () => {
 
   const onValid = async (data: CommunityEditorForm) => {
     console.log(data);
-    
     try {
       axiosPrivate
         .post("/community/write", {
@@ -77,7 +76,7 @@ const CommunityEditor = () => {
 
 
   return (
-    <MainContentContainer onSubmit={handleSubmit(onValid)}>
+    <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid)}>
       <MainCenterWrapper>
           <SectionWrapper width={100} borderNone={true}>
             <>
