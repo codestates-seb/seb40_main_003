@@ -147,8 +147,8 @@ function Login() {
             {error && <Errormsg>{error}</Errormsg>}
           </InputContainer>
 
-          <Link to={`/signup`} className={"sub mb-10"}>
-            <span className="font-main bold sub">회원 가입</span>하고
+          <Link to={`/signup`} className={"mb-10"}>
+            <span className="font-main bold">회원 가입</span>하고
             식물전문가가 되어보세요!
           </Link>
 

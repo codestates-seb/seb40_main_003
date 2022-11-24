@@ -58,7 +58,7 @@ export const LoadingSkeleton = ({count=5}) => {
         return <ProductPlaceHolder />;
       })}
     </>
-  )
+  ) 
 };
 
 export const ProductPlaceHolder = () => {

@@ -1,12 +1,6 @@
-import axios from 'axios';
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { ProfileCard, ProfilePlantCard, SigButton } from '../../Components/GlobalComponents';
-import PlantCardCarousel from '../../Components/profile/plantCardCarousel';
-import { MainCenterWrapper, MainContentContainer, MainRightWrapper, SectionWrapper } from '../../Components/Wrapper';
-import useFetch, { FetchByBody } from '../../Hooks/useFetch';
+import { FetchByBody } from '../../Hooks/useFetch';
 import usePageTitle from '../../Hooks/usePageTitle';
 import { userState } from '../../Recoil/atoms/user';
 import { profileTypes } from '../../types/profile';
@@ -20,7 +14,7 @@ const Profile = () => {
   const data= FetchByBody<profileTypes>(`/profile/${id}`)
   usePageTitle("프로필")
   console.log(data)
-  return data!==undefined ? (
+  return (
     <></>
     // <MainContentContainer>
     //   <MainCenterWrapper>
@@ -54,9 +48,7 @@ const Profile = () => {
     //       </Link>
     //     </MainRightWrapper>
     // </MainContentContainer>
-  ) : (
-    <>Loading...</>
-  );
+  )
 };
 
 export default Profile

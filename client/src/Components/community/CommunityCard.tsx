@@ -17,7 +17,7 @@ const CommunityCard = ({ data }: any) => {
             <ImageWrapper
               className='communityImage mt-8'
               size={"112"}
-              src={data.images[0].imgUrl}
+              src={data.images[0]}
               alt={`상품명 ${data.title}의 대표이미지`}
               loading='lazy'
             />

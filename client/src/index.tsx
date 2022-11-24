@@ -12,6 +12,11 @@ import { ErrorMessage } from "./Components/ErrorHandle";
 //   worker.start();
 // }
 
+if(process.env.NODE_ENV ==="production"){
+  console.log(()=>{})
+}
+
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

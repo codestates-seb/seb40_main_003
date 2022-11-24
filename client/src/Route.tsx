@@ -5,7 +5,12 @@ import Header from "./Components/Header";
 import useAxiosPrivate from "./Hooks/useAxiosPrivate";
 
 
-function AuthProvider() {
+export const LogOutOnly=()=>{
+  const auth = useRecoilValue(userState);
+  return !auth ? <Outlet /> : <Navigate to="/" />;
+}
+
+export const  AuthProvider=()=>{
   const auth = useRecoilValue(userState);
   const axiosPrivate=useAxiosPrivate()
   return auth ? <Outlet /> : <Navigate to="/" />;
@@ -31,4 +36,3 @@ export const SearchLayout = () => {
   );
 };
 
-export default AuthProvider;
