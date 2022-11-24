@@ -12,6 +12,7 @@ import {
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { axiosPrivate } from "../../Hooks/api";
+import secureLocalStorage from "react-secure-storage";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -66,9 +67,7 @@ function Login() {
 
   // 원래있던 페이지로 되돌리는 기능
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-
+  
   // 로그인버튼 클릭시 동작하는 함수
   const onLogin = async (data: LoginForm) => {
     axiosPrivate
@@ -77,21 +76,25 @@ function Login() {
         password: data.password,
       })
       .then((res) => {
-        // 전역상태로 로그인 관련정보, 토큰 받아야함
-        setUser(res.data);
-        localStorage.setItem("accessToken", res.data.accessToken);
-        localStorage.setItem("refreshToken", res.data.refreshToken);
+        // 로그인 관련정보, 토큰 받아야함
+        const userInfo = {
+          memberId: res.data.memberId,
+          nickname: res.data.nickname,
+          image: res.data.image,
+        };
+        setUser(userInfo);
+        secureLocalStorage.setItem("accessToken", res.data.accessToken);
+        secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
       })
       .then(() => {
         // 원래있던 페이지로 되돌림
-        navigate(from, { replace: true });
+        navigate(-1);
       })
       .catch((err) => {
         if (!err?.response) {
           setErrMsg("서버로부터 응답이 없습니다");
         } else if (err.response?.status === 400) {
           setErrMsg("이메일 또는 패스워드를 확인해주세요");
-          console.log(err);
         } else if (err.response?.status === 401) {
           setErrMsg("허가되지않은 접근입니다");
         } else {
@@ -145,16 +148,17 @@ function Login() {
           </InputContainer>
 
           <Link to={`/signup`} className={"sub mb-10"}>
-              <span className="font-main bold sub">회원 가입</span>하고
-              식물전문가가 되어보세요!
+            <span className="font-main bold sub">회원 가입</span>하고
+            식물전문가가 되어보세요!
           </Link>
 
           <SigButton
             className={
               errors?.email === undefined && errors.password === undefined
-                ? "active"
+                ? ""
                 : "disable"
             }
+            
             type="submit"
             value={"Login"}
           >

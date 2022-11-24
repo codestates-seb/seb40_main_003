@@ -1,6 +1,5 @@
 import { useEffect } from "react";
-import { useRecoilState } from "recoil";
-import { userState } from "../Recoil/atoms/user";
+import secureLocalStorage from "react-secure-storage";
 import { axiosPrivate } from "./api";
 // 수정하기
 import useRefreshToken from "./useRefreshToken";
@@ -9,14 +8,14 @@ import useRefreshToken from "./useRefreshToken";
 const useAxiosPrivate = () => {
     // 수정하기
     const refresh = useRefreshToken();
-    const [auth,setAuth] = useRecoilState(userState)
+    const accessToken = secureLocalStorage.getItem("accessToken")
 
     useEffect(() => {
         // 요청을 가로채는 인터셉터
         const requestIntercept = axiosPrivate.interceptors.request.use(
             config => {
                 if (config.headers&&config.headers['Authorization']){
-                    config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
+                    config.headers['Authorization'] = `Bearer ${accessToken}`;
                 }
                 return config;
             }, (error) => Promise.reject(error)
@@ -25,8 +24,9 @@ const useAxiosPrivate = () => {
         const responseIntercept = axiosPrivate.interceptors.response.use(
             response => response,
             async (error) => {
+                console.log("403이라 가로챔")
                 const prevRequest = error?.config;
-                if (error?.response?.status === 403 && !prevRequest?.sent) {
+                if (error?.response?.status === 403 && !prevRequest?.sent){
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
@@ -40,7 +40,7 @@ const useAxiosPrivate = () => {
             axiosPrivate.interceptors.request.eject(requestIntercept);
             axiosPrivate.interceptors.response.eject(responseIntercept);
         }
-    }, [auth, refresh])
+    }, [accessToken, refresh])
 
     return axiosPrivate;
 }

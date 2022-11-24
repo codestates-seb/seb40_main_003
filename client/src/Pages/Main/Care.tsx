@@ -26,9 +26,7 @@ const CareMain = () => {
   return (
     <>
       {data &&
-        // ===============any고치기===========
         data.data.data.map((e: caringPreviewDataTypes) => {
-          console.log(e)
           return(
             <Link key={e.expertId} to={`/experts/${e.expertId}`}>
               <CareCard data={e} />
