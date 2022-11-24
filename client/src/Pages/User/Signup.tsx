@@ -175,7 +175,8 @@ const Signup = () => {
             className={
               errors.nickname === undefined &&
               errors.email === undefined &&
-              errors.password === undefined
+              errors.password === undefined &&
+              errors.passwordCheck === undefined
                 ? "active mt-16"
                 : "disable mt-16"
             }
