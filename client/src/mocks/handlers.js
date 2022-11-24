@@ -51,7 +51,6 @@ export const handlers = [
   expertProfileDetail(1),
   expertProfileDetail(2),
   expertProfileDetail(3),
-  expertProfileHandler(),
 
 
 // 커뮤니티 핸들러
