@@ -11,6 +11,7 @@ import com.kittyhiker.sikjipsa.deal.respository.DealRepository;
 import com.kittyhiker.sikjipsa.deal.respository.LikeDealRepository;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
+import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,12 @@ public class DealLikeService {
                 like -> {
                     List<Image> image = imageService.findImage(like.getDeal());
                     List<String> imageUrlList = image.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
-                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(like.getDeal(), imageUrlList);
+
+                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(member.getId())
+                            .nickname(member.getNickname())
+                            .image(imageService.findImage(member)).build();
+
+                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(like.getDeal(), imageUrlList, responseMember);
                     dealList.add(dealResponseDto);
                 }
         );
@@ -75,7 +81,8 @@ public class DealLikeService {
     public void cancelLikeDeal (Long userId, Long dealId) {
         Member member = verifiedMember(userId);
         Deal deal = verifiedDeal(dealId);
-        MemberLikeDeal likeDeal = likeDealRepository.findByMemberAndDeal(member, deal).orElseThrow(() -> new IllegalArgumentException("NOT LIKE STATE"));
+        MemberLikeDeal likeDeal = likeDealRepository.findByMemberAndDeal(member, deal).orElseThrow(()
+                -> new IllegalArgumentException("NOT LIKE STATE"));
         likeDealRepository.delete(likeDeal);
     }
 

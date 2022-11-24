@@ -9,8 +9,10 @@ import com.kittyhiker.sikjipsa.deal.mapper.DealMapper;
 import com.kittyhiker.sikjipsa.deal.respository.DealRepository;
 import com.kittyhiker.sikjipsa.deal.respository.DealReviewRepository;
 import com.kittyhiker.sikjipsa.deal.respository.LikeDealRepository;
+import com.kittyhiker.sikjipsa.image.dto.SavedImageDto;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
+import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -30,6 +33,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class DealService {
 
@@ -40,10 +44,6 @@ public class DealService {
     private final DealReviewRepository reviewRepository;
     private final LikeDealRepository likeDealRepository;
 
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
-    private final AmazonS3 amazonS3;
-
     public DealResponseDto postDeal(DealPostDto dealPostDto, List<MultipartFile> images, Long userId) throws IOException {
 
         Deal deal = mapper.dealPostDtoToDeal(dealPostDto);
@@ -53,63 +53,53 @@ public class DealService {
 
         List<String> responseImages=new ArrayList<>();
         if (images!=null) {
-            UUID uuid = UUID.randomUUID();
             images.stream().forEach(
                     (image) -> {
-                        String originalFilename = image.getOriginalFilename();
-                        String fileName = uuid+"_"+ originalFilename;
-                        try {
-                            ObjectMetadata objMeta = new ObjectMetadata();
-                            objMeta.setContentLength(image.getSize());
-                            amazonS3.putObject(bucket, fileName, image.getInputStream(), objMeta);
-                            String filePath = amazonS3.getUrl(bucket, originalFilename).toString();
-                            Image newImage = Image.builder().originalName(originalFilename)
-                                    .imgName(fileName).deal(savedDeal).imgUrl(filePath).build();
-                            imageService.postImage(newImage);
-                            responseImages.add(filePath);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        SavedImageDto savedImageDto = imageService.savedImageToS3(image);
+                        Image newImage = Image.builder().originalName(savedImageDto.getOriginalFileName())
+                                .imgName(savedImageDto.getFileName()).deal(savedDeal)
+                                .imgUrl(savedImageDto.getFilePath()).build();
+                        imageService.postImage(newImage);
+                        responseImages.add(savedImageDto.getFilePath());
                     }
             );
         }
-
-        return mapper.dealToDealResponseDto(savedDeal, responseImages);
+        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(findMember.getId())
+                .nickname(findMember.getNickname())
+                .image(imageService.findImage(findMember)).build();
+        return mapper.dealToDealResponseDto(savedDeal, responseImages, responseMember);
     }
 
     public DealResponseDto patchDeal(Long dealId, List<MultipartFile> images, DealPostDto dealPatchDto) throws IOException {
 
         Deal findDeal = verifiedDeal(dealId);
         List<Image> findImage = imageService.findImage(findDeal);
-        List<String> responseImages;
+        List<String> responseImages = new ArrayList<>();
         if (images == null) {
-            responseImages=findImage.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+            List<String> deleteImage = findImage.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+            deleteImage.stream().forEach(
+                    img -> imageService.deleteImageFromS3(img)
+            );
         } else {
-            responseImages = new ArrayList<>();
-            UUID uuid = UUID.randomUUID();
             images.stream().forEach(
                     (image) -> {
-                        String originalFilename = image.getOriginalFilename();
-                        String fileName = uuid+"_"+ originalFilename;
-                        try {
-                            ObjectMetadata objMeta = new ObjectMetadata();
-                            objMeta.setContentLength(image.getSize());
-                            amazonS3.putObject(bucket, fileName, image.getInputStream(), objMeta);
-                            String filePath = amazonS3.getUrl(bucket, originalFilename).toString();
-                            Image newImage = Image.builder().originalName(originalFilename)
-                                    .imgName(fileName).deal(findDeal).imgUrl(filePath).build();
-                            imageService.postImage(newImage);
-                            responseImages.add(filePath);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        SavedImageDto savedImageDto = imageService.savedImageToS3(image);
+                        Image newImage = Image.builder().originalName(savedImageDto.getOriginalFileName())
+                                .imgName(savedImageDto.getFileName()).deal(findDeal)
+                                .imgUrl(savedImageDto.getFilePath()).build();
+                        imageService.postImage(newImage);
+                        responseImages.add(savedImageDto.getFilePath());
                     }
             );
         }
 
         findDeal.updateDeal(dealPatchDto);
         dealRepository.save(findDeal);
-        return mapper.dealToDealResponseDto(findDeal, responseImages);
+        Member findMember = findDeal.getMember();
+        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(findMember.getId())
+                .nickname(findMember.getNickname())
+                .image(imageService.findImage(findMember)).build();
+        return mapper.dealToDealResponseDto(findDeal, responseImages, responseMember);
     }
 
     public DealPagingDto<List> getDealList(int page, int size) {
@@ -120,7 +110,11 @@ public class DealService {
                 deal -> {
                     List<Image> images = imageService.findImage(deal);
                     List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
-                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(deal, responseImage);
+                    Member dealMember = deal.getMember();
+                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getId())
+                            .nickname(dealMember.getNickname())
+                            .image(imageService.findImage(dealMember)).build();
+                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(deal, responseImage, responseMember);
                     response.add(dealResponseDto);
                 }
         );
@@ -137,7 +131,11 @@ public class DealService {
                 deal -> {
                     List<Image> images = imageService.findImage(deal);
                     List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
-                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(deal, responseImage);
+                    Member dealMember = deal.getMember();
+                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getId())
+                            .nickname(dealMember.getNickname())
+                            .image(imageService.findImage(dealMember)).build();
+                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(deal, responseImage, responseMember);
                     response.add(dealResponseDto);
                 }
         );
@@ -153,12 +151,21 @@ public class DealService {
         List<Image> image = imageService.findImage(findDeal);
         List<String> responseImage = image.stream().map(img -> img.getImgUrl()).collect(Collectors.toList());
 
-        return mapper.dealToDealResponseDto(findDeal, responseImage);
+        Member dealMember = findDeal.getMember();
+        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getId())
+                .nickname(dealMember.getNickname())
+                .image(imageService.findImage(dealMember)).build();
+
+        return mapper.dealToDealResponseDto(findDeal, responseImage, responseMember);
     }
 
 
     public void removeDeal(Long dealId) {
         Deal findDeal = verifiedDeal(dealId);
+        List<Image> images = imageService.findImage(findDeal);
+        images.stream().forEach(
+                i -> imageService.deleteImageFromS3(i.getImgUrl())
+        );
         dealRepository.delete(findDeal);
     }
 

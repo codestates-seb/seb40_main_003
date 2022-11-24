@@ -11,7 +11,7 @@ public interface MemberMapper {
     Member memberSignupDtoToMember(MemberSignupDto memberSignupDto);
     Member memberLoginDtoToMember(MemberLoginDto memberLoginDto);
     MemberInformation memberInfoPostDtoToMemberInfo(MemberInfoPostDto infoPostDto);
-    MemberInfoResponseDto memberInfoToResponseDto(MemberInformation memberInfo);
+    MemberInfoResponseDto memberInfoToResponseDto(MemberInformation memberInfo, Long memberId, String nickname);
 
     default MemberResponseDto memberToMemberResponseDto(Member member, String imageUrl){
         if ( member == null ) {

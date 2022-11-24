@@ -77,7 +77,8 @@ public class MemberService {
         Member registerMember = verifyMember(userId);
         info.setMember(registerMember);
         MemberInformation savedInfo = memberInfoRepository.save(info);
-        return memberMapper.memberInfoToResponseDto(savedInfo);
+        return memberMapper.memberInfoToResponseDto(savedInfo, registerMember.getId()
+                , registerMember.getNickname());
     }
 
     public TokenDto reissueToken(String refreshToken) {
