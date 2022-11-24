@@ -7,7 +7,7 @@ export const MainContentContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   background-color: var(--bg-gray);
-  min-height: 100vh;
+  min-height: 95vh;
   padding-bottom: 36px;
   margin-top: 52px;
   @media screen and (max-width: 1024px) {
