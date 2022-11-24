@@ -72,32 +72,31 @@ function Login() {
 
   // 로그인버튼 클릭시 동작하는 함수
   const onLogin = async (data: LoginForm) => {
-    try {
-      axiosPrivate
-        .post("/login", {
-          email: data.email,
-          password: data.password,
-        })
-        .then((res) => {
-          // 전역상태로 로그인 관련정보, 토큰 받아야함
-          setUser(res.data);
-        })
-        .then(() => {
-          // 원래있던 페이지로 되돌림
-          navigate(from, { replace: true });
-        });
-    } catch (err: any) {
-      if (!err?.response) {
-        setErrMsg("서버로부터 응답이 없습니다");
-      } else if (err.response?.status === 400) {
-        setErrMsg("이메일 또는 패스워드를 확인해주세요");
-        console.log(err);
-      } else if (err.response?.status === 401) {
-        setErrMsg("허가되지않은 접근입니다");
-      } else {
-        setErrMsg("로그인에 실패했습니다");
-      }
-    }
+    axiosPrivate
+      .post("/login", {
+        email: data.email,
+        password: data.password,
+      })
+      .then((res) => {
+        // 전역상태로 로그인 관련정보, 토큰 받아야함
+        setUser(res.data);
+      })
+      .then(() => {
+        // 원래있던 페이지로 되돌림
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          setErrMsg("서버로부터 응답이 없습니다");
+        } else if (err.response?.status === 400) {
+          setErrMsg("이메일 또는 패스워드를 확인해주세요");
+          console.log(err);
+        } else if (err.response?.status === 401) {
+          setErrMsg("허가되지않은 접근입니다");
+        } else {
+          setErrMsg("로그인에 실패했습니다");
+        }
+      });
   };
 
   return (
@@ -141,12 +140,11 @@ function Login() {
             {errors.password && errors.password.type === "pattern" && (
               <Errormsg>8자 이상, 영문, 숫자, 특수문자를 사용하세요.</Errormsg>
             )}
-            {error&&<Errormsg>{error}</Errormsg>}
+            {error && <Errormsg>{error}</Errormsg>}
           </InputContainer>
 
-          <Link to={`/signup/`}>
-            <button className="font-main sub bold mb-16">회원 가입</button>
-
+          <Link to={`/signup`}>
+            <button className="mb-16"><span className="sub"><span className="font-main bold sub">회원 가입</span>하고 식물전문가가 되어보세요!</span> </button>
           </Link>
 
           <SigButton
@@ -160,7 +158,6 @@ function Login() {
           >
             로그인
           </SigButton>
-          
         </FormWrapper>
       </MainCenterWrapper>
       <MainRightWrapper></MainRightWrapper>
