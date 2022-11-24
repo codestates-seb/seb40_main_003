@@ -60,7 +60,6 @@ const ProductEditor = (props: Props) => {
           image: data.image,
           price: data.price,
           content: data.content,
-
         })
         .then((res) => {
           // 전역상태로 로그인 관련정보, 토큰 받아야함

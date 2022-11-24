@@ -18,7 +18,7 @@ const careQueryClient = new QueryClient();
 const CareMain = () => {
   const { data, isLoading, error } = useQuery(["careQuery"], () => {
     const data = FetchByParams("/experts", { page: 1, size: 5 });
-    return data;
+    return data;    
   });
   if (isLoading) return <LoadingSkeleton />;
   if (error) {console.log(data)
