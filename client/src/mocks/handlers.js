@@ -1,85 +1,53 @@
 import { rest } from "msw";
+import {ProductDetailHandler,ProductListHandler} from "./productHandler"
+import {CaringListHandler, expertProfileHandler, expertProfileDetail} from "./caringHandler"
+import { BambooListHandler,BambooDetailHandler } from "./bambooHandler"
+import { Profile } from './profileHandler';
 export const handlers = [
-  // 기본형
-  rest.post("/login", async (req, res, ctx) => {
-    return res(ctx.json("뱉어줄정보들!"));
+  // 로그인 테스트
+  rest.post("https://testserver.com/auth/token", async (req, res, ctx) => {
+    return res(ctx.status(200));
   }),
-  // Handles a GET /user request
-  rest.get("https://testserver.com/shopping", async (req, res, ctx) => {
+  // 기본형
+  rest.post("https://testserver.com/login", async (req, res, ctx) => {
     return res(
       ctx.json({
-        shopping: [
-          {
-            dealId: 1,
-            title: "예쁜 식물",
-            pictures:[
-              {picture:"https://picsum.photos/200/300​"},
-              {picture:"https://picsum.photos/seed/picsum/200/300​"},
-              {picture:"https://picsum.photos/seed/picsum/400/600​"},
-            ],
-            createdAt: "2022-11-08",
-            view: 13,
-            price: 5000,
-            userInfo: {
-              userId: 1,
-              nickname: "junguZzang",
-            },
-            tag: 1,
-          },
-          {
-            dealId: 2,
-            title: "몬스테라 팔아요~",
-            pictures:[
-              {picture:"https://picsum.photos/seed/picsum/100/150​"},
-              {picture:"https://picsum.photos/seed/picsum/200/300​"},
-              {picture:"https://picsum.photos/seed/picsum/400/600​"},
-            ],
-            createdAt: "2022-11-07",
-            view: 24,
-            price: 15000,
-            userInfo: {
-              userId: 2,
-              nickname: "woosiZzang",
-            },
-            tag: 0,
-          },
-          {
-            dealId: 3,
-            title: "당근마켓 팔아요~",
-            pictures:[
-              {picture:"https://picsum.photos/seed/picsum/100/150​"},
-              {picture:"https://picsum.photos/seed/picsum/200/300​"},
-              {picture:"https://picsum.photos/seed/picsum/400/600​"},
-            ],
-            createdAt: "2022-11-07",
-            view: 33,
-            price: 20000,
-            userInfo: {
-              userId: 3,
-              nickname: "sexyYunJeong",
-            },
-            tag: 2,
-          },
-        ],
+        userId: 1,
+        userImage:
+          "https://learnenglish.britishcouncil.org/sites/podcasts/files/2021-10/RS6715_492969113-hig.jpg",
+        userNickname: "준구짱",
       })
     );
   }),
-
-  rest.get("https://testserver.com/shopping/1", async (req, res, ctx) => {
-    return res(ctx.json(
-      {
-        dealId:1,
-        title:"예쁜 식물",
-        content:"예쁜 식물이 싸게싸게 나왔어요 여러분~",
-        createdAt:"2022-11-08",
-        view:13,
-        price:5000,
-        userInfo: {
-              userId:1,
-              nickname:"junguZzang"
-              },
-        "tag": 1
-      }
-    ));
+  rest.post("https://testserver.com/logout", async (req, res, ctx) => {
+    return res(ctx.status(200));
   }),
+  // Handles a GET /user request
+
+  ProductListHandler(),
+  ProductDetailHandler(1),
+  ProductDetailHandler(2),
+  ProductDetailHandler(3),
+
+// 캐어링 핸들러
+  CaringListHandler(),
+  expertProfileDetail(1),
+  expertProfileDetail(2),
+  expertProfileDetail(3),
+  expertProfileHandler(),
+
+
+// 커뮤니티 핸들러
+BambooListHandler(),
+BambooDetailHandler(1),
+BambooDetailHandler(2),
+BambooDetailHandler(3),
+
+// 일반 유저 프로필 핸들러
+Profile(1),
+Profile(2),
+Profile(3),
+
 ];
+
+  

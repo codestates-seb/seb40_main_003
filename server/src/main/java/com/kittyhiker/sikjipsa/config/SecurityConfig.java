@@ -16,6 +16,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.List;
 
 import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.POST;
 
 @Configuration
 @RequiredArgsConstructor
@@ -30,16 +31,16 @@ public class SecurityConfig {
                 .and()
                 .formLogin().disable()
                 .csrf().disable()
-                .cors().configurationSource(corsConfigurationSource())
+                .cors() //.configurationSource(corsConfigurationSource())
                 .and()
                 .apply(authenticationManagerConfig)
                 .and()
                 .httpBasic().disable()
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .mvcMatchers( "/auth/**").permitAll()
+                .mvcMatchers( "/signup", "/login").permitAll()
                 .mvcMatchers(GET, "/**").permitAll()
-//                .mvcMatchers(POST,"questions/**").hasAnyRole("USER", "MANAGER", "ADMIN")
+                .mvcMatchers(POST,"/**").hasAnyRole("USER", "MANAGER", "ADMIN")
 //                .mvcMatchers(POST,"answers/**").hasAnyRole("USER", "MANAGER", "ADMIN")
                 .anyRequest().permitAll()
                 .and()
@@ -48,6 +49,7 @@ public class SecurityConfig {
                 .and()
                 .build();
     }
+
 
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

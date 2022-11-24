@@ -1,12 +1,14 @@
 package com.kittyhiker.sikjipsa.member.entity;
 
-import com.kittyhiker.sikjipsa.plant.entity.Image;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberProfile {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,6 +21,4 @@ public class MemberProfile {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
-	@OneToOne(mappedBy = "memberProfile")
-	private Image image;
 }

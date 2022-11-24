@@ -1,0 +1,253 @@
+package com.kittyhiker.sikjipsa.caring.service;
+
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
+import com.kittyhiker.sikjipsa.caring.entity.MemberLikeExpert;
+import com.kittyhiker.sikjipsa.caring.repository.ExpertRepository;
+import com.kittyhiker.sikjipsa.caring.repository.MemberLikeExpertRepository;
+import com.kittyhiker.sikjipsa.caring.repository.TechTagRepository;
+import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
+import com.kittyhiker.sikjipsa.exception.ExceptionCode;
+import com.kittyhiker.sikjipsa.image.entity.Image;
+import com.kittyhiker.sikjipsa.image.repository.ImageRepository;
+import com.kittyhiker.sikjipsa.member.entity.Member;
+import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
+import lombok.RequiredArgsConstructor;
+import net.coobird.thumbnailator.Thumbnailator;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Optional;
+import java.util.UUID;
+
+@Service
+@Transactional
+@RequiredArgsConstructor
+public class ExpertService {
+	private final ExpertRepository expertRepository;
+	private final MemberRepository memberRepository;
+	private final MemberLikeExpertRepository memberLikeExpertRepository;
+	private final ImageRepository imageRepository;
+	private final TechTagRepository techTagRepository;
+
+//	@Value("${com.sikjipsa.upload.path}")
+//	private String uploadPath;
+
+	@Value("${cloud.aws.s3.bucket}")
+	private String bucket;
+	private final AmazonS3 amazonS3;
+
+	public ExpertProfile postExpert(ExpertProfile expertProfile, MultipartFile multipartFile, Long memberId) {
+		expertProfile.setMember(memberRepository.getReferenceById(memberId));
+
+//		if (multipartFile != null) {
+//			String originalName = multipartFile.getOriginalFilename();
+//			String uuid = UUID.randomUUID().toString();
+//			Path path = Paths.get(uploadPath, uuid + "_" + originalName);
+//			try {
+//				multipartFile.transferTo(path);
+//				if (Files.probeContentType(path).startsWith("image")) {
+//					File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
+//					Thumbnailator.createThumbnail(path.toFile(), thumbFile, 200, 200);
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			Image image = new Image(originalName, uuid + "_" + originalName, path.toString(), "empty", expertProfile);
+//			expertProfile.setImage(image);
+//			imageRepository.save(image);
+//		}
+		if (multipartFile != null) {
+			String originalName = multipartFile.getOriginalFilename();
+			String uuid = UUID.randomUUID().toString();
+//			Path path = Paths.get(uploadPath, uuid + "_" + originalName);
+			String fileName = uuid + "_" + originalName;
+			try {
+//				multipartFile.transferTo(path);
+//				if (Files.probeContentType(path).startsWith("image")) {
+//					File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
+//					Thumbnailator.createThumbnail(path.toFile(), thumbFile, 200, 200);
+//				}
+				ObjectMetadata objectMetadata = new ObjectMetadata();
+				objectMetadata.setContentLength(multipartFile.getSize());
+				amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), objectMetadata);
+				String filePath = amazonS3.getUrl(bucket, originalName).toString();
+
+				Image image = new Image(fileName, originalName, filePath, "empty", expertProfile);
+				expertProfile.setImage(image);
+				imageRepository.save(image);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		expertProfile.setView(0L);
+		expertProfile.setLikes(0L);
+		return expertRepository.save(expertProfile);
+	}
+
+	public ExpertProfile patchExpert(ExpertProfile expertProfile, MultipartFile multipartFile) {
+		ExpertProfile findExpertProfile = findVerifiedExpert(expertProfile.getExpertId());
+
+		Optional.ofNullable(expertProfile.getName())
+				.ifPresent(findExpertProfile::setName);
+
+		Optional.of(expertProfile.getAge())
+				.ifPresent(findExpertProfile::setAge);
+
+		Optional.of(expertProfile.getGender())
+				.ifPresent(findExpertProfile::setGender);
+
+		Optional.ofNullable(expertProfile.getSimpleContent())
+				.ifPresent(findExpertProfile::setSimpleContent);
+
+		Optional.ofNullable(expertProfile.getDetailContent())
+				.ifPresent(findExpertProfile::setDetailContent);
+
+		Optional.of(expertProfile.getPrice())
+				.ifPresent(findExpertProfile::setPrice);
+
+		Optional.ofNullable(expertProfile.getExtra())
+				.ifPresent(findExpertProfile::setExtra);
+
+		Optional.ofNullable(expertProfile.getAddress())
+				.ifPresent(findExpertProfile::setAddress);
+
+		Optional.ofNullable(expertProfile.getDetailContent())
+				.ifPresent(findExpertProfile::setDetailContent);
+
+		// 태그 변경
+		Optional.ofNullable(expertProfile.getTechTags())
+				.ifPresent(techTags -> {
+					techTagRepository.deleteAll(findExpertProfile.getTechTags());
+					findExpertProfile.setTechTags(techTags);
+				});
+
+		// 이미지 변경
+//		if (multipartFile != null) {
+//			imageRepository.delete(findExpertProfile.getImage());
+//
+//			String originalName = multipartFile.getOriginalFilename();
+//			String uuid = UUID.randomUUID().toString();
+//			Path path = Paths.get(uploadPath, uuid + "_" + originalName);
+//			try {
+//				multipartFile.transferTo(path);
+//				if (Files.probeContentType(path).startsWith("image")) {
+//					File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
+//					Thumbnailator.createThumbnail(path.toFile(), thumbFile, 200, 200);
+//				}
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			Image image = new Image(originalName, uuid + "_" + originalName, path.toString(), "empty", findExpertProfile);
+//
+//			findExpertProfile.setImage(image);
+//			imageRepository.save(image);
+//		}
+		if (multipartFile != null) {
+			if (findExpertProfile.getImage() != null) {
+				imageRepository.delete(findExpertProfile.getImage());
+			}
+
+			String originalName = multipartFile.getOriginalFilename();
+			String uuid = UUID.randomUUID().toString();
+			String fileName = uuid + "_" + originalName;
+			try {
+				ObjectMetadata objectMetadata = new ObjectMetadata();
+				objectMetadata.setContentLength(multipartFile.getSize());
+				amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), objectMetadata);
+				String filePath = amazonS3.getUrl(bucket, originalName).toString();
+
+				Image image = new Image(fileName, originalName, filePath, "empty", findExpertProfile);
+				findExpertProfile.setImage(image);
+				imageRepository.save(image);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return findExpertProfile;
+	}
+
+	public ExpertProfile getExpert(Long expertId) {
+		ExpertProfile expertProfile = findVerifiedExpert(expertId);
+		expertProfile.setView(expertProfile.getView() + 1L);
+		return expertProfile;
+	}
+
+	public Page<ExpertProfile> getExperts(int page, int size) {
+		return expertRepository.findAll(PageRequest.of(page, size, Sort.by("expertId").descending()));
+	}
+
+//	public Page<ExpertProfile> getExpertProfilesByKeyword(String keyword, int page, int size) {
+//		Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
+//		Page<ExpertProfile> expertProfiles = expertProfileRepository.findByTechTagNameContainingOrderByIdDesc(keyword, pageable);
+//		return null;
+//	}
+
+	public void deleteExpert(Long expertId) {
+		ExpertProfile expertProfile = findVerifiedExpert(expertId);
+		expertRepository.delete(expertProfile);
+	}
+
+	private ExpertProfile findVerifiedExpert(Long expertId) {
+		Optional<ExpertProfile> optionalExpertProfile = expertRepository.findById(expertId);
+		ExpertProfile expertProfile = optionalExpertProfile.orElseThrow(() ->
+				new BusinessLogicException(ExceptionCode.EXPERT_PROFILE_NOT_FOUND));
+		return expertProfile;
+	}
+
+	// 전문가 찜
+	public MemberLikeExpert postExpertLike(MemberLikeExpert memberLikeExpert, Long memberId, Long expertId) {
+		ExpertProfile expertProfile = findVerifiedExpert(expertId);
+		Member member = memberRepository.getReferenceById(memberId);
+		// 좋아요가 존재하는가?
+		boolean isEmpty = memberLikeExpertRepository.findByMemberAndExpertProfile(member, expertProfile).isEmpty();
+		if (isEmpty) {
+			expertProfile.setLikes(expertProfile.getLikes() + 1L);
+			memberLikeExpert.setMember(memberRepository.getReferenceById(1L));
+			memberLikeExpert.setExpertProfile(expertRepository.getReferenceById(expertId));
+		}
+		return memberLikeExpertRepository.save(memberLikeExpert);
+	}
+
+	public Page<MemberLikeExpert> getExpertLikes(int page, int size) {
+		return memberLikeExpertRepository.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
+	}
+
+	public void deleteExpertLike(Long expertId, Long memberLikeExpertId, Long memberId) {
+		ExpertProfile expertProfile = findVerifiedExpert(expertId);
+		Member member = memberRepository.getReferenceById(memberId);
+		boolean isEmpty = memberLikeExpertRepository.findByMemberAndExpertProfile(member, expertProfile).isEmpty();
+		if (!isEmpty) {
+			expertProfile.setLikes(expertProfile.getLikes() - 1L);
+
+			MemberLikeExpert memberLikeExpert = findVerifiedExpertLike(memberLikeExpertId);
+			memberLikeExpertRepository.delete(memberLikeExpert);
+		}
+	}
+
+	private MemberLikeExpert findVerifiedExpertLike(Long memberLikeExpertId) {
+		Optional<MemberLikeExpert> optionalMemberLikeExpert = memberLikeExpertRepository.findById(memberLikeExpertId);
+		MemberLikeExpert memberLikeExpert = optionalMemberLikeExpert.orElseThrow(() ->
+				new BusinessLogicException(ExceptionCode.MEMBER_LIKE_EXPERT_NOT_FOUND));
+		return memberLikeExpert;
+	}
+
+//	public ExpertReview postExpertSuccess(ExpertReview expertReview) {
+//		Member member = memberRepository.getReferenceById(1L);
+//		expertReview.setMember(member);
+//
+//		//expertReview.setExpertProfile();
+//		return expertReviewRepository.save(expertReview);
+//	}
+}

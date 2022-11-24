@@ -7,7 +7,9 @@ import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
 import com.kittyhiker.sikjipsa.member.dto.*;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.entity.MemberInformation;
+import com.kittyhiker.sikjipsa.member.entity.MemberProfile;
 import com.kittyhiker.sikjipsa.member.mapper.MemberMapper;
+import com.kittyhiker.sikjipsa.member.memberprofile.repository.MemberProfileRepository;
 import com.kittyhiker.sikjipsa.member.repository.MemberInfoRepository;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
@@ -26,6 +28,7 @@ public class MemberService {
     private final JwtTokenizer jwtTokenizer;
     private final PasswordEncoder passwordEncoder;
     private final MemberMapper memberMapper;
+    private final MemberProfileRepository memberProfileRepository;
 
     public Long signUpUser(MemberSignupDto signupDto) {
         if (!checkIfUserExists(signupDto.getEmail())) throw new IllegalArgumentException("ALREADY EXSITS EMAIL");
@@ -34,8 +37,10 @@ public class MemberService {
         member.encryptingPassword(passwordEncoder);
         member.addRole("ROLE_USER,");
         Member savedUser = memberRepository.save(member);
-        MemberInformation newMemberInfo = MemberInformation.builder().member(savedUser).build();
-        memberInfoRepository.save(newMemberInfo);
+//        MemberInformation newMemberInfo = MemberInformation.builder().member(savedUser).build();
+//        memberInfoRepository.save(newMemberInfo);
+        MemberProfile memberProfile = MemberProfile.builder().member(savedUser).content("content").build();
+        memberProfileRepository.save(memberProfile);
         return savedUser.getId();
     }
 
@@ -67,10 +72,13 @@ public class MemberService {
         return true;
     }
 
-    public MemberInfoResponseDto postMemberInfo(MemberInfoPostDto infoPostDto) {
+    public MemberInfoResponseDto postMemberInfo(Long userId, MemberInfoPostDto infoPostDto) {
         MemberInformation info = memberMapper.memberInfoPostDtoToMemberInfo(infoPostDto);
+        Member registerMember = verifyMember(userId);
+        info.setMember(registerMember);
         MemberInformation savedInfo = memberInfoRepository.save(info);
-        return memberMapper.memberInfoToResponseDto(savedInfo);
+        return memberMapper.memberInfoToResponseDto(savedInfo, registerMember.getId()
+                , registerMember.getNickname());
     }
 
     public TokenDto reissueToken(String refreshToken) {
@@ -96,6 +104,9 @@ public class MemberService {
                 .build();
     }
 
+    public Member verifyMember(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+    }
 
     private void verifyPassword(Member user, Member findUser) {
         if (!passwordEncoder.matches(user.getPassword(), findUser.getPassword())) {

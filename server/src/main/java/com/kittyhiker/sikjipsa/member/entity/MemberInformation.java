@@ -30,4 +30,8 @@ public class MemberInformation extends AuditingEntity {
 	private Integer gender;
 	private String address;
 
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
 }
