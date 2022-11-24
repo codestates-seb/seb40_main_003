@@ -17,8 +17,15 @@ import { LoadingSpinner } from "../../Components/Loading";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
 import { getDateAgo } from "../../utils/controller";
+import styled from "@emotion/styled";
 
-
+const CarouselImage= styled.img`
+  width: 100%;
+  max-height: 45vh;
+  overflow: hidden;
+  object-fit: cover;
+  background-color: var(--bg-gray);
+`
 
 
 const ProductDetail = () => {
@@ -35,9 +42,9 @@ const ProductDetail = () => {
         <TopCarousel>
           {data.images.map((e, i) => {
             return (
-              <div key={i}>
-                <img src={e} alt={`${data.title}의 ${i}번째사진`} />
-              </div>
+
+                <CarouselImage src={e} alt={`${data.title}의 ${i}번째사진`} />
+
             );
           })}
         </TopCarousel>
