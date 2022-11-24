@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import { useNavigate } from "react-router-dom";
@@ -53,9 +53,8 @@ interface SignupForm {
 }
 
 const Signup = () => {
-  const navigate = useNavigate();
-  const [error, setErrMsg] = useState("");
   const {
+    watch,
     register,
     formState: { errors },
     handleSubmit,
@@ -67,6 +66,10 @@ const Signup = () => {
   useEffect(() => {
     setFocus("nickname");
   }, []);
+  const navigate = useNavigate();
+  const [error, setErrMsg] = useState("");
+  const password = useRef({});
+  password.current = watch("password", "");
   // 버튼 클릭시 동작하는 함수
   const onValid = async (data: SignupForm) => {
     try {
@@ -143,13 +146,13 @@ const Signup = () => {
               id="password"
               {...register("password", {
                 required: true,
-                minLength: 8,
+                pattern: /^(?=.*[a-zA-z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
               })}
             />
             {errors.password && errors.password.type === "required" && (
-              <Errormsg> 패스워드를 입력해주세요</Errormsg>
+              <Errormsg> 비밀번호를 입력해주세요</Errormsg>
             )}
-            {errors.password && errors.password.type === "minLength" && (
+            {errors.password && errors.password.type === "pattern" && (
               <Errormsg>8자 이상, 영문, 숫자, 특수문자를 사용하세요.</Errormsg>
             )}
           </InputContainer>
@@ -160,19 +163,13 @@ const Signup = () => {
               id="passwordCheck"
               {...register("passwordCheck", {
                 required: true,
-                minLength: 8,
+                validate: (value) =>
+                  value === password.current || "비밀번호가 일치하지 않습니다.",
               })}
             />
-            {errors.passwordCheck &&
-              errors.passwordCheck.type === "required" && (
-                <Errormsg> 패스워드를 다시 확인해주세요</Errormsg>
-              )}
-            {errors.passwordCheck &&
-              errors.passwordCheck.type === "minLength" && (
-                <Errormsg>
-                  8자 이상, 영문, 숫자, 특수문자를 사용하세요.
-                </Errormsg>
-              )}
+            {errors.passwordCheck && (
+              <Errormsg>{errors.passwordCheck.message}</Errormsg>
+            )}
           </InputContainer>
           <SigButton
             className={
@@ -185,7 +182,7 @@ const Signup = () => {
             type="submit"
             value={"Login"}
           >
-            계정생성
+            가입하기
           </SigButton>
           {error && <Errormsg>{error}</Errormsg>}
         </FormWrapper>

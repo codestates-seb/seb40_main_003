@@ -105,7 +105,7 @@ function Login() {
       <MainCenterWrapper>
         <FormWrapper onSubmit={handleSubmit(onLogin)}>
           <InputContainer>
-            <Label htmlFor={"Email"}>Email</Label>
+            <Label htmlFor={"Email"}>이메일</Label>
             <Input
               type={"email"}
               id="Email"
@@ -126,26 +126,27 @@ function Login() {
             )}
           </InputContainer>
           <InputContainer>
-            <Label htmlFor={"password"}>Password</Label>
+            <Label htmlFor={"password"}>비밀번호</Label>
             <Input
               type={"password"}
               id="password"
               {...register("password", {
                 required: true,
-                minLength: 8,
+                pattern: /^(?=.*[a-zA-z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/,
               })}
             />
             {errors.password && errors.password.type === "required" && (
-              <Errormsg> 패스워드를 입력해주세요</Errormsg>
+              <Errormsg> 비밀번호를 입력해주세요</Errormsg>
             )}
-            {errors.password && errors.password.type === "minLength" && (
-              <Errormsg> 최소 길이는 8자 이상이여야 합니다</Errormsg>
+            {errors.password && errors.password.type === "pattern" && (
+              <Errormsg>8자 이상, 영문, 숫자, 특수문자를 사용하세요.</Errormsg>
             )}
             {error&&<Errormsg>{error}</Errormsg>}
           </InputContainer>
 
           <Link to={`/signup/`}>
             <button className="font-main sub bold mb-16">회원 가입</button>
+
           </Link>
 
           <SigButton
