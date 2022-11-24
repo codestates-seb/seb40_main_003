@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FieldErrors, useForm } from "react-hook-form";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import {
   MainContentContainer,
@@ -44,18 +44,16 @@ const CommunityEditor = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  const [auth,setAuth] = useRecoilState(userState)
 
   const onValid = async (data: CommunityEditorForm) => {
     console.log(data);
-    
+    const dto = {title:data.title,content:data.content}
     const formData = new FormData();
-    formData.append("file", data.file[0])
-  try {
-    axiosPrivate
-        .post("/community", {
-          title: data.title,
-          content: data.content,
-        })
+    formData.append("postDto",JSON.stringify(dto))
+    formData.append("images", data.file)
+    console.log(formData)
+    axiosPrivate.post("/community", formData, {headers:{'Content-Type': 'multipart/form-data','Authorization' :`Bearer ${auth?.accessToken}`}})
         .then((res) => {
           // 전역상태로 로그인 관련정보, 토큰 받아야함
           setUser(res.data);
@@ -63,8 +61,7 @@ const CommunityEditor = () => {
         .then(() => {
           // 원래있던 페이지로 되돌림
           navigate(from, { replace: true });
-        });
-    } catch (err: any) {
+        }).catch((err)=>{
       if (!err?.response) {
         setErrMsg("서버로부터 응답이 없습니다");
       } else if (err.response?.status === 400) {
@@ -75,7 +72,7 @@ const CommunityEditor = () => {
       } else {
         setErrMsg("로그인에 실패했습니다");
       }
-    }
+    })
   };
 
 
@@ -136,8 +133,8 @@ const CommunityEditor = () => {
               <br />
               욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
             </p>
-            {error&&<p>{error}</p>}
           </ConfirmWrapper>
+            {error&&<p>{error}</p>}
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
