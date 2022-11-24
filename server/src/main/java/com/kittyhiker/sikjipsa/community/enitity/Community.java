@@ -32,7 +32,7 @@ public class Community extends AuditingEntity {
 
 	private int view=0;
 
-	private int likes=0;
+	private int likeNum=0;
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")
@@ -41,7 +41,7 @@ public class Community extends AuditingEntity {
 //	@OneToMany(mappedBy = "community")
 //	private List<CommunityLike> communityLikes = new ArrayList<>();
 
-//	@OneToMany(mappedBy = "community")
+//	@OneToMany(mappedBy = "community", orphanRemoval = true)
 //	private List<Comment> comments = new ArrayList<>();
 
 //	@OneToMany(mappedBy = "community")
@@ -56,7 +56,17 @@ public class Community extends AuditingEntity {
 		this.content = patchDto.getContent();
 	}
 
+
 	public void updateView() {
 		this.view+=1;
+	}
+
+	public void updateLike() {
+		this.likeNum+=1;
+	}
+
+	public void cancelLike() {
+		this.likeNum-=1;
+		if (this.likeNum<0) this.likeNum=0;
 	}
 }

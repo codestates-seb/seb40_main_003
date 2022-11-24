@@ -6,15 +6,20 @@ import com.kittyhiker.sikjipsa.community.dto.CommentResponseDto;
 import com.kittyhiker.sikjipsa.community.dto.CommunityPagingDto;
 import com.kittyhiker.sikjipsa.community.dto.CommunityPostDto;
 import com.kittyhiker.sikjipsa.community.dto.CommunityResponseDto;
+import com.kittyhiker.sikjipsa.community.enitity.Comment;
 import com.kittyhiker.sikjipsa.community.enitity.Community;
 import com.kittyhiker.sikjipsa.community.enitity.CommunityLike;
+import com.kittyhiker.sikjipsa.community.mapper.CommentMapper;
 import com.kittyhiker.sikjipsa.community.mapper.CommunityMapper;
 import com.kittyhiker.sikjipsa.community.repository.CommunityLikeRepository;
 import com.kittyhiker.sikjipsa.community.repository.CommunityRepository;
 import com.kittyhiker.sikjipsa.deal.dto.PageInfo;
+import com.kittyhiker.sikjipsa.image.dto.SavedImageDto;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
+import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
+import com.kittyhiker.sikjipsa.member.mapper.MemberMapper;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +45,7 @@ public class CommunityService {
     private final CommunityRepository communityRepository;
     private final CommunityLikeRepository communityLikeRepository;
     private final CommunityMapper mapper;
+    private final MemberMapper memberMapper;
     private final ImageService imageService;
     private final CommentService commentService;
     private final MemberRepository memberRepository;
@@ -57,63 +63,56 @@ public class CommunityService {
 
         List<String> responseImages=new ArrayList<>();
         if (images!=null) {
-            UUID uuid = UUID.randomUUID();
             images.stream().forEach(
                     (image) -> {
-                        String originalFilename = image.getOriginalFilename();
-                        String fileName = uuid+"_"+ originalFilename;
-                        try {
-                            ObjectMetadata objMeta = new ObjectMetadata();
-                            objMeta.setContentLength(image.getSize());
-                            amazonS3.putObject(bucket, fileName, image.getInputStream(), objMeta);
-                            String filePath = amazonS3.getUrl(bucket, originalFilename).toString();
-                            Image newImage = Image.builder().originalName(originalFilename)
-                                    .imgName(fileName).community(savedCommunity).imgUrl(filePath).build();
-                            imageService.postImage(newImage);
-                            responseImages.add(filePath);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        SavedImageDto savedImageDto = imageService.savedImageToS3(image);
+                        Image newImage = Image.builder().originalName(savedImageDto.getOriginalFileName())
+                                .imgName(savedImageDto.getFileName()).community(savedCommunity)
+                                .imgUrl(savedImageDto.getFilePath()).build();
+                        imageService.postImage(newImage);
+                        responseImages.add(savedImageDto.getFilePath());
                     }
             );
         }
 
-        return mapper.communityToResponseDto(savedCommunity, responseImages);
+        MemberResponseDto responseMember = memberMapper
+                .memberToMemberResponseDto(findMember, imageService.findImage(findMember));
+
+        return mapper.communityToResponseDto(savedCommunity, responseImages, responseMember, 0L);
     }
 
     public CommunityResponseDto patchCommunity(Long communityId, List<MultipartFile> images, CommunityPostDto patchDto) throws IOException {
 
         Community findCommunity = verifiedCommunity(communityId);
         List<Image> findImage = imageService.findImage(findCommunity);
-        List<String> responseImages;
+        List<String> responseImages=new ArrayList<>();
         if (images == null) {
-            responseImages=findImage.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+            List<String> deleteImage = findImage.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+            deleteImage.stream().forEach(
+                    img -> imageService.deleteImageFromS3(img)
+            );
         } else {
-            responseImages = new ArrayList<>();
-            UUID uuid = UUID.randomUUID();
             images.stream().forEach(
                     (image) -> {
-                        String originalFilename = image.getOriginalFilename();
-                        String fileName = uuid+"_"+ originalFilename;
-                        try {
-                            ObjectMetadata objMeta = new ObjectMetadata();
-                            objMeta.setContentLength(image.getSize());
-                            amazonS3.putObject(bucket, fileName, image.getInputStream(), objMeta);
-                            String filePath = amazonS3.getUrl(bucket, originalFilename).toString();
-                            Image newImage = Image.builder().originalName(originalFilename)
-                                    .imgName(fileName).community(findCommunity).imgUrl(filePath).build();
-                            imageService.postImage(newImage);
-                            responseImages.add(filePath);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        SavedImageDto savedImageDto = imageService.savedImageToS3(image);
+                        Image newImage = Image.builder().originalName(savedImageDto.getOriginalFileName())
+                                .imgName(savedImageDto.getFileName()).community(findCommunity)
+                                .imgUrl(savedImageDto.getFilePath()).build();
+                        imageService.postImage(newImage);
+                        responseImages.add(savedImageDto.getFilePath());
                     }
             );
         }
 
         findCommunity.update(patchDto);
         Community saved = communityRepository.save(findCommunity);
-        return mapper.communityToResponseDto(saved, responseImages);
+        Member findMember = saved.getMember();
+
+        MemberResponseDto responseMember = memberMapper
+                .memberToMemberResponseDto(findMember, imageService.findImage(findMember));
+
+        return mapper.communityToResponseDto(saved, responseImages,
+                responseMember, commentService.getCommentNum(saved));
     }
 
     public CommunityPagingDto<List> getPostList(int page, int size) {
@@ -124,7 +123,13 @@ public class CommunityService {
                 c -> {
                     List<Image> images = imageService.findImage(c);
                     List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
-                    CommunityResponseDto communityResponseDto = mapper.communityToResponseDto(c, responseImage);
+
+                    Member findMember = c.getMember();
+                    MemberResponseDto responseMember = memberMapper
+                            .memberToMemberResponseDto(findMember, imageService.findImage(findMember));
+                    CommunityResponseDto communityResponseDto =
+                            mapper.communityToResponseDto(c, responseImage,
+                                    responseMember, commentService.getCommentNum(c));
                     response.add(communityResponseDto);
                 }
         );
@@ -142,7 +147,14 @@ public class CommunityService {
                 c -> {
                     List<Image> images = imageService.findImage(c);
                     List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
-                    CommunityResponseDto communityResponse = mapper.communityToResponseDto(c, responseImage);
+
+                    Member findMember = c.getMember();
+                    MemberResponseDto responseMember = memberMapper
+                            .memberToMemberResponseDto(findMember, imageService.findImage(findMember));
+
+                    CommunityResponseDto communityResponse = mapper
+                            .communityToResponseDto(c, responseImage,
+                                    responseMember, commentService.getCommentNum(c));
                     response.add(communityResponse);
                 }
         );
@@ -154,14 +166,19 @@ public class CommunityService {
     public CommunityResponseDto getCommunityDetail(Long communityId) {
         Community findCommunity = verifiedCommunity(communityId);
         findCommunity.updateView();
-        communityRepository.save(findCommunity);
+        Community savedCommunity = communityRepository.save(findCommunity);
 
-        List<CommentResponseDto> comments = commentService.getComments(communityId);
+        List<CommentResponseDto> comments = commentService.getComments(savedCommunity);
 
         List<Image> image = imageService.findImage(findCommunity);
         List<String> responseImage = image.stream().map(img -> img.getImgUrl()).collect(Collectors.toList());
 
-        return mapper.communityToResponseDto(findCommunity, responseImage, comments);
+        Member findMember = savedCommunity.getMember();
+        MemberResponseDto responseMember = memberMapper
+                .memberToMemberResponseDto(findMember, imageService.findImage(findMember));
+
+        return mapper.communityToResponseDto(findCommunity, responseImage, responseMember,
+                comments, commentService.getCommentNum(findCommunity));
     }
 
     public void likeCommunity(Long communityId, Long userId) {
@@ -170,8 +187,9 @@ public class CommunityService {
         if (communityLikeRepository.findByMemberAndCommunity(community, member).isPresent()) {
             throw new IllegalArgumentException("ALREADY LIKE");
         }
-
-        CommunityLike like = CommunityLike.builder().community(community).member(member).build();
+        community.updateLike();
+        Community savedCommunity = communityRepository.save(community);
+        CommunityLike like = CommunityLike.builder().community(savedCommunity).member(member).build();
         communityLikeRepository.save(like);
     }
 
@@ -181,6 +199,8 @@ public class CommunityService {
         CommunityLike likeCommunity = communityLikeRepository.findByMemberAndCommunity(community, member)
                 .orElseThrow(() -> new IllegalArgumentException("NOT FOUND LIKE POST"));
         communityLikeRepository.delete(likeCommunity);
+        community.cancelLike();
+        communityRepository.save(community);
     }
 
 

@@ -1,5 +1,6 @@
 package com.kittyhiker.sikjipsa.community.controller;
 
+import com.kittyhiker.sikjipsa.community.dto.CommentPostDto;
 import com.kittyhiker.sikjipsa.community.dto.CommentResponseDto;
 import com.kittyhiker.sikjipsa.community.service.CommentService;
 import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
@@ -20,11 +21,11 @@ public class CommentController {
      * 댓글 등록
      */
     @PostMapping("/{community-id}/comment")
-    public ResponseEntity postComment(@RequestBody String content,
+    public ResponseEntity postComment(@RequestBody CommentPostDto content,
                                       @PathVariable("community-id") Long communityId,
                                       @RequestHeader("Authorization") String token){
         Long userId = jwtTokenizer.getUserIdFromToken(token);
-        CommentResponseDto response = commentService.postComment(communityId, userId, content);
+        CommentResponseDto response = commentService.postComment(communityId, userId, content.getContent());
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
@@ -33,9 +34,9 @@ public class CommentController {
      * 댓글 수정
      */
     @PatchMapping("/{community-id}/comment/{comment-id}")
-    public ResponseEntity postComment(@RequestBody String content,
+    public ResponseEntity postComment(@RequestBody CommentPostDto content,
                                       @PathVariable("comment-id") Long commentId){
-        CommentResponseDto response = commentService.patchComment(commentId, content);
+        CommentResponseDto response = commentService.patchComment(commentId, content.getContent());
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -52,12 +53,12 @@ public class CommentController {
      * 대댓글 등록
      */
     @PostMapping("/{community-id}/comment/{comment-id}")
-    public ResponseEntity postComment(@RequestBody String content,
+    public ResponseEntity postComment(@RequestBody CommentPostDto content,
                                       @PathVariable("community-id") Long communityId,
                                       @PathVariable("comment-id") Long commentId,
                                       @RequestHeader("Authorization") String token){
         Long userId = jwtTokenizer.getUserIdFromToken(token);
-        CommentResponseDto response = commentService.postComment(communityId, userId, commentId, content);
+        CommentResponseDto response = commentService.postComment(communityId, userId, commentId, content.getContent());
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
