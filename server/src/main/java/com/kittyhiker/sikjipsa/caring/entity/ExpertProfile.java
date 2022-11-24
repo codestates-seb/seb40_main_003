@@ -33,7 +33,7 @@ public class ExpertProfile {
 
 	private int useNum;
 
-	private int price;
+	private String price;
 
 	private Long likes;
 

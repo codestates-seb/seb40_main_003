@@ -25,7 +25,7 @@ public class ExpertProfileResponseDto {
 
 	private int useNum;
 
-	private int price;
+	private String price;
 
 	private String address;
 
