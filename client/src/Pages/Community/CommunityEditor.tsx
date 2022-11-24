@@ -13,6 +13,7 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import { axiosPrivate } from "../../Hooks/api";
 import { useRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 const ConfirmWrapper = styled.span`
   display: flex;
@@ -45,24 +46,23 @@ const CommunityEditor = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const [auth, setAuth] = useRecoilState(userState);
+  const axiosPrivate = useAxiosPrivate()
 
   const onValid = async (data: CommunityEditorForm) => {
     console.log(data);
-    const dto = { title: data.title, content: data.content };
+    const dto = JSON.stringify({ title: data.title, content: data.content });
     const formData = new FormData();
-    formData.append("postDto", JSON.stringify(dto));
     formData.append("images", data.file);
-    console.log(formData);
+    formData.append("postDto", new Blob([dto],{type:"application/json"}));
+
     axiosPrivate
       .post("/community", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${auth?.accessToken}`,
         },
       })
       .then((res) => {
-        // 전역상태로 로그인 관련정보, 토큰 받아야함
-        setUser(res.data);
+        console.log(res)
       })
       .then(() => {
         // 원래있던 페이지로 되돌림
@@ -71,13 +71,11 @@ const CommunityEditor = () => {
       .catch((err) => {
         if (!err?.response) {
           setErrMsg("서버로부터 응답이 없습니다");
-        } else if (err.response?.status === 400) {
-          setErrMsg("이메일 또는 패스워드를 확인해주세요");
-          console.log(err);
-        } else if (err.response?.status === 401) {
-          setErrMsg("허가되지않은 접근입니다");
+          if(err?.response?.state === 403){
+            navigate("/")
+          }
         } else {
-          setErrMsg("로그인에 실패했습니다");
+          setErrMsg("작성에 실패했습니다");
         }
       });
   };

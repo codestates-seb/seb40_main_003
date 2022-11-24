@@ -9,11 +9,12 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { axiosPrivate } from "../../Hooks/api";
 import { userState } from "../../Recoil/atoms/user";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useRecoilState } from "recoil";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 const ConfirmWrapper = styled.span`
   display: flex;
   justify-content: row;
@@ -31,6 +32,7 @@ interface ProductEditorForm {
 }
 
 const ProductEditor = (props: Props) => {
+  const axiosPrivate = useAxiosPrivate()
   const [user, setUser] = useRecoilState(userState);
   const {
     register,
@@ -60,7 +62,7 @@ const ProductEditor = (props: Props) => {
           image: data.image,
           price: data.price,
           content: data.content,
-        })
+        },{headers:{"Content-Type":"multipart/form-data"}})
         .then((res) => {
           // 전역상태로 로그인 관련정보, 토큰 받아야함
           setUser(res.data);

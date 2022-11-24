@@ -1,7 +1,7 @@
 import { Routes } from "react-router";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import AuthProvider, { HeaderLayout } from "./Route";
+import { AuthProvider, HeaderLayout, LogOutOnly } from "./Route";
 import Product from "./Pages/Product/Product";
 import Navbar from "./Components/Navbar";
 
@@ -38,7 +38,6 @@ import ProductCategory from "./Pages/Product/ProductCategory";
 // import DevTools from "./Components/DevTools";
 
 function App() {
-
   return (
     <BrowserRouter>
       {/* 모바일용 navbar*/}
@@ -48,9 +47,9 @@ function App() {
         {/* 보호된 라우팅 */}
 
         {/* <Route element={<AuthProvider />}> */}
-          <Route path="/profile" element={<HeaderLayout />}>
-            <Route path=":id" element={<Profile />} />
-          </Route>
+        <Route path="/profile" element={<HeaderLayout />}>
+          <Route path=":id" element={<Profile />} />
+        </Route>
         {/* </Route> */}
 
         {/* 오픈된 라우팅 */}
@@ -66,7 +65,7 @@ function App() {
             <Route index element={<Product />} />
             <Route path=":id" element={<ProductDetail />} />
             <Route path="write" element={<ProductEditor />} />
-            <Route path="category" element={<ProductCategory/>}/>
+            <Route path="category" element={<ProductCategory />} />
           </Route>
           {/* 커뮤니티 */}
           <Route path="/community" element={<DefaultLayout />}>
@@ -77,7 +76,9 @@ function App() {
 
           {/* 로그인 */}
           <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          <Route element={<LogOutOnly />}>
+            <Route path="/signup" element={<Signup />} />
+          </Route>
           {/* 대화 */}
           <Route path="/talk" element={<DefaultLayout />}>
             <Route index element={<Talk />} />
