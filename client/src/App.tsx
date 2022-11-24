@@ -35,7 +35,7 @@ import CommunityEditor from "./Pages/Community/CommunityEditor";
 import Talk from "./Pages/Talk/Talk";
 import { DefaultLayout } from "./Route";
 import ProductCategory from "./Pages/Product/ProductCategory";
-import DevTools from "./Components/DevTools";
+// import DevTools from "./Components/DevTools";
 
 function App() {
 
@@ -43,7 +43,7 @@ function App() {
     <BrowserRouter>
       {/* 모바일용 navbar*/}
       <Navbar />
-      <DevTools/>
+      {/* <DevTools/> */}
       <Routes>
         {/* 보호된 라우팅 */}
 
