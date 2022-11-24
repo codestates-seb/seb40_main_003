@@ -13,7 +13,6 @@ import {
 import usePageTitle from "../../Hooks/usePageTitle";
 import { axiosPrivate } from "../../Hooks/api";
 
-
 const FormWrapper = styled.form`
   display: flex;
   flex-direction: column;
@@ -42,7 +41,6 @@ const Label = styled.label`
   margin-bottom: 3px;
 `;
 
-
 interface LoginForm {
   password: string;
   email: string;
@@ -61,7 +59,7 @@ function Login() {
   } = useForm<LoginForm>({
     mode: "onChange",
   });
-  usePageTitle("로그인")
+  usePageTitle("로그인");
   useEffect(() => {
     setFocus("email");
   }, []);
@@ -70,11 +68,9 @@ function Login() {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  
 
   // 로그인버튼 클릭시 동작하는 함수
   const onLogin = async (data: LoginForm) => {
-    console.log(data);
     try {
       axiosPrivate
         .post("/login", {
@@ -89,9 +85,7 @@ function Login() {
           // 원래있던 페이지로 되돌림
           navigate(from, { replace: true });
         });
-
     } catch (err: any) {
-      console.log(err);
       if (!err?.response) {
         setErrMsg("서버로부터 응답이 없습니다");
       } else if (err.response?.status === 400) {
@@ -104,59 +98,67 @@ function Login() {
       }
     }
   };
-  
+
   return (
     <MainContentContainer>
       <MainCenterWrapper>
-          <FormWrapper onSubmit={handleSubmit(onLogin)}>
-            <InputContainer>
-              <Label htmlFor={"Email"}>Email</Label>
-              <input
-                type={"email"}
-                id="Email"
-                {...register("email", {
-                  required: true,
-                  pattern: /^\S+@\S+$/i,
-                  maxLength: 20,
-                })}
-              />
-              {errors.email && errors.email.type === "required" && (
-                <Errormsg> 이메일을 입력해주세요.</Errormsg>
-              )}
-              {errors.email && errors.email.type === "pattern" && (
-                <Errormsg> 이메일 형식이여야 합니다.</Errormsg>
-              )}
-              {errors.email && errors.email.type === "maxLength" && (
-                <Errormsg> 최대 길이는 20자 이하여야 합니다</Errormsg>
-              )}
-            </InputContainer>
-            <InputContainer>
-              <Label htmlFor={"password"}>Password</Label>
-              <input
-                type={"password"}
-                id="password"
-                {...register("password", {
-                  required: true,
-                  minLength: 8,
-                })}
-              />
-              {errors.password && errors.password.type === "required" && (
-                <Errormsg> 패스워드를 입력해주세요</Errormsg>
-              )}
-              {errors.password && errors.password.type === "minLength" && (
-                <Errormsg> 최소 길이는 8자 이상이여야 합니다</Errormsg>
-              )}
-            </InputContainer>
+        <FormWrapper onSubmit={handleSubmit(onLogin)}>
+          <InputContainer>
+            <Label htmlFor={"Email"}>Email</Label>
+            <input
+              type={"email"}
+              id="Email"
+              {...register("email", {
+                required: true,
+                pattern: /^\S+@\S+$/i,
+                maxLength: 20,
+              })}
+            />
+            {errors.email && errors.email.type === "required" && (
+              <Errormsg> 이메일을 입력해주세요.</Errormsg>
+            )}
+            {errors.email && errors.email.type === "pattern" && (
+              <Errormsg> 이메일 형식이여야 합니다.</Errormsg>
+            )}
+            {errors.email && errors.email.type === "maxLength" && (
+              <Errormsg> 최대 길이는 20자 이하여야 합니다</Errormsg>
+            )}
+          </InputContainer>
+          <InputContainer>
+            <Label htmlFor={"password"}>Password</Label>
+            <input
+              type={"password"}
+              id="password"
+              {...register("password", {
+                required: true,
+                minLength: 8,
+              })}
+            />
+            {errors.password && errors.password.type === "required" && (
+              <Errormsg> 패스워드를 입력해주세요</Errormsg>
+            )}
+            {errors.password && errors.password.type === "minLength" && (
+              <Errormsg> 최소 길이는 8자 이상이여야 합니다</Errormsg>
+            )}
+          </InputContainer>
 
-            <button className="font-gray sub">ID / PW 찾기</button>
-            <Link to={`/signup/`}>
-              <button className="font-main sub bold">회원 가입</button>
-            </Link>
-            <SigButton className={errors?.email===undefined &&errors.password===undefined?"active":"disable"} type="submit" value={"Login"}>
-              로그인
-            </SigButton>
-            {error && <Errormsg>{error}</Errormsg>}
-          </FormWrapper>
+          <button className="font-gray sub">ID / PW 찾기</button>
+          <Link to={`/signup/`}>
+            <button className="font-main sub bold">회원 가입</button>
+          </Link>
+          <SigButton
+            className={
+              errors?.email === undefined && errors.password === undefined
+                ? "active"
+                : "disable"
+            }
+            type="submit"
+            value={"Login"}
+          >
+            로그인
+          </SigButton>
+          {error && <Errormsg>{error}</Errormsg>}
+        </FormWrapper>
       </MainCenterWrapper>
       <MainRightWrapper></MainRightWrapper>
     </MainContentContainer>
