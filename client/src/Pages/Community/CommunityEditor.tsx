@@ -22,8 +22,9 @@ const ConfirmWrapper = styled.span`
 interface CommunityEditorForm {
   title: string;
   content: string;
-  image: string;
+  images: string;
   errors?: string;
+  file: any;
 }
 
 const CommunityEditor = () => {
@@ -46,9 +47,12 @@ const CommunityEditor = () => {
 
   const onValid = async (data: CommunityEditorForm) => {
     console.log(data);
-    try {
-      axiosPrivate
-        .post("/community/write", {
+    
+    const formData = new FormData();
+    formData.append("file", data.file[0])
+  try {
+    axiosPrivate
+        .post("/community", {
           title: data.title,
           content: data.content,
         })
@@ -103,12 +107,12 @@ const CommunityEditor = () => {
           <SectionWrapper>
             <>
               <input
-                className="image"
-                {...register("image")}
-                id="image"
+                className="images"
+                {...register("images")}
+                id="images"
                 type="file" multiple
               />
-              <p className="font-alert-red sub">{errors.image?.message}</p>
+              <p className="font-alert-red sub">{errors.images?.message}</p>
             </>
           </SectionWrapper>
 
