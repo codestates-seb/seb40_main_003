@@ -70,7 +70,7 @@ const CommunityEditor = () => {
                 className="image"
                 {...register("image")}
                 id="image"
-                type="file"
+                type="file" multiple
               />
               <p className="font-alert-red sub">{errors.image?.message}</p>
             </>
