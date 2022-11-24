@@ -48,8 +48,8 @@ public class Deal extends AuditingEntity {
 //	@OneToMany(mappedBy = "deal")
 //	private List<MemberReview> memberReviews = new ArrayList<>();
 
-	@OneToMany(mappedBy = "deal")
-	private List<DealChat> dealChats = new ArrayList<>();
+//	@OneToMany(mappedBy = "deal")
+//	private List<DealChat> dealChats = new ArrayList<>();
 
 //	@OneToMany(mappedBy = "deal")
 //	private List<AreaTag> areaTags = new ArrayList<>();
