@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FieldErrors, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import {
   MainContentContainer,
