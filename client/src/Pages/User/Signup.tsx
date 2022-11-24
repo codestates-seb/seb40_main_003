@@ -20,6 +20,11 @@ const FormWrapper = styled.form`
   padding: 10px;
 `;
 
+const Input = styled.input`
+  width: 200%;
+  height: 35px;
+`;
+
 const InputContainer = styled.div`
   margin: 10px 0;
   display: flex;
@@ -95,7 +100,7 @@ const Signup = () => {
         <FormWrapper onSubmit={handleSubmit(onValid)}>
           <InputContainer>
             <Label htmlFor={"nickname"}>닉네임</Label>
-            <input
+            <Input
               type={"nickname"}
               id="nickname"
               {...register("nickname", {
