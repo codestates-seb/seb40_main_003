@@ -78,7 +78,6 @@ const NavElem = ({ title = "Untitled", children }: NavElemProps) => {
 };
 export const NavContent = () => {
   const user = useRecoilValue(userState);
-  console.log(user)
   return (<>
     <NavElemWrapper>
       <NavLink

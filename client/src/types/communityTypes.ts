@@ -25,10 +25,17 @@
 // };
 // export type { communityTypes };
 // -------------------------------
+export type CommunityPreviewType = {
+  data: [communityPreviewDataTypes];
+  pageInfo: {
+    page: number;
+    size: number;
+    totalPages: number;
+    totalElements: number;
+  };
+};
 
-type communityTypes = {
-  data: [
-    {
+export type communityPreviewDataTypes = {
       communityId: number;
       title: string;
       content: string;
@@ -39,7 +46,4 @@ type communityTypes = {
       modifiedAt: string;
       images: [string];
       comments: null;
-    }
-  ];
 };
-export type { communityTypes };

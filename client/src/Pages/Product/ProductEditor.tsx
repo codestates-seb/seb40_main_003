@@ -1,4 +1,5 @@
-import React from "react";
+import styled from "@emotion/styled";
+// import React, { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import {
@@ -7,10 +8,12 @@ import {
   MainRightWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
-import { Link } from "react-router-dom";
-import styled from "@emotion/styled";
 import usePageTitle from "../../Hooks/usePageTitle";
-
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { axiosPrivate } from "../../Hooks/api";
+import { userState } from "../../Recoil/atoms/user";
+import { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
 const ConfirmWrapper = styled.span`
   display: flex;
   justify-content: row;
@@ -20,38 +23,63 @@ type Props = {};
 
 interface ProductEditorForm {
   title: string;
-  image: string;
+  image: File;
   category: number;
   content: string;
-  price: string;
+  price: number;
   errors?: string;
 }
 
 const ProductEditor = (props: Props) => {
+  const [user, setUser] = useRecoilState(userState);
   const {
     register,
     handleSubmit,
+    setFocus,
     formState: { errors },
-  } = useForm<ProductEditorForm>();
+  } = useForm<ProductEditorForm>({
+    mode: "onChange",
+  });
+  
+  useEffect(() => {
+    setFocus("title");
+  }, []);
 
-  const onValid = (data: ProductEditorForm) => {
-    console.log("나 발리드됨");
-  };
   const onInValid = (errors: FieldErrors) => {};
   usePageTitle("거래 글 쓰기");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
-  console.log(errors);
+  const onValid = async (data: ProductEditorForm) => {
+    console.log(data);
+
+      axiosPrivate
+        .post("/deal", {
+          title: data.title,
+          image: data.image,
+          price: data.price,
+          content: data.content,
+        })
+        .then((res) => {
+          // 전역상태로 로그인 관련정보, 토큰 받아야함
+          setUser(res.data);
+        })
+        .then(() => {
+          // 원래있던 페이지로 되돌림
+          navigate(from, { replace: true });
+        }).catch ((err)=>{})
+};
 
   return (
-    <MainContentContainer>
+    <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid, onInValid)}>
       <MainCenterWrapper>
-        <section onSubmit={handleSubmit(onValid, onInValid)}>
           <SectionWrapper width={100} borderNone={true}>
             <>
               <input
                 className="title"
                 {...register("title", {
-                  required: "",
+                  required: true,
                   minLength: {
                     message: "제목은 2글자 이상으로 작성해주세요.",
                     value: 2,
@@ -89,7 +117,7 @@ const ProductEditor = (props: Props) => {
               <input
                 className="price"
                 {...register("price", {
-                  required: "",
+                  required: true,
                 })}
                 type="price"
                 placeholder="가격"
@@ -102,7 +130,7 @@ const ProductEditor = (props: Props) => {
               <input
                 className="content"
                 {...register("content", {
-                  required: "",
+                  required: true,
                 })}
                 type="content"
                 placeholder="글쓰기"
@@ -119,7 +147,6 @@ const ProductEditor = (props: Props) => {
               욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
             </p>
           </ConfirmWrapper>
-        </section>
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
@@ -127,11 +154,9 @@ const ProductEditor = (props: Props) => {
             반려식물을 분양하고 원예 용품을 판매해보세요.🌿
           </p>
         </SectionWrapper>
-        <Link to={"../"}>
           <SigButton type="submit" className="disable">
             작성 완료
           </SigButton>
-        </Link>
       </MainRightWrapper>
     </MainContentContainer>
   );

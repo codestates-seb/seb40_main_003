@@ -2,7 +2,7 @@ import { rest } from "msw";
 
 export const ProductDetailHandler = (pageNumber) => {
   return rest.get(
-    `https://testserver.com/shopping/${pageNumber}`,
+    `https://testserver.com/deal/${pageNumber}`,
     async (req, res, ctx) => {
       return res(
         ctx.json({        
@@ -88,10 +88,12 @@ export const ProductDetailHandler = (pageNumber) => {
   );
 };
 
-export const ProductListHandler = () => {
-  return rest.get("https://testserver.com/shopping", async (req, res, ctx) => {
+export const ProductListHandler = (page) => {
+  return rest.get(`https://testserver.com/deal?page={${page}}&size={5}`, async (req, res, ctx) => {
     return res(
       ctx.json({
+
+        data:{
         data: [
           {
             dealId: 1,
@@ -154,7 +156,9 @@ export const ProductListHandler = () => {
                 totalPages: 3,
                 totalElements: 9
             }, 
-        })
+        }
+        
+          })
     );
   });
 };

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { keyframes, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { DescriptionColumnWrapper } from "./product/ProductCard";
@@ -50,15 +50,19 @@ export const ProductWrapper = styled.div`
   flex-direction: column;
   border-bottom: 1px solid var(--line-light-gray);
 `;
-export const LoadingSkeleton = () => {
-  return (
+export const LoadingSkeleton = ({count=5}) => {
+  const [hidingTime, setHidingTime] = useState(true);
+  setTimeout(() => {
+    setHidingTime((prev) => !prev);
+  }, 300);
+  return !hidingTime ? (
     <>
-      <ProductPlaceHolder />
-      <ProductPlaceHolder />
-      <ProductPlaceHolder />
-      <ProductPlaceHolder />
-      <ProductPlaceHolder />
+      {[...Array(count)].map((e) => {
+        return <ProductPlaceHolder />;
+      })}
     </>
+  ) : (
+    <></>
   );
 };
 
@@ -124,7 +128,7 @@ const Base = styled.span<Props>`
   ${({ animation }) => animation && pulseAnimation};
   width: ${({ width, unit }) => width && unit && `${width}${unit}`};
   height: ${({ height, unit }) => height && unit && `${height}${unit}`};
-  z-index:auto;
+  z-index: auto;
 `;
 
 const Content = styled.span`
@@ -145,7 +149,7 @@ const Skeleton: React.FC<Props> = ({
   ml,
 }) => {
   const content = useMemo(
-    () => [...Array({ length: count })].map(() => "-").join(""),
+    () => [Array(count)].map((e) => "-").join(""),
     [count]
   );
 

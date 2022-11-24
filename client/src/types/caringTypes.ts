@@ -7,8 +7,8 @@ export type caringPreviewTypes = {
     totalPages: number
         }
 };
-export type caringPreviewDataTypes={
-  expertId: number,
+export type caringPreviewDataTypes = {
+      expertId: number,
       name: string,
       age: number,
       gender: number,
@@ -61,7 +61,7 @@ export type CareDetailTypes = {
   simpleContent: string,
   detailContent: string,
   useNum: number,
-  price: number,
+  price: string,
   address: string,
   extra: string,
   member: {
@@ -93,7 +93,7 @@ export type CareDetailTypes = {
           member: {
               memberId: number,
               nickname: string
-            }
+            },
           createdAt: string,
           modifiedAt: string
         }

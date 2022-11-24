@@ -18,7 +18,7 @@ const careQueryClient = new QueryClient();
 const CareMain = () => {
   const { data, isLoading, error } = useQuery(["careQuery"], () => {
     const data = FetchByParams("/experts", { page: 1, size: 5 });
-    return data;
+    return data;    
   });
   if (isLoading) return <LoadingSkeleton />;
   if (error) {console.log(data)
@@ -26,9 +26,7 @@ const CareMain = () => {
   return (
     <>
       {data &&
-        // ===============any고치기===========
         data.data.data.map((e: caringPreviewDataTypes) => {
-          console.log(e)
           return(
             <Link key={e.expertId} to={`/experts/${e.expertId}`}>
               <CareCard data={e} />
