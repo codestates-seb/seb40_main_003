@@ -150,7 +150,7 @@ const Signup = () => {
               })}
             />
             {errors.password && errors.password.type === "required" && (
-              <Errormsg> 패스워드를 입력해주세요</Errormsg>
+              <Errormsg> 비밀번호를 입력해주세요</Errormsg>
             )}
             {errors.password && errors.password.type === "pattern" && (
               <Errormsg>8자 이상, 영문, 숫자, 특수문자를 사용하세요.</Errormsg>
