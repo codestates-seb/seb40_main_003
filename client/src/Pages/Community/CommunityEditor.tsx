@@ -54,8 +54,7 @@ const CommunityEditor = () => {
     const formData = new FormData();
     formData.append("images", data.file);
     formData.append("postDto", new Blob([dto],{type:"application/json"}));
-
-    axiosPrivate
+    try{axiosPrivate
       .post("/community", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -67,17 +66,11 @@ const CommunityEditor = () => {
       .then(() => {
         // 원래있던 페이지로 되돌림
         navigate(from, { replace: true });
-      })
-      .catch((err) => {
-        if (!err?.response) {
-          setErrMsg("서버로부터 응답이 없습니다");
-          if(err?.response?.state === 403){
-            navigate("/")
-          }
-        } else {
-          setErrMsg("작성에 실패했습니다");
-        }
-      });
+      })}
+      catch(err){
+        console.error(err)
+        navigate("/login")
+      };
   };
 
   return (
