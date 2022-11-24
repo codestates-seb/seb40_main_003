@@ -142,10 +142,8 @@ function Login() {
               <Errormsg> 최소 길이는 8자 이상이여야 합니다</Errormsg>
             )}
           </InputContainer>
-
-          <button className="font-gray sub">ID / PW 찾기</button>
           <Link to={`/signup/`}>
-            <button className="font-main sub bold">회원 가입</button>
+            <button className="font-main sub bold mb-10">회원 가입</button>
           </Link>
           <SigButton
             className={
