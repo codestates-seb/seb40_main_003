@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import {
@@ -7,9 +7,12 @@ import {
   MainRightWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import usePageTitle from "../../Hooks/usePageTitle";
+import { axiosPrivate } from "../../Hooks/api";
+import { useRecoilState } from "recoil";
+import { userState } from "../../Recoil/atoms/user";
 
 const ConfirmWrapper = styled.span`
   display: flex;
@@ -20,11 +23,12 @@ interface CommunityEditorForm {
   title: string;
   content: string;
   image: string;
-  password: string;
   errors?: string;
 }
 
 const CommunityEditor = () => {
+  const [user, setUser] = useRecoilState(userState);
+  const [error, setErrMsg] = useState("");
   usePageTitle("커뮤니티 글 쓰기");
 
   const {
@@ -32,22 +36,55 @@ const CommunityEditor = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<CommunityEditorForm>();
-  const onValid = (data: CommunityEditorForm) => {
-    console.log("나 발리드됨");
+  } = useForm<CommunityEditorForm>({
+    mode: "onChange",
+  });
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+
+  const onValid = async (data: CommunityEditorForm) => {
+    console.log(data);
+    
+    try {
+      axiosPrivate
+        .post("/community/write", {
+          title: data.title,
+          content: data.content,
+        })
+        .then((res) => {
+          // 전역상태로 로그인 관련정보, 토큰 받아야함
+          setUser(res.data);
+        })
+        .then(() => {
+          // 원래있던 페이지로 되돌림
+          navigate(from, { replace: true });
+        });
+    } catch (err: any) {
+      if (!err?.response) {
+        setErrMsg("서버로부터 응답이 없습니다");
+      } else if (err.response?.status === 400) {
+        setErrMsg("이메일 또는 패스워드를 확인해주세요");
+        console.log(err);
+      } else if (err.response?.status === 401) {
+        setErrMsg("허가되지않은 접근입니다");
+      } else {
+        setErrMsg("로그인에 실패했습니다");
+      }
+    }
   };
-  const onInValid = (errors: FieldErrors) => {};
+
 
   return (
-    <MainContentContainer>
+    <MainContentContainer onSubmit={handleSubmit(onValid)}>
       <MainCenterWrapper>
-        <section onSubmit={handleSubmit(onValid, onInValid)}>
           <SectionWrapper width={100} borderNone={true}>
             <>
               <input
                 className="title"
                 {...register("title", {
-                  required: "",
+                  required: true,
                   minLength: {
                     message: "제목은 2글자 이상으로 작성해주세요.",
                     value: 2,
@@ -81,7 +118,7 @@ const CommunityEditor = () => {
               <input
                 className="content"
                 {...register("content", {
-                  required: "",
+                  required: true,
                 })}
                 type="content"
                 placeholder="글쓰기"
@@ -96,8 +133,8 @@ const CommunityEditor = () => {
               <br />
               욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
             </p>
+            {error&&<p>{error}</p>}
           </ConfirmWrapper>
-        </section>
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
@@ -105,11 +142,9 @@ const CommunityEditor = () => {
             반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
           </p>
         </SectionWrapper>
-        <Link to={"../"}>
-          <SigButton type="submit" className="disable">
+          <SigButton type="submit" value={"CommunityEditor"}>
             작성 완료
           </SigButton>
-        </Link>
       </MainRightWrapper>
     </MainContentContainer>
   );
