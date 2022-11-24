@@ -1,24 +1,34 @@
 import CommunityCard from "../../Components/community/CommunityCard";
-import { communityTypes } from "../../types/communityTypes";
+
 import { Link } from "react-router-dom";
 import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
-  SectionWrapper
+  SectionWrapper,
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
-import useFetch from "../../Hooks/useFetch";
+import { FetchByParams } from "../../Hooks/useFetch";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorMessage } from "../../Components/ErrorHandle";
+import { LoadingSkeleton } from "../../Components/Loading";
+import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { communityPreviewDataTypes } from "../../types/communityTypes";
 
-const Community = () => {
-  usePageTitle("커뮤니티")
-  const data = useFetch<communityTypes>("/community", { page: 1, size: 5 })
-  
-  return data?(
-    <MainContentContainer>
-      <MainCenterWrapper>
-        {data.data.map((e) => {
+const communityQueryClient = new QueryClient();
+
+const CommunityMain = () => {
+  const { data, isLoading, error } = useQuery(["productQuery"], () => {
+    const data = FetchByParams("/community", { page: 1, size: 5 });
+    return data;
+  });
+  if (isLoading) return <LoadingSkeleton />;
+  if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
+  return (
+    <>
+      {data &&
+        data.data.map((e: communityPreviewDataTypes) => {
           return (
             <Link
               to={`/community/${e.communityId}`}
@@ -28,17 +38,37 @@ const Community = () => {
             </Link>
           );
         })}
+    </>
+  );
+};
+
+const Community = () => {
+  usePageTitle("커뮤니티");
+  return (
+    <MainContentContainer>
+      <MainCenterWrapper>
+        {/* 에러바운더리 */}
+        <ErrorBoundary fallback={<ErrorMessage content={"정보를 불러오는데 실패했습니다"} />}>
+          {/* 쿼리클라이언트 */}
+          <QueryClientProvider client={communityQueryClient}>
+            <CommunityMain />
+          </QueryClientProvider>
+        </ErrorBoundary>
+        
       </MainCenterWrapper>
       <MainRightWrapper>
+        {/* 우측 영역 */}
         <SectionWrapper borderNone={true}>
-          <p className='h5 bold font-main mr-16'>반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
-          </p></SectionWrapper>
+          <p className="h5 bold font-main mr-16">
+            반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
+          </p>
+        </SectionWrapper>
         <Link to={"/community/write"}>
-          <SigButton type='submit'>새 글쓰기</SigButton>
+          <SigButton type="submit">새 글쓰기</SigButton>
         </Link>
       </MainRightWrapper>
-    </MainContentContainer >
-  ):<></>
+    </MainContentContainer>
+  );
 };
 
 export default Community;
