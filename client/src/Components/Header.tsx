@@ -39,6 +39,10 @@ const BackButton = () => {
     </button>
   );
 };
+const PlaceHolder = styled.div`
+  width: 13px;
+  height: 18px;
+`
 
 const Header = () => {
   const { title } = useRecoilValue(currentPage);
@@ -48,7 +52,7 @@ const Header = () => {
       <HeaderContent>
         <BackButton />
         <span className="display-none-pc h4 bold">{title}</span>
-        <BackButton />
+        <PlaceHolder />
         {width !== undefined && width > 1024 ? <NavContent /> : null}
       </HeaderContent>
     </HeaderWrapper>
