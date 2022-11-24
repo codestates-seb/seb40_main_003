@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -41,7 +42,7 @@ public class ImageService {
             ObjectMetadata objMeta = new ObjectMetadata();
             objMeta.setContentLength(image.getSize());
             amazonS3.putObject(bucket, fileName, image.getInputStream(), objMeta);
-            filePath = amazonS3.getUrl(bucket, originalFilename).toString();
+            filePath = amazonS3.getUrl(bucket, fileName).toString();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,6 +50,7 @@ public class ImageService {
     }
 
     public void deleteImageFromS3(String imagePath) {
+        imageRepository.deleteByImgUrl(imagePath);
         amazonS3.deleteObject(new DeleteObjectRequest(bucket, imagePath));
     }
 
@@ -62,11 +64,17 @@ public class ImageService {
         return image;
     }
 
-    public Image findImage(Member member) {
-        Image image = imageRepository.findByMember(member).orElseThrow(()
-                -> new IllegalArgumentException("NOT FOUND IMAGE"));
-        return image;
+//    public Image findImage(Member member) {
+//        Image image = imageRepository.findByMember(member).orElseThrow(()
+//                -> new IllegalArgumentException("NOT FOUND IMAGE"));
+//        return image;
+//    }
+    public String findImage(Member member) {
+        Optional<Image> image = imageRepository.findByMember(member);
+        if (image.isPresent()) return image.get().getImgUrl();
+        else return "";
     }
+
 
     public Image findImage(Plant plant) {
         Image image = imageRepository.findByPlant(plant).orElseThrow(()

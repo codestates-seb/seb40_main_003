@@ -1,6 +1,7 @@
 package com.kittyhiker.sikjipsa.deal.dto;
 
 import com.kittyhiker.sikjipsa.image.entity.Image;
+import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,7 +29,8 @@ public class DealResponseDto {
     int category;
     int area;
     int state;
-    int memberLikeNum;
+    int likeNum;
+    MemberResponseDto member;
 
 //    Map<String, Object> image;
 //    Map<String, Object> areaTag;
