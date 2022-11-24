@@ -51,19 +51,14 @@ export const ProductWrapper = styled.div`
   border-bottom: 1px solid var(--line-light-gray);
 `;
 export const LoadingSkeleton = ({count=5}) => {
-  const [hidingTime, setHidingTime] = useState(true);
-  setTimeout(() => {
-    setHidingTime((prev) => !prev);
-  }, 300);
-  return !hidingTime ? (
+
+  return (
     <>
       {[...Array(count)].map((e) => {
         return <ProductPlaceHolder />;
       })}
     </>
-  ) : (
-    <></>
-  );
+  )
 };
 
 export const ProductPlaceHolder = () => {
