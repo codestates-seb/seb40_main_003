@@ -44,97 +44,104 @@ const CommunityEditor = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const [auth,setAuth] = useRecoilState(userState)
+  const [auth, setAuth] = useRecoilState(userState);
 
   const onValid = async (data: CommunityEditorForm) => {
     console.log(data);
-    const dto = {title:data.title,content:data.content}
+    const dto = { title: data.title, content: data.content };
     const formData = new FormData();
-    formData.append("postDto",JSON.stringify(dto))
-    formData.append("images", data.file)
-    console.log(formData)
-    axiosPrivate.post("/community", formData, {headers:{'Content-Type': 'multipart/form-data','Authorization' :`Bearer ${auth?.accessToken}`}})
-        .then((res) => {
-          // 전역상태로 로그인 관련정보, 토큰 받아야함
-          setUser(res.data);
-        })
-        .then(() => {
-          // 원래있던 페이지로 되돌림
-          navigate(from, { replace: true });
-        }).catch((err)=>{
-      if (!err?.response) {
-        setErrMsg("서버로부터 응답이 없습니다");
-      } else if (err.response?.status === 400) {
-        setErrMsg("이메일 또는 패스워드를 확인해주세요");
-        console.log(err);
-      } else if (err.response?.status === 401) {
-        setErrMsg("허가되지않은 접근입니다");
-      } else {
-        setErrMsg("로그인에 실패했습니다");
-      }
-    })
+    formData.append("postDto", JSON.stringify(dto));
+    formData.append("images", data.file);
+    console.log(formData);
+    axiosPrivate
+      .post("/community", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${auth?.accessToken}`,
+        },
+      })
+      .then((res) => {
+        // 전역상태로 로그인 관련정보, 토큰 받아야함
+        setUser(res.data);
+      })
+      .then(() => {
+        // 원래있던 페이지로 되돌림
+        navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          setErrMsg("서버로부터 응답이 없습니다");
+        } else if (err.response?.status === 400) {
+          setErrMsg("이메일 또는 패스워드를 확인해주세요");
+          console.log(err);
+        } else if (err.response?.status === 401) {
+          setErrMsg("허가되지않은 접근입니다");
+        } else {
+          setErrMsg("로그인에 실패했습니다");
+        }
+      });
   };
-
 
   return (
     <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid)}>
       <MainCenterWrapper>
-          <SectionWrapper width={100} borderNone={true}>
-            <>
-              <input
-                className="title"
-                {...register("title", {
-                  required: true,
-                  minLength: {
-                    message: "제목은 2글자 이상으로 작성해주세요.",
-                    value: 2,
-                  },
-                  maxLength: {
-                    message: "제목",
-                    value: 30,
-                  },
-                })}
-                type="Text"
-                placeholder="제목"
-              />
-              <p className="font-alert-red sub">{errors.title?.message}</p>
-            </>
-          </SectionWrapper>
+        <SectionWrapper width={100} borderNone={true}>
+          <>
+            <input
+              className="title"
+              {...register("title", {
+                required: true,
+                minLength: {
+                  message: "제목은 2글자 이상으로 작성해주세요.",
+                  value: 2,
+                },
+                maxLength: {
+                  message: "제목",
+                  value: 30,
+                },
+              })}
+              type="Text"
+              placeholder="제목"
+            />
+            <p className="font-alert-red sub">{errors.title?.message}</p>
+          </>
+        </SectionWrapper>
 
-          <SectionWrapper>
-            <>
-              <input
-                className="images"
-                {...register("images")}
-                id="images"
-                type="file" multiple
-              />
-              <p className="font-alert-red sub">{errors.images?.message}</p>
-            </>
-          </SectionWrapper>
+        <SectionWrapper>
+          <>
+            <input
+              className="images"
+              {...register("images")}
+              id="images"
+              type="file"
+              multiple
+            />
+            <p className="font-alert-red sub">{errors.images?.message}</p>
+          </>
+        </SectionWrapper>
 
-          <SectionWrapper width={100} borderNone={true}>
-            <>
-              <input
-                className="content"
-                {...register("content", {
-                  required: true,
-                })}
-                type="content"
-                placeholder="글쓰기"
-              />
-              <p className="font-alert-red sub">{errors.content?.message}</p>
-            </>
-          </SectionWrapper>
-          <ConfirmWrapper>
-            <input type="checkbox" className="border-none checkbox-20"></input>
-            <p className="sub font-gray">
-              식물처럼 싱그럽고 예쁜 말을 써주세요.
-              <br />
-              욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
-            </p>
-          </ConfirmWrapper>
-            {error&&<p>{error}</p>}
+        <SectionWrapper width={100} borderNone={true}>
+          <>
+            <input
+              className="content"
+              {...register("content", {
+                required: true,
+              })}
+              type="content"
+              placeholder="글쓰기"
+            />
+            <p className="font-alert-red sub">{errors.content?.message}</p>
+          </>
+        </SectionWrapper>
+        <ConfirmWrapper>
+          <input type="checkbox" className="border-none checkbox-20"></input>
+          <p className="sub font-gray">
+            식물처럼 싱그럽고 예쁜 말을 써주세요.
+            <br />
+            욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
+          </p>
+        </ConfirmWrapper>
+        {error && <p>{error}</p>}
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
@@ -142,9 +149,9 @@ const CommunityEditor = () => {
             반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
           </p>
         </SectionWrapper>
-          <SigButton type="submit" value={"CommunityEditor"}>
-            작성 완료
-          </SigButton>
+        <SigButton type="submit" value={"CommunityEditor"}>
+          작성 완료
+        </SigButton>
       </MainRightWrapper>
     </MainContentContainer>
   );
