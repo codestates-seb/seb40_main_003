@@ -124,6 +124,7 @@ const Base = styled.span<Props>`
   ${({ animation }) => animation && pulseAnimation};
   width: ${({ width, unit }) => width && unit && `${width}${unit}`};
   height: ${({ height, unit }) => height && unit && `${height}${unit}`};
+  z-index:auto;
 `;
 
 const Content = styled.span`
