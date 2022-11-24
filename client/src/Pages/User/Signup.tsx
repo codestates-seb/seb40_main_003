@@ -20,6 +20,11 @@ const FormWrapper = styled.form`
   padding: 10px;
 `;
 
+export const Input = styled.input`
+  width: 250px;
+  height: 35px;
+`;
+
 const InputContainer = styled.div`
   margin: 10px 0;
   display: flex;
@@ -95,7 +100,7 @@ const Signup = () => {
         <FormWrapper onSubmit={handleSubmit(onValid)}>
           <InputContainer>
             <Label htmlFor={"nickname"}>닉네임</Label>
-            <input
+            <Input
               type={"nickname"}
               id="nickname"
               {...register("nickname", {
@@ -112,7 +117,7 @@ const Signup = () => {
           </InputContainer>
           <InputContainer>
             <Label htmlFor={"Email"}>이메일</Label>
-            <input
+            <Input
               type={"email"}
               id="email"
               {...register("email", {
@@ -133,7 +138,7 @@ const Signup = () => {
           </InputContainer>
           <InputContainer>
             <Label htmlFor={"password"}>비밀번호</Label>
-            <input
+            <Input
               type={"password"}
               id="password"
               {...register("password", {
@@ -145,14 +150,12 @@ const Signup = () => {
               <Errormsg> 패스워드를 입력해주세요</Errormsg>
             )}
             {errors.password && errors.password.type === "minLength" && (
-              <Errormsg>
-                8자 이상, 영문 대 소문자, 숫자, 특수문자를 사용하세요.
-              </Errormsg>
+              <Errormsg>8자 이상, 영문, 숫자, 특수문자를 사용하세요.</Errormsg>
             )}
           </InputContainer>
           <InputContainer>
             <Label htmlFor={"passwordCheck"}>비밀번호 재확인</Label>
-            <input
+            <Input
               type={"password"}
               id="passwordCheck"
               {...register("passwordCheck", {
@@ -167,11 +170,21 @@ const Signup = () => {
             {errors.passwordCheck &&
               errors.passwordCheck.type === "minLength" && (
                 <Errormsg>
-                  8자 이상, 영문 대 소문자, 숫자, 특수문자를 사용하세요.
+                  8자 이상, 영문, 숫자, 특수문자를 사용하세요.
                 </Errormsg>
               )}
           </InputContainer>
-          <SigButton className="disable" type="submit" value={"Login"}>
+          <SigButton
+            className={
+              errors.nickname === undefined &&
+              errors.email === undefined &&
+              errors.password === undefined
+                ? "active mt-16"
+                : "disable mt-16"
+            }
+            type="submit"
+            value={"Login"}
+          >
             계정생성
           </SigButton>
           {error && <Errormsg>{error}</Errormsg>}

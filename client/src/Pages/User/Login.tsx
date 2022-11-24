@@ -12,6 +12,7 @@ import {
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { axiosPrivate } from "../../Hooks/api";
+import { Input } from "./Signup";
 
 const FormWrapper = styled.form`
   display: flex;
@@ -105,7 +106,7 @@ function Login() {
         <FormWrapper onSubmit={handleSubmit(onLogin)}>
           <InputContainer>
             <Label htmlFor={"Email"}>Email</Label>
-            <input
+            <Input
               type={"email"}
               id="Email"
               {...register("email", {
@@ -126,7 +127,7 @@ function Login() {
           </InputContainer>
           <InputContainer>
             <Label htmlFor={"password"}>Password</Label>
-            <input
+            <Input
               type={"password"}
               id="password"
               {...register("password", {

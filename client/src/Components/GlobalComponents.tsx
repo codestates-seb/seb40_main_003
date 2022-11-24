@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { overKillo } from "../utils/controller";
+import { getDateAgo, overKillo } from "../utils/controller";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import { UserStateType } from "../Recoil/atoms/user";
 import { useEffect, useRef, useState } from "react";
@@ -317,7 +317,7 @@ export type CommentCardTypes = {
   src?: string;
   alt?: string;
   name?: string;
-  createdAt?: string;
+  createdAt?: string | any;
   content?: string;
   tag?: [{ techId: number; name: string }];
   user: UserStateType | null;
@@ -381,7 +381,7 @@ export const CommentCard = (props: CommentCardTypes) => {
       </RowWrapper>
       <GridWrapper>
         <ColumnWrapper>
-          <div className='sub font-gray mb-6'>{createdAt}</div>
+          <div className='sub font-gray mb-6'>{getDateAgo(createdAt)}</div>
           {String(author) === String(user?.memberId) ? (
             <CommentButtonWrapper>
               <span
