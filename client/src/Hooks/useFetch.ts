@@ -19,10 +19,12 @@ const useFetch=<T>(url:string,params?:object)=>{
     }, [url]);
   return data;
 }
+// 파라미터로 페치하는 훅
 export const FetchByParams = async(url:string,params?:object)=>{
   const data = await axios.get(url,{params})
   return data
 }
+// 바디데이터로 페치하는 훅
 export const FetchByBody = async<T>(url:string,body?:object)=>{
   const data = await axios.get(url,body)
   return data
