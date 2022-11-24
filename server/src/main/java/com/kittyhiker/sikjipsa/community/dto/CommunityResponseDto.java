@@ -1,5 +1,6 @@
 package com.kittyhiker.sikjipsa.community.dto;
 
+import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,11 +19,12 @@ public class CommunityResponseDto {
     private String title;
     private String content;
     private int view;
-    private int likes;
-    private int commentNum;
+    private int likeNum;
+    private Long commentNum;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
     List<String> images;
     List<CommentResponseDto> comments;
+    MemberResponseDto member;
 }
