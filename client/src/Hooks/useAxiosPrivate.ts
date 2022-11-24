@@ -6,7 +6,6 @@ import useRefreshToken from "./useRefreshToken";
 
 // 
 const useAxiosPrivate = () => {
-    // 수정하기
     const refresh = useRefreshToken();
     const accessToken = secureLocalStorage.getItem("accessToken")
 
@@ -24,7 +23,6 @@ const useAxiosPrivate = () => {
         const responseIntercept = axiosPrivate.interceptors.response.use(
             response => response,
             async (error) => {
-                console.log("403이라 가로챔")
                 const prevRequest = error?.config;
                 if (error?.response?.status === 403 && !prevRequest?.sent){
                     prevRequest.sent = true;

@@ -4,7 +4,6 @@ import { axiosPrivate } from "./api";
 const useRefreshToken = () => {
 
   const refresh = async () => {
-    console.log("refresh시도함")
     const response = await axiosPrivate.post(
       "/users/refresh",
       JSON.stringify({refreshToken:secureLocalStorage.getItem("refreshToken")})

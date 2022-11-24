@@ -43,7 +43,7 @@ function App() {
     <BrowserRouter>
       {/* 모바일용 navbar*/}
       <Navbar />
-      <DevTools/>
+      {/* <DevTools/> */}
       <Routes>
         {/* 보호된 라우팅 */}
 
