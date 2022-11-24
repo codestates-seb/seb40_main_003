@@ -10,6 +10,7 @@ const useRefreshToken = () => {
       JSON.stringify({"refreshToken":refreshToken})
     );
     secureLocalStorage.setItem("accessToken", response.data.accessToken)
+    secureLocalStorage.setItem("refreshToken", response.data.refreshToken)
     return response.data.accessToken;
   };
   return refresh;
