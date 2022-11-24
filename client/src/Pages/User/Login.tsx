@@ -104,7 +104,7 @@ function Login() {
       }
     }
   };
-  console.log(errors)
+  
   return (
     <MainContentContainer>
       <MainCenterWrapper>
@@ -117,7 +117,7 @@ function Login() {
                 {...register("email", {
                   required: true,
                   pattern: /^\S+@\S+$/i,
-                  maxLength: 50,
+                  maxLength: 20,
                 })}
               />
               {errors.email && errors.email.type === "required" && (
@@ -127,7 +127,7 @@ function Login() {
                 <Errormsg> 이메일 형식이여야 합니다.</Errormsg>
               )}
               {errors.email && errors.email.type === "maxLength" && (
-                <Errormsg> 최대 길이는 50자 이하여야 합니다</Errormsg>
+                <Errormsg> 최대 길이는 20자 이하여야 합니다</Errormsg>
               )}
             </InputContainer>
             <InputContainer>
