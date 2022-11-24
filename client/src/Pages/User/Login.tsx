@@ -91,11 +91,11 @@ function Login() {
         setErrMsg("서버로부터 응답이 없습니다");
       } else if (err.response?.status === 400) {
         setErrMsg("이메일 또는 패스워드를 확인해주세요");
-        console.log(error);
+        console.log(err);
       } else if (err.response?.status === 401) {
         setErrMsg("허가되지않은 접근입니다");
       } else {
-        setErrMsg("Login Failed");
+        setErrMsg("로그인에 실패했습니다");
       }
     }
   };
@@ -141,12 +141,13 @@ function Login() {
             {errors.password && errors.password.type === "minLength" && (
               <Errormsg> 최소 길이는 8자 이상이여야 합니다</Errormsg>
             )}
+            {error&&<Errormsg>{error}</Errormsg>}
           </InputContainer>
 
-          <button className="font-gray sub">ID / PW 찾기</button>
           <Link to={`/signup/`}>
-            <button className="font-main sub bold">회원 가입</button>
+            <button className="font-main sub bold mb-16">회원 가입</button>
           </Link>
+
           <SigButton
             className={
               errors?.email === undefined && errors.password === undefined
@@ -158,7 +159,7 @@ function Login() {
           >
             로그인
           </SigButton>
-          {error && <Errormsg>{error}</Errormsg>}
+          
         </FormWrapper>
       </MainCenterWrapper>
       <MainRightWrapper></MainRightWrapper>
