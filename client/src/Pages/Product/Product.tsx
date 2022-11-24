@@ -1,7 +1,5 @@
 import ProductCard from "../../Components/product/ProductCard";
-import {
-  ProductPreviewMappingType,
-} from "../../types/productTypes";
+import { ProductPreviewMappingType } from "../../types/productTypes";
 import { Link } from "react-router-dom";
 import {
   MainCenterWrapper,
@@ -16,20 +14,17 @@ import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
-
+import { ErrorBoundary } from "react-error-boundary";
 
 // 쿼리클라이언트
 const productQueryClient = new QueryClient();
 
 const ProductMain = () => {
-  const { data, isLoading, error } = useQuery(
-    ["productQuery"],
-    () => {
-      const data = FetchByParams("/deal", { page: 1, size: 5 });
-      return data;
-    }
-  );
-  if (isLoading) return <LoadingSkeleton/>;
+  const { data, isLoading, error } = useQuery(["productQuery"], () => {
+    const data = FetchByParams("/deal", { page: 1, size: 5 });
+    return data;
+  });
+  if (isLoading) return <LoadingSkeleton />;
   if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
   return (
     <>
@@ -45,8 +40,6 @@ const ProductMain = () => {
   );
 };
 
-
-
 // 전체 페이지
 const Product = () => {
   usePageTitle("거래");
@@ -54,9 +47,13 @@ const Product = () => {
     <MainContentContainer>
       <MainCenterWrapper>
         {/* 쿼리클라이언트로 감쌈 */}
-        <QueryClientProvider client={productQueryClient}>
-          <ProductMain />
-        </QueryClientProvider>
+        <ErrorBoundary
+          fallback={<ErrorMessage content={"정보를 불러오는데 실패했습니다"} />}
+        >
+          <QueryClientProvider client={productQueryClient}>
+            <ProductMain />
+          </QueryClientProvider>
+        </ErrorBoundary>
         {/* 쿼리클라이언트로 감쌈 */}
       </MainCenterWrapper>
       <MainRightWrapper>

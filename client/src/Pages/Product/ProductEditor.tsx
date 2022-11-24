@@ -53,7 +53,7 @@ const ProductEditor = (props: Props) => {
 
   const onValid = async (data: ProductEditorForm) => {
     console.log(data);
-    try {
+
       axiosPrivate
         .post("/deal", {
           title: data.title,
@@ -69,9 +69,7 @@ const ProductEditor = (props: Props) => {
         .then(() => {
           // 원래있던 페이지로 되돌림
           navigate(from, { replace: true });
-        });
-    } catch (err: any) {
-  }
+        }).catch ((err)=>{})
 };
 
   return (
