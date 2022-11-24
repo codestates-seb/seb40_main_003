@@ -6,8 +6,12 @@ import { Profile } from './profileHandler';
 export const handlers = [
   // 로그인 테스트
   rest.post("https://testserver.com/auth/token", async (req, res, ctx) => {
-    return res(ctx.status(200));
+    return res(ctx.status(200),ctx.body(req));
   }),
+  rest.post("https://testserver.com/axiospravateTest", async (req, res, ctx) => {
+    return res(ctx.status(403));
+  }),
+  
   // 기본형
   rest.post("https://testserver.com/login", async (req, res, ctx) => {
     return res(
@@ -41,7 +45,9 @@ export const handlers = [
   ProductDetailHandler(3),
 
 // 캐어링 핸들러
-  CaringListHandler(),
+  CaringListHandler(1),
+  CaringListHandler(2),
+  CaringListHandler(3),
   expertProfileDetail(1),
   expertProfileDetail(2),
   expertProfileDetail(3),

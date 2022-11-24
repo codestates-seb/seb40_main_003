@@ -11,7 +11,7 @@ const useAxiosPrivate = () => {
     const accessToken = secureLocalStorage.getItem("accessToken")
 
     useEffect(() => {
-        // 요청을 가로채는 인터셉터
+        // 요청을 가로채는 인터셉터 (필요할때만 토큰을 싣기 위해)
         const requestIntercept = axiosPrivate.interceptors.request.use(
             config => {
                 if (config.headers&&config.headers['Authorization']){
@@ -37,6 +37,7 @@ const useAxiosPrivate = () => {
         );
 
         return () => {
+            // axios interceptor은 자동으로 이젝트 되지않으므로 다음 사용을 위해 eject함
             axiosPrivate.interceptors.request.eject(requestIntercept);
             axiosPrivate.interceptors.response.eject(responseIntercept);
         }
