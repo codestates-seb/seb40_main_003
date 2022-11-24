@@ -1,7 +1,7 @@
 import { rest } from "msw";
 
-export const CaringListHandler = () => {
-  return rest.get("https://testserver.com/caring", async (req, res, ctx) => {
+export const CaringListHandler = (number) => {
+  return rest.get(`https://testserver.com/experts?page=${number}&size=5`, async (req, res, ctx) => {
     return res(
       ctx.json(
         {
