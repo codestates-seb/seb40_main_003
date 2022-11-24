@@ -24,6 +24,7 @@ const NavContainer = styled.nav`
   padding: 0 24px;
   position: fixed;
   bottom: 0;
+  z-index: 9999;
   @media screen and (min-width:1024px) {
     display: none;
 }

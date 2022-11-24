@@ -1,7 +1,14 @@
-type caringTypes = {
-  data: [
-    {
-      expertId: number,
+export type caringPreviewTypes = {
+  data: [caringPreviewDataTypes],
+  pageInfo: {
+    page: number,
+    size: number,
+    totalElements: number,
+    totalPages: number
+        }
+};
+export type caringPreviewDataTypes={
+  expertId: number,
       name: string,
       age: number,
       gender: number,
@@ -44,18 +51,9 @@ type caringTypes = {
               imgUrl: string,
               isRepImg: string
             }
-        }
-    ],
-  pageInfo: {
-    page: number,
-    size: number,
-    totalElements: number,
-    totalPages: number
-        }
-};
+}
 
-
-type CareDetailTypes = {
+export type CareDetailTypes = {
   expertId: number,
   name: string,
   age: number,
@@ -106,4 +104,3 @@ type CareDetailTypes = {
       isRepImg: string
     }
   }
-export type { caringTypes, CareDetailTypes };
