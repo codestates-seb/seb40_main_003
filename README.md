@@ -20,6 +20,8 @@
 
 ✔️ 반려식물에 대한 지식 공유
 
+## 배포링크
+http://plant-hiker.s3-website.ap-northeast-2.amazonaws.com/community
 
 ## :family_man_woman_girl_boy: 멤버
 
