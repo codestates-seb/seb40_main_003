@@ -9,6 +9,8 @@ import com.kittyhiker.sikjipsa.deal.mapper.DealMapper;
 import com.kittyhiker.sikjipsa.deal.respository.DealRepository;
 import com.kittyhiker.sikjipsa.deal.respository.DealReviewRepository;
 import com.kittyhiker.sikjipsa.deal.respository.LikeDealRepository;
+import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
+import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.image.dto.SavedImageDto;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
@@ -47,7 +49,8 @@ public class DealService {
     public DealResponseDto postDeal(DealPostDto dealPostDto, List<MultipartFile> images, Long userId) throws IOException {
 
         Deal deal = mapper.dealPostDtoToDeal(dealPostDto);
-        Member findMember = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+        Member findMember = memberRepository.findById(userId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         deal.setMember(findMember);
         Deal savedDeal = dealRepository.save(deal);
 
@@ -170,7 +173,8 @@ public class DealService {
     }
 
     public Deal verifiedDeal(Long dealId) {
-        return dealRepository.findById(dealId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND DEAL"));
+        return dealRepository.findById(dealId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.NOT_FOUND_DEAL));
     }
 
 }
