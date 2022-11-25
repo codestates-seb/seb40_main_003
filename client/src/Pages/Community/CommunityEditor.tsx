@@ -50,10 +50,9 @@ const CommunityEditor = () => {
 
   const onValid = async (data: CommunityEditorForm) => {
     const formData = new FormData();
-    formData.append("images", data.file);
     const postDto = JSON.stringify({ title: data.title, content: data.content });
+    formData.append("images", data.images);
     formData.append("postDto", new Blob([postDto],{type:"application/json"}));
-    console.log(formData)
     try{axiosPrivate
       .post("/community", formData, {
         headers: {
@@ -62,11 +61,9 @@ const CommunityEditor = () => {
       })
       .then((res) => {
         console.log(res)
+        navigate(`/community/${res.data.communityId}`);
       })
-      .then(() => {
-        // 원래있던 페이지로 되돌림
-        navigate(from, { replace: true });
-      })}
+    }
       catch(err){
         console.error(err)
         navigate("/login")

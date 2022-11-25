@@ -83,10 +83,9 @@ const CommentInput = (props: props) => {
   const axiosPrivate = useAxiosPrivate();
   
   const handleSubmit = async () => {
-    axiosPrivate.post(`/community/${props.url}/comment`, {
-      content: value,
-    })
-    
+    axiosPrivate.post(`/community/${props.url}/comment`, JSON.stringify({
+      "content": String(value),
+    }))
   }
   
   return (

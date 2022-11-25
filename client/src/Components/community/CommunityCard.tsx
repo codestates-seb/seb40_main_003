@@ -9,6 +9,7 @@ export const CommunityWrapper = styled.footer`
 `;
 
 const CommunityCard = ({ data }: any) => {
+  console.log(data)
   return (
     <ColumnWrapper>
       <SectionWrapper title={data.title} content={data.content} width={100}>
@@ -33,9 +34,10 @@ const CommunityCard = ({ data }: any) => {
               </span> */}
             </RowWrapper>
             <ViewCounter
-              view={data.view}
-              renameLike='좋아요'
-              like={data.likes}
+              view={data.likeNum}
+              renameView="좋아요"
+              renameLike='댓글'
+              like={data.commentNum}
             />
           </CommunityWrapper>
         </>
