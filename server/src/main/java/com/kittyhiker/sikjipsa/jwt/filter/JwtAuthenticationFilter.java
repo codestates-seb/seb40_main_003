@@ -43,12 +43,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         catch (SecurityException | MalformedJwtException e) {
             request.setAttribute("exception", ExceptionCode.WRONG_TOKEN);
+            log.error("Wrong Token // token : {}", token);
         } catch (ExpiredJwtException e) {
             request.setAttribute("exception", ExceptionCode.EXPIRED_TOKEN);
+            log.error("EXPIRED Token // token : {}", token);
         } catch (UnsupportedJwtException e) {
             request.setAttribute("exception", ExceptionCode.UNSUPPORTED_TOKEN);
+            log.error("Unsupported Token // token : {}", token);
         } catch (IllegalArgumentException e) {
             request.setAttribute("exception", ExceptionCode.WRONG_TOKEN);
+            log.error("Wrong Token // token : {}", token);
         } catch (Exception e) {
             log.error("====================================================");
             log.error("JwtFilter - doFilterInternal() 오류 발생");
