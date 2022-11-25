@@ -28,10 +28,6 @@ const CommunityDetail = () => {
   const data = useFetch<communityDetailTypes>(`/community/${id}`)
   usePageTitle("커뮤니티")
 
-  const onSubmit = (form : {description: string;}) => {
-    console.log(form)
-  }
-
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>

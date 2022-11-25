@@ -44,9 +44,7 @@ export const CommunityCommentCard = (props: CommentCardTypes) => {
   const ref = useRef<any>(null);
   const [text, setText] = useState(content);
   const [editable, setEditable] = useState(false);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+
   const editOn = () => {
     setEditable(true);
   }
