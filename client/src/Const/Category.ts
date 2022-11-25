@@ -1,4 +1,4 @@
-export const ProductCategoryName = {
+export const CategoryName = {
     product: [
         {number:1, name: "대형 식물(100cm 내외)"},
         {number:1, name: "중형 식물(50cm 내외)"},
