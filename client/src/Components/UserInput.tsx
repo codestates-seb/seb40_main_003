@@ -72,7 +72,10 @@ type props = {
 
 const Textarea = styled.textarea`
   width: 100%;
-  height: 30px;
+  height: 35px;
+  border: none;
+  resize: none;
+  padding-right: 50px;
 `;
 
 const CommentInput = (props: props) => {
@@ -98,9 +101,8 @@ const CommentInput = (props: props) => {
           as = {"button"}
           width={30}
           height={20}
-          onClick={handleSubmit} 
-          // ()=>(handleSubmit) -> 콜백으로 하니까 버튼 안됨
-          className='ml--40 z-index-9999 cursor'
+          onClick={handleSubmit}
+          className='ml--45 z-index-9999 cursor'
           >
           작성
         </SigTag>
