@@ -25,7 +25,7 @@ const useAxiosPrivate = () => {
             response => response,
             async (error) => {
                 const prevRequest = error?.config;
-                if (error?.response?.status === 403 && !prevRequest?.sent){
+                if ((error?.response?.status === 403||error?.response?.status === 401) && !prevRequest?.sent){
                     console.log("403이라 가로챔")
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
