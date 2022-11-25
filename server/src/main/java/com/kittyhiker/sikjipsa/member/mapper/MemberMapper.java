@@ -20,7 +20,7 @@ public interface MemberMapper {
 
         MemberResponseDto.MemberResponseDtoBuilder memberResponseDto = MemberResponseDto.builder();
 
-        memberResponseDto.memberId(member.getId());
+        memberResponseDto.memberId(member.getMemberId());
         memberResponseDto.nickname( member.getNickname() );
         memberResponseDto.image(imageUrl);
 

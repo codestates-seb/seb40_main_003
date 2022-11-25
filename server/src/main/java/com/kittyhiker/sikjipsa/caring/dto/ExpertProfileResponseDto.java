@@ -37,6 +37,8 @@ public class ExpertProfileResponseDto {
 
 	private List<TechTagDto> techTags;
 
+//	private List<AreaTagDto> areaTags;
+
 	private List<ExpertReviewDto> expertReviews;
 
 	private ImageDto image;

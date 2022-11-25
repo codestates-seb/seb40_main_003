@@ -51,7 +51,7 @@ public class MemberProfileService {
 	}
 
 	public Member patchProfile(Member member, MultipartFile multipartFile) {
-		Optional<Member> optionalMember = memberRepository.findById(member.getId());
+		Optional<Member> optionalMember = memberRepository.findById(member.getMemberId());
 		Member findMember = optionalMember.orElseThrow(() ->
 				new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 

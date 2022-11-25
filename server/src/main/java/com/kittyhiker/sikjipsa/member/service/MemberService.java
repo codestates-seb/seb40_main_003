@@ -45,7 +45,7 @@ public class MemberService {
 //        memberInfoRepository.save(newMemberInfo);
         MemberProfile memberProfile = MemberProfile.builder().member(savedUser).content("content").build();
         memberProfileRepository.save(memberProfile);
-        return savedUser.getId();
+        return savedUser.getMemberId();
     }
 
     public MemberLoginResponseDto login(MemberLoginDto memberLoginDto) {
@@ -55,15 +55,15 @@ public class MemberService {
 
         verifyPassword(member, findMember);
 
-        String accessToken = jwtTokenizer.createAccessToken(findMember.getId(), findMember.getEmail(), findMember.getRolesToList());
-        String refreshToken = jwtTokenizer.createRefreshToken(findMember.getId(), findMember.getEmail(), findMember.getRolesToList());
+        String accessToken = jwtTokenizer.createAccessToken(findMember.getMemberId(), findMember.getEmail(), findMember.getRolesToList());
+        String refreshToken = jwtTokenizer.createRefreshToken(findMember.getMemberId(), findMember.getEmail(), findMember.getRolesToList());
 
         tokenRepository.save(new RefreshToken(refreshToken));
 
         return MemberLoginResponseDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                .memberId(findMember.getId())
+                .memberId(findMember.getMemberId())
                 .nickname(findMember.getNickname()).build();
     }
 
@@ -81,7 +81,7 @@ public class MemberService {
         Member registerMember = verifyMember(userId);
         info.setMember(registerMember);
         MemberInformation savedInfo = memberInfoRepository.save(info);
-        return memberMapper.memberInfoToResponseDto(savedInfo, registerMember.getId()
+        return memberMapper.memberInfoToResponseDto(savedInfo, registerMember.getMemberId()
                 , registerMember.getNickname());
     }
 

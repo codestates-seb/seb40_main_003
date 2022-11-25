@@ -1,6 +1,7 @@
 package com.kittyhiker.sikjipsa.caring.dto;
 
 
+import com.kittyhiker.sikjipsa.caring.entity.AreaTag;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -39,7 +40,7 @@ public class ExpertProfileDto {
 
 	private List<TechTagDto> techTags;
 
-//	private List<AreaTag> areaTags = new ArrayList<>();
+	private List<AreaTag> areaTags;
 //
 //	private List<ExpertChat> expertChats = new ArrayList<>();
 }
