@@ -16,8 +16,10 @@ export const HeaderWrapper = styled.header`
   border-bottom: 1px solid var(--line-light-gray);
   background-color: var(--pure-white);
   position: fixed;
-  top: ${(props:{top?:number,mt?:number}) => (props.top ? props.top + "px" : 0)};
-  margin-top: ${(props:{top?:number,mt?:number}) => (props.mt ? props.mt + "px" : 0)};
+  top: ${(props: { top?: number; mt?: number }) =>
+    props.top ? props.top + "px" : 0};
+  margin-top: ${(props: { top?: number; mt?: number }) =>
+    props.mt ? props.mt + "px" : 0};
   z-index: 9999;
 `;
 const HeaderContent = styled.div`
@@ -46,35 +48,41 @@ const BackButton = () => {
   );
 };
 const PlaceHolder = styled.div`
-  width: 13px;
-  height: 18px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 `;
 
 const Header = () => {
   const { title } = useRecoilValue(currentPage);
   const { width } = useWindowSize();
   const url = () => {
-    let result =""
+    let result = "";
     switch (title) {
-      case "돌봄":result="caring";
-      break;
-      case "거래":result="product";
-      break;
-      case "커뮤니티":result="community";
-      break;
-      };
-      return result
+      case "돌봄":
+        result = "caring";
+        break;
+      case "거래":
+        result = "product";
+        break;
+      case "커뮤니티":
+        result = "community";
+        break;
     }
-    
-  
+    return result;
+  };
+
   return (
     <HeaderWrapper className="bold h4">
       <HeaderContent>
-        <BackButton />
-        <span className="display-none-pc h4 bold">{title}</span>
-        <Link to={`/search/${url()}`}>
-          <Search />
-        </Link>
+        <PlaceHolder>
+          <BackButton />
+          <span className="display-none-pc h4 bold">{title}</span>
+          <Link to={`/search/${url()}`}>
+            <Search />
+          </Link>
+        </PlaceHolder>
         {width !== undefined && width > 1024 ? <NavContent /> : null}
       </HeaderContent>
     </HeaderWrapper>

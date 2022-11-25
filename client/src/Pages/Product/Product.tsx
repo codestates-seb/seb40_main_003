@@ -20,19 +20,20 @@ import { ErrorBoundary } from "react-error-boundary";
 const productQueryClient = new QueryClient();
 
 export const ProductMain = () => {
-  const { data, isLoading, error } = useQuery(["productQuery"], () => {
+  const { data, isLoading, error,isSuccess } = useQuery(["productQuery"], () => {
     const data = FetchByParams("/deal", { page: 1, size: 5 });
     return data;
     
   });
   if (isLoading) return <LoadingSkeleton />;
   if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
-  console.log(data);
+  if(isSuccess) console.log(data.data.data);
+  
 
   return (
     <>
       {data &&
-        data.data.map((e: ProductPreviewMappingType) => {
+        data.data.data.map((e: ProductPreviewMappingType) => {
           return (
             <Link key={e.dealId} to={`/product/${e.dealId}`}>
               <ProductCard data={e} />
