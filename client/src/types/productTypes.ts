@@ -1,25 +1,31 @@
 export type ProductPreviewType = {
-  data: [ProductPreviewMappingType];
-  pageInfo: {
-    page: number;
-    size: number;
-    totalPages: number;
-    totalElements: number;
+  data: {  
+    data: [ProductPreviewMappingType];
+      pageInfo: {
+        page: number;
+        size: number;
+        totalPages: number;
+        totalElements: number;
   };
+}
 };
 export interface ProductPreviewMappingType {
-  area: number;
-  category: number;
-  content: string;
-  createdAt: string;
-  dealId: number;
-  images: [string];
-  memberLikeNum: number;
-  modifiedAt: string;
-  price: number;
-  state: number;
-  title: string;
-  view: number;
+  dealId: number,
+  title: string,
+  content : string,
+  view: number,
+  price: number,
+  createdAt: string,
+  modifiedAt: string,
+  category: number,
+  state: number, 
+  likeNum: number,
+  images: [
+    {
+      imgUrl: string
+    }
+  ],
+      area: number
 }
 
 export type ProductDetailType = {
@@ -28,20 +34,31 @@ export type ProductDetailType = {
 
 // 프로덕트 디테일의 내용
 export type ProductDetailDataType = {
-  area: number;
-  category: number;
-  content: string
-  createdAt: string
-  dealId: number;
+  dealId: number,
+  title: string,
+  content : string,
+  view: number,
+  price: number,
+  createdAt: string,
+  modifiedAt: string,
+  state:number,
+  likeNum: number,
   images: [
-    string
-  ];
-  memberLikeNum: number;
-  modifiedAt: string;
-  price: number;
-  state: number;
-  title: string
-  view: number;
+    {    
+      imgUrl:string
+    }
+  ],
+  area: number,
+  member: {
+    memberId: number,
+    nickname: string,
+    image: {
+      imageId: string,
+      imgUrl: string,
+      isRepImg: string
+    }
+  }
+
 };
 
 // 

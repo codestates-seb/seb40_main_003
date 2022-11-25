@@ -30,7 +30,7 @@ const ProductCard = (props:props) => {
       <RowWrapper>
         <ImageWrapper
           size={"100"}
-          src={data.images[0]}
+          src={data.images[0].imgUrl}
           alt={`상품명 ${data.title}의 대표이미지`}
           loading="lazy"
           className={data.state === 0 ? "soldOut" : ""}
@@ -49,7 +49,7 @@ const ProductCard = (props:props) => {
           <SpaceBetween>
             <Price className="bold">{data.price.toLocaleString()}원</Price>
             <SpaceEnd>
-              <ViewCounter view={data.view} like={data.memberLikeNum} />
+              <ViewCounter view={data.view} like={data.likeNum} />
             </SpaceEnd>
           </SpaceBetween>
         </DescriptionColumnWrapper>

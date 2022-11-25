@@ -1,4 +1,5 @@
 export const ProductCategoryConst = [
+    {number:0, name: "카테고리 선택"},
     {number:1, name: "대형 식물(100cm 내외)"},
     {number:2, name: "중형 식물(50cm 내외)"},
     {number:3, name: "소형 식물(30cm 이하)"},
@@ -11,6 +12,7 @@ export const ProductCategoryConst = [
 ]
 
 export const CareCategoryConst = [
+    {number:0, name: "카테고리 선택"},
     {number:1, name: "물 주기"},
     {number:2, name: "분갈이"},
     {number:3, name: "화병 관리"},
