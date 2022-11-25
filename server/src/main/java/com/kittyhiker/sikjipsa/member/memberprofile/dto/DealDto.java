@@ -18,7 +18,7 @@ public class DealDto {
 
 	private int price;
 
-	private int likes;
+	private int likeNum;
 
 	//private int category;
 
