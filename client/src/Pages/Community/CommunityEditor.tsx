@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { FieldErrors, useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import {
   MainContentContainer,
@@ -7,10 +6,9 @@ import {
   MainRightWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
+import usePageTitle from "../../Hooks/usePageTitle";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
-import usePageTitle from "../../Hooks/usePageTitle";
-import { axiosPrivate } from "../../Hooks/api";
 import { useRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
@@ -20,58 +18,62 @@ const ConfirmWrapper = styled.span`
   justify-content: row;
 `;
 
+type Props = {};
+
 interface CommunityEditorForm {
   title: string;
   content: string;
-  images: string;
+  image: File;
   errors?: string;
   file: any;
 }
 
-const CommunityEditor = () => {
-  const [user, setUser] = useRecoilState(userState);
-  const [error, setErrMsg] = useState("");
-  usePageTitle("커뮤니티 글 쓰기");
-
+const CommunityEditor = (props: Props) => {
+  const axiosPrivate = useAxiosPrivate();
+  // const [user, setUser] = useRecoilState(userState);
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<CommunityEditorForm>({
     mode: "onChange",
   });
 
+  const onInValid = (errors: FieldErrors) => {};
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  const [auth, setAuth] = useRecoilState(userState);
-  const axiosPrivate = useAxiosPrivate();
 
   const onValid = async (data: CommunityEditorForm) => {
+    console.log(data);
+    
     const formData = new FormData();
-    const postDto = JSON.stringify({ title: data.title, content: data.content });
-    formData.append("images", data.images);
+    const postDto = JSON.stringify({ 
+      title: data.title,
+      image: data.image,
+      content: data.content });
+
+    formData.append("image", data.image);
     formData.append("postDto", new Blob([postDto],{type:"application/json"}));
-    try{axiosPrivate
+
+
+      axiosPrivate
       .post("/community", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
-        },
+          "Content-Type": "multipart/form-data"
+        }
       })
       .then((res) => {
-        console.log(res)
         navigate(`/community/${res.data.communityId}`);
-      })
+        navigate(from, {replace: true});
+      }).catch ((err)=>{});
     }
-      catch(err){
-        console.error(err)
-        navigate("/login")
-      };
-  };
+  
+  usePageTitle("커뮤니티 글 쓰기");
+
 
   return (
-    <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid)}>
+    <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid, onInValid)}>
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>
           <>
@@ -98,24 +100,23 @@ const CommunityEditor = () => {
         <SectionWrapper>
           <>
             <input
-              className="images"
-              {...register("images")}
-              id="images"
+              className="image"
+              {...register("image")}
+              id=""
               type="file"
               multiple
             />
-            <p className="font-alert-red sub">{errors.images?.message}</p>
+            <p className="font-alert-red sub">{errors.image?.message}</p>
           </>
         </SectionWrapper>
 
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <input
+            <textarea
               className="content"
               {...register("content", {
                 required: true,
               })}
-              type="content"
               placeholder="글쓰기"
             />
             <p className="font-alert-red sub">{errors.content?.message}</p>
@@ -129,7 +130,6 @@ const CommunityEditor = () => {
             욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
           </p>
         </ConfirmWrapper>
-        {error && <p>{error}</p>}
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>

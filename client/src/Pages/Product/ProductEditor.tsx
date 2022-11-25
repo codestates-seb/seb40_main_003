@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-// import React, { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import {
@@ -9,12 +8,11 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { userState } from "../../Recoil/atoms/user";
-import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import {ProductCategoryConst, CareCategoryConst} from "../../Const/Category";
+import {ProductCategoryConst } from "../../Const/Category";
 
 const ConfirmWrapper = styled.span`
   display: flex;
@@ -34,22 +32,18 @@ interface ProductEditorForm {
 
 const ProductEditor = (props: Props) => {
   const axiosPrivate = useAxiosPrivate()
-  const [user, setUser] = useRecoilState(userState);
+  // const [user, setUser] = useRecoilState(userState);
   const {
     register,
     handleSubmit,
-    setFocus,
     formState: { errors },
   } = useForm<ProductEditorForm>({
     mode: "onChange",
   });
   
-  useEffect(() => {
-    setFocus("title");
-  }, []);
+
 
   const onInValid = (errors: FieldErrors) => {};
-  usePageTitle("거래 글 쓰기");
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -57,25 +51,32 @@ const ProductEditor = (props: Props) => {
   const onValid = async (data: ProductEditorForm) => {
     console.log(data);
 
+    const formData = new FormData();
+    const postDto = JSON.stringify({ 
+      title: data.title,
+      image: data.image,
+      category: data.category,
+      price: data.price,
+      content: data.content});
+
+      formData.append("image", data.image);
+      formData.append("postDto", new Blob([postDto],{type:"application/json"}));
+  
       axiosPrivate
         .post("/deal", {
-          title: data.title,
-          image: data.image,
-          category: data.category,
-          price: data.price,
-          content: data.content,
-        },{headers:{"Content-Type":"multipart/form-data"}})
-        .then((res) => {
-          // 전역상태로 로그인 관련정보, 토큰 받아야함
-          setUser(res.data);
+          headers:{
+            "Content-Type":"multipart/form-data"
+          }
         })
-        .then(() => {
-          // 원래있던 페이지로 되돌림
-          navigate(from, { replace: true });
-        }).catch ((err)=>{})
-};
+        .then((res) => {
+        navigate(`/deal/${res.data.dealId}`);
+        navigate(from, {replace: true});
+      }).catch ((err)=>{});
+    }
 
-  return (
+usePageTitle("거래 글 쓰기");
+
+return (
     <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid, onInValid)}>
       <MainCenterWrapper>
           <SectionWrapper width={100} borderNone={true}>
@@ -108,6 +109,7 @@ const ProductEditor = (props: Props) => {
                 id="image"
                 type="file" multiple
               />
+              <label htmlFor="image" className="cursor"> </label>
               <p className="font-alert-red sub">{errors.image?.message}</p>
             </>
           </SectionWrapper>
@@ -137,12 +139,11 @@ const ProductEditor = (props: Props) => {
           </SectionWrapper>
           <SectionWrapper width={100} borderNone={true}>
             <>
-              <input
+              <textarea
                 className="content"
                 {...register("content", {
                   required: true,
                 })}
-                type="content"
                 placeholder="글쓰기"
               />
               <p className="font-alert-red sub">{errors.content?.message}</p>

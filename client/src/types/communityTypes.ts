@@ -73,7 +73,6 @@ export type communityDetailTypes = {
   ];
 };
 
-
 // 추가 조회: 내 게시글
 export type CommunityMyPreviewType = {
   data : [
