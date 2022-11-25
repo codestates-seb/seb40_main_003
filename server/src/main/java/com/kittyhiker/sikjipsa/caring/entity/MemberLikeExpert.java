@@ -13,7 +13,7 @@ public class MemberLikeExpert {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_like_expert_id")
-	private Long id;
+	private Long memberLikeExpertId;
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")

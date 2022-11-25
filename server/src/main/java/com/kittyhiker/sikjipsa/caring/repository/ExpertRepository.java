@@ -1,11 +1,14 @@
 package com.kittyhiker.sikjipsa.caring.repository;
 
 import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ExpertRepository extends JpaRepository<ExpertProfile, Long> {
+	Page<ExpertProfile> findByTechTags_TechTagNameContaining(String keyword, Pageable pageable);
 
 	//@Query("select b from ExpertProfile b where b.title like concat('%',:q,'%')")
 //	@Query("select distinct a from expert_profile a join a.tech_tags b where b.tech_tag_name like concat('%',:q,'%')")

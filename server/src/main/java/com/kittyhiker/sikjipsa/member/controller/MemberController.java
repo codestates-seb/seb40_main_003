@@ -40,8 +40,8 @@ public class MemberController {
     }
 
     @PostMapping("/users/refresh")
-    public ResponseEntity requestRefresh(@RequestHeader("Authorization") String token) {
-        TokenDto tokenDto = memberService.reissueToken(token);
+    public ResponseEntity requestRefresh(@RequestBody RefreshTokenDto token) {
+        TokenDto tokenDto = memberService.reissueToken(token.getRefreshToken());
         return new ResponseEntity(tokenDto, HttpStatus.CREATED);
     }
 

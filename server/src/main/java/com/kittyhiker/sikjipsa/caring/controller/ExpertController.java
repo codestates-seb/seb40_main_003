@@ -58,18 +58,19 @@ public class ExpertController {
 	}
 
 	@GetMapping
-	public ResponseEntity getExperts(@Positive @RequestParam int page, @Positive @RequestParam int size) {
-		Page<ExpertProfile> pageExpertProfile = expertService.getExperts(page - 1, size);
-		List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
-		return new ResponseEntity<>(new MultiResponseDto<>(expertMapper.toExpertResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
+	public ResponseEntity getExperts(@RequestParam(required = false) String keyword,
+									 @Positive @RequestParam int page,
+									 @Positive @RequestParam int size) {
+		if (keyword != null) {
+			Page<ExpertProfile> pageExpertProfile = expertService.getExpertsByKeyword(keyword, page - 1, size);
+			List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
+			return new ResponseEntity<>(new MultiResponseDto<>(expertMapper.toExpertResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
+		} else {
+			Page<ExpertProfile> pageExpertProfile = expertService.getExperts(page - 1, size);
+			List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
+			return new ResponseEntity<>(new MultiResponseDto<>(expertMapper.toExpertResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
+		}
 	}
-
-//	@GetMapping("search")
-//	public ResponseEntity getExpertProfilesByKeyword(@RequestParam String keyword, @Positive @RequestParam int page, @Positive @RequestParam int size) {
-//		Page<ExpertProfile> pageExpertProfile = expertProfileService.getExpertProfilesByKeyword(keyword, page - 1, size);
-//		List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
-//		return new ResponseEntity<>(new MultiResponseDto<>(expertProfileMapper.toExpertProfileResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
-//	}
 
 	@DeleteMapping("/{expert-id}")
 	public ResponseEntity deleteExpert(@PathVariable("expert-id") @Positive Long expertId) {
