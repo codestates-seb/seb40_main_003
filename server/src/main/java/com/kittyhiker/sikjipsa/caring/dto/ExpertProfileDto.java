@@ -23,7 +23,7 @@ public class ExpertProfileDto {
 
 	private String detailContent;
 
-	private int price;
+	private String price;
 
 	private String address;
 

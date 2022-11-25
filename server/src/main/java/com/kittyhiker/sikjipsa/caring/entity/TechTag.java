@@ -14,7 +14,7 @@ public class TechTag {
 	@Column(name = "tech_tag_id")
 	private Long techTagId;
 
-	private String TechTagName;
+	private String techTagName;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "expert_profile_id")

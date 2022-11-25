@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MemberLikeExpertResponseDto {
-	private Long id;
+	private Long memberLikeExpertId;
 
 	private MemberDto3 member;
 

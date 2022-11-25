@@ -18,6 +18,7 @@ import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -188,11 +189,11 @@ public class ExpertService {
 		return expertRepository.findAll(PageRequest.of(page, size, Sort.by("expertId").descending()));
 	}
 
-//	public Page<ExpertProfile> getExpertProfilesByKeyword(String keyword, int page, int size) {
-//		Pageable pageable = PageRequest.of(page, size, Sort.by("id").descending());
-//		Page<ExpertProfile> expertProfiles = expertProfileRepository.findByTechTagNameContainingOrderByIdDesc(keyword, pageable);
-//		return null;
-//	}
+	public Page<ExpertProfile> getExpertsByKeyword(String keyword, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("expertId").descending());
+		Page<ExpertProfile> expertProfiles = expertRepository.findByTechTags_TechTagNameContaining(keyword, pageable);
+		return expertProfiles;
+	}
 
 	public void deleteExpert(Long expertId) {
 		ExpertProfile expertProfile = findVerifiedExpert(expertId);
@@ -221,7 +222,7 @@ public class ExpertService {
 	}
 
 	public Page<MemberLikeExpert> getExpertLikes(int page, int size) {
-		return memberLikeExpertRepository.findAll(PageRequest.of(page, size, Sort.by("id").descending()));
+		return memberLikeExpertRepository.findAll(PageRequest.of(page, size, Sort.by("memberLikeExpertId").descending()));
 	}
 
 	public void deleteExpertLike(Long expertId, Long memberLikeExpertId, Long memberId) {

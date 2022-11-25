@@ -32,6 +32,7 @@ public class MemberProfileController {
 	private final MemberMapper memberMapper;
 
 
+	// 테스트용
 	@PostMapping
 	public ResponseEntity postProfile(@RequestBody MemberInfoDto memberInfoDto,
 									  @RequestHeader("Authorization") String token) {
