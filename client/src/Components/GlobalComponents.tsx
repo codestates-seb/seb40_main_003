@@ -3,7 +3,6 @@ import { getDateAgo, overKillo } from "../utils/controller";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import { UserStateType } from "../Recoil/atoms/user";
 import { useEffect, useRef, useState } from "react";
-import { CategoryName } from "../Const/Category";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`

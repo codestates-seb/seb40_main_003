@@ -19,7 +19,7 @@ import { ErrorBoundary } from "react-error-boundary";
 // 쿼리클라이언트
 const productQueryClient = new QueryClient();
 
-const ProductMain = () => {
+export const ProductMain = () => {
   const { data, isLoading, error } = useQuery(["productQuery"], () => {
     const data = FetchByParams("/deal", { page: 1, size: 5 });
     return data;
