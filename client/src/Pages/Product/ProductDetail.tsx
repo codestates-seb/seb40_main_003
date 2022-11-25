@@ -43,7 +43,7 @@ const ProductDetail = () => {
           {data.images.map((e, i) => {
             return (
 
-                <CarouselImage src={e.imgUrl} alt={`${data.title}의 ${i}번째사진`} />
+                <CarouselImage src={e} alt={`${data.title}의 ${i}번째사진`} />
 
             );
           })}
