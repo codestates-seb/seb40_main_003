@@ -1,3 +1,4 @@
+// 거래 게시글 리스트 조회 / 검색
 export type ProductPreviewType = {
   data: {  
     data: [ProductPreviewMappingType];
@@ -24,11 +25,11 @@ export interface ProductPreviewMappingType {
       area: number
 }
 
+// 거래 게시글 상세 조회
 export type ProductDetailType = {
   data:[ProductDetailDataType]
 };
 
-// 프로덕트 디테일의 내용
 export type ProductDetailDataType = {
   dealId: number,
   title: string,
@@ -57,7 +58,7 @@ export type ProductDetailDataType = {
 
 };
 
-// 
+// 거래 찜 목록 조회
 export type ProductLikePreviewType = {
   data: [
     {
@@ -87,11 +88,13 @@ export type ProductLikePreviewType = {
   };
 };
 
+// 거래 게시글 찜 하기
 export type ProductLikeAddType = {
   memberLikeDealId: number;
   dealId: number;
 };
 
+// 거래 후기 작성
 export type DealReviewType = {
   dealReviewId: number;
   dealId: number;

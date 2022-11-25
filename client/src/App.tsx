@@ -10,7 +10,8 @@ import Login from "./Pages/User/Login";
 import Signup from "./Pages/User/Signup";
 
 import Setting from "./Pages/settingPage/SettingPage";
-import Bookmarks from "./Pages/settingPage/Bookmarks";
+import CareBookmarks from "./Pages/settingPage/CareBookmarks";
+import DealBookmarks from "./Pages/settingPage/DealBookmarks";
 import SalesHistory from "./Pages/settingPage/SalesHistory";
 import PurchaseHistory from "./Pages/settingPage/PurchaseHistory";
 import CaringHistory from "./Pages/settingPage/CaringHistory";
@@ -96,7 +97,8 @@ function App() {
           <Route>
             <Route path="/setting" element={<DefaultLayout />}>
               <Route index element={<Setting />} />
-              <Route path="bookmarks" element={<Bookmarks />} />
+              <Route path="carebookmarks" element={<CareBookmarks />} />
+              <Route path="dealbookmarks" element={<DealBookmarks />} />
               <Route path="sales-history" element={<SalesHistory />} />
               <Route path="purchase-history" element={<PurchaseHistory />} />
               <Route path="caring-history" element={<CaringHistory />} />

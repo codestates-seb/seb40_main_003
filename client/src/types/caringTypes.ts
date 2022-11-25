@@ -1,3 +1,4 @@
+// 돌봄 프로필 리스트 조회 / 검색
 export type caringPreviewTypes = {
   data: [caringPreviewDataTypes],
   pageInfo: {
@@ -53,6 +54,7 @@ export type caringPreviewDataTypes = {
             }
 }
 
+// 돌봄 프로필 상세 조회
 export type CareDetailTypes = {
   expertId: number,
   name: string,
@@ -104,3 +106,38 @@ export type CareDetailTypes = {
       isRepImg: string
     }
   }
+
+// 돌봄 프로필 찜 하기
+export type CareLikeAddType = {
+  memberLikeExpertId: number,
+  member:{
+      memberId: number,
+      nickname: string
+  },
+  "expertProfileId": 1
+}
+
+// 돌봄 찜 목록 조회
+export type CareLikeListType = {
+  data: [
+    {
+    memberLikeExpertId: number,
+    member:{
+        memberId: number,
+        nickname: string
+    },
+    expertProfileId: number
+    }
+  ]
+}
+
+// 돌봄 리뷰 작성
+export type CareReviewType = {
+  experSucessId: number,
+    expertId: number
+    writer: {
+        memberId: number,
+        nickname: string
+    },
+    content: string
+}

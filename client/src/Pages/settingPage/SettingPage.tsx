@@ -1,14 +1,12 @@
 import styled from "@emotion/styled";
 import { Link } from "react-router-dom";
-import { LoadingSpinner } from "../../Components/Loading";
 import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
-import useFetch from "../../Hooks/useFetch";
-
+import usePageTitle from "../../Hooks/usePageTitle";
 const ContentContainer = styled.div`
     
 `
@@ -18,6 +16,7 @@ const ContentWrapper = styled.div`
 `
 
 const SettingPage = () => {
+  usePageTitle("설정");
   // const data = useFetch("/");
   // return data !== undefined ? (
   return (
@@ -28,9 +27,14 @@ const SettingPage = () => {
             <></>
           </SectionWrapper>
           <ContentWrapper>
-            <Link to={"/setting/sales-history"}>
+            <Link to={"/setting/carebookmarks"}>
               <SectionWrapper>
-                <>찜 목록(2)</>
+                <>돌봄 전문가 찜 목록(2)</>
+              </SectionWrapper>
+            </Link>
+            <Link to={"/setting/dealbookmarks"}>
+              <SectionWrapper>
+                <>거래글 찜 목록(2)</>
               </SectionWrapper>
             </Link>
           </ContentWrapper>
