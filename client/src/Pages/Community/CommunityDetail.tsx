@@ -14,7 +14,7 @@ import {
   SectionWrapper
 } from "../../Components/Wrapper";
 import { userState } from "../../Recoil/atoms/user";
-import { communityDetailTypes } from "../../types/communityDetailTypes";
+import { communityDetailTypes } from "../../types/communityTypes";
 import { CommunityWrapper } from "../../Components/community/CommunityCard";
 import { Link } from "react-router-dom";
 import CommentInput from '../../Components/UserInput'
@@ -38,7 +38,7 @@ const CommunityDetail = () => {
           <ImageWrapper
             className='communityImage'
             size={"240"}
-            src={data.images[0]}
+            src={data.images[0].imgUrl}
             alt={`상품명 ${data.title}의 대표이미지`}
           />
         ) : null}
@@ -51,7 +51,7 @@ const CommunityDetail = () => {
           <ViewCounter
             view={data.view}
             renameLike='좋아요'
-            like={data.likes}
+            like={data.likeNum}
           />
         </CommunityWrapper>
         <CommentInput url={id} />
@@ -68,7 +68,6 @@ const CommunityDetail = () => {
               author={e.writer.memberId}
               user={user}
             />
-
           );
         })}
       </MainCenterWrapper>

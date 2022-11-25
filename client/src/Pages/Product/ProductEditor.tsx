@@ -113,20 +113,12 @@ const ProductEditor = (props: Props) => {
           </SectionWrapper>
           <SectionWrapper>
             <>
-            {/*손으로 짠 코드 */}
             <select {...register("category", { required: true })}>
               {ProductCategoryConst.map((e)=>{return(
                 <option value={e.number}>{e.name}</option>
               )})
               }
             </select>
-              {/*
-              컴포넌트 제작의 흔적...
-
-              <DropdownWrapper>
-                <DropdownOptions  value="대형 식물">
-                </DropdownOptions>
-              </DropdownWrapper>*/}
             </>
           </SectionWrapper>
 

@@ -13,13 +13,13 @@ import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { communityPreviewDataTypes } from "../../types/communityTypes";
+import { CommunityMyPreviewType } from "../../types/communityTypes";
 
 const communityQueryClient = new QueryClient();
 
 export const CommunityMain = () => {
   const { data, isLoading, error } = useQuery(["productQuery"], () => {
-    const data = FetchByParams("/community", { page: 1, size: 5 });
+    const data = FetchByParams("/community/my", { page: 1, size: 5 });
     return data;
   });
   if (isLoading) return <LoadingSkeleton />;
@@ -28,14 +28,15 @@ export const CommunityMain = () => {
   return (
     <>
       {data &&
-        data.data.data.map((e: communityPreviewDataTypes) => {
-          return (
-            <Link
-              to={`/community/${e.communityId}`}
-              key={"member" + e.communityId}
-            >
-              <CommunityCard data={e} />
-            </Link>
+        data.data.data.map((e: CommunityMyPreviewType) => {
+          return (<></>
+            // <Link
+            //   to={`/community/my${e.postId}`}
+            //   key={"member" + e.postId}
+            // >
+            //   log
+            //   <CommunityCard data={e} />
+            // </Link>
           );
         })}
     </>

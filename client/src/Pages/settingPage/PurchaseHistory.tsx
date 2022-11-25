@@ -20,7 +20,7 @@ const productQueryClient = new QueryClient();
 
 export const ProductMain = () => {
   const { data, isLoading, error,isSuccess } = useQuery(["productQuery"], () => {
-    const data = FetchByParams("/deal", { page: 1, size: 5 });
+    const data = FetchByParams("/deal/success", { page: 1, size: 5 });
     return data;
     
   });
@@ -34,7 +34,7 @@ export const ProductMain = () => {
       {data &&
         data.data.data.map((e: ProductPreviewMappingType) => {
           return (
-            <Link key={e.dealId} to={`/product/${e.dealId}`}>
+            <Link key={e.dealId} to={`/deal/success${e.dealId}`}>
               <ProductCard data={e} />
             </Link>
           );
