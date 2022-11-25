@@ -2,19 +2,21 @@ import { Outlet, Navigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userState } from "./Recoil/atoms/user";
 import Header from "./Components/Header";
-import useAxiosPrivate from "./Hooks/useAxiosPrivate";
+import SearchBar from "./Components/SearchBar";
+import { MainCenterWrapper, MainContentContainer } from "./Components/Wrapper";
+import { ErrorMessage } from "./Components/ErrorHandle";
+import { ErrorBoundary } from "react-error-boundary";
+import { QueryClient, QueryClientProvider } from "react-query";
 
-
-export const LogOutOnly=()=>{
+export const LogOutOnly = () => {
   const auth = useRecoilValue(userState);
   return !auth ? <Outlet /> : <Navigate to="/" />;
-}
+};
 
-export const  AuthProvider=()=>{
+export const AuthProvider = () => {
   const auth = useRecoilValue(userState);
-  const axiosPrivate=useAxiosPrivate()
-  return auth ? <Outlet /> : <Navigate to="/" />;
-}
+  return auth ? <Outlet /> : <Navigate to="/login" />;
+};
 
 export const HeaderLayout = () => {
   return (
@@ -28,11 +30,24 @@ export const HeaderLayout = () => {
 export const DefaultLayout = () => {
   return <Outlet />;
 };
+const searchQueryClient = new QueryClient();
 export const SearchLayout = () => {
   return (
     <>
-      <Outlet />
+      <SearchBar />
+      <MainContentContainer>
+        <MainCenterWrapper>
+          <ErrorBoundary
+            fallback={
+              <ErrorMessage content={"정보를 불러오는데 실패했습니다"} />
+            }
+          >
+            <QueryClientProvider client={searchQueryClient}>
+              <Outlet />
+            </QueryClientProvider>
+          </ErrorBoundary>
+        </MainCenterWrapper>
+      </MainContentContainer>
     </>
   );
 };
-

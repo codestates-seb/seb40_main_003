@@ -18,7 +18,7 @@ import { communityPreviewDataTypes } from "../../types/communityTypes";
 
 const communityQueryClient = new QueryClient();
 
-const CommunityMain = () => {
+export const CommunityMain = () => {
   const { data, isLoading, error } = useQuery(["productQuery"], () => {
     const data = FetchByParams("/community", { page: 1, size: 5 });
     return data;

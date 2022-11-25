@@ -49,7 +49,7 @@ const ProductCard = (props:props) => {
           <SpaceBetween>
             <Price className="bold">{data.price.toLocaleString()}원</Price>
             <SpaceEnd>
-              <ViewCounter view={data.view} like={data.memberLikeNum} />
+              <ViewCounter view={data.view} like={data.likeNum} />
             </SpaceEnd>
           </SpaceBetween>
         </DescriptionColumnWrapper>

@@ -61,7 +61,7 @@ const ProductDetail = () => {
         
         <h1 className="h4 bold mt-16">{data.title}</h1>
         <span className="sub font-gray mb-8">{getDateAgo(data.createdAt)}</span>
-        <ViewCounter like={data.memberLikeNum} view={data.view} />
+        <ViewCounter like={data.likeNum} view={data.view} />
         <p className="mt-16">{data.content}</p>
       </MainCenterWrapper>
 

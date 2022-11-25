@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 // 이미지의 경우, 상단에 변수로 Import해서 사용할 시 자동으로 경로를 관리해줍니다
 // 아래와같이 변수로 import시 이미지의 경로를 string 형태로 리턴해줍니다
-import { Link, Outlet, useParams, NavLink } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 import { SubText } from "./GlobalComponents";
 import { ReactComponent as Home } from "../images/homeIcon.svg";
 import { ReactComponent as Community } from "../images/communityIcon.svg";

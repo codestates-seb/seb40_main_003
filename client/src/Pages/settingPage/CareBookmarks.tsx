@@ -6,17 +6,15 @@ import {
 } from "../../Components/Wrapper";
 import useFetch from "../../Hooks/useFetch";
 
-const BookMarks = () => {
-  // const data = useFetch("/");
-
-  // return data!==undefined?(
-  return (
+const CareBookmarks = () => {
+  const data = useFetch("/");
+  return data!==undefined?
+  (
     <MainContentContainer>
       <MainCenterWrapper>북마크 컴포넌트</MainCenterWrapper>
       <MainRightWrapper></MainRightWrapper>
     </MainContentContainer>
-  );
-  // ):<LoadingSpinner/>
+  ):<LoadingSpinner/>
 };
 
-export default BookMarks;
+export default CareBookmarks;

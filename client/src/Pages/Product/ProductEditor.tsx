@@ -10,11 +10,12 @@ import {
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate, useLocation } from "react-router-dom";
-import { axiosPrivate } from "../../Hooks/api";
 import { userState } from "../../Recoil/atoms/user";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import {ProductCategoryConst, CareCategoryConst} from "../../Const/Category";
+
 const ConfirmWrapper = styled.span`
   display: flex;
   justify-content: row;
@@ -60,6 +61,7 @@ const ProductEditor = (props: Props) => {
         .post("/deal", {
           title: data.title,
           image: data.image,
+          category: data.category,
           price: data.price,
           content: data.content,
         },{headers:{"Content-Type":"multipart/form-data"}})
@@ -109,9 +111,23 @@ const ProductEditor = (props: Props) => {
               <p className="font-alert-red sub">{errors.image?.message}</p>
             </>
           </SectionWrapper>
-
           <SectionWrapper>
-            <>카테고리 선택</>
+            <>
+            {/*손으로 짠 코드 */}
+            <select {...register("category", { required: true })}>
+              {ProductCategoryConst.map((e)=>{return(
+                <option value={e.number}>{e.name}</option>
+              )})
+              }
+            </select>
+              {/*
+              컴포넌트 제작의 흔적...
+
+              <DropdownWrapper>
+                <DropdownOptions  value="대형 식물">
+                </DropdownOptions>
+              </DropdownWrapper>*/}
+            </>
           </SectionWrapper>
 
           <SectionWrapper width={100} borderNone={true}>

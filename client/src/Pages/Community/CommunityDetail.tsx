@@ -17,7 +17,7 @@ import { userState } from "../../Recoil/atoms/user";
 import { communityDetailTypes } from "../../types/communityDetailTypes";
 import { CommunityWrapper } from "../../Components/community/CommunityCard";
 import { Link } from "react-router-dom";
-import CommentInput from '../../Components/UserInput';
+import CommentInput from '../../Components/UserInput'
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
 import { getDateAgo } from "../../utils/controller";
@@ -27,10 +27,6 @@ const CommunityDetail = () => {
   const user = useRecoilValue(userState);
   const data = useFetch<communityDetailTypes>(`/community/${id}`)
   usePageTitle("커뮤니티")
-
-  const onSubmit = (form : {description: string;}) => {
-    console.log(form)
-  }
 
   return data !== undefined ? (
     <MainContentContainer>
@@ -58,7 +54,7 @@ const CommunityDetail = () => {
             like={data.likes}
           />
         </CommunityWrapper>
-        <CommentInput onSubmit={onSubmit}/>
+        <CommentInput url={id} />
         {data.comments.map((e:any) => {
           return (
             <CommentCard

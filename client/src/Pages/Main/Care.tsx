@@ -15,14 +15,16 @@ import { LoadingSkeleton } from "../../Components/Loading";
 
 const careQueryClient = new QueryClient();
 
-const CareMain = () => {
+export const CareMain = () => {
   const { data, isLoading, error } = useQuery(["careQuery"], () => {
-    const data = FetchByParams("/experts", { page: 1, size: 5 });
+    const data = FetchByParams("/experts", { keyword:"tag-id", page: 1, size: 5 });
     return data;    
   });
   if (isLoading) return <LoadingSkeleton />;
   if (error) {console.log(data)
     return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;}
+    console.log(data);
+    
   return (
     <>
       {data &&

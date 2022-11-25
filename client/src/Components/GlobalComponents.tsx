@@ -240,6 +240,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
   );
 };
 
+
 // 프로필 반려식물
 export const ProfilePlantCardWrapper = styled.div`
   max-width: 250px;
