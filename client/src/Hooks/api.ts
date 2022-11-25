@@ -1,3 +1,4 @@
+import secureLocalStorage from "react-secure-storage";
 import axios from "../../node_modules/axios/index";
 
 // axios.defaults.baseURL = "https://fbc9-121-162-186-109.jp.ngrok.io";
@@ -12,7 +13,7 @@ axios.defaults.xsrfHeaderName = "x-CSRFToken";
 // 쿠키를 싣고가야하는 요청 axios
 export const axiosPrivate = axios.create({
   baseURL: BASE_URL,
-  headers: { "Content-Type": "application/json" },
+  headers: { "Content-Type": "application/json","Authorization":`Bearer ${secureLocalStorage.getItem("accessToken")}` },
   withCredentials: true,
 });
 
