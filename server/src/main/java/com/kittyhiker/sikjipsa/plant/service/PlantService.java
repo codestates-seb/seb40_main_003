@@ -81,8 +81,8 @@ public class PlantService {
 		Optional.ofNullable(plant.getType())
 				.ifPresent(findPlant::setType);
 
-		Optional.of(plant.getYears())
-				.ifPresent(findPlant::setYears);
+		Optional.of(plant.getDays())
+				.ifPresent(findPlant::setDays);
 
 		if (multipartFile != null) {
 			if (findPlant.getImage() != null) {

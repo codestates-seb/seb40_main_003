@@ -17,9 +17,9 @@ public interface PlantMapper {
 	List<PlantResponseDto> toPlantResponseDtos(List<Plant> plants);
 
 	// memberProfile
-	@Mapping(target = "plantName", source = "name")
-	@Mapping(target = "plantAge", source = "years")
-	@Mapping(target = "plantType", source = "type")
-	@Mapping(target = "plantPhoto", source = "image")
-	PlantResponseDto2 toPlantResponseDto2(Plant plant);
+//	@Mapping(target = "plantName", source = "name")
+//	@Mapping(target = "plantAge", source = "years")
+//	@Mapping(target = "plantType", source = "type")
+//	@Mapping(target = "plantPhoto", source = "image")
+//	PlantResponseDto2 toPlantResponseDto2(Plant plant);
 }
