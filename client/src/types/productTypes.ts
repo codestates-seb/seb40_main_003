@@ -20,11 +20,7 @@ export interface ProductPreviewMappingType {
   category: number,
   state: number, 
   likeNum: number,
-  images: [
-    {
-      imgUrl: string
-    }
-  ],
+  images: [string],
       area: number
 }
 
