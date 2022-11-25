@@ -3,7 +3,7 @@ import { getDateAgo, overKillo } from "../utils/controller";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import { UserStateType } from "../Recoil/atoms/user";
 import { useEffect, useRef, useState } from "react";
-import { ProductPreviewMappingType, ProductPreviewType } from "../types/productTypes";
+import { CategoryName } from "../Const/Category";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -254,30 +254,24 @@ export const DropdownOptions = styled.option`
 
 `
 type DropdownTypes = {
-  category: number;
-  value: string;
+  type: string;
+  number: number;
+  name: string;
 }
 
 export const Dropdown = (props: DropdownTypes) => {
-  const {value, category} = props;
+  const {number, name} = props;
   return (
-<DropdownWrapper>
-  <DropdownOptions>
-    category={category}
-    value={value}
-  </DropdownOptions>
-</DropdownWrapper>
-    
 // 배열로 오면 쓸 수 있는 코드
-  //   <>
-  //   {category ? (
-  //     <DropdownWrapper>
-  //       {category.map((e:ProductPreviewMappingType) => {
-  //         return <DropdownOptions key={e.category}>{value}</DropdownOptions>
-  //       })}
-  //   </DropdownWrapper>
-  // ) : null}
-  //   </>
+    <>
+    {[] ? (
+      <DropdownWrapper>
+        {[].map((e:DropdownTypes) => {
+          return <DropdownOptions key={e.number}>{name}</DropdownOptions>
+        })}
+    </DropdownWrapper>
+  ) : null}
+    </>
   )
 }
 
