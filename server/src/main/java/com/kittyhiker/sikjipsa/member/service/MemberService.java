@@ -1,5 +1,7 @@
 package com.kittyhiker.sikjipsa.member.service;
 
+import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
+import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.jwt.dto.TokenDto;
 import com.kittyhiker.sikjipsa.jwt.entity.RefreshToken;
 import com.kittyhiker.sikjipsa.jwt.repository.TokenRepository;
@@ -31,7 +33,9 @@ public class MemberService {
     private final MemberProfileRepository memberProfileRepository;
 
     public Long signUpUser(MemberSignupDto signupDto) {
-        if (!checkIfUserExists(signupDto.getEmail())) throw new IllegalArgumentException("ALREADY EXSITS EMAIL");
+        if (!checkIfUserExists(signupDto.getEmail())) {
+            throw new BusinessLogicException(ExceptionCode.ALREAD_EXISTS_EMAIL);
+        }
 
         Member member = memberMapper.memberSignupDtoToMember(signupDto);
         member.encryptingPassword(passwordEncoder);
@@ -47,7 +51,7 @@ public class MemberService {
     public MemberLoginResponseDto login(MemberLoginDto memberLoginDto) {
         Member member = memberMapper.memberLoginDtoToMember(memberLoginDto);
         Member findMember = memberRepository.findUserByEmail(member.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("INVALID_EMAIL"));
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_EMAIL));
 
         verifyPassword(member, findMember);
 
@@ -82,14 +86,15 @@ public class MemberService {
     }
 
     public TokenDto reissueToken(String refreshToken) {
-        String[] tokenArr = refreshToken.split(",");
-        refreshToken = tokenArr[1];
+//        String[] tokenArr = refreshToken.split(",");
+//        refreshToken = tokenArr[1];
 
         tokenRepository.findRefreshTokenByValue(refreshToken)
-                .orElseThrow(() -> new IllegalArgumentException("INVALID REFRESHTOKEN"));
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN));
 
         Claims claims = jwtTokenizer.parseRefreshToken(refreshToken);
-        Long userId = (Long) claims.get("userId");
+
+        Long userId = Long.valueOf((Integer)claims.get("userId"));
         List roles = (List) claims.get("roles");
         String email = claims.getSubject();
 
@@ -105,12 +110,13 @@ public class MemberService {
     }
 
     public Member verifyMember(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+        return memberRepository.findById(memberId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
     private void verifyPassword(Member user, Member findUser) {
         if (!passwordEncoder.matches(user.getPassword(), findUser.getPassword())) {
-            throw new IllegalArgumentException("INVALID PASSWORD");
+            throw new BusinessLogicException(ExceptionCode.WRONG_PASSWORD);
         }
     }
 

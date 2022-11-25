@@ -6,6 +6,8 @@ import com.kittyhiker.sikjipsa.community.enitity.Community;
 import com.kittyhiker.sikjipsa.community.mapper.CommentMapper;
 import com.kittyhiker.sikjipsa.community.repository.CommentRepository;
 import com.kittyhiker.sikjipsa.community.repository.CommunityRepository;
+import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
+import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
 import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
@@ -84,15 +86,18 @@ public class CommentService {
     }
 
     public Comment verifiedComment(Long commentId) {
-        return commentRepository.findById(commentId).orElseThrow(()-> new IllegalArgumentException("NOT FOUND COMMENT"));
+        return commentRepository.findById(commentId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.NOT_FOUND_COMMENT));
     }
 
     public Community verifiedCommunity(Long communityId) {
-        return communityRepository.findById(communityId).orElseThrow(()-> new IllegalArgumentException("NOT FOUND COMMUNITY"));
+        return communityRepository.findById(communityId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.NOT_FOUND_COMMUNITY));
     }
 
     public Member verifiedMember(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow(()-> new IllegalArgumentException("NOT FOUND MEMBER"));
+        return memberRepository.findById(memberId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
     public Long getCommentNum(Community community) {

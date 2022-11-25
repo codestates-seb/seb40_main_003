@@ -14,6 +14,8 @@ import com.kittyhiker.sikjipsa.community.mapper.CommunityMapper;
 import com.kittyhiker.sikjipsa.community.repository.CommunityLikeRepository;
 import com.kittyhiker.sikjipsa.community.repository.CommunityRepository;
 import com.kittyhiker.sikjipsa.deal.dto.PageInfo;
+import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
+import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.image.dto.SavedImageDto;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
@@ -185,7 +187,7 @@ public class CommunityService {
         Community community = verifiedCommunity(communityId);
         Member member = verifiedMember(userId);
         if (communityLikeRepository.findByMemberAndCommunity(community, member).isPresent()) {
-            throw new IllegalArgumentException("ALREADY LIKE");
+            throw new BusinessLogicException(ExceptionCode.ALREADY_LIKE);
         }
         community.updateLike();
         Community savedCommunity = communityRepository.save(community);
@@ -197,7 +199,7 @@ public class CommunityService {
         Community community = verifiedCommunity(communityId);
         Member member = verifiedMember(userId);
         CommunityLike likeCommunity = communityLikeRepository.findByMemberAndCommunity(community, member)
-                .orElseThrow(() -> new IllegalArgumentException("NOT FOUND LIKE POST"));
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_LIKE_POST));
         communityLikeRepository.delete(likeCommunity);
         community.cancelLike();
         communityRepository.save(community);
@@ -210,10 +212,12 @@ public class CommunityService {
     }
 
     public Community verifiedCommunity(Long communityId) {
-        return communityRepository.findById(communityId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND COMMUNITY POST"));
+        return communityRepository.findById(communityId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.NOT_FOUND_COMMUNITY));
     }
 
     public Member verifiedMember(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+        return memberRepository.findById(memberId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 }
