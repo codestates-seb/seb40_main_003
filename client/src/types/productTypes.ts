@@ -1,64 +1,59 @@
 // 거래 게시글 리스트 조회 / 검색
 export type ProductPreviewType = {
-  data: {  
+  data: {
     data: [ProductPreviewMappingType];
-      pageInfo: {
-        page: number;
-        size: number;
-        totalPages: number;
-        totalElements: number;
+    pageInfo: {
+      page: number;
+      size: number;
+      totalPages: number;
+      totalElements: number;
+    };
   };
-}
 };
 export interface ProductPreviewMappingType {
-  dealId: number,
-  title: string,
-  content : string,
-  view: number,
-  price: number,
-  createdAt: string,
-  modifiedAt: string,
-  category: number,
-  state: number, 
-  likeNum: number,
-  images: [string],
-      area: number
+  dealId: number;
+  title: string;
+  content: string;
+  view: number;
+  price: number;
+  createdAt: string;
+  modifiedAt: string;
+  category: number;
+  state: number;
+  likeNum: number;
+  images: [string];
+  area: number;
 }
 
 // 거래 게시글 상세 조회
 export type ProductDetailType = {
-  data:[ProductDetailDataType]
+  data: [ProductDetailDataType];
 };
 
 export type ProductDetailDataType = {
-  dealId: number,
-  title: string,
-  content : string,
-  view: number,
-  price: number,
-  createdAt: string,
-  modifiedAt: string,
-  state:number,
-  likeNum: number,
-  images: [
-    {    
-      imgUrl:string
-    }
-  ],
-  area: number,
+  dealId: number;
+  title: string;
+  content: string;
+  view: number;
+  price: number;
+  createdAt: string;
+  modifiedAt: string;
+  state: number;
+  likeNum: number;
+  images: [string];
+  area: number;
   member: {
-    memberId: number,
-    nickname: string,
+    memberId: number;
+    nickname: string;
     image: {
-      imageId: string,
-      imgUrl: string,
-      isRepImg: string
-    }
-  }
-
+      imageId: string;
+      imgUrl: string;
+      isRepImg: string;
+    };
+  };
 };
 
-// 거래 찜 목록 조회
+//거래 찜 목록 조회
 export type ProductLikePreviewType = {
   data: [
     {

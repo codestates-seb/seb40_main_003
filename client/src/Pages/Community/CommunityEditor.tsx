@@ -46,14 +46,14 @@ const CommunityEditor = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const [auth, setAuth] = useRecoilState(userState);
-  const axiosPrivate = useAxiosPrivate()
+  const axiosPrivate = useAxiosPrivate();
 
   const onValid = async (data: CommunityEditorForm) => {
-    console.log(data);
-    const dto = JSON.stringify({ title: data.title, content: data.content });
     const formData = new FormData();
     formData.append("images", data.file);
-    formData.append("postDto", new Blob([dto],{type:"application/json"}));
+    const postDto = JSON.stringify({ title: data.title, content: data.content });
+    formData.append("postDto", new Blob([postDto],{type:"application/json"}));
+    console.log(formData)
     try{axiosPrivate
       .post("/community", formData, {
         headers: {
