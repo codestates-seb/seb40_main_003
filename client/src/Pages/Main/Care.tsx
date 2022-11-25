@@ -15,7 +15,7 @@ import { LoadingSkeleton } from "../../Components/Loading";
 
 const careQueryClient = new QueryClient();
 
-const CareMain = () => {
+export const CareMain = () => {
   const { data, isLoading, error } = useQuery(["careQuery"], () => {
     const data = FetchByParams("/experts", { keyword:"tag-id", page: 1, size: 5 });
     return data;    

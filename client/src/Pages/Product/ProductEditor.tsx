@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 // import React, { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
-import { SigButton, DropdownWrapper, DropdownOptions } from "../../Components/GlobalComponents";
+import { SigButton } from "../../Components/GlobalComponents";
 import {
   MainContentContainer,
   MainCenterWrapper,
@@ -10,11 +10,12 @@ import {
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate, useLocation } from "react-router-dom";
-import { axiosPrivate } from "../../Hooks/api";
 import { userState } from "../../Recoil/atoms/user";
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import {ProductCategoryConst, CareCategoryConst} from "../../Const/Category";
+
 const ConfirmWrapper = styled.span`
   display: flex;
   justify-content: row;
@@ -114,16 +115,10 @@ const ProductEditor = (props: Props) => {
             <>
             {/*손으로 짠 코드 */}
             <select {...register("category", { required: true })}>
-              <option value="">카테고리 선택</option>
-              <option value="1">대형 식물(100cm 내외)</option>
-              <option value="2">중형 식물(50cm 내외)</option>
-              <option value="3">소형 식물(30cm 이하)</option>
-              <option value="4">씨앗/모종</option>
-              <option value="5">화분/화병</option>
-              <option value="6">가구/장식</option>
-              <option value="7">도구/용품</option>
-              <option value="8">기계</option>
-              <option value="9">서적</option>
+              {ProductCategoryConst.map((e)=>{return(
+                <option value={e.number}>{e.name}</option>
+              )})
+              }
             </select>
               {/*
               컴포넌트 제작의 흔적...

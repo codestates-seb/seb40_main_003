@@ -1,8 +1,8 @@
 import { Routes } from "react-router";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import { AuthProvider, HeaderLayout, LogOutOnly } from "./Route";
-import Product from "./Pages/Product/Product";
+import { AuthProvider, HeaderLayout, LogOutOnly, SearchLayout } from "./Route";
+import Product, { ProductMain } from "./Pages/Product/Product";
 import Navbar from "./Components/Navbar";
 
 import Profile from "./Pages/Profile/Profile";
@@ -20,7 +20,7 @@ import Resign from "./Pages/settingPage/Resign";
 
 import Missing from "./Pages/Missing";
 
-import Care from "./Pages/Main/Care";
+import Care, { CareMain } from "./Pages/Main/Care";
 import CareDetail from "./Pages/Main/CareDetail";
 import CareReviewEditor from "./Pages/Talk/CareReviewEditor";
 
@@ -28,7 +28,7 @@ import ProductDetail from "./Pages/Product/ProductDetail";
 import ProductEditor from "./Pages/Product/ProductEditor";
 import ProductReviewEditor from "./Pages/Talk/ProductReviewEditor";
 
-import Community from "./Pages/Community/Community";
+import Community, { CommunityMain } from "./Pages/Community/Community";
 import CommunityDetail from "./Pages/Community/CommunityDetail";
 import CommunityEditor from "./Pages/Community/CommunityEditor";
 
@@ -73,7 +73,14 @@ function App() {
             <Route path=":id" element={<CommunityDetail />} />
             <Route path="write" element={<CommunityEditor />} />
           </Route>
-
+          {/* 검색 */}
+          <Route path="/search">
+            <Route element={<SearchLayout />}>
+              <Route path="caring" element={<CareMain />} />
+              <Route path="product" element={<ProductMain />} />
+              <Route path="community" element={<CommunityMain />} />
+            </Route>
+          </Route>
           {/* 로그인 */}
           <Route path="/login" element={<Login />} />
           <Route element={<LogOutOnly />}>

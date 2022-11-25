@@ -54,8 +54,8 @@ export const LoadingSkeleton = ({count=5}) => {
 
   return (
     <>
-      {[...Array(count)].map((e) => {
-        return <ProductPlaceHolder />;
+      {[...Array(count)].map((e,i) => {
+        return <ProductPlaceHolder key={"skeleton"+i}/>;
       })}
     </>
   ) 

@@ -3,7 +3,6 @@ import { getDateAgo, overKillo } from "../utils/controller";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import { UserStateType } from "../Recoil/atoms/user";
 import { useEffect, useRef, useState } from "react";
-import { ProductPreviewMappingType, ProductPreviewType } from "../types/productTypes";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -241,45 +240,6 @@ export const ProfileCard = (props: ProfileCardTypes) => {
   );
 };
 
-// 드롭다운
-
-export const DropdownWrapper = styled.select`
-  background-color: pink;
-  width: 100%;
-  border: 1px solid var(--line-light-gray);
-  border-radius: var(--sig-border-8);
-`
-
-export const DropdownOptions = styled.option`
-
-`
-type DropdownTypes = {
-  category: number;
-  value: string;
-}
-
-export const Dropdown = (props: DropdownTypes) => {
-  const {value, category} = props;
-  return (
-<DropdownWrapper>
-  <DropdownOptions>
-    category={category}
-    value={value}
-  </DropdownOptions>
-</DropdownWrapper>
-    
-// 배열로 오면 쓸 수 있는 코드
-  //   <>
-  //   {category ? (
-  //     <DropdownWrapper>
-  //       {category.map((e:ProductPreviewMappingType) => {
-  //         return <DropdownOptions key={e.category}>{value}</DropdownOptions>
-  //       })}
-  //   </DropdownWrapper>
-  // ) : null}
-  //   </>
-  )
-}
 
 // 프로필 반려식물
 export const ProfilePlantCardWrapper = styled.div`
