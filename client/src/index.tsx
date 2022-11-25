@@ -7,10 +7,10 @@ import { RecoilRoot } from "recoil";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "./Components/ErrorHandle";
 
-if (process.env.NODE_ENV === "development") {
-  const { worker } = require("./mocks/browser");
-  worker.start();
-}
+// if (process.env.NODE_ENV === "development") {
+//   const { worker } = require("./mocks/browser");
+//   worker.start();
+// }
 if(process.env.NODE_ENV ==="production"){
   console.log(()=>{})
 }

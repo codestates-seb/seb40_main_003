@@ -30,7 +30,7 @@ const ProductCard = (props:props) => {
       <RowWrapper>
         <ImageWrapper
           size={"100"}
-          src={data.images[0].imgUrl}
+          src={data.images[0]}
           alt={`상품명 ${data.title}의 대표이미지`}
           loading="lazy"
           className={data.state === 0 ? "soldOut" : ""}
