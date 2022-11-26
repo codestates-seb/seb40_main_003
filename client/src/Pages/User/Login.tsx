@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 import { SigButton } from "../../Components/GlobalComponents";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   MainContentContainer,
   MainCenterWrapper,
@@ -13,34 +13,7 @@ import {
 import usePageTitle from "../../Hooks/usePageTitle";
 import { axiosPrivate } from "../../Hooks/api";
 import secureLocalStorage from "react-secure-storage";
-
-const FormWrapper = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  padding: 10px;
-`;
-
-const InputContainer = styled.div`
-  margin: 10px 0;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-`;
-
-const Errormsg = styled.p`
-  color: var(--alert-red);
-  margin: 3px;
-  font-size: 13px;
-`;
-
-const Label = styled.label`
-  font-size: 15px;
-  font-weight: 500;
-  margin-bottom: 3px;
-`;
+import { ReactComponent as LogoMain } from "../../images/logoMain.svg";
 
 interface LoginForm {
   password: string;
@@ -67,7 +40,7 @@ function Login() {
 
   // 원래있던 페이지로 되돌리는 기능
   const navigate = useNavigate();
-  
+
   // 로그인버튼 클릭시 동작하는 함수
   const onLogin = async (data: LoginForm) => {
     axiosPrivate
@@ -107,8 +80,13 @@ function Login() {
     <MainContentContainer>
       <MainCenterWrapper>
         <FormWrapper onSubmit={handleSubmit(onLogin)}>
+          <Link to={"/"}>
+            <LogoMain width={"150px"} />
+          </Link>
           <InputContainer>
-            <Label htmlFor={"Email"}>이메일</Label>
+            <label className="mb-4 medium font-main" htmlFor={"Email"}>
+              이메일
+            </label>
             <input
               type={"email"}
               id="Email"
@@ -129,7 +107,9 @@ function Login() {
             )}
           </InputContainer>
           <InputContainer>
-            <Label htmlFor={"password"}>비밀번호</Label>
+            <label className="mb-4 medium font-main" htmlFor={"password"}>
+              비밀번호
+            </label>
             <input
               type={"password"}
               id="password"
@@ -147,9 +127,9 @@ function Login() {
             {error && <Errormsg>{error}</Errormsg>}
           </InputContainer>
 
-          <Link to={`/signup`} className={"mb-10"}>
-            <span className="font-main bold">회원 가입</span>하고
-            식물전문가가 되어보세요!
+          <Link to={`/signup`} className={"mb-16 mt-16"}>
+            <span className="font-main bold">회원 가입</span>하고 식물전문가가
+            되어보세요!
           </Link>
 
           <SigButton
@@ -158,7 +138,6 @@ function Login() {
                 ? ""
                 : "disable"
             }
-            
             type="submit"
             value={"Login"}
           >
@@ -170,5 +149,29 @@ function Login() {
     </MainContentContainer>
   );
 }
+
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+`;
+
+const InputContainer = styled.div`
+  margin: 10px 0;
+  display: flex;
+  width: 100%;
+  max-width: 425px;
+  flex-direction: column;
+  align-self: center;
+`;
+
+const Errormsg = styled.p`
+  color: var(--alert-red);
+  font-size: 0.8rem;
+  margin-top: 4px;
+`;
 
 export default Login;
