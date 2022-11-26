@@ -21,6 +21,9 @@ import CommentInput from '../../Components/UserInput'
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
 import { getDateAgo } from "../../utils/controller";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorMessage } from "../../Components/ErrorHandle";
+import { cannotLoad } from "../../Const/ErrorContent";
 
 const CommunityDetail = () => {
   const { id } = useParams();
@@ -31,6 +34,9 @@ const CommunityDetail = () => {
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
+
+      <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
+
         <CommunityWrapper>
           <span className='h4 bold font-main mb-16'>{data.title}</span>
         </CommunityWrapper>
@@ -70,6 +76,9 @@ const CommunityDetail = () => {
             />
           );
         })}
+        
+        </ErrorBoundary>
+
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
