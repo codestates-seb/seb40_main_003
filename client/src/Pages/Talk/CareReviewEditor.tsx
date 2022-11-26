@@ -2,7 +2,6 @@ import React from 'react';
 import { FieldErrors, useForm } from "react-hook-form";
 import { SigButton } from '../../Components/GlobalComponents';
 import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
-import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import usePageTitle from '../../Hooks/usePageTitle'
 
@@ -16,6 +15,7 @@ type Props = {}
 interface CareReviewEditorForm {
     content: string;
     errors?: string;
+    checked: boolean;
 }
 
 const CareReviewEditor = (props: Props) => {
@@ -62,7 +62,9 @@ const CareReviewEditor = (props: Props) => {
                     </SectionWrapper>
 
                     <ConfirmWrapper>
-                        <input type="checkbox" className='border-none checkbox-20'></input>
+                        <input 
+                        {...register("checked", { required: true })}
+                        type="checkbox" className='border-none checkbox-20'></input>
                         <p className='sub font-gray'>식물처럼 싱그럽고 예쁜 말을 써주세요.
                             <br />욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.</p>
                     </ConfirmWrapper>
@@ -72,9 +74,7 @@ const CareReviewEditor = (props: Props) => {
                 <SectionWrapper borderNone={true}>
                     <p className='h5 bold font-main mr-16'>
                     </p></SectionWrapper>
-                <Link to={"/talk"}>
                     <SigButton type='submit' className='disable'>후기 작성 완료</SigButton>
-                </Link>
             </MainRightWrapper>
 
 
