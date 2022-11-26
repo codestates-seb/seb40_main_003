@@ -9,6 +9,9 @@ import {
   MainContentContainer,
   MainCenterWrapper,
   MainRightWrapper,
+  ColumnWrapper,
+  RowWrapper,
+  SpaceBetween,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import axios, { axiosPrivate } from "../../Hooks/api";
@@ -24,6 +27,7 @@ interface LoginForm {
 function Login() {
   const [error, setErrMsg] = useState("");
   const [user, setUser] = useRecoilState(userState);
+  const [isAutoLogin, setIsAutoLogin] = useState<boolean>(false);
 
   const {
     register,
@@ -38,42 +42,46 @@ function Login() {
     setFocus("email");
   }, []);
 
-  // 원래있던 페이지로 되돌리는 기능
+  /**  원래있던 페이지로 되돌리는 기능*/
   const navigate = useNavigate();
 
-  // 로그인버튼 클릭시 동작하는 함수
+  /**  로그인버튼 클릭시 동작하는 함수*/
   const onLogin = async (data: LoginForm) => {
-    axios
-      .post("/login", {
-        email: data.email,
-        password: data.password,
-      })
-      .then((res) => {
-        // 로그인 관련정보, 토큰 받아야함
-        const userInfo = {
-          memberId: res.data.memberId,
-          nickname: res.data.nickname,
-          image: res.data.image,
-        };
-        setUser(userInfo);
-        secureLocalStorage.setItem("accessToken", res.data.accessToken);
-        secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
-      })
-      .then(() => {
-        // 원래있던 페이지로 되돌림
-        navigate(-1);
-      })
-      .catch((err) => {
-        if (!err?.response) {
-          setErrMsg("서버로부터 응답이 없습니다");
-        } else if (err.response?.status === 400) {
-          setErrMsg("이메일 또는 패스워드를 확인해주세요");
-        } else if (err.response?.status === 401) {
-          setErrMsg("허가되지않은 접근입니다");
-        } else {
-          setErrMsg("로그인에 실패했습니다");
-        }
-      });
+    !errors &&
+      axios
+        .post("/login", {
+          email: data.email,
+          password: data.password,
+        })
+        .then((res) => {
+          // 로그인 관련정보, 토큰 받아야함
+          const userInfo = {
+            memberId: res.data.memberId,
+            nickname: res.data.nickname,
+            image: res.data.image,
+          }
+          setUser(userInfo);
+          secureLocalStorage.setItem("accessToken", res.data.accessToken);
+          if(isAutoLogin){
+            secureLocalStorage.setItem("userInfo",userInfo)
+          }
+          secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
+        })
+        .then(() => {
+          // 원래있던 페이지로 되돌림
+          navigate(-1);
+        })
+        .catch((err) => {
+          if (!err?.response) {
+            setErrMsg("서버로부터 응답이 없습니다");
+          } else if (err.response?.status === 400) {
+            setErrMsg("이메일 또는 패스워드를 확인해주세요");
+          } else if (err.response?.status === 401) {
+            setErrMsg("허가되지않은 접근입니다");
+          } else {
+            setErrMsg("로그인에 실패했습니다");
+          }
+        });
   };
 
   return (
@@ -126,12 +134,18 @@ function Login() {
             )}
             {error && <Errormsg>{error}</Errormsg>}
           </InputContainer>
-
-          <Link to={`/signup`} className={"mb-16 mt-16"}>
-            <span className="font-main bold">회원 가입</span>하고 식물전문가가
-            되어보세요!
-          </Link>
-
+          <OptionWrapper className={"mb-16 mt-16"}>
+            <RowWrapper>
+              <input type={"checkbox"} id="AutoLogin" className="border-none checkbox-20" onChange={()=>{setIsAutoLogin(prev=>!prev)}} checked={isAutoLogin}/>
+              <label className="mb-4 medium font-main" htmlFor={"AutoLogin"} >
+                자동 로그인
+              </label>
+            </RowWrapper>
+            <Link to={`/signup`} >
+              <span className="font-main bold">회원 가입</span>하고 식물전문가가
+              되어보세요!
+            </Link>
+          </OptionWrapper>
           <SigButton
             className={
               errors?.email === undefined && errors.password === undefined
@@ -166,7 +180,7 @@ const InputContainer = styled.div`
   max-width: 425px;
   flex-direction: column;
   align-self: center;
-  &:last-child{
+  &:last-child {
     margin-bottom: 30px;
   }
 `;
@@ -177,4 +191,11 @@ const Errormsg = styled.p`
   margin-top: 4px;
 `;
 
+const OptionWrapper = styled.div`
+  width: 100%;
+  max-width: 425px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+`
 export default Login;

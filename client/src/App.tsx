@@ -36,9 +36,22 @@ import CommunityEditor from "./Pages/Community/CommunityEditor";
 import Talk from "./Pages/Talk/Talk";
 import { DefaultLayout } from "./Route";
 import ProductCategory from "./Pages/Product/ProductCategory";
+import { useEffect } from "react";
+import secureLocalStorage from "react-secure-storage";
+import { useSetRecoilState } from "recoil";
+import { userState, UserStateType } from "./Recoil/atoms/user";
+
 // import DevTools from "./Components/DevTools";
 
-function App() {
+const App=()=>{
+  const setUser = useSetRecoilState(userState)
+  useEffect(() => {
+    const userInfo:any = secureLocalStorage.getItem("userInfo")
+    if(userInfo){
+      setUser(userInfo);
+    }
+  }, [])
+  
   return (
     <BrowserRouter>
       {/* 모바일용 navbar*/}
