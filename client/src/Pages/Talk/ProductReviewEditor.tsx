@@ -16,6 +16,8 @@ type Props = {}
 interface ProductReviewEditorForm {
     content: string;
     errors?: string;
+    checked: boolean;
+
 }
 
 const ProductReviewEditor = (props: Props) => {
@@ -57,7 +59,9 @@ const ProductReviewEditor = (props: Props) => {
                     </SectionWrapper>
 
                     <ConfirmWrapper>
-                        <input type="checkbox" className='border-none checkbox-20'></input>
+                        <input 
+                        {...register("checked", { required: true })}
+                        type="checkbox" className='border-none checkbox-20'></input>
                         <p className='sub font-gray'>식물처럼 싱그럽고 예쁜 말을 써주세요.
                             <br />욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.</p>
                     </ConfirmWrapper>

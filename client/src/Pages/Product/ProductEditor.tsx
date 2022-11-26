@@ -28,7 +28,7 @@ interface ProductEditorForm {
   content: string;
   price: number;
   errors?: string;
-  checked: true;
+  checked: boolean;
 }
 
 const ProductEditor = (props: Props) => {

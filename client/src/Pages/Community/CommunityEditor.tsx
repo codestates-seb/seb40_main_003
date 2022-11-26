@@ -27,7 +27,7 @@ interface CommunityEditorForm {
   image: File;
   errors?: string;
   file: any;
-  checked: true;
+  checked: boolean;
 }
 
 const CommunityEditor = (props: Props) => {
