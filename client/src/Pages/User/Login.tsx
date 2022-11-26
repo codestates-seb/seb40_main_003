@@ -9,25 +9,23 @@ import {
   MainContentContainer,
   MainCenterWrapper,
   MainRightWrapper,
-  ColumnWrapper,
   RowWrapper,
-  SpaceBetween,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import axios, { axiosPrivate } from "../../Hooks/api";
+import axios from "../../Hooks/api";
 import secureLocalStorage from "react-secure-storage";
 import { ReactComponent as LogoMain } from "../../images/logoMain.svg";
 
 interface LoginForm {
   password: string;
   email: string;
+  autoLogin:boolean;
   errors?: string;
 }
 
-function Login() {
+const Login = () => {
   const [error, setErrMsg] = useState("");
   const [user, setUser] = useRecoilState(userState);
-  const [isAutoLogin, setIsAutoLogin] = useState<boolean>(false);
 
   const {
     register,
@@ -47,7 +45,6 @@ function Login() {
 
   /**  로그인버튼 클릭시 동작하는 함수*/
   const onLogin = async (data: LoginForm) => {
-    !errors &&
       axios
         .post("/login", {
           email: data.email,
@@ -59,16 +56,15 @@ function Login() {
             memberId: res.data.memberId,
             nickname: res.data.nickname,
             image: res.data.image,
-          }
+          };
           setUser(userInfo);
           secureLocalStorage.setItem("accessToken", res.data.accessToken);
-          if(isAutoLogin){
-            secureLocalStorage.setItem("userInfo",userInfo)
+          if (data.autoLogin) {
+            secureLocalStorage.setItem("userInfo", userInfo);
           }
           secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
         })
         .then(() => {
-          // 원래있던 페이지로 되돌림
           navigate(-1);
         })
         .catch((err) => {
@@ -81,7 +77,7 @@ function Login() {
           } else {
             setErrMsg("로그인에 실패했습니다");
           }
-        });
+        })
   };
 
   return (
@@ -97,6 +93,7 @@ function Login() {
             </label>
             <input
               type={"email"}
+              autoComplete="true"
               id="Email"
               {...register("email", {
                 required: true,
@@ -119,6 +116,7 @@ function Login() {
               비밀번호
             </label>
             <input
+            autoComplete="true"
               type={"password"}
               id="password"
               {...register("password", {
@@ -136,12 +134,18 @@ function Login() {
           </InputContainer>
           <OptionWrapper className={"mb-16 mt-16"}>
             <RowWrapper>
-              <input type={"checkbox"} id="AutoLogin" className="border-none checkbox-20" onChange={()=>{setIsAutoLogin(prev=>!prev)}} checked={isAutoLogin}/>
-              <label className="mb-4 medium font-main" htmlFor={"AutoLogin"} >
+              <input
+                type={"checkbox"}
+                id="autoLogin"
+                className="border-none checkbox-20"
+                {...register("autoLogin",{
+                  required: false})}
+              />
+              <label className="mb-4 medium font-main" htmlFor={"autoLogin"}>
                 자동 로그인
               </label>
             </RowWrapper>
-            <Link to={`/signup`} >
+            <Link to={`/signup`}>
               <span className="font-main bold">회원 가입</span>하고 식물전문가가
               되어보세요!
             </Link>
@@ -152,7 +156,7 @@ function Login() {
                 ? ""
                 : "disable"
             }
-            type="submit"
+            type={!errors?"submit":undefined}
             value={"Login"}
           >
             로그인
@@ -162,7 +166,7 @@ function Login() {
       <MainRightWrapper></MainRightWrapper>
     </MainContentContainer>
   );
-}
+};
 
 const FormWrapper = styled.form`
   display: flex;
@@ -197,5 +201,5 @@ const OptionWrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
-`
+`;
 export default Login;
