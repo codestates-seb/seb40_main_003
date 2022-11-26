@@ -1,17 +1,17 @@
 
 import {useQuery} from 'react-query'
-import { FetchByParams } from './useFetch';
+import { FetchByParams, FetchByParamsType } from './useFetch';
 import { LoadingSpinner } from '../Components/Loading';
 import { ErrorMessage } from '../Components/ErrorHandle';
 
 
 export const UseReactQuery = (
   url: string,
-  parpams: object,
+  params: FetchByParamsType,
   children: JSX.Element
 ) => {
   const { data, isLoading, error } = useQuery([url], () => {
-    const data = FetchByParams(url, { parpams });
+    const data = FetchByParams(url, params);
     return data;
   });
   if (isLoading) return <LoadingSpinner />;

@@ -4,10 +4,10 @@ import {
   MainContentContainer,
   MainRightWrapper,
 } from "../../Components/Wrapper";
-import useFetch from "../../Hooks/useFetch";
+import { axiosPrivate } from "../../Hooks/api";
 
 const Resign = () => {
-  const data = useFetch("/");
+  const data = axiosPrivate("/");
   return data!==undefined?
   (
     <MainContentContainer>

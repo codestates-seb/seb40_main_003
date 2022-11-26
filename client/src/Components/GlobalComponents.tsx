@@ -120,15 +120,13 @@ export const ImageWrapper = styled.img`
   background-color: var(--bg-gray);
   border-radius: ${(props: imageWrapperProps) =>
     props.circle ? `${props.size}px` : "8px 0px"};
+  border:1px solid var(--line-light-gray);
   display: block;
   object-fit: cover;
   margin-right: 16px;
   &.communityImage {
     width: 100%;
     margin-right: 0;
-  }
-  &.soldOut {
-    opacity: 0.5;
   }
 `;
 

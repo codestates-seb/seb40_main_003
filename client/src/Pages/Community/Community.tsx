@@ -49,7 +49,7 @@ const Community = () => {
   return (
     <MainContentContainer>
       <MainCenterWrapper>
-        {/* 에러바운더리 */}
+        {/** 에러바운더리 fallback으로 에러시*/}
         <ErrorBoundary fallback={<ErrorMessage content={"정보를 불러오는데 실패했습니다"} />}>
           {/* 쿼리클라이언트 */}
           <QueryClientProvider client={communityQueryClient}>

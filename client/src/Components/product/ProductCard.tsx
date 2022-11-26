@@ -16,6 +16,7 @@ export const DescriptionColumnWrapper = styled.div`
   flex-direction: column;
   justify-content:center;
   width: 100%;
+  
 `;
 
 
@@ -26,14 +27,13 @@ type props={
 const ProductCard = (props:props) => {
   const data = props.data
   return (
-    <ProductWrapper>
+    <ProductWrapper className={data.state === 0 ? "soldOut" : ""}>
       <RowWrapper>
         <ImageWrapper
           size={"100"}
           src={data.images[0]}
           alt={`상품명 ${data.title}의 대표이미지`}
           loading="lazy"
-          className={data.state === 0 ? "soldOut" : ""}
         />
         <DescriptionColumnWrapper>
           <span className="medium">{data.title}</span>

@@ -49,6 +49,13 @@ export const ProductWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid var(--line-light-gray);
+  &.soldOut {
+    opacity: 0.5;
+    transition-duration:200ms;
+    :hover{
+      opacity:1;
+    }
+    }
 `;
 export const LoadingSkeleton = ({count=5}) => {
 

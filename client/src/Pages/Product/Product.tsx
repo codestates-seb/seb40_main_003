@@ -28,7 +28,7 @@ export const ProductMain = () => {
   });
   if (isLoading) return <LoadingSkeleton />;
   if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
-  if(isSuccess) console.log(data.data.data);
+  // if(isSuccess) console.log(data.data.data);
   
 
   return (
