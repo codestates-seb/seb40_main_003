@@ -110,7 +110,7 @@ const CommunityEditor = (props: Props) => {
             <input
               className="image cursor"
               {...register("image")}
-              id=""
+              id="picture"
               type="file"
               multiple
             />
