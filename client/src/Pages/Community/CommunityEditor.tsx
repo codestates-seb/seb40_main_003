@@ -12,6 +12,7 @@ import styled from "@emotion/styled";
 import { useRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import { useState, useRef } from "react";
 
 const ConfirmWrapper = styled.span`
   display: flex;
@@ -26,11 +27,18 @@ interface CommunityEditorForm {
   image: File;
   errors?: string;
   file: any;
+  checked: true;
 }
 
 const CommunityEditor = (props: Props) => {
   const axiosPrivate = useAxiosPrivate();
   // const [user, setUser] = useRecoilState(userState);
+
+  const [file, setFile] = useState('');
+  const [previewURL, setPreviewURL] = useState('');
+  const [preview,setPreview] = useState(null);
+  const fileRef= useRef();
+
   const {
     register,
     handleSubmit,
@@ -97,10 +105,10 @@ const CommunityEditor = (props: Props) => {
           </>
         </SectionWrapper>
 
-        <SectionWrapper>
+        <SectionWrapper width={100} >
           <>
             <input
-              className="image"
+              className="image cursor"
               {...register("image")}
               id="picture"
               type="file"
@@ -123,7 +131,9 @@ const CommunityEditor = (props: Props) => {
           </>
         </SectionWrapper>
         <ConfirmWrapper>
-          <input type="checkbox" className="border-none checkbox-20"></input>
+          <input
+          {...register("checked", { required: true })}
+          type="checkbox" className="border-none checkbox-20"></input>
           <p className="sub font-gray">
             식물처럼 싱그럽고 예쁜 말을 써주세요.
             <br />

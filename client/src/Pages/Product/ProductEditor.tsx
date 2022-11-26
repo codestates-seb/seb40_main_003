@@ -28,6 +28,7 @@ interface ProductEditorForm {
   content: string;
   price: number;
   errors?: string;
+  checked: true;
 }
 
 const ProductEditor = (props: Props) => {
@@ -101,7 +102,7 @@ return (
             </>
           </SectionWrapper>
 
-          <SectionWrapper>
+          <SectionWrapper width={100} borderNone={false}>
             <>
               <input
                 className="image"
@@ -113,11 +114,11 @@ return (
               <p className="font-alert-red sub">{errors.image?.message}</p>
             </>
           </SectionWrapper>
-          <SectionWrapper>
+          <SectionWrapper width={100} borderNone={false}>
             <>
             <select {...register("category", { required: true })}>
               {ProductCategoryConst.map((e)=>{return(
-                <option value={e.number}>{e.name}</option>
+                <option key={e.number} value={e.number}>{e.name}</option>
               )})
               }
             </select>
@@ -151,7 +152,9 @@ return (
           </SectionWrapper>
 
           <ConfirmWrapper>
-            <input type="checkbox" className="border-none checkbox-20"></input>
+            <input 
+            {...register("checked", { required: true })}
+            type="checkbox" className="border-none checkbox-20"></input>
             <p className="sub font-gray">
               식물처럼 싱그럽고 예쁜 말을 써주세요.
               <br />

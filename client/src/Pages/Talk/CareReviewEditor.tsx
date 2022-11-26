@@ -52,10 +52,9 @@ const CareReviewEditor = (props: Props) => {
                     </SectionWrapper>
                     <SectionWrapper width={100} borderNone={true}>
                         <>
-                            <input className='content' {...register("content", {
+                            <textarea className='content' {...register("content", {
                                 required: "",
                             })}
-                                type="content"
                                 placeholder="글쓰기"
                             />
                             <p className='font-alert-red sub'>{errors.content?.message}</p>
