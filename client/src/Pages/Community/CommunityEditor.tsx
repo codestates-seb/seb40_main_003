@@ -102,7 +102,7 @@ const CommunityEditor = (props: Props) => {
             <input
               className="image"
               {...register("image")}
-              id=""
+              id="picture"
               type="file"
               multiple
             />
