@@ -11,7 +11,7 @@ import {
   MainRightWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { axiosPrivate } from "../../Hooks/api";
+import axios, { axiosPrivate } from "../../Hooks/api";
 import secureLocalStorage from "react-secure-storage";
 import { ReactComponent as LogoMain } from "../../images/logoMain.svg";
 
@@ -43,7 +43,7 @@ function Login() {
 
   // 로그인버튼 클릭시 동작하는 함수
   const onLogin = async (data: LoginForm) => {
-    axiosPrivate
+    axios
       .post("/login", {
         email: data.email,
         password: data.password,
@@ -166,6 +166,9 @@ const InputContainer = styled.div`
   max-width: 425px;
   flex-direction: column;
   align-self: center;
+  &:last-child{
+    margin-bottom: 30px;
+  }
 `;
 
 const Errormsg = styled.p`
