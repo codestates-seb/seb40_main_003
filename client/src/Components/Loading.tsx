@@ -45,7 +45,7 @@ export const ProductWrapper = styled.div`
   width: 100%;
   min-width: 312px;
   max-width: 730px;
-  padding: 8px 8px;
+  padding: 16px 0;
   display: flex;
   flex-direction: column;
   border-bottom: 1px solid var(--line-light-gray);
