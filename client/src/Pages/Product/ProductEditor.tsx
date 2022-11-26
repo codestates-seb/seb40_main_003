@@ -117,7 +117,7 @@ return (
             <>
             <select {...register("category", { required: true })}>
               {ProductCategoryConst.map((e)=>{return(
-                <option value={e.number}>{e.name}</option>
+                <option key={e.number} value={e.number}>{e.name}</option>
               )})
               }
             </select>
