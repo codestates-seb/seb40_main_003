@@ -15,13 +15,14 @@ import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
+import { fetchingImageLimit } from "../../Const/fetchImage";
 
 // 쿼리클라이언트
 const productQueryClient = new QueryClient();
 
 export const ProductMain = () => {
   const { data, isLoading, error,isSuccess } = useQuery(["productQuery"], () => {
-    const data = FetchByParams("/deal", { page: 1, size: 5 });
+    const data = FetchByParams("/deal", { page: 1, size: fetchingImageLimit });
     return data;
     
   });

@@ -12,12 +12,13 @@ import { ErrorMessage } from "../../Components/ErrorHandle";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { LoadingSkeleton } from "../../Components/Loading";
+import { fetchingImageLimit } from "../../Const/fetchImage";
 
 const careQueryClient = new QueryClient();
 
 export const CareMain = () => {
   const { data, isLoading, error } = useQuery(["careQuery"], () => {
-    const data = FetchByParams("/experts", { keyword:"tag-id", page: 1, size: 5 });
+    const data = FetchByParams("/experts", { keyword:"tag-id", page: 1, size: fetchingImageLimit });
     return data;    
   });
   if (isLoading) return <LoadingSkeleton />;

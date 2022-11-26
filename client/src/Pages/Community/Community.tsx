@@ -15,12 +15,13 @@ import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { communityPreviewDataTypes } from "../../types/communityTypes";
+import { fetchingImageLimit } from "../../Const/fetchImage";
 
 const communityQueryClient = new QueryClient();
 
 export const CommunityMain = () => {
   const { data, isLoading, error } = useQuery(["productQuery"], () => {
-    const data = FetchByParams("/community", { page: 1, size: 5 });
+    const data = FetchByParams("/community", { page: 1, size: fetchingImageLimit });
     return data;
   });
   if (isLoading) return <LoadingSkeleton />;
