@@ -63,6 +63,7 @@ textarea {
   outline-width: 1px;
   outline-color: var(--line-light-gray);
   border-radius: 6px;
+  resize: none;
 }
 
 input:focus,
@@ -86,6 +87,7 @@ input.checkbox-20 {
   accent-color: var(--main);
   cursor: pointer;
 }
+
 
 
 /* 아이콘 active */

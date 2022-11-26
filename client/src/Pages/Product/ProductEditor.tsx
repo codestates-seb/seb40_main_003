@@ -101,7 +101,7 @@ return (
             </>
           </SectionWrapper>
 
-          <SectionWrapper>
+          <SectionWrapper width={100} borderNone={false}>
             <>
               <input
                 className="image"
@@ -113,7 +113,7 @@ return (
               <p className="font-alert-red sub">{errors.image?.message}</p>
             </>
           </SectionWrapper>
-          <SectionWrapper>
+          <SectionWrapper borderNone={false}>
             <>
             <select {...register("category", { required: true })}>
               {ProductCategoryConst.map((e)=>{return(
