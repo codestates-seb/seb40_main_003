@@ -35,12 +35,12 @@ export type CommentCardTypes = {
   src?: string;
   alt?: string;
   name?: string;
-  createdAt?: string | any;
+  createdAt: string ;
   content?: string;
   tag?: [{ techId: number; name: string }];
   user: UserStateType | null;
   author: number;
-  commentId?: string;
+  commentId?: number;
   communityId?: string;
 };
 
@@ -59,7 +59,7 @@ export const CommentCard = (props: CommentCardTypes) => {
     commentId,
     communityId,
   } = props;
-  const ref = useRef<any>(null);
+  const ref = useRef<HTMLDivElement>(null);
   const [text, setText] = useState(content);
   const [editable, setEditable] = useState(false);
 
@@ -73,7 +73,6 @@ export const CommentCard = (props: CommentCardTypes) => {
     setEditable(!editable);
   };
 
-  // 비구조화할당
   return (
     <CommentCardWrapper>
       <RowWrapper className="align-center">

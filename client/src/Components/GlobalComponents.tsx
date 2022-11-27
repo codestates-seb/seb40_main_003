@@ -254,7 +254,7 @@ type ProfilePlantCardTypes = {
   src: string;
   alt: string;
   name: string;
-  type: string;
+  type: string|number;
   age: number;
 };
 export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
