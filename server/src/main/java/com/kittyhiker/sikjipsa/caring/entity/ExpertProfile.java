@@ -77,8 +77,17 @@ public class ExpertProfile {
 	@OneToMany(mappedBy = "expertProfile", cascade = CascadeType.ALL)
 	private List<TechTag> techTags = new ArrayList<>();
 
-	@OneToMany(mappedBy = "expertProfile")
-	private List<AreaTag> AreaTags = new ArrayList<>();
+	public void setAreaTags(List<AreaTag> areaTags) {
+		this.areaTags = areaTags;
+		if (areaTags != null) {
+			for (AreaTag areaTag : areaTags) {
+				areaTag.setExpertProfile(this);
+			}
+		}
+	}
+
+	@OneToMany(mappedBy = "expertProfile", cascade = CascadeType.ALL)
+	private List<AreaTag> areaTags = new ArrayList<>();
 
 	@OneToMany(mappedBy = "expertProfile")
 	private List<ExpertChat> expertChats = new ArrayList<>();

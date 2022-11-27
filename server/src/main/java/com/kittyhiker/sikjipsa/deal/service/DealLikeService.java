@@ -49,7 +49,7 @@ public class DealLikeService {
                     List<Image> image = imageService.findImage(like.getDeal());
                     List<String> imageUrlList = image.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
 
-                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(member.getId())
+                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(member.getMemberId())
                             .nickname(member.getNickname())
                             .image(imageService.findImage(member)).build();
 

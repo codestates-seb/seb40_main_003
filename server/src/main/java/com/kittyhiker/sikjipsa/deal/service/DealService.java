@@ -67,7 +67,7 @@ public class DealService {
                     }
             );
         }
-        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(findMember.getId())
+        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(findMember.getMemberId())
                 .nickname(findMember.getNickname())
                 .image(imageService.findImage(findMember)).build();
         return mapper.dealToDealResponseDto(savedDeal, responseImages, responseMember);
@@ -99,7 +99,7 @@ public class DealService {
         findDeal.updateDeal(dealPatchDto);
         dealRepository.save(findDeal);
         Member findMember = findDeal.getMember();
-        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(findMember.getId())
+        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(findMember.getMemberId())
                 .nickname(findMember.getNickname())
                 .image(imageService.findImage(findMember)).build();
         return mapper.dealToDealResponseDto(findDeal, responseImages, responseMember);
@@ -114,7 +114,7 @@ public class DealService {
                     List<Image> images = imageService.findImage(deal);
                     List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
                     Member dealMember = deal.getMember();
-                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getId())
+                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
                             .nickname(dealMember.getNickname())
                             .image(imageService.findImage(dealMember)).build();
                     DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(deal, responseImage, responseMember);
@@ -135,7 +135,7 @@ public class DealService {
                     List<Image> images = imageService.findImage(deal);
                     List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
                     Member dealMember = deal.getMember();
-                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getId())
+                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
                             .nickname(dealMember.getNickname())
                             .image(imageService.findImage(dealMember)).build();
                     DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(deal, responseImage, responseMember);
@@ -155,7 +155,7 @@ public class DealService {
         List<String> responseImage = image.stream().map(img -> img.getImgUrl()).collect(Collectors.toList());
 
         Member dealMember = findDeal.getMember();
-        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getId())
+        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
                 .nickname(dealMember.getNickname())
                 .image(imageService.findImage(dealMember)).build();
 

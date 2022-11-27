@@ -4,6 +4,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
 import com.kittyhiker.sikjipsa.caring.entity.MemberLikeExpert;
+import com.kittyhiker.sikjipsa.caring.repository.AreaTagRepository;
 import com.kittyhiker.sikjipsa.caring.repository.ExpertRepository;
 import com.kittyhiker.sikjipsa.caring.repository.MemberLikeExpertRepository;
 import com.kittyhiker.sikjipsa.caring.repository.TechTagRepository;
@@ -41,6 +42,7 @@ public class ExpertService {
 	private final MemberLikeExpertRepository memberLikeExpertRepository;
 	private final ImageRepository imageRepository;
 	private final TechTagRepository techTagRepository;
+	private final AreaTagRepository areaTagRepository;
 
 //	@Value("${com.sikjipsa.upload.path}")
 //	private String uploadPath;
@@ -127,11 +129,18 @@ public class ExpertService {
 		Optional.ofNullable(expertProfile.getDetailContent())
 				.ifPresent(findExpertProfile::setDetailContent);
 
-		// 태그 변경
+		// 기술 태그 변경
 		Optional.ofNullable(expertProfile.getTechTags())
 				.ifPresent(techTags -> {
 					techTagRepository.deleteAll(findExpertProfile.getTechTags());
 					findExpertProfile.setTechTags(techTags);
+				});
+
+		// 지역 태그 변경
+		Optional.ofNullable(expertProfile.getAreaTags())
+				.ifPresent(areaTags -> {
+					areaTagRepository.deleteAll(findExpertProfile.getAreaTags());
+					findExpertProfile.setAreaTags(areaTags);
 				});
 
 		// 이미지 변경

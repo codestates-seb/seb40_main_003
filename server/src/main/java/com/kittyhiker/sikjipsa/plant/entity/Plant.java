@@ -22,7 +22,7 @@ public class Plant {
 
 	private String name;
 
-	private int years;
+	private String days;
 
 	private String type;
 
