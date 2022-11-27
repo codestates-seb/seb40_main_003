@@ -125,12 +125,14 @@ export const CommentCard = (props: CommentCardTypes) => {
       <GridWrapper>
         <ColumnWrapper>
           <div className="sub font-gray mb-6 ml-4">{getDateAgo(createdAt)}</div>
+          {/* 유저와 작성자가 같다면 */}
           {String(author) === String(user?.memberId) ? (
             <CommentButtonWrapper>
               {editable ? (
                 <>
                   <button
                     className="sub font-gray cursor mr-8"
+                    // 수정버튼
                     onClick={() => {
                       if (editable) {
                         axiosPrivate
@@ -149,6 +151,7 @@ export const CommentCard = (props: CommentCardTypes) => {
                   <button
                     className="sub font-gray cursor"
                     onClick={() => {
+                      // 댓글 삭제버튼
                       if (window.confirm("댓글을 삭제 하시겠습니까?")) {
                         axiosPrivate.delete(
                           `/community/${communityId}/comment/${commentId}`
