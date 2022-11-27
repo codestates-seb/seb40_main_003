@@ -10,39 +10,9 @@ import {
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import axios from "../../Hooks/api";
-
-const FormWrapper = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  padding: 10px;
-`;
-
-export const Input = styled.input`
-  width: 250px;
-  height: 35px;
-`;
-
-const InputContainer = styled.div`
-  margin: 10px 0;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-`;
-
-const Errormsg = styled.p`
-  color: var(--alert-red);
-  margin: 3px;
-  font-size: 13px;
-`;
-
-const Label = styled.label`
-  font-size: 15px;
-  font-weight: 500;
-  margin-bottom: 3px;
-`;
+import secureLocalStorage from "react-secure-storage";
+import { useRecoilState } from "recoil";
+import { userState } from "../../Recoil/atoms/user";
 
 interface SignupForm {
   password: string;
@@ -53,6 +23,15 @@ interface SignupForm {
 }
 
 const Signup = () => {
+  // 리코일설정
+  const [user, setUser] = useRecoilState(userState);
+
+  // 페이지 이름변경
+  useEffect(() => {
+    setFocus("nickname");
+  }, []);
+
+  // 훅폼 설정
   const {
     watch,
     register,
@@ -62,39 +41,60 @@ const Signup = () => {
   } = useForm<SignupForm>({
     mode: "onChange",
   });
+
   usePageTitle("회원가입");
-  useEffect(() => {
-    setFocus("nickname");
-  }, []);
+  // 첫번째 인풋 연결
+
   const navigate = useNavigate();
   const [error, setErrMsg] = useState("");
   const password = useRef({});
   password.current = watch("password", "");
   // 버튼 클릭시 동작하는 함수
   const onValid = async (data: SignupForm) => {
-    try {
-      axios
-        .post("/signup", {
-          email: data.email,
-          password: data.password,
-          nickname: data.nickname,
-        })
-        .then((response) => {
-          console.log(response);
-          navigate("/login");
-        });
-    } catch (err: any) {
-      if (!err?.response) {
-        setErrMsg("서버로부터 응답이 없습니다");
-      } else if (err.response?.status === 400) {
-        setErrMsg("이메일 또는 패스워드를 확인해주세요");
-        console.log(error);
-      } else if (err.response?.status === 401) {
-        setErrMsg("허가되지않은 접근입니다");
-      } else {
-        setErrMsg("Login Failed");
-      }
-    }
+    axios
+      .post("/signup", {
+        email: data.email,
+        password: data.password,
+        nickname: data.nickname,
+      })
+      .then((res) => {
+        console.log("회원가입 성공, 로그인시도");
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          setErrMsg("서버로부터 응답이 없습니다");
+        } else if (err.response?.status === 400) {
+          setErrMsg("이메일 또는 패스워드를 확인해주세요");
+        } else if (err.response?.status === 401) {
+          setErrMsg("허가되지않은 접근입니다");
+        } else {
+          setErrMsg("회원가입에 실패했습니다");
+        }
+      })
+      .then(() => {
+        axios
+          .post("/login", {
+            email: data.email,
+            password: data.password,
+          })
+          .then((res) => {
+            const userInfo = {
+              memberId: res.data.memberId,
+              nickname: res.data.nickname,
+              image: res.data.image,
+            };
+            setUser(userInfo);
+            secureLocalStorage.setItem("accessToken", res.data.accessToken);
+            secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
+          })
+          .then(() => {
+            window.alert("회원가입에 성공했습니다");
+            navigate("/");
+          })
+          .catch((err) => {
+            navigate("/login");
+          });
+      });
   };
 
   return (
@@ -192,5 +192,38 @@ const Signup = () => {
     </MainContentContainer>
   );
 };
+
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+`;
+
+export const Input = styled.input`
+  width: 250px;
+  height: 35px;
+`;
+
+const InputContainer = styled.div`
+  margin: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+`;
+
+const Errormsg = styled.p`
+  color: var(--alert-red);
+  margin: 3px;
+  font-size: 13px;
+`;
+
+const Label = styled.label`
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 3px;
+`;
 
 export default Signup;

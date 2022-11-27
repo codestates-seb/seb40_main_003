@@ -30,13 +30,13 @@ const CommunityDetail = () => {
   const user = useRecoilValue(userState);
   const data = useFetch<communityDetailTypes>(`/community/${id}`)
   usePageTitle("커뮤니티")
+  console.log(data)
 
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
-
+      {/* {String(data.member.memberId)===String(user?.memberId)&&<>수정 / 삭제</>} */}
       <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
-
         <CommunityWrapper>
           <span className='h4 bold font-main mb-16'>{data.title}</span>
         </CommunityWrapper>

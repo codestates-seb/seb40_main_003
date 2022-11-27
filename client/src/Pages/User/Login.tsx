@@ -19,7 +19,7 @@ import { ReactComponent as LogoMain } from "../../images/logoMain.svg";
 interface LoginForm {
   password: string;
   email: string;
-  autoLogin:boolean;
+  autoLogin: boolean;
   errors?: string;
 }
 
@@ -45,39 +45,39 @@ const Login = () => {
 
   /**  로그인버튼 클릭시 동작하는 함수*/
   const onLogin = async (data: LoginForm) => {
-      axios
-        .post("/login", {
-          email: data.email,
-          password: data.password,
-        })
-        .then((res) => {
-          // 로그인 관련정보, 토큰 받아야함
-          const userInfo = {
-            memberId: res.data.memberId,
-            nickname: res.data.nickname,
-            image: res.data.image,
-          };
-          setUser(userInfo);
-          secureLocalStorage.setItem("accessToken", res.data.accessToken);
-          if (data.autoLogin) {
-            secureLocalStorage.setItem("userInfo", userInfo);
-          }
-          secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
-        })
-        .then(() => {
-          navigate(-1);
-        })
-        .catch((err) => {
-          if (!err?.response) {
-            setErrMsg("서버로부터 응답이 없습니다");
-          } else if (err.response?.status === 400) {
-            setErrMsg("이메일 또는 패스워드를 확인해주세요");
-          } else if (err.response?.status === 401) {
-            setErrMsg("허가되지않은 접근입니다");
-          } else {
-            setErrMsg("로그인에 실패했습니다");
-          }
-        })
+    axios
+      .post("/login", {
+        email: data.email,
+        password: data.password,
+      })
+      .then((res) => {
+        // 로그인 관련정보, 토큰 받아야함
+        const userInfo = {
+          memberId: res.data.memberId,
+          nickname: res.data.nickname,
+          image: res.data.image,
+        };
+        setUser(userInfo);
+        secureLocalStorage.setItem("accessToken", res.data.accessToken);
+        if (data.autoLogin) {
+          secureLocalStorage.setItem("userInfo", userInfo);
+        }
+        secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
+      })
+      .then(() => {
+        navigate(-1);
+      })
+      .catch((err) => {
+        if (!err?.response) {
+          setErrMsg("서버로부터 응답이 없습니다");
+        } else if (err.response?.status === 400) {
+          setErrMsg("이메일 또는 패스워드를 확인해주세요");
+        } else if (err.response?.status === 401) {
+          setErrMsg("허가되지않은 접근입니다");
+        } else {
+          setErrMsg("로그인에 실패했습니다");
+        }
+      });
   };
 
   return (
@@ -116,7 +116,7 @@ const Login = () => {
               비밀번호
             </label>
             <input
-            autoComplete="true"
+              autoComplete="true"
               type={"password"}
               id="password"
               {...register("password", {
@@ -138,8 +138,9 @@ const Login = () => {
                 type={"checkbox"}
                 id="autoLogin"
                 className="border-none checkbox-20"
-                {...register("autoLogin",{
-                  required: false})}
+                {...register("autoLogin", {
+                  required: false,
+                })}
               />
               <label className="mb-4 medium font-main" htmlFor={"autoLogin"}>
                 자동 로그인
@@ -156,7 +157,7 @@ const Login = () => {
                 ? ""
                 : "disable"
             }
-            type={!errors?"submit":undefined}
+            type={!errors ? "submit" : undefined}
             value={"Login"}
           >
             로그인
