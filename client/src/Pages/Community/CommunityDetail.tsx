@@ -31,8 +31,6 @@ const CommunityDetail = () => {
   const user = useRecoilValue(userState);
   const data = useFetch<communityDetailTypes>(`/community/${id}`)
   usePageTitle("커뮤니티")
-  console.log(data);
-  
 
   return data !== undefined ? (
     <MainContentContainer>
@@ -64,7 +62,6 @@ const CommunityDetail = () => {
         </CommunityWrapper>
         <CommentInput url={id} />
         {data.comments.map((e:any) => {
-          console.log(e)
           return (
             <CommentCard
               src={e.writer.image}
