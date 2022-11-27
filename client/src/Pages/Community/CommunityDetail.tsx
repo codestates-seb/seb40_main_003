@@ -30,7 +30,6 @@ const CommunityDetail = () => {
   const user = useRecoilValue(userState);
   const data = useFetch<communityDetailTypes>(`/community/${id}`)
   usePageTitle("커뮤니티")
-  console.log(data)
 
   return data !== undefined ? (
     <MainContentContainer>

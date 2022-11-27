@@ -26,7 +26,6 @@ export const CommunityMain = () => {
   });
   if (isLoading) return <LoadingSkeleton />;
   if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
-  console.log(data)
   return (
     <>
       {data &&
