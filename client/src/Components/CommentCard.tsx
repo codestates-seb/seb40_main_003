@@ -124,11 +124,13 @@ export const CommentCard = (props: CommentCardTypes) => {
       </RowWrapper>
       <GridWrapper>
         <ColumnWrapper>
-          <div className="sub font-gray mb-6">{getDateAgo(createdAt)}</div>
+          <div className="sub font-gray mb-6 ml-4">{getDateAgo(createdAt)}</div>
           {String(author) === String(user?.memberId) ? (
             <CommentButtonWrapper>
               {editable ? (
-                <span
+                <>
+                <button
+                  className="sub font-gray cursor mr-8"
                   onClick={() => {
                     if (editable) {
                       axiosPrivate
@@ -143,17 +145,8 @@ export const CommentCard = (props: CommentCardTypes) => {
                   }}
                 >
                   완료
-                </span>
-              ) : (
-                <>
-                  <span
-                    onClick={() => editOn()}
-                    onKeyDown={handleKeyDown}
-                    className="sub font-gray cursor"
-                  >
-                    수정
-                  </span>
-                  <span
+                </button>
+                <button
                     className="sub font-gray cursor"
                     onClick={() => {
                       if (window.confirm("댓글을 삭제 하시겠습니까?")) {
@@ -161,14 +154,36 @@ export const CommentCard = (props: CommentCardTypes) => {
                           .delete(
                             `/community/${communityId}/comment/${commentId}`
                           )
-                          .then((res) => {
-                            console.log(res);
-                          });
+                          
                       }
                     }}
                   >
                     삭제
-                  </span>
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button
+                    onClick={() => editOn()}
+                    onKeyDown={handleKeyDown}
+                    className="sub font-gray cursor mr-8"
+                  >
+                    수정
+                  </button>
+                  <button
+                    className="sub font-gray cursor"
+                    onClick={() => {
+                      if (window.confirm("댓글을 삭제 하시겠습니까?")) {
+                        axiosPrivate
+                          .delete(
+                            `/community/${communityId}/comment/${commentId}`
+                          )
+                          
+                      }
+                    }}
+                  >
+                    삭제
+                  </button>
                 </>
               )}
             </CommentButtonWrapper>
