@@ -7,10 +7,8 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
-import { useRecoilState } from "recoil";
-import { userState } from "../../Recoil/atoms/user";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { useState, useRef } from "react";
 
@@ -24,7 +22,7 @@ type Props = {};
 interface CommunityEditorForm {
   title: string;
   content: string;
-  image: File;
+  image: FileList;
   errors?: string;
   file: any;
   checked: boolean;
@@ -49,22 +47,17 @@ const CommunityEditor = (props: Props) => {
 
   const onInValid = (errors: FieldErrors) => {};
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
 
   const onValid = async (data: CommunityEditorForm) => {
-    console.log(data);
-    
     const formData = new FormData();
     const postDto = JSON.stringify({ 
       title: data.title,
-      image: data.image,
       content: data.content });
 
-    formData.append("image", data.image);
+    formData.append("image", data.image[0]);
     formData.append("postDto", new Blob([postDto],{type:"application/json"}));
 
-
+      console.log(formData)
       axiosPrivate
       .post("/community", formData, {
         headers: {
@@ -73,7 +66,6 @@ const CommunityEditor = (props: Props) => {
       })
       .then((res) => {
         navigate(`/community/${res.data.communityId}`);
-        navigate(from, {replace: true});
       }).catch ((err)=>{});
     }
   
@@ -110,8 +102,10 @@ const CommunityEditor = (props: Props) => {
             <input
               className="image cursor"
               {...register("image")}
-              id="picture"
+              id="image"
               type="file"
+              accept="image/*"
+              name="image"
               multiple
             />
             <p className="font-alert-red sub">{errors.image?.message}</p>
@@ -133,12 +127,12 @@ const CommunityEditor = (props: Props) => {
         <ConfirmWrapper>
           <input
           {...register("checked", { required: true })}
-          type="checkbox" className="border-none checkbox-20"></input>
-          <p className="sub font-gray">
+          type="checkbox" className="border-none checkbox-20"/>
+          <label className={errors.checked?"sub font-gray":"sub alert-red"}>
             식물처럼 싱그럽고 예쁜 말을 써주세요.
             <br />
             욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
-          </p>
+          </label>
         </ConfirmWrapper>
       </MainCenterWrapper>
       <MainRightWrapper>
