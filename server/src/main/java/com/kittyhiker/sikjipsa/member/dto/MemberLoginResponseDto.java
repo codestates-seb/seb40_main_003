@@ -15,5 +15,6 @@ public class MemberLoginResponseDto {
 
     private Long memberId;
     private String nickname;
+    private String image;
 
 }

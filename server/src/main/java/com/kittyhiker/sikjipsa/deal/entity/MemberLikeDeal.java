@@ -1,15 +1,20 @@
 package com.kittyhiker.sikjipsa.deal.entity;
 
+import com.kittyhiker.sikjipsa.entity.AuditingEntity;
 import com.kittyhiker.sikjipsa.member.entity.Member;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
 @Builder
-public class MemberLikeDeal {
+@NoArgsConstructor
+@AllArgsConstructor
+public class MemberLikeDeal extends AuditingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_like_deal_id")
