@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import { UserStateType } from "../Recoil/atoms/user";
 import { getDateAgo } from "../utils/controller";
@@ -98,6 +98,7 @@ export const CommentCard = (props: CommentCardTypes) => {
             <div ref={ref}>
               {editable ? (
                 <input
+                  autoFocus
                   type="text"
                   value={text}
                   onChange={(e) => handleChange(e)}
