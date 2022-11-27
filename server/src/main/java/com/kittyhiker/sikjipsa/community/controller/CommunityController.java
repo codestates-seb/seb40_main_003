@@ -77,7 +77,23 @@ public class CommunityController {
         return new ResponseEntity(communityDetail, HttpStatus.OK);
     }
 
-    @PostMapping("/like")
+    /**
+     * 내가 작성한 커뮤니티 글 조회
+     */
+    @GetMapping("/my")
+    public ResponseEntity getMyCommunityPost(@Positive @RequestParam int page,
+                                             @Positive @RequestParam int size,
+                                             @RequestHeader("Authorization") String token) {
+        Long memberId = jwtTokenizer.getUserIdFromToken(token);
+        CommunityPagingDto<List> response = communityService.getMyPost(memberId, page, size);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+
+    /**
+     * 커뮤니티 좋아요 기능
+     */
+    @PostMapping("/like/{community-id}")
     public ResponseEntity likeCommunity(@PathVariable("community-id") Long communityId,
                                         @RequestHeader("Authorization") String token) {
         communityService.likeCommunity(communityId, jwtTokenizer.getUserIdFromToken(token));
@@ -85,14 +101,16 @@ public class CommunityController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/like")
+    /**
+     * 커뮤니티 좋아요 취소
+     */
+    @DeleteMapping("/like/{community-id}")
     public ResponseEntity cancelLikeCommunity(@PathVariable("community-id") Long communityId,
                                               @RequestHeader("Authorization") String token) {
         communityService.cancelLikeCommunity(communityId, jwtTokenizer.getUserIdFromToken(token));
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-
 
     /**
      * 커뮤니티글 삭제

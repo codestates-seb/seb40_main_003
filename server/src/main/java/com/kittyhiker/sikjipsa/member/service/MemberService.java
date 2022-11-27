@@ -59,11 +59,14 @@ public class MemberService {
         String refreshToken = jwtTokenizer.createRefreshToken(findMember.getMemberId(), findMember.getEmail(), findMember.getRolesToList());
 
         tokenRepository.save(new RefreshToken(refreshToken));
+        String image = "";
+        if (findMember.getImage()!=null) image=findMember.getImage().getImgUrl();
 
         return MemberLoginResponseDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .memberId(findMember.getMemberId())
+                .image(image)
                 .nickname(findMember.getNickname()).build();
     }
 
