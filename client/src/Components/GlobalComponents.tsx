@@ -322,79 +322,79 @@ export type CommentCardTypes = {
   user: UserStateType | null;
   author: number;
 };
-export const CommentCard = (props: CommentCardTypes) => {
-  const { size, src, alt, name, createdAt, content, tag, user, author } = props;
-  const ref = useRef<any>(null);
-  const [text, setText] = useState(content);
-  const [editable, setEditable] = useState(false);
-  const editOn = () => {
-    setEditable(true);
-  }
-  const handleChange = (e:any) => {
-    setText(e.target.value);
-  };
-  const handleKeyDown = (e:any) => {
-    setEditable(!editable);
-  };
-  const handleClickOutside = (e:any) => {
-    if (editable === true && !ref.current.contains(e.target)) setEditable(false);
-  };
-  useEffect(() => {
-    window.addEventListener("click", handleClickOutside, true);
-  });
-  // 비구조화할당
-  return (
-    <CommentCardWrapper>
-      <RowWrapper className='align-center'>
-      {src && alt !== undefined ? (
-        <ImageWrapper
-          src={src}
-          alt={alt}
-          size={size === "sm" ? "16" : "36"}
-          loading="lazy"
-        />
-      ) : null}
-    <GridWrapper>
-          <span className="sub bold font-gray mb-3">{name}</span>
-          {tag ? (
-            <TagWrapper>
-              {tag.map((e) => {
-                return <SigTag key={e.techId}>{e.name}</SigTag>;
-              })}
-            </TagWrapper>
-          ) : null}
-          <>
-            <div ref={ref}>
-              {editable ? (
-                <input
-                  type='text'
-                  value={text}
-                  onChange={(e) => handleChange(e)}
-                />
-              ) : (
-                <p className='font-gray medium'>{text}</p>
-              )}
-            </div>
-          </>
-        </GridWrapper>
-      </RowWrapper>
-      <GridWrapper>
-        <ColumnWrapper>
-          <div className='sub font-gray mb-6'>{getDateAgo(createdAt)}</div>
-          {String(author) === String(user?.memberId) ? (
-            <CommentButtonWrapper>
-              <span
-                onClick={() => editOn()}
-                onKeyDown={handleKeyDown}
-                className='sub font-gray cursor'
-              >
-                수정
-              </span>
-              <span className='sub font-gray cursor'> 삭제</span>
-            </CommentButtonWrapper>
-          ) : null}
-        </ColumnWrapper>
-      </GridWrapper>
-    </CommentCardWrapper>
-  );
-};
+// export const CommentCard = (props: CommentCardTypes) => {
+//   const { size, src, alt, name, createdAt, content, tag, user, author } = props;
+//   const ref = useRef<any>(null);
+//   const [text, setText] = useState(content);
+//   const [editable, setEditable] = useState(false);
+//   const editOn = () => {
+//     setEditable(true);
+//   }
+//   const handleChange = (e:any) => {
+//     setText(e.target.value);
+//   };
+//   const handleKeyDown = (e:any) => {
+//     setEditable(!editable);
+//   };
+//   const handleClickOutside = (e:any) => {
+//     if (editable === true && !ref.current.contains(e.target)) setEditable(false);
+//   };
+//   useEffect(() => {
+//     window.addEventListener("click", handleClickOutside, true);
+//   });
+//   // 비구조화할당
+//   return (
+//     <CommentCardWrapper>
+//       <RowWrapper className='align-center'>
+//       {src && alt !== undefined ? (
+//         <ImageWrapper
+//           src={src}
+//           alt={alt}
+//           size={size === "sm" ? "16" : "36"}
+//           loading="lazy"
+//         />
+//       ) : null}
+//     <GridWrapper>
+//           <span className="sub bold font-gray mb-3">{name}</span>
+//           {tag ? (
+//             <TagWrapper>
+//               {tag.map((e) => {
+//                 return <SigTag key={e.techId}>{e.name}</SigTag>;
+//               })}
+//             </TagWrapper>
+//           ) : null}
+//           <>
+//             <div ref={ref}>
+//               {editable ? (
+//                 <input
+//                   type='text'
+//                   value={text}
+//                   onChange={(e) => handleChange(e)}
+//                 />
+//               ) : (
+//                 <p className='font-gray medium'>{text}</p>
+//               )}
+//             </div>
+//           </>
+//         </GridWrapper>
+//       </RowWrapper>
+//       <GridWrapper>
+//         <ColumnWrapper>
+//           <div className='sub font-gray mb-6'>{getDateAgo(createdAt)}</div>
+//           {String(author) === String(user?.memberId) ? (
+//             <CommentButtonWrapper>
+//               <span
+//                 onClick={() => editOn()}
+//                 onKeyDown={handleKeyDown}
+//                 className='sub font-gray cursor'
+//               >
+//                 수정
+//               </span>
+//               <span className='sub font-gray cursor'> 삭제</span>
+//             </CommentButtonWrapper>
+//           ) : null}
+//         </ColumnWrapper>
+//       </GridWrapper>
+//     </CommentCardWrapper>
+//   );
+// };

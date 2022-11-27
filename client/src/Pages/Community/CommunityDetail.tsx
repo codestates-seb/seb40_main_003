@@ -1,7 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
-  CommentCard,
   ImageWrapper,
   SigButton,
   ViewCounter,
@@ -24,6 +23,7 @@ import { getDateAgo } from "../../utils/controller";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { cannotLoad } from "../../Const/ErrorContent";
+import { CommentCard} from "../../Components/CommentCard";
 
 const CommunityDetail = () => {
   const { id } = useParams();
@@ -35,7 +35,7 @@ const CommunityDetail = () => {
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
-      {/* {String(data.member.memberId)===String(user?.memberId)&&<>수정 / 삭제</>} */}
+      {String(data.member.memberId)===String(user?.memberId)&&<>수정 / 삭제</>}
       <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
         <CommunityWrapper>
           <span className='h4 bold font-main mb-16'>{data.title}</span>
@@ -62,6 +62,7 @@ const CommunityDetail = () => {
         </CommunityWrapper>
         <CommentInput url={id} />
         {data.comments.map((e:any) => {
+          console.log(e)
           return (
             <CommentCard
               src={e.writer.image}
@@ -70,9 +71,11 @@ const CommunityDetail = () => {
               name={e.writer.nickname}
               createdAt={e.createdAt}
               content={e.content}
+              commentId={e.commentId}
               key={e.commentId}
               author={e.writer.memberId}
               user={user}
+              communityId={id?id:""}
             />
           );
         })}
