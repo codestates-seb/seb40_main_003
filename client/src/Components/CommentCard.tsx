@@ -12,8 +12,8 @@ import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 export const CommentCardWrapper = styled.div`
   width: 100%;
-  padding: 6px 10px;
-  margin-top: 16px;
+  padding: 16px 16px;
+  margin-top: 8px;
   border: 1px solid var(--line-light-gray);
   border-radius: var(--sig-border-8);
   display: flex;
@@ -86,7 +86,7 @@ export const CommentCard = (props: CommentCardTypes) => {
           />
         ) : null}
         <GridWrapper>
-          <span className="sub bold font-gray mb-3">{name}</span>
+          <span className="sub bold font-gray mb-4">{name}</span>
           {tag ? (
             <TagWrapper>
               {tag.map((e) => {
@@ -115,7 +115,7 @@ export const CommentCard = (props: CommentCardTypes) => {
                   }}
                 />
               ) : (
-                <p className="font-gray medium">{text}</p>
+                <p className="font-black medium">{text}</p>
               )}
             </div>
           </>
