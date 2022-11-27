@@ -129,32 +129,30 @@ export const CommentCard = (props: CommentCardTypes) => {
             <CommentButtonWrapper>
               {editable ? (
                 <>
-                <button
-                  className="sub font-gray cursor mr-8"
-                  onClick={() => {
-                    if (editable) {
-                      axiosPrivate
-                        .patch(
-                          `/community/${communityId}/comment/${commentId}`,
-                          {
-                            content: text,
-                          }
-                        )
-                        .then(() => setEditable(false));
-                    }
-                  }}
-                >
-                  완료
-                </button>
-                <button
+                  <button
+                    className="sub font-gray cursor mr-8"
+                    onClick={() => {
+                      if (editable) {
+                        axiosPrivate
+                          .patch(
+                            `/community/${communityId}/comment/${commentId}`,
+                            {
+                              content: text,
+                            }
+                          )
+                          .then(() => setEditable(false));
+                      }
+                    }}
+                  >
+                    완료
+                  </button>
+                  <button
                     className="sub font-gray cursor"
                     onClick={() => {
                       if (window.confirm("댓글을 삭제 하시겠습니까?")) {
-                        axiosPrivate
-                          .delete(
-                            `/community/${communityId}/comment/${commentId}`
-                          )
-                          
+                        axiosPrivate.delete(
+                          `/community/${communityId}/comment/${commentId}`
+                        );
                       }
                     }}
                   >
@@ -174,11 +172,9 @@ export const CommentCard = (props: CommentCardTypes) => {
                     className="sub font-gray cursor"
                     onClick={() => {
                       if (window.confirm("댓글을 삭제 하시겠습니까?")) {
-                        axiosPrivate
-                          .delete(
-                            `/community/${communityId}/comment/${commentId}`
-                          )
-                          
+                        axiosPrivate.delete(
+                          `/community/${communityId}/comment/${commentId}`
+                        );
                       }
                     }}
                   >
