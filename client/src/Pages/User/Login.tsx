@@ -59,10 +59,10 @@ const Login = () => {
         };
         setUser(userInfo);
         secureLocalStorage.setItem("accessToken", res.data.accessToken);
+        secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
         if (data.autoLogin) {
           secureLocalStorage.setItem("userInfo", userInfo);
         }
-        secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
       })
       .then(() => {
         navigate(-1);

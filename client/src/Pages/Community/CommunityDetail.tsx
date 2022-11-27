@@ -13,7 +13,7 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import { userState } from "../../Recoil/atoms/user";
-import { communityDetailTypes } from "../../types/communityTypes";
+import { communityCommentType, communityDetailTypes } from "../../types/communityTypes";
 import { CommunityWrapper } from "../../Components/community/CommunityCard";
 import { Link } from "react-router-dom";
 import CommentInput from "../../Components/UserInput";
@@ -30,9 +30,11 @@ const CommunityDetail = () => {
   const { id } = useParams();
   const user = useRecoilValue(userState);
   const data = useFetch<communityDetailTypes>(`/community/${id}`);
+  
   usePageTitle("커뮤니티");
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
+  console.log(data?.comments)
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
@@ -81,7 +83,7 @@ const CommunityDetail = () => {
             />
           </CommunityWrapper>
           <CommentInput url={id} />
-          {data.comments.map((e: any) => {
+          {data.comments.map((e: communityCommentType) => {
             return (
               <CommentCard
                 src={e.writer.image}
