@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { axiosPrivate } from "../../Hooks/api";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { UserStateType } from "../../Recoil/atoms/user";
 import { getDateAgo } from "../../utils/controller";
 import { ImageWrapper, SigTag, TagWrapper, ViewCounter } from "../GlobalComponents";
@@ -44,12 +45,16 @@ export const CommunityCommentCard = (props: CommentCardTypes) => {
   const ref = useRef<any>(null);
   const [text, setText] = useState(content);
   const [editable, setEditable] = useState(false);
+  const axiosPrivate = useAxiosPrivate();
 
-  const editOn = () => {
+  const editOn = async () => {
     setEditable(true);
   }
   const handleChange = (e:any) => {
     setText(e.target.value);
+    axiosPrivate.post("/community/1/comment/1", JSON.stringify({
+      content: String(text),
+    }))
   };
   const handleKeyDown = () => {
     setEditable(!editable);
@@ -60,6 +65,8 @@ export const CommunityCommentCard = (props: CommentCardTypes) => {
   useEffect(() => {
     window.addEventListener("click", handleClickOutside, true);
   });
+
+
 
   // 비구조화할당
   return (

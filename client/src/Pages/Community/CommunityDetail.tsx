@@ -24,12 +24,15 @@ import { getDateAgo } from "../../utils/controller";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { cannotLoad } from "../../Const/ErrorContent";
+import { CommunityCommentCard } from "../../Components/community/CommunityCommentCard";
 
 const CommunityDetail = () => {
   const { id } = useParams();
   const user = useRecoilValue(userState);
   const data = useFetch<communityDetailTypes>(`/community/${id}`)
   usePageTitle("커뮤니티")
+  console.log(data);
+  
 
   return data !== undefined ? (
     <MainContentContainer>
@@ -62,7 +65,7 @@ const CommunityDetail = () => {
         <CommentInput url={id} />
         {data.comments.map((e:any) => {
           return (
-            <CommentCard
+            <CommunityCommentCard
               src={e.writer.image}
               alt={`${e.writer.nickname}의 대표이미지`}
               size={"36"}
