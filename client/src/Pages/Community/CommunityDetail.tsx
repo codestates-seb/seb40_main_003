@@ -25,12 +25,14 @@ import { ErrorMessage } from "../../Components/ErrorHandle";
 import { cannotLoad } from "../../Const/ErrorContent";
 import { CommentCard} from "../../Components/CommentCard";
 
+
 const CommunityDetail = () => {
   const { id } = useParams();
   const user = useRecoilValue(userState);
   const data = useFetch<communityDetailTypes>(`/community/${id}`)
   usePageTitle("커뮤니티")
-  console.log(data)
+  console.log(data);
+  
 
   return data !== undefined ? (
     <MainContentContainer>
