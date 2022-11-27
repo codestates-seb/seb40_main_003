@@ -72,8 +72,8 @@ textarea:focus {
   color: var(--font-main);
 }
 
-input.content {
-  height: 300px;
+textarea.content {
+  height: 30vh;
 }
 
 input.border-none {
@@ -158,21 +158,12 @@ input.checkbox-20 {
 }
 
 /* 마진 설정 */
-.mt-1 {
-  margin-top: 1px;
-}
+
 
 .mt-4 {
   margin-top: 4px;
 }
 
-.mt-5 {
-  margin-top: 5px;
-}
-
-.mt-7 {
-  margin-top: 7px;
-}
 
 .mt-8 {
   margin-top: 8px;
