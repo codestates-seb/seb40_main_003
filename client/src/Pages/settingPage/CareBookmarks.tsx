@@ -8,7 +8,7 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { FetchByParams, InfiniteFetch } from "../../Hooks/useFetch";
+import { InfiniteFetchPrivate } from "../../Hooks/useFetch";
 import { QueryClient, QueryClientProvider, useInfiniteQuery, useQuery } from "react-query";
 
 import { ErrorMessage } from "../../Components/ErrorHandle";
@@ -27,13 +27,12 @@ export const CareBookmarksMain = () => {
     // useInfiniteQuery
     const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
       "CareBookmarksQuery",
-      ({ pageParam = 1 }) => InfiniteFetch("/experts/like",pageParam),
+      ({ pageParam = 1 }) => InfiniteFetchPrivate("/experts/like",pageParam),
       {
         getNextPageParam: (lastPage) =>
           !lastPage.isLast ? lastPage.nextPage : undefined,
       }
     );
-    console.log(data)
 
     // 스크롤감지
     useEffect(() => {

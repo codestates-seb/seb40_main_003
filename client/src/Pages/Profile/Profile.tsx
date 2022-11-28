@@ -53,7 +53,7 @@ const Profile = () => {
           <>
             {isOpenModal && (
               <Modal onClickModal={onClickModal}>
-                <AddPlantModal />
+                <AddPlantModal closeModal={onClickModal}/>
               </Modal>
             )}
           </>

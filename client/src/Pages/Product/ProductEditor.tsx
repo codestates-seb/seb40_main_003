@@ -72,7 +72,7 @@ const ProductEditor = () => {
         },
       })
       .then((res) => {
-        navigate(`/deal/${res.data.dealId}`);
+        navigate(`/product/${res.data.dealId}`);
       })
       .catch((err) => {});
   };

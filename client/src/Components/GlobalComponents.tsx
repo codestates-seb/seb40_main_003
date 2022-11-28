@@ -127,6 +127,7 @@ export const ImageWrapper = styled.img`
   margin-right: 16px;
   &.communityImage {
     width: 100%;
+    height:25vw;
     margin-right: 0;
   }
 `;

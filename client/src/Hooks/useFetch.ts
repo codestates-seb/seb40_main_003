@@ -1,5 +1,5 @@
 import { fetchingImageLimit } from '../Const/fetchImage';
-import axios from './api';
+import axios, { axiosPrivate } from './api';
 import {useState,useEffect} from 'react'
 import { useRecoilState} from 'recoil';
 import {loading} from "../Recoil/atoms/loadingStatus"
@@ -28,6 +28,16 @@ export const FetchByBody = async<T>(url:string,body?:object)=>{
 /** url,pageParam,keyword를 받아서 data, nextpage, isLast를 반환하는 함수 */
 export const InfiniteFetch = async (url:string,pageParam:number,keyword?:string) => {
   const res = await axios.get(
+    `${url}?${keyword!==undefined?`keyword=${keyword}`:""}&page=${pageParam}&size=${fetchingImageLimit}`
+  );
+  const { data } = res.data;
+  const {page,totalPages}=res.data.pageInfo
+  const isLast = (page===totalPages)
+  return { data, nextPage: pageParam + 1, isLast };
+};
+/** url,pageParam,keyword를 받아서 data, nextpage, isLast를 반환하는 함수 */
+export const InfiniteFetchPrivate = async (url:string,pageParam:number,keyword?:string) => {
+  const res = await axiosPrivate.get(
     `${url}?${keyword!==undefined?`keyword=${keyword}`:""}&page=${pageParam}&size=${fetchingImageLimit}`
   );
   const { data } = res.data;
