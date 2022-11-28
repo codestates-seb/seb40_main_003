@@ -165,6 +165,33 @@ public class CommunityService {
         return new CommunityPagingDto<>(response, pageInfo);
     }
 
+    public CommunityPagingDto<List> getMyPost(Long memberId, int page, int size) {
+        Member writer = verifiedMember(memberId);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<Community> myCommunity = communityRepository.findByMember(writer, pageable);
+
+        List<CommunityResponseDto> response = new ArrayList<>();
+        myCommunity.stream().forEach(
+                c -> {
+                    List<Image> images = imageService.findImage(c);
+                    List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+
+                    Member findMember = c.getMember();
+                    MemberResponseDto responseMember = memberMapper
+                            .memberToMemberResponseDto(findMember, imageService.findImage(findMember));
+
+                    CommunityResponseDto communityResponse = mapper
+                            .communityToResponseDto(c, responseImage,
+                                    responseMember, commentService.getCommentNum(c));
+                    response.add(communityResponse);
+                }
+        );
+
+        PageInfo pageInfo = new PageInfo(page, size, (int) myCommunity.getTotalElements(), myCommunity.getTotalPages());
+        return new CommunityPagingDto<>(response, pageInfo);
+    }
+
+
     public CommunityResponseDto getCommunityDetail(Long communityId) {
         Community findCommunity = verifiedCommunity(communityId);
         findCommunity.updateView();
@@ -186,7 +213,7 @@ public class CommunityService {
     public void likeCommunity(Long communityId, Long userId) {
         Community community = verifiedCommunity(communityId);
         Member member = verifiedMember(userId);
-        if (communityLikeRepository.findByMemberAndCommunity(community, member).isPresent()) {
+        if (communityLikeRepository.findByMemberAndCommunity(member, community).isPresent()) {
             throw new BusinessLogicException(ExceptionCode.ALREADY_LIKE);
         }
         community.updateLike();
@@ -198,7 +225,7 @@ public class CommunityService {
     public void cancelLikeCommunity(Long communityId, Long userId) {
         Community community = verifiedCommunity(communityId);
         Member member = verifiedMember(userId);
-        CommunityLike likeCommunity = communityLikeRepository.findByMemberAndCommunity(community, member)
+        CommunityLike likeCommunity = communityLikeRepository.findByMemberAndCommunity(member, community)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_LIKE_POST));
         communityLikeRepository.delete(likeCommunity);
         community.cancelLike();

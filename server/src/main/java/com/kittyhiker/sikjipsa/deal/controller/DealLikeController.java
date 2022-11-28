@@ -26,8 +26,8 @@ public class DealLikeController {
      * 찜목록 조회
      */
     @GetMapping
-    public ResponseEntity getLikeDealList(@PathVariable @Positive int page,
-                                          @PathVariable @Positive int size,
+    public ResponseEntity getLikeDealList(@RequestParam @Positive int page,
+                                          @RequestParam @Positive int size,
                                           @RequestHeader("Authorization") String token) {
         Long userId = jwtTokenizer.getUserIdFromToken(token);
         DealPagingDto likeDealList = dealLikeService.getLikeDealList(userId, page-1, size);
@@ -48,8 +48,8 @@ public class DealLikeController {
     /**
      * 찜 취소
      */
-    @DeleteMapping("/{deal-like-id}")
-    public ResponseEntity cancelLikeDeal(@RequestParam(("deal-id")) Long dealId,
+    @DeleteMapping("/{deal-id}")
+    public ResponseEntity cancelLikeDeal(@PathVariable(("deal-id")) Long dealId,
                                          @RequestHeader("Authorization") String token) {
         Long userId = jwtTokenizer.getUserIdFromToken(token);
         dealLikeService.cancelLikeDeal(userId, dealId);
