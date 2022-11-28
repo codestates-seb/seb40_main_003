@@ -50,7 +50,7 @@ const CommunityEditor = (props: Props) => {
       title: data.title,
       content: data.content });
 
-    formData.append("image", data.image[0]);
+    formData.append("images", data.image[0]);
     formData.append("postDto", new Blob([postDto],{type:"application/json"}));
 
       axiosPrivate

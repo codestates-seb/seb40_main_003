@@ -114,7 +114,7 @@ export type CareLikeAddType = {
       memberId: number,
       nickname: string
   },
-  "expertProfileId": 1
+  expertProfileId: number
 }
 
 // 돌봄 찜 목록 조회
