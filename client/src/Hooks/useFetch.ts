@@ -25,7 +25,16 @@ export const FetchByBody = async<T>(url:string,body?:object)=>{
   const data = await axios.get(url,body)
   return data
 }
-
+/** url,pageParam,keyword를 받아서 data, nextpage, isLast를 반환하는 함수 */
+export const InfiniteFetch = async (url:string,pageParam:number,keyword?:string) => {
+  const res = await axios.get(
+    `${url}?${keyword!==undefined?`keyword=${keyword}`:""}&page=${pageParam}&size=${fetchingImageLimit}`
+  );
+  const { data } = res.data;
+  const {page,totalPages}=res.data.pageInfo
+  const isLast = (page===totalPages)
+  return { data, nextPage: pageParam + 1, isLast };
+};
 // =============리액트 쿼리 사용으로 당분간 안쓸예정===============
 
 // URL을 받아서 DATA 를 리턴하는 Hooks

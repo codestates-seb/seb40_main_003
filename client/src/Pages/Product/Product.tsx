@@ -9,41 +9,55 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { FetchByParams } from "../../Hooks/useFetch";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { FetchByParams, InfiniteFetch } from "../../Hooks/useFetch";
+import { QueryClient, QueryClientProvider, useInfiniteQuery, useQuery } from "react-query";
 
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
 import { fetchingImageLimit } from "../../Const/fetchImage";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
+import React from "react";
 
 // 쿼리클라이언트
 const productQueryClient = new QueryClient();
 
 export const ProductMain = () => {
-  const { data, isLoading, error,isSuccess } = useQuery(["productQuery"], () => {
-    const data = FetchByParams("/deal", { page: 1, size: fetchingImageLimit });
-    return data;
+    // 무한스크롤 감지 Ref
+    const { ref, inView } = useInView();
+    // useInfiniteQuery
+    const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+      "productQuery",
+      ({ pageParam = 1 }) => InfiniteFetch("/deal",pageParam),
+      {
+        getNextPageParam: (lastPage) =>
+          !lastPage.isLast ? lastPage.nextPage : undefined,
+      }
+    );
+    // 스크롤감지
+    useEffect(() => {
+      if (inView) fetchNextPage();
+    }, [inView]);
     
-  });
-  if (isLoading) return <LoadingSkeleton />;
-  if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
-  // if(isSuccess) console.log(data.data.data);
+    if (status==="loading") return <LoadingSkeleton />;
+    if (status==="error") return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
   
-
-  return (
-    <>
-      {data &&
-        data.data.data.map((e: ProductPreviewMappingType) => {
-          return (
+    return (
+      <>
+      {data?.pages.map((page, index) => (
+            <React.Fragment key={index}>
+              {page.data.map((e:ProductPreviewMappingType) => (
             <Link key={e.dealId} to={`/product/${e.dealId}`}>
-              <ProductCard data={e} />
-            </Link>
-          );
-        })}
-    </>
-  );
-};
+            <ProductCard data={e} />
+          </Link>
+              ))}
+            </React.Fragment>
+          ))}
+          {isFetchingNextPage?<LoadingSkeleton/>:<div ref={ref}></div>}
+      </>
+    )
+  }
 
 // 전체 페이지
 const Product = () => {
@@ -79,4 +93,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Product
