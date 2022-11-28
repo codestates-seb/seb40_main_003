@@ -27,6 +27,7 @@ interface ProductEditorForm {
   title: string;
   image: FileList;
   category: number;
+  gudong: number;
   price: number;
   content: string;
   checked: boolean;
