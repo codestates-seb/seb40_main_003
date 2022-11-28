@@ -13,7 +13,10 @@ axios.defaults.xsrfHeaderName = "x-CSRFToken";
 // 쿠키를 싣고가야하는 요청 axios
 export const axiosPrivate = axios.create({
   baseURL: BASE_URL,
-  headers: { "Content-Type": "application/json","Authorization":`Bearer ${secureLocalStorage.getItem("accessToken")}` },
+  headers: {
+    "Content-Type": "application/json",
+    Authorization: `Bearer ${secureLocalStorage.getItem("accessToken")}`,
+  },
   withCredentials: true,
 });
 
@@ -23,6 +26,3 @@ export default axios.create({
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });
-
-
-

@@ -4,51 +4,26 @@ import { useForm } from "react-hook-form";
 import { useRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 import { SigButton } from "../../Components/GlobalComponents";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   MainContentContainer,
   MainCenterWrapper,
   MainRightWrapper,
+  RowWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { axiosPrivate } from "../../Hooks/api";
+import axios from "../../Hooks/api";
 import secureLocalStorage from "react-secure-storage";
-
-const FormWrapper = styled.form`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-  padding: 10px;
-`;
-
-const InputContainer = styled.div`
-  margin: 10px 0;
-  display: flex;
-  flex-direction: column;
-  align-self: center;
-`;
-
-const Errormsg = styled.p`
-  color: var(--alert-red);
-  margin: 3px;
-  font-size: 13px;
-`;
-
-const Label = styled.label`
-  font-size: 15px;
-  font-weight: 500;
-  margin-bottom: 3px;
-`;
+import { ReactComponent as LogoMain } from "../../images/logoMain.svg";
 
 interface LoginForm {
   password: string;
   email: string;
+  autoLogin: boolean;
   errors?: string;
 }
 
-function Login() {
+const Login = () => {
   const [error, setErrMsg] = useState("");
   const [user, setUser] = useRecoilState(userState);
 
@@ -65,12 +40,12 @@ function Login() {
     setFocus("email");
   }, []);
 
-  // 원래있던 페이지로 되돌리는 기능
+  /**  원래있던 페이지로 되돌리는 기능*/
   const navigate = useNavigate();
-  
-  // 로그인버튼 클릭시 동작하는 함수
+
+  /**  로그인버튼 클릭시 동작하는 함수*/
   const onLogin = async (data: LoginForm) => {
-    axiosPrivate
+    axios
       .post("/login", {
         email: data.email,
         password: data.password,
@@ -85,9 +60,11 @@ function Login() {
         setUser(userInfo);
         secureLocalStorage.setItem("accessToken", res.data.accessToken);
         secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
+        if (data.autoLogin) {
+          secureLocalStorage.setItem("userInfo", userInfo);
+        }
       })
       .then(() => {
-        // 원래있던 페이지로 되돌림
         navigate(-1);
       })
       .catch((err) => {
@@ -107,10 +84,16 @@ function Login() {
     <MainContentContainer>
       <MainCenterWrapper>
         <FormWrapper onSubmit={handleSubmit(onLogin)}>
+          <Link to={"/"}>
+            <LogoMain width={"150px"} />
+          </Link>
           <InputContainer>
-            <Label htmlFor={"Email"}>이메일</Label>
+            <label className="mb-4 medium font-main" htmlFor={"Email"}>
+              이메일
+            </label>
             <input
               type={"email"}
+              autoComplete="true"
               id="Email"
               {...register("email", {
                 required: true,
@@ -129,8 +112,11 @@ function Login() {
             )}
           </InputContainer>
           <InputContainer>
-            <Label htmlFor={"password"}>비밀번호</Label>
+            <label className="mb-4 medium font-main" htmlFor={"password"}>
+              비밀번호
+            </label>
             <input
+              autoComplete="true"
               type={"password"}
               id="password"
               {...register("password", {
@@ -146,20 +132,32 @@ function Login() {
             )}
             {error && <Errormsg>{error}</Errormsg>}
           </InputContainer>
-
-          <Link to={`/signup`} className={"mb-10"}>
-            <span className="font-main bold">회원 가입</span>하고
-            식물전문가가 되어보세요!
-          </Link>
-
+          <OptionWrapper className={"mb-16 mt-16"}>
+            <RowWrapper>
+              <input
+                type={"checkbox"}
+                id="autoLogin"
+                className="border-none checkbox-20"
+                {...register("autoLogin", {
+                  required: false,
+                })}
+              />
+              <label className="mb-4 medium font-main" htmlFor={"autoLogin"}>
+                자동 로그인
+              </label>
+            </RowWrapper>
+            <Link to={`/signup`}>
+              <span className="font-main bold">회원 가입</span>하고 식물전문가가
+              되어보세요!
+            </Link>
+          </OptionWrapper>
           <SigButton
             className={
               errors?.email === undefined && errors.password === undefined
                 ? ""
                 : "disable"
             }
-            
-            type="submit"
+            type={!errors ? "submit" : undefined}
             value={"Login"}
           >
             로그인
@@ -169,6 +167,40 @@ function Login() {
       <MainRightWrapper></MainRightWrapper>
     </MainContentContainer>
   );
-}
+};
 
+const FormWrapper = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+`;
+
+const InputContainer = styled.div`
+  margin: 10px 0;
+  display: flex;
+  width: 100%;
+  max-width: 425px;
+  flex-direction: column;
+  align-self: center;
+  &:last-child {
+    margin-bottom: 30px;
+  }
+`;
+
+const Errormsg = styled.p`
+  color: var(--alert-red);
+  font-size: 0.8rem;
+  margin-top: 4px;
+`;
+
+const OptionWrapper = styled.div`
+  width: 100%;
+  max-width: 425px;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+`;
 export default Login;

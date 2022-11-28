@@ -9,7 +9,6 @@ export const MainContentContainer = styled.div`
   background-color: var(--bg-gray);
   min-height: 95vh;
   padding-bottom: 36px;
-  margin-top: 52px;
   @media screen and (max-width: 1024px) {
     flex-direction: column;
     align-items: center;
@@ -49,7 +48,7 @@ export const MainRightWrapper = styled.aside`
   @media screen and (max-width: 1024px) {
     margin: 0;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content:${(props:{center?:boolean})=>(props.center?"center":"space-between")};
     position: fixed;
     width: 100%;
     top: auto;

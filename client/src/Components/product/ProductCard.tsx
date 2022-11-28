@@ -1,9 +1,10 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, SigTag, ViewCounter } from "../GlobalComponents";
-import { ColumnWrapper, RowWrapper, SpaceBetween, SpaceEnd } from "../Wrapper";
-import Skeleton,{ ProductWrapper } from "../Loading";
-import { ProductPreviewMappingType, ProductPreviewType } from "../../types/productTypes";
+import {  RowWrapper, SpaceBetween, SpaceEnd } from "../Wrapper";
+import { ProductWrapper } from "../Loading";
+import { ProductPreviewMappingType } from "../../types/productTypes";
 import { getDateAgo } from "../../utils/controller";
+import { ProfileDealType } from "../../types/profileType";
 
 
 const Price = styled.span`
@@ -16,9 +17,8 @@ export const DescriptionColumnWrapper = styled.div`
   flex-direction: column;
   justify-content:center;
   width: 100%;
+  
 `;
-
-
 
 type props={
   data: ProductPreviewMappingType
@@ -26,14 +26,13 @@ type props={
 const ProductCard = (props:props) => {
   const data = props.data
   return (
-    <ProductWrapper>
+    <ProductWrapper className={data.state === 0 ? "soldOut" : ""}>
       <RowWrapper>
         <ImageWrapper
           size={"100"}
           src={data.images[0]}
           alt={`상품명 ${data.title}의 대표이미지`}
           loading="lazy"
-          className={data.state === 0 ? "soldOut" : ""}
         />
         <DescriptionColumnWrapper>
           <span className="medium">{data.title}</span>

@@ -1,30 +1,4 @@
-// -------------- API 명세서
-// type communityTypes = {
-//   data: [
-//     {
-//       communityId: number;
-//       title: string;
-//       content: string;
-//       view: number;
-//       createdAt: number;
-//       modifiedAt: string;
-//       commentNum: string;
-//       likeNum: string;
-//       image: [
-//         {
-//           imgUrl: string;
-//         }
-//       ];
-//       member: {
-//         memberId: string;
-//         nickname: string;
-//         image: string;
-//       };
-//     }
-//   ];
-// };
-// export type { communityTypes };
-// -------------------------------
+// 커뮤니티 게시글 조회
 export type CommunityPreviewType = {
   data: [communityPreviewDataTypes];
   pageInfo: {
@@ -36,14 +10,84 @@ export type CommunityPreviewType = {
 };
 
 export type communityPreviewDataTypes = {
-      communityId: number;
+  communityId: number;
+  title: string;
+  content: string;
+  view: number;
+  createdAt: string;
+  modifiedAt: string;
+  commentNum: number;
+  likeNum: number;
+  images: [
+    {
+      imgUrl: string;
+    }
+  ];
+  member: {
+    memberId: number;
+    nickname: string;
+    image: string;
+  };
+};
+
+// 커뮤니티 게시글 상세 조회
+export type communityDetailTypes = {
+  communityId: number;
+  title: string;
+  content: string;
+  view: number;
+  createdAt: string;
+  modifiedAt: string;
+  commentNum: number;
+  likeNum: number;
+  images: [
+    {
+      imgUrl: string;
+    }
+  ];
+  member: {
+    memberId: number;
+    nickname: string;
+    image: {
+      imgUrl: string;
+    };
+  };
+  comments: communityCommentType[];
+};
+export type communityCommentType = {
+  commentId: number;
+  content: string;
+  createdAt: string;
+  modifiedAt: string;
+  isModified: number;
+  isDeleted: number;
+  depth: number;
+  parent: number;
+  writer: {
+    memberId: number;
+    nickname: string;
+    image: string;
+  };
+};
+
+// 추가 조회: 내 게시글
+export type CommunityMyPreviewType = {
+  data: [
+    {
+      postId: number;
       title: string;
+      photo: string;
       content: string;
-      view: number;
-      likes: number;
+      likeNum: number;
       commentNum: number;
+      viewNum: number;
       createdAt: string;
-      modifiedAt: string;
-      images: [string];
-      comments: null;
+    }
+  ];
+  pageInfo: {
+    page: number;
+    size: number;
+    totalPages: number;
+    totalElements: number;
+  };
 };

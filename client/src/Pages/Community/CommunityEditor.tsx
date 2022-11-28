@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import styled from "@emotion/styled";
+import { FieldErrors, useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import {
   MainContentContainer,
@@ -7,12 +7,8 @@ import {
   MainRightWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import styled from "@emotion/styled";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { axiosPrivate } from "../../Hooks/api";
-import { useRecoilState } from "recoil";
-import { userState } from "../../Recoil/atoms/user";
+import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 const ConfirmWrapper = styled.span`
@@ -20,58 +16,59 @@ const ConfirmWrapper = styled.span`
   justify-content: row;
 `;
 
+type Props = {};
+
 interface CommunityEditorForm {
   title: string;
-  content: string;
-  images: string;
-  errors?: string;
+  image: FileList;
   file: any;
+  content: string;
+  checked: boolean;
+  errors?: string;
 }
 
-const CommunityEditor = () => {
-  const [user, setUser] = useRecoilState(userState);
-  const [error, setErrMsg] = useState("");
-  usePageTitle("커뮤니티 글 쓰기");
+const CommunityEditor = (props: Props) => {
+  const axiosPrivate = useAxiosPrivate();
+  // const [user, setUser] = useRecoilState(userState);
 
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm<CommunityEditorForm>({
     mode: "onChange",
   });
 
+  const onInValid = (errors: FieldErrors) => {};
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-  const [auth, setAuth] = useRecoilState(userState);
-  const axiosPrivate = useAxiosPrivate();
 
   const onValid = async (data: CommunityEditorForm) => {
+    console.log(data);
+    
     const formData = new FormData();
-    const postDto = JSON.stringify({ title: data.title, content: data.content });
-    formData.append("images", data.images);
+    const postDto = JSON.stringify({ 
+      title: data.title,
+      content: data.content });
+
+    formData.append("image", data.image[0]);
     formData.append("postDto", new Blob([postDto],{type:"application/json"}));
-    try{axiosPrivate
+
+      axiosPrivate
       .post("/community", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
-        },
+          "Content-Type": "multipart/form-data"
+        }
       })
       .then((res) => {
-        console.log(res)
         navigate(`/community/${res.data.communityId}`);
-      })
+      }).catch ((err)=>{});
     }
-      catch(err){
-        console.error(err)
-        navigate("/login")
-      };
-  };
+  
+  usePageTitle("커뮤니티 글 쓰기");
+
 
   return (
-    <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid)}>
+    <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid, onInValid)}>
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>
           <>
@@ -95,41 +92,45 @@ const CommunityEditor = () => {
           </>
         </SectionWrapper>
 
-        <SectionWrapper>
+        <SectionWrapper width={100} >
           <>
             <input
-              className="images"
-              {...register("images")}
-              id="images"
+              className="image cursor"
+              {...register("image", 
+              // {required: true}
+                )}
+              id="image"
               type="file"
+              accept="image/*"
+              name="image"
               multiple
             />
-            <p className="font-alert-red sub">{errors.images?.message}</p>
+            <p className="font-alert-red sub">{errors.image?.message}</p>
           </>
         </SectionWrapper>
 
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <input
+            <textarea
               className="content"
               {...register("content", {
                 required: true,
               })}
-              type="content"
               placeholder="글쓰기"
             />
             <p className="font-alert-red sub">{errors.content?.message}</p>
           </>
         </SectionWrapper>
         <ConfirmWrapper>
-          <input type="checkbox" className="border-none checkbox-20"></input>
-          <p className="sub font-gray">
+          <input
+          {...register("checked", { required: true })}
+          type="checkbox" className="border-none checkbox-20"/>
+          <label className={errors.checked?"sub font-gray":"sub alert-red"}>
             식물처럼 싱그럽고 예쁜 말을 써주세요.
             <br />
             욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
-          </p>
+          </label>
         </ConfirmWrapper>
-        {error && <p>{error}</p>}
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>

@@ -9,7 +9,7 @@ export const CommunityWrapper = styled.footer`
 `;
 
 const CommunityCard = ({ data }: any) => {
-  console.log(data)
+  // console.log(data)
   return (
     <ColumnWrapper>
       <SectionWrapper title={data.title} content={data.content} width={100}>
@@ -28,7 +28,7 @@ const CommunityCard = ({ data }: any) => {
 
           <CommunityWrapper className='mt-7'>
             <RowWrapper>
-              <span className='sub font-gray'>{getDateAgo(data.createdAt)}</span>
+              <span className='sub font-gray mr-8'>{getDateAgo(data.createdAt)}</span>
               {/* <span className='sub font-gray ml-16'>
                 {data.member.nickname}
               </span> */}

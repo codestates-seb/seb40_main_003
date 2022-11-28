@@ -15,7 +15,7 @@ export const HeaderWrapper = styled.header`
   justify-content: center;
   border-bottom: 1px solid var(--line-light-gray);
   background-color: var(--pure-white);
-  position: fixed;
+  position: sticky;
   top: ${(props: { top?: number; mt?: number }) =>
     props.top ? props.top + "px" : 0};
   margin-top: ${(props: { top?: number; mt?: number }) =>

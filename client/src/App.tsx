@@ -32,13 +32,30 @@ import ProductReviewEditor from "./Pages/Talk/ProductReviewEditor";
 import Community, { CommunityMain } from "./Pages/Community/Community";
 import CommunityDetail from "./Pages/Community/CommunityDetail";
 import CommunityEditor from "./Pages/Community/CommunityEditor";
+import secureLocalStorage from "react-secure-storage";
 
 import Talk from "./Pages/Talk/Talk";
 import { DefaultLayout } from "./Route";
 import ProductCategory from "./Pages/Product/ProductCategory";
+import { useEffect } from "react";
+import { useSetRecoilState } from "recoil";
+import { userState } from "./Recoil/atoms/user";
+
 // import DevTools from "./Components/DevTools";
 
-function App() {
+const App=()=>{
+  const setUser = useSetRecoilState(userState)
+  useEffect(() => {
+    const accessToken = secureLocalStorage.getItem("accessToken")
+    const refreshToken = secureLocalStorage.getItem("refreshToken")
+    const userInfo:any = secureLocalStorage.getItem("userInfo")
+
+    //로컬스토리지에 유저정보가 있고, 액세스토큰, 리프레시토큰 모두 있을때 (토큰 유효성검사는 안함)
+    if(accessToken&&refreshToken&&userInfo){
+      setUser(userInfo);
+    }
+  }, [])
+  
   return (
     <BrowserRouter>
       {/* 모바일용 navbar*/}

@@ -5,7 +5,6 @@ import {
   ProfileCard,
   ProfilePlantCard,
   SigButton,
-  CommentCard,
   AddProfilePlantCard,
 } from "../../Components/GlobalComponents";
 import PlantCardCarousel from "../../Components/profile/plantCardCarousel";
@@ -25,6 +24,7 @@ import { LoadingSpinner } from "../../Components/Loading";
 import AddPlantModal from "./AddPlantModal";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
+import { CommentCard } from "../../Components/CommentCard";
 
 const CareDetail = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);

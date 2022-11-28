@@ -9,46 +9,62 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { FetchByParams } from "../../Hooks/useFetch";
+import { InfiniteFetch } from "../../Hooks/useFetch";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "../../Components/ErrorHandle";
-import { LoadingSkeleton } from "../../Components/Loading";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
+import { LoadingSkeleton, LoadingSpinner } from "../../Components/Loading";
+import { QueryClient, QueryClientProvider, useInfiniteQuery } from "react-query";
 import { communityPreviewDataTypes } from "../../types/communityTypes";
+import { useInView } from "react-intersection-observer";
+import React, { useEffect } from "react";
 
 const communityQueryClient = new QueryClient();
 
 export const CommunityMain = () => {
-  const { data, isLoading, error } = useQuery(["productQuery"], () => {
-    const data = FetchByParams("/community", { page: 1, size: 5 });
-    return data;
-  });
-  if (isLoading) return <LoadingSkeleton />;
-  if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
-  console.log(data)
+  // 무한스크롤 감지 Ref
+  const { ref, inView } = useInView();
+  // useInfiniteQuery
+  const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+    "communityQuery",
+    ({ pageParam = 1 }) => InfiniteFetch("/community",pageParam),
+    {
+      getNextPageParam: (lastPage) =>
+        !lastPage.isLast ? lastPage.nextPage : undefined,
+    }
+  );
+  // 스크롤감지
+  useEffect(() => {
+    if (inView) fetchNextPage();
+  }, [inView]);
+  
+  if (status==="loading") return <LoadingSkeleton />;
+  if (status==="error") return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
+
   return (
     <>
-      {data &&
-        data.data.data.map((e: communityPreviewDataTypes) => {
-          return (
-            <Link
+    {data?.pages.map((page, index) => (
+          <React.Fragment key={index}>
+            {page.data.map((e:communityPreviewDataTypes) => (
+              <Link
               to={`/community/${e.communityId}`}
               key={"member" + e.communityId}
             >
               <CommunityCard data={e} />
             </Link>
-          );
-        })}
+            ))}
+          </React.Fragment>
+        ))}
+        {isFetchingNextPage?<LoadingSkeleton/>:<div ref={ref}></div>}
     </>
-  );
-};
+  )
+}
 
 const Community = () => {
   usePageTitle("커뮤니티");
   return (
     <MainContentContainer>
       <MainCenterWrapper>
-        {/* 에러바운더리 */}
+        {/** 에러바운더리 fallback으로 에러시*/}
         <ErrorBoundary fallback={<ErrorMessage content={"정보를 불러오는데 실패했습니다"} />}>
           {/* 쿼리클라이언트 */}
           <QueryClientProvider client={communityQueryClient}>
