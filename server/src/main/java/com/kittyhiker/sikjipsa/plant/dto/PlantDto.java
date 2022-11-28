@@ -12,6 +12,8 @@ public class PlantDto {
 
 	private String name;
 
+	private String years;
+
 	private String days;
 
 	private String type;
