@@ -8,7 +8,7 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { ProductCategoryConst } from "../../Const/Category";
 
@@ -23,15 +23,17 @@ interface ProductEditorForm {
   title: string;
   image: FileList;
   category: number;
-  content: string;
   price: number;
-  errors?: string;
+  content: string;
   checked: boolean;
+  area: number;
+  errors?: string;
 }
 
 const ProductEditor = (props: Props) => {
   const axiosPrivate = useAxiosPrivate();
   // const [user, setUser] = useRecoilState(userState);
+
   const {
     register,
     handleSubmit,
@@ -42,25 +44,20 @@ const ProductEditor = (props: Props) => {
 
   const onInValid = (errors: FieldErrors) => {};
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
 
   const onValid = async (data: ProductEditorForm) => {
     console.log(data);
 
     const formData = new FormData();
-    const postDto = JSON.stringify({
+    const dealPostDto = JSON.stringify({
       title: data.title,
-      image: data.image,
-      category: data.category,
-      price: data.price,
       content: data.content,
+      price: data.price,
+      category: data.category,
+      area: data.area,
     });
-    console.log(data.category)
     formData.append("image", data.image[0]);
-    formData.append(
-      "postDto",
-      new Blob([postDto], { type: "application/json" })
+    formData.append("dealPostDto", new Blob([dealPostDto], { type: "application/json" })
     );
 
     axiosPrivate
@@ -71,7 +68,6 @@ const ProductEditor = (props: Props) => {
       })
       .then((res) => {
         navigate(`/deal/${res.data.dealId}`);
-        navigate(from, { replace: true });
       })
       .catch((err) => {});
   };
@@ -109,10 +105,14 @@ const ProductEditor = (props: Props) => {
         <SectionWrapper width={100} borderNone={false}>
           <>
             <input
-              className="image"
-              {...register("image")}
+              className="image cursor"
+              {...register("image", 
+              // {required: true}
+              )}
               id="image"
               type="file"
+              accept="image/*"
+              name="image"
               multiple
             />
             <p className="font-alert-red sub">{errors.image?.message}</p>
@@ -120,7 +120,10 @@ const ProductEditor = (props: Props) => {
         </SectionWrapper>
         <SectionWrapper width={100} borderNone={false}>
           <>
-            <select {...register("category", { required: true })}>
+            <select {...register("category", 
+            {required: true }
+              )}
+              name="category">
               {ProductCategoryConst.map((e) => {
                 return (
                   <option key={`option ${e.number}`} value={e.number}>
@@ -178,13 +181,7 @@ const ProductEditor = (props: Props) => {
       </MainCenterWrapper>
       <MainRightWrapper center={true}>
         <SigButton
-          type="submit"
-          className={
-            errors?.content === undefined && errors.price === undefined && errors.title === undefined
-              ? ""
-              : "disable"
-          }
-        >
+          type="submit" value={"ProductEditor"}>
           작성 완료
         </SigButton>
       </MainRightWrapper>
