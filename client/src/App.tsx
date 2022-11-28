@@ -32,6 +32,7 @@ import ProductReviewEditor from "./Pages/Talk/ProductReviewEditor";
 import Community, { CommunityMain } from "./Pages/Community/Community";
 import CommunityDetail from "./Pages/Community/CommunityDetail";
 import CommunityEditor from "./Pages/Community/CommunityEditor";
+import CommunityModify from "./Pages/Community/CommunityModify";
 import secureLocalStorage from "react-secure-storage";
 
 import Talk from "./Pages/Talk/Talk";
@@ -40,6 +41,7 @@ import ProductCategory from "./Pages/Product/ProductCategory";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { userState } from "./Recoil/atoms/user";
+
 
 // import DevTools from "./Components/DevTools";
 
@@ -89,6 +91,7 @@ const App=()=>{
           <Route path="/community" element={<DefaultLayout />}>
             <Route index element={<Community />} />
             <Route path=":id" element={<CommunityDetail />} />
+            <Route path="modify" element={<CommunityModify />} />
             <Route path="write" element={<CommunityEditor />} />
           </Route>
           {/* 검색 */}
