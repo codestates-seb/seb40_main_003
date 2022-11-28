@@ -35,7 +35,7 @@ public class ExpertProfile {
 
 	private String price;
 
-	private Long likes;
+	private Long likes = 0L;
 
 	private Long view;
 

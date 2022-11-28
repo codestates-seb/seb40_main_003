@@ -3,11 +3,9 @@ package com.kittyhiker.sikjipsa.caring.service;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
+import com.kittyhiker.sikjipsa.caring.entity.ExpertReview;
 import com.kittyhiker.sikjipsa.caring.entity.MemberLikeExpert;
-import com.kittyhiker.sikjipsa.caring.repository.AreaTagRepository;
-import com.kittyhiker.sikjipsa.caring.repository.ExpertRepository;
-import com.kittyhiker.sikjipsa.caring.repository.MemberLikeExpertRepository;
-import com.kittyhiker.sikjipsa.caring.repository.TechTagRepository;
+import com.kittyhiker.sikjipsa.caring.repository.*;
 import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
 import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.image.entity.Image;
@@ -43,6 +41,7 @@ public class ExpertService {
 	private final ImageRepository imageRepository;
 	private final TechTagRepository techTagRepository;
 	private final AreaTagRepository areaTagRepository;
+	private final ExpertReviewRepository expertReviewRepository;
 
 //	@Value("${com.sikjipsa.upload.path}")
 //	private String uploadPath;
@@ -253,11 +252,12 @@ public class ExpertService {
 		return memberLikeExpert;
 	}
 
-//	public ExpertReview postExpertSuccess(ExpertReview expertReview) {
-//		Member member = memberRepository.getReferenceById(1L);
-//		expertReview.setMember(member);
-//
-//		//expertReview.setExpertProfile();
-//		return expertReviewRepository.save(expertReview);
-//	}
+	public ExpertReview postExpertSuccess(ExpertReview expertReview, Long expertId, Long memberId) {
+		Member member = memberRepository.getReferenceById(memberId);
+		expertReview.setMember(member);
+
+		ExpertProfile expertProfile = expertRepository.getReferenceById(expertId);
+		expertReview.setExpertProfile(expertProfile);
+		return expertReviewRepository.save(expertReview);
+	}
 }

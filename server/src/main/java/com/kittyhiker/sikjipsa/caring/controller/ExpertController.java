@@ -1,8 +1,10 @@
 package com.kittyhiker.sikjipsa.caring.controller;
 
 import com.kittyhiker.sikjipsa.caring.dto.ExpertProfileDto;
+import com.kittyhiker.sikjipsa.caring.dto.ExpertReviewDto;
 import com.kittyhiker.sikjipsa.caring.dto.MultiResponseDto;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
+import com.kittyhiker.sikjipsa.caring.entity.ExpertReview;
 import com.kittyhiker.sikjipsa.caring.entity.MemberLikeExpert;
 import com.kittyhiker.sikjipsa.caring.mapper.ExpertMapper;
 import com.kittyhiker.sikjipsa.caring.mapper.ExpertReviewMapper;
@@ -30,6 +32,7 @@ public class ExpertController {
 	private final ExpertService expertService;
 	private final ExpertMapper expertMapper;
 	private final MemberLikeExpertMapper memberLikeExpertMapper;
+	private final ExpertReviewMapper expertReviewMapper;
 
 	@PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
 	public ResponseEntity postExpert(@RequestPart ExpertProfileDto expertProfileDto,
@@ -103,13 +106,15 @@ public class ExpertController {
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 
-	// TODO: 전문가(돌봄) 리뷰
-//	@PostMapping("/{expert-success-id}/reviews")
-//	public ResponseEntity postExpertSuccess(@PathVariable("expert-success-id") @Positive Long expertSuccessId,
-//											@RequestBody ExpertReviewDto expertReviewDto) {
-//		ExpertReview expertReview = expertReviewMapper.toReview(expertReviewDto);
-//		ExpertReview response = expertService.postExpertSuccess(expertReview);
-//		return new ResponseEntity(expertReviewMapper.toExpertReviewResponseDto(response), HttpStatus.CREATED);
-//	}
+	// 전문가(돌봄) 리뷰
+	@PostMapping("/{expert-id}/reviews")
+	public ResponseEntity postExpertSuccess(@PathVariable("expert-id") @Positive Long expertId,
+											//@PathVariable("expert-success-id") @Positive Long expertSuccessId,
+											@RequestBody ExpertReviewDto expertReviewDto,
+											@RequestHeader("Authorization") String token) {
+		ExpertReview expertReview = expertReviewMapper.toReview(expertReviewDto);
+		ExpertReview response = expertService.postExpertSuccess(expertReview, expertId, jwtTokenizer.getUserIdFromToken(token));
+		return new ResponseEntity(expertReviewMapper.toExpertReviewResponseDto(response), HttpStatus.CREATED);
+	}
 
 }

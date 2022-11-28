@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class MemberPatchDto {
-	private Long id;
+	private Long memberId;
 	private String nickname;
 }

@@ -8,8 +8,8 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class ExpertReviewResponseDto {
-	private Long id;
+	private Long expertSuccessId;
 	private String content;
-	private ExpertProfile expertProfile;
-	private Member member;
+	private ExpertProfileDto2 expertProfile;
+	private MemberDto3 member;
 }
