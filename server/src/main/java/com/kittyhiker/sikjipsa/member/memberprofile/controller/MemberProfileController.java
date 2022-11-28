@@ -51,7 +51,7 @@ public class MemberProfileController {
 	public ResponseEntity patchProfile(@PathVariable("user-id") @Positive Long memberId,
 									   @Valid @RequestPart MemberPatchDto memberPatchDto,
 									   @RequestPart MultipartFile multipartFile) {
-		memberPatchDto.setId(memberId);
+		memberPatchDto.setMemberId(memberId);
 		Member member = memberMapper.toProfile(memberPatchDto);
 		Member response = memberProfileService.patchProfile(member, multipartFile);
 
