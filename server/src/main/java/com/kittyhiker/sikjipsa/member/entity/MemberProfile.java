@@ -1,11 +1,14 @@
 package com.kittyhiker.sikjipsa.member.entity;
 
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberProfile {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

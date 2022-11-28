@@ -9,9 +9,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/community")
 @RequiredArgsConstructor
+@Validated
 public class CommunityController {
 
     private final CommunityService communityService;
@@ -28,7 +31,7 @@ public class CommunityController {
      * 커뮤니티글 등록
      */
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity postCommunity(@RequestPart CommunityPostDto postDto,
+    public ResponseEntity postCommunity(@RequestPart @Valid CommunityPostDto postDto,
                                    @RequestPart(required = false) List<MultipartFile> images,
                                    @RequestHeader("Authorization") String token) throws IOException {
         CommunityResponseDto response = communityService.postCommunity(postDto, images, jwtTokenizer.getUserIdFromToken(token));
@@ -41,7 +44,7 @@ public class CommunityController {
     @PatchMapping(value = "/{community-id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity patchCommunity(@PathVariable("community-id") Long communityId,
-                                    @RequestPart CommunityPostDto patchDto,
+                                    @RequestPart @Valid CommunityPostDto patchDto,
                                     @RequestPart(required = false) List<MultipartFile> images) throws IOException {
         CommunityResponseDto response = communityService.patchCommunity(communityId, images, patchDto);
         return new ResponseEntity(response, HttpStatus.OK);
@@ -74,7 +77,23 @@ public class CommunityController {
         return new ResponseEntity(communityDetail, HttpStatus.OK);
     }
 
-    @PostMapping("/like")
+    /**
+     * 내가 작성한 커뮤니티 글 조회
+     */
+    @GetMapping("/my")
+    public ResponseEntity getMyCommunityPost(@Positive @RequestParam int page,
+                                             @Positive @RequestParam int size,
+                                             @RequestHeader("Authorization") String token) {
+        Long memberId = jwtTokenizer.getUserIdFromToken(token);
+        CommunityPagingDto<List> response = communityService.getMyPost(memberId, page, size);
+        return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+
+    /**
+     * 커뮤니티 좋아요 기능
+     */
+    @PostMapping("/like/{community-id}")
     public ResponseEntity likeCommunity(@PathVariable("community-id") Long communityId,
                                         @RequestHeader("Authorization") String token) {
         communityService.likeCommunity(communityId, jwtTokenizer.getUserIdFromToken(token));
@@ -82,14 +101,16 @@ public class CommunityController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @DeleteMapping("/like")
+    /**
+     * 커뮤니티 좋아요 취소
+     */
+    @DeleteMapping("/like/{community-id}")
     public ResponseEntity cancelLikeCommunity(@PathVariable("community-id") Long communityId,
                                               @RequestHeader("Authorization") String token) {
         communityService.cancelLikeCommunity(communityId, jwtTokenizer.getUserIdFromToken(token));
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
-
 
     /**
      * 커뮤니티글 삭제

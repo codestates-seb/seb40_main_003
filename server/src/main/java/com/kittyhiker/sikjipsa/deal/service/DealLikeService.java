@@ -9,8 +9,11 @@ import com.kittyhiker.sikjipsa.deal.entity.MemberLikeDeal;
 import com.kittyhiker.sikjipsa.deal.mapper.DealMapper;
 import com.kittyhiker.sikjipsa.deal.respository.DealRepository;
 import com.kittyhiker.sikjipsa.deal.respository.LikeDealRepository;
+import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
+import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
+import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +50,12 @@ public class DealLikeService {
                 like -> {
                     List<Image> image = imageService.findImage(like.getDeal());
                     List<String> imageUrlList = image.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
-                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(like.getDeal(), imageUrlList);
+
+                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(member.getMemberId())
+                            .nickname(member.getNickname())
+                            .image(imageService.findImage(member)).build();
+
+                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(like.getDeal(), imageUrlList, responseMember);
                     dealList.add(dealResponseDto);
                 }
         );
@@ -75,15 +83,18 @@ public class DealLikeService {
     public void cancelLikeDeal (Long userId, Long dealId) {
         Member member = verifiedMember(userId);
         Deal deal = verifiedDeal(dealId);
-        MemberLikeDeal likeDeal = likeDealRepository.findByMemberAndDeal(member, deal).orElseThrow(() -> new IllegalArgumentException("NOT LIKE STATE"));
+        MemberLikeDeal likeDeal = likeDealRepository.findByMemberAndDeal(member, deal).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.NOT_FOUND_LIKE_POST));
         likeDealRepository.delete(likeDeal);
     }
 
     public Member verifiedMember(Long memberId) {
-        return memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+        return memberRepository.findById(memberId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
     }
 
     public Deal verifiedDeal(Long dealId) {
-        return dealRepository.findById(dealId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND DEAL"));
+        return dealRepository.findById(dealId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.NOT_FOUND_DEAL));
     }
 }

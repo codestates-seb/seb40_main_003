@@ -1,5 +1,6 @@
 package com.kittyhiker.sikjipsa.config;
 
+import com.kittyhiker.sikjipsa.exception.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,7 @@ import static org.springframework.http.HttpMethod.POST;
 public class SecurityConfig {
 
     private final AuthenticationManagerConfig authenticationManagerConfig;
+    private final CustomAuthenticationEntryPoint customAuthenticationEntryPoint;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -38,14 +40,14 @@ public class SecurityConfig {
                 .httpBasic().disable()
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-                .mvcMatchers( "/signup", "/login").permitAll()
+                .mvcMatchers( "/signup", "/login", "/users/refresh").permitAll()
                 .mvcMatchers(GET, "/**").permitAll()
                 .mvcMatchers(POST,"/**").hasAnyRole("USER", "MANAGER", "ADMIN")
 //                .mvcMatchers(POST,"answers/**").hasAnyRole("USER", "MANAGER", "ADMIN")
                 .anyRequest().permitAll()
                 .and()
                 .exceptionHandling()
-//                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                .authenticationEntryPoint(customAuthenticationEntryPoint)
                 .and()
                 .build();
     }
