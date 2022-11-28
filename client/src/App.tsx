@@ -32,6 +32,7 @@ import ProductReviewEditor from "./Pages/Talk/ProductReviewEditor";
 import Community, { CommunityMain } from "./Pages/Community/Community";
 import CommunityDetail from "./Pages/Community/CommunityDetail";
 import CommunityEditor from "./Pages/Community/CommunityEditor";
+import CommunityModify from "./Pages/Community/CommunityModify";
 import secureLocalStorage from "react-secure-storage";
 
 import Talk from "./Pages/Talk/Talk";
@@ -90,6 +91,7 @@ const App=()=>{
             <Route index element={<Community />} />
             <Route path=":id" element={<CommunityDetail />} />
             <Route path="write" element={<CommunityEditor />} />
+            <Route path="modify" element={<CommunityModify />} />
           </Route>
           {/* 검색 */}
           <Route path="/search">
