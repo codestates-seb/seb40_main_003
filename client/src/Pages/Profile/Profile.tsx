@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { FetchByBody } from "../../Hooks/useFetch";
+import useFetch, { FetchByBody } from "../../Hooks/useFetch";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { userState } from "../../Recoil/atoms/user";
 import {
@@ -17,48 +17,48 @@ import {
   SigButton,
 } from "../../Components/GlobalComponents";
 import { Link } from "react-router-dom";
-import { MockData } from "../../types/profileType";
+import { profileType } from "../../types/profileType";
 import AddPlantModal from "../Main/AddPlantModal";
 import Modal from "../../Components/Modal";
 import { useCallback, useState } from "react";
 import { CommentCard } from "../../Components/CommentCard";
 import PlantCardCarousel from "../../Components/profile/plantCardCarousel";
-import ProductCard from "../../Components/product/ProductCard";
 
 const Profile = () => {
   const { id } = useParams();
-  const isLogin = useRecoilValue(userState);
-  // const data= FetchByBody<profileTypes>(`/profile/${id}`)
-  const data = MockData;
+  const userInfo = useRecoilValue(userState);
+  const data = useFetch<profileType>(`/profile/${id}`);
+  // const data = MockData;
   usePageTitle("프로필");
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-
-  return (
+  console.log(data);
+  return data ? (
     <>
       <MainContentContainer>
         <MainCenterWrapper>
           <ProfileCard
-            src={data.image.imgUrl}
+            src={data.image?.imgUrl}
             alt={`${data.nickname}의 대표사진`}
             name={data.nickname}
-            location={data.memberInformation.address}
+            location={data.memberInformation?.address}
             circle={true}
             size={"66"}
           />
+          <SectionWrapper content={data.memberProfile.content} pt={0} pb={8} />
 
           {/* 모달창 */}
           <>
             {isOpenModal && (
               <Modal onClickModal={onClickModal}>
-                <AddPlantModal />
+                <AddPlantModal closeModal={onClickModal}/>
               </Modal>
             )}
           </>
           {
-            // isLogin?.userId===id?
+            // userInfo?.userId===id?
             // :<></>
           }
           <SectionWrapper title="반려 식물">
@@ -76,40 +76,46 @@ const Profile = () => {
                     />
                   );
                 })}
-                {
-                  // isLogin?.memberId===id?
-                <ColumnWrapper center={true}>
-                  <AddProfilePlantCard onClick={onClickModal}>
-                    +
-                  </AddProfilePlantCard>
-                </ColumnWrapper>
-                // :<></>
-                }
+                {String(userInfo?.memberId) === String(id) ? (
+                  <ColumnWrapper center={true}>
+                    <AddProfilePlantCard onClick={onClickModal}>
+                      +
+                    </AddProfilePlantCard>
+                  </ColumnWrapper>
+                ) : (
+                  <></>
+                )}
               </>
             </PlantCardCarousel>
           </SectionWrapper>
-          <SectionWrapper width={100} title="거래 리뷰" borderNone={true}>
-            <>
-              {data.memberReviews.map((e) => {
-                return (
-                  <CommentCard
-                    name={e.member.nickname}
-                    createdAt={"날짜가 서버에서 안날아옵니다"}
-                    content={e.content}
-                    user={isLogin}
-                    author={e.member.memberId}
-                    key={`거래후기 ${e.dealReviewId}`}
-                  />
-                );
-              })}
-            </>
+          <SectionWrapper width={100} title="거래 리뷰">
+            {data.memberReviews.length !== 0 ? (
+              <>
+                {data.memberReviews.map((e) => {
+                  return (
+                    <CommentCard
+                      name={e.member.nickname}
+                      createdAt={"날짜가 서버에서 안날아옵니다"}
+                      content={e.content}
+                      user={userInfo}
+                      author={e.member.memberId}
+                      key={`거래후기 ${e.dealReviewId}`}
+                    />
+                  );
+                })}
+              </>
+            ) : (
+              <span className="mt-8">거래후기가 없습니다</span>
+            )}
           </SectionWrapper>
           <SectionWrapper title="판매 상품" width={100}>
-            <>
-              {data.deals.map((e) => {
-                // return <ProductCard data={e}/>;
-              })}
-            </>
+            {data.deals.length!==0?
+              <>
+                {data.deals.map((e) => {
+                  // return <ProductCard data={e}/>;
+                })}
+              </>:<span className="mt-8">판매중인 상품이 없습니다</span>
+            }
           </SectionWrapper>
         </MainCenterWrapper>
         <MainRightWrapper>
@@ -119,6 +125,8 @@ const Profile = () => {
         </MainRightWrapper>
       </MainContentContainer>
     </>
+  ) : (
+    <></>
   );
 };
 

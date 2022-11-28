@@ -18,11 +18,7 @@ export type communityPreviewDataTypes = {
   modifiedAt: string;
   commentNum: number;
   likeNum: number;
-  images: [
-    {
-      imgUrl: string;
-    }
-  ];
+  images: [string];
   member: {
     memberId: number;
     nickname: string;
@@ -40,11 +36,7 @@ export type communityDetailTypes = {
   modifiedAt: string;
   commentNum: number;
   likeNum: number;
-  images: [
-    {
-      imgUrl: string;
-    }
-  ];
+  images: [string];
   member: {
     memberId: number;
     nickname: string;
@@ -54,6 +46,7 @@ export type communityDetailTypes = {
   };
   comments: communityCommentType[];
 };
+
 export type communityCommentType = {
   commentId: number;
   content: string;

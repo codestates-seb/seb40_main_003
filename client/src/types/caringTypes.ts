@@ -114,13 +114,21 @@ export type CareLikeAddType = {
       memberId: number,
       nickname: string
   },
-  "expertProfileId": 1
+  expertProfileId: number
 }
 
 // 돌봄 찜 목록 조회
 export type CareLikeListType = {
-  data: [
-    {
+  data: [CareLikeType],
+  pageInfo: {
+    page: number,
+    size: number,
+    totalElements: number,
+    totalPages: number
+        }
+}
+
+export type CareLikeType = {
     memberLikeExpertId: number,
     member:{
         memberId: number,
@@ -128,8 +136,6 @@ export type CareLikeListType = {
     },
     expertProfileId: number
     }
-  ]
-}
 
 // 돌봄 리뷰 작성
 export type CareReviewType = {

@@ -34,7 +34,7 @@ const CommunityDetail = () => {
   usePageTitle("커뮤니티");
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
-  console.log(data?.comments)
+  console.log(data)
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
@@ -64,7 +64,7 @@ const CommunityDetail = () => {
             <ImageWrapper
               className="communityImage"
               size={"240"}
-              src={data.images[0].imgUrl}
+              src={data.images[0]}
               alt={`상품명 ${data.title}의 대표이미지`}
             />
           ) : null}
@@ -83,7 +83,7 @@ const CommunityDetail = () => {
             />
           </CommunityWrapper>
           <CommentInput url={id} />
-          {data.comments.map((e: communityCommentType) => {
+          {data.comments.length!==0?data.comments.map((e: communityCommentType) => {
             return (
               <CommentCard
                 src={e.writer.image}
@@ -99,7 +99,7 @@ const CommunityDetail = () => {
                 communityId={id ? id : ""}
               />
             );
-          })}
+          }):<></>}
         </ErrorBoundary>
       </MainCenterWrapper>
       <MainRightWrapper>

@@ -16,7 +16,6 @@ import {
 } from "react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { LoadingSkeleton } from "../../Components/Loading";
-
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import React from "react";
@@ -67,15 +66,17 @@ const Care = () => {
     <MainContentContainer>
       <MainCenterWrapper>
         <ErrorBoundary
-          fallback={<ErrorMessage content="예상치 못한 발생했습니다" />}
+          fallback={<ErrorMessage content="예상치 못한 에러가 발생했습니다" />}
         >
-          <QueryClientProvider client={careQueryClient}>
+          {/* <QueryClientProvider client={careQueryClient}>
             <CareMain />
-          </QueryClientProvider>
+          </QueryClientProvider> */}
         </ErrorBoundary>
       </MainCenterWrapper>
       <MainRightWrapper>
-        <p>윤정's 페이지의 오류가 다른곳에 침범하지 못하게 막음</p>
+      <p className="h5 bold font-main mr-16">
+            우리 동네 식물 전문가를 만나보세요.🌿
+          </p>
       </MainRightWrapper>
     </MainContentContainer>
   );
