@@ -26,7 +26,7 @@ const CommunityCard = ({ data }: any) => {
             <></>
           )}
 
-          <CommunityWrapper className='mt-7'>
+          <CommunityWrapper className='mt-8'>
             <RowWrapper>
               <span className='sub font-gray mr-8'>{getDateAgo(data.createdAt)}</span>
               {/* <span className='sub font-gray ml-16'>

@@ -14,6 +14,7 @@ export const LogOutOnly = () => {
 };
 
 export const AuthProvider = () => {
+  // 토큰 유효 api에서 체크를 한번 거치게하기
   const auth = useRecoilValue(userState);
   return auth ? <Outlet /> : <Navigate to="/login" />;
 };

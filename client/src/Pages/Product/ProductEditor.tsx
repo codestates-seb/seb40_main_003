@@ -20,8 +20,6 @@ const ConfirmWrapper = styled.span`
   justify-content: row;
 `;
 
-type Props = {};
-
 
 interface ProductEditorForm {
   title: string;
@@ -35,7 +33,7 @@ interface ProductEditorForm {
   errors?: string;
 }
 
-const ProductEditor = (props: Props) => {
+const ProductEditor = () => {
   const axiosPrivate = useAxiosPrivate();
   // const [user, setUser] = useRecoilState(userState);
   
@@ -91,7 +89,7 @@ const ProductEditor = (props: Props) => {
           <>
             <input
               className="title"
-              {...register("title", {
+              {...register("title",{
                 required: true,
                 minLength: {
                   message: "제목은 2글자 이상으로 작성해주세요.",
