@@ -61,7 +61,7 @@ const ProductEditor = () => {
       category: data.category,
       area: data.area,
     });
-    formData.append("image", data.image[0]);
+    formData.append("images", data.image[0]);
     formData.append("dealPostDto", new Blob([dealPostDto], { type: "application/json" })
     );
 
