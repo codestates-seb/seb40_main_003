@@ -9,15 +9,6 @@ public enum ExceptionCode {
 	//MEMBER_PROFILE_NOT_FOUND(404, "member profile not found"),
 	MEMBER_NOT_FOUND(404, "member not found"),
 
-//	UNKNOWN_ERROR(404, "UNKNOWN_ERROR"),
-	NOT_FOUND_TOKEN(400, "Headers에 토큰 값 찾을 수 없음"),
-	WRONG_TYPE_TOKEN(400, "잘못된 형식의 토큰"),
-	WRONG_TOKEN(400, "잘못된 토큰"),
-	EXPIRED_TOKEN(400, "기간이 만료된 토큰"),
-	UNSUPPORTED_TOKEN(400, "지원하지 않는 토큰"),
-	ACCESS_DENIED(403, "토큰 접근 권한 없음"),
-
-
 	ALREAD_EXISTS_EMAIL(400, "ALREADY EXISTS EMAIL"),
 	NOT_FOUND_EMAIL(404, "NOT FOUND EMAIL"),
 	WRONG_PASSWORD(400, "WRONG PASSWORD"),
