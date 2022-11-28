@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class AreaTagDto {
-	private Long id;
+	private Long areaTagId;
 
 	private String areaTagName;
 }

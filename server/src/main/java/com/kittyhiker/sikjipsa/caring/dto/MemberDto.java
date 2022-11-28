@@ -10,7 +10,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class MemberDto {
-	private Long id;
+	private Long memberId;
 	private String nickname;
 	private List<PlantResponseDto> plants;
 }

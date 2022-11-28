@@ -40,15 +40,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (StringUtils.hasText(token)) {
                 getAuthentication(token);
             }
+            filterChain.doFilter(request, response);
         }
         catch (SecurityException | MalformedJwtException e) {
             request.setAttribute("exception", ExceptionCode.WRONG_TOKEN);
+            log.error("Wrong Token // token : {}", token);
         } catch (ExpiredJwtException e) {
             request.setAttribute("exception", ExceptionCode.EXPIRED_TOKEN);
+            log.error("EXPIRED Token // token : {}", token);
         } catch (UnsupportedJwtException e) {
             request.setAttribute("exception", ExceptionCode.UNSUPPORTED_TOKEN);
-        } catch (IllegalArgumentException e) {
-            request.setAttribute("exception", ExceptionCode.WRONG_TOKEN);
+            log.error("Unsupported Token // token : {}", token);
         } catch (Exception e) {
             log.error("====================================================");
             log.error("JwtFilter - doFilterInternal() 오류 발생");
@@ -59,7 +61,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.error("}");
             log.error("====================================================");
         }
-        filterChain.doFilter(request, response);
     }
 
     private void getAuthentication(String token) {

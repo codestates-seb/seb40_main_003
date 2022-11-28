@@ -10,4 +10,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 
     List<Comment> findAllByCommunity(Community community);
     Long countByCommunity(Community community);
+    Boolean existsByParent(Long parent);
+
 }

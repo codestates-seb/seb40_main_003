@@ -66,7 +66,7 @@ public class CommentService {
 
     public void deleteComment(Long commentId) {
         Comment comment = verifiedComment(commentId);
-        if (comment.getDepth()==0) {
+        if (comment.getDepth()==0 && commentRepository.existsByParent(commentId)) {
             comment.deleteComment();
         } else {
             commentRepository.delete(comment);

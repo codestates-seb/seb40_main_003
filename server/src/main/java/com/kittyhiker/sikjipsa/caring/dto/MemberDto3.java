@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class MemberDto3 {
-	private Long id;
+	private Long memberId;
 	private String nickname;
 	//private ImageDto image;
 }

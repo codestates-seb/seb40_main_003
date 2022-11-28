@@ -9,7 +9,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class MemberDto2 {
-	private Long id;
+	private Long memberId;
 	private List<PlantResponseDto> plants;
 	//private ImageDto image;
 }

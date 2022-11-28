@@ -19,24 +19,32 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         Object exception = request.getAttribute("exception");
-        exception = exception;
 
         if(exception == null) {
+            log.error("exception is null");
             setResponse(response, ExceptionCode.NOT_FOUND_TOKEN);
         }
         //잘못된 타입의 토큰인 경우
-        if(exception.equals(ExceptionCode.WRONG_TYPE_TOKEN)) {
+        else if(exception.equals(ExceptionCode.WRONG_TYPE_TOKEN)) {
+            log.error("wrong type token");
             setResponse(response, ExceptionCode.WRONG_TYPE_TOKEN);
         }
         //토큰 만료된 경우
-        if(exception.equals(ExceptionCode.EXPIRED_TOKEN)) {
+        else if(exception.equals(ExceptionCode.EXPIRED_TOKEN)) {
+            log.error("expired token");
             setResponse(response, ExceptionCode.EXPIRED_TOKEN);
+        }
+        else if (exception.equals(ExceptionCode.WRONG_TOKEN)){
+            log.error("wrong token");
+            setResponse(response, ExceptionCode.WRONG_TOKEN);
         }
         //지원되지 않는 토큰인 경우
         else if(exception.equals(ExceptionCode.UNSUPPORTED_TOKEN)) {
+            log.error("unsupported token");
             setResponse(response, ExceptionCode.UNSUPPORTED_TOKEN);
         }
         else if (exception.equals(ExceptionCode.NOT_FOUND_TOKEN)) {
+            log.error("not found token");
             setResponse(response, ExceptionCode.NOT_FOUND_TOKEN);
         }
         else {
