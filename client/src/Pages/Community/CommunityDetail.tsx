@@ -45,7 +45,7 @@ const CommunityDetail = () => {
             {String(data.member.memberId) === String(user?.memberId) && (
               <div>
                 {/* 수정버튼 */}
-                <Link to={"../../community/modify"}><button className="sub mr-16">수정</button></Link>
+                <button className="sub mr-16">수정</button>
                 {/* 삭제버튼 */}
                 <button className="sub" onClick={()=>{
                   if (window.confirm("게시글을 삭제 하시겠습니까?")) {
