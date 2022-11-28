@@ -10,86 +10,76 @@ import {
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import { ProductCategoryConst } from "../../Const/Category";
-import useFetch from "../../Hooks/useFetch";
-import { ProductDetailDataType } from "../../types/productTypes";
-
+import { useRecoilValue } from "recoil";
+import { editDataAtom } from "../../Recoil/atoms/editData";
 
 const ConfirmWrapper = styled.span`
   display: flex;
   justify-content: row;
 `;
 
+type Props = {};
 
-interface ProductEditorForm {
+interface CommunityEditorForm {
   title: string;
   image: FileList;
-  category: number;
-  gudong: number;
-  price: number;
+  file: any;
   content: string;
   checked: boolean;
-  area: number;
   errors?: string;
 }
 
-const ProductEditor = () => {
+const CommunityModify = (props: Props) => {
   const axiosPrivate = useAxiosPrivate();
   // const [user, setUser] = useRecoilState(userState);
-  
-  const data = useFetch<ProductDetailDataType>(`/deal/`);
+  const editData = useRecoilValue(editDataAtom)
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ProductEditorForm>({
+  } = useForm<CommunityEditorForm>({
     mode: "onChange",
   });
 
   const onInValid = (errors: FieldErrors) => {};
   const navigate = useNavigate();
 
-  const onValid = async (data: ProductEditorForm) => {
+  const onValid = async (data: CommunityEditorForm) => {
     console.log(data);
-
+    
     const formData = new FormData();
-    const dealPostDto = JSON.stringify({
+    const postDto = JSON.stringify({ 
       title: data.title,
-      content: data.content,
-      price: data.price,
-      category: data.category,
-      area: data.area,
-    });
-    formData.append("images", data.image[0]);
-    formData.append("dealPostDto", new Blob([dealPostDto], { type: "application/json" })
-    );
+      content: data.content });
 
-    axiosPrivate
-      .post("/deal",formData, {
+    formData.append("images", data.image[0]);
+    formData.append("postDto", new Blob([postDto],{type:"application/json"}));
+
+      axiosPrivate
+      .patch("/community/", formData, {
         headers: {
-          "Content-Type": "multipart/form-data",
-        },
+          "Content-Type": "multipart/form-data"
+        }
       })
       .then((res) => {
-        navigate(`/product/${res.data.dealId}`);
-      })
-      .catch((err) => {});
-  };
+        console.log(res.data)
+        navigate(`/community/${res.data.communityId}`);
+      }).catch ((err)=>{});
+    }
+  
+  usePageTitle("커뮤니티 글 쓰기");
 
-  usePageTitle("거래 글 쓰기");
 
   return (
-    <MainContentContainer
-      as={"form"}
-      onSubmit={handleSubmit(onValid, onInValid)}>
-      {data?.area}
+    <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid, onInValid)}>
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>
           <>
             <input
+            defaultValue={editData.title}
               className="title"
-              {...register("title",{
+              {...register("title", {
                 required: true,
                 minLength: {
                   message: "제목은 2글자 이상으로 작성해주세요.",
@@ -107,13 +97,14 @@ const ProductEditor = () => {
           </>
         </SectionWrapper>
 
-        <SectionWrapper width={100} borderNone={false}>
+        <SectionWrapper width={100} >
           <>
             <input
+            // defaultValue={editData.images[0]}
               className="image cursor"
               {...register("image", 
-              {required: true}
-              )}
+              // {required: true}
+                )}
               id="image"
               type="file"
               accept="image/*"
@@ -123,44 +114,11 @@ const ProductEditor = () => {
             <p className="font-alert-red sub">{errors.image?.message}</p>
           </>
         </SectionWrapper>
-        <SectionWrapper width={100} borderNone={false}>
-          <>
-            <select {...register("category", 
-            {required: true }
-              )}
-              name="category">
-              {ProductCategoryConst.map((e) => {
-                return (
-                  <option key={`option ${e.number}`} value={e.number}>
-                    {e.name}
-                  </option>
-                );
-              })}
-            </select>
-          </>
-        </SectionWrapper>
 
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <input
-              className="price"
-              {...register("price", {
-                required: true,
-                pattern: /^[0-9.]{1,9}$/g,
-              })}
-              type="text"
-              placeholder="가격"
-            />
-            {errors.price && errors.price.type === "pattern" && (
-              <span className="font-alert-red sub mt-4">
-                숫자만 입력해주세요
-              </span>
-            )}
-          </>
-        </SectionWrapper>
-        <SectionWrapper width={100} borderNone={true}>
-          <>
             <textarea
+            defaultValue={editData.content}
               className="content"
               {...register("content", {
                 required: true,
@@ -170,23 +128,24 @@ const ProductEditor = () => {
             <p className="font-alert-red sub">{errors.content?.message}</p>
           </>
         </SectionWrapper>
-
         <ConfirmWrapper>
           <input
-            {...register("checked", { required: true })}
-            type="checkbox"
-            className="border-none checkbox-20"
-          ></input>
-          <p className="sub font-gray">
+          {...register("checked", { required: true })}
+          type="checkbox" className="border-none checkbox-20"/>
+          <label className={errors.checked?"sub font-gray":"sub alert-red"}>
             식물처럼 싱그럽고 예쁜 말을 써주세요.
             <br />
             욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
-          </p>
+          </label>
         </ConfirmWrapper>
       </MainCenterWrapper>
-      <MainRightWrapper center={true}>
-        <SigButton
-          type="submit" value={"ProductEditor"}>
+      <MainRightWrapper>
+        <SectionWrapper borderNone={true}>
+          <p className="h5 bold font-main mr-16">
+            반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
+          </p>
+        </SectionWrapper>
+        <SigButton type="submit" value={"CommunityEditor"}>
           작성 완료
         </SigButton>
       </MainRightWrapper>
@@ -194,4 +153,4 @@ const ProductEditor = () => {
   );
 };
 
-export default ProductEditor;
+export default CommunityModify;

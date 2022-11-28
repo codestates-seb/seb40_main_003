@@ -28,7 +28,7 @@ const CarouselImage= styled.img`
 `
 
 
-const ProductDetail = () => {
+const ProductBookmarksDetail = () => {
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
   const data = useFetch<ProductDetailDataType>(id?`/deal/${id}`:"")
@@ -78,4 +78,4 @@ const ProductDetail = () => {
   );
 };
 
-export default ProductDetail;
+export default ProductBookmarksDetail;

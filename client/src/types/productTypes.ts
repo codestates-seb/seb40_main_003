@@ -21,8 +21,8 @@ export interface ProductPreviewMappingType {
   category: number;
   state: number;
   likeNum: number;
-  images: [string];
-  area: number;
+  images?: [string];
+  area?: number;
 }
 
 // 거래 게시글 상세 조회
@@ -53,10 +53,24 @@ export type ProductDetailDataType = {
   };
 };
 
+// 거래 게시글 찜 하기
+export type ProductLikeAddType = {
+  memberLikeDealId: number;
+  dealId: number;
+};
+
 //거래 찜 목록 조회
-export type ProductLikePreviewType = {
-  data: [
-    {
+export type ProductLikeListType = {
+  data: [ProductLikeType];
+  pageInfo: {
+    page: number;
+    size: number;
+    totalPages: number;
+    totalElements: number;
+  };
+};
+
+export type ProductLikeType = {
       dealId: number;
       title: string;
       content: string;
@@ -67,26 +81,8 @@ export type ProductLikePreviewType = {
       category: number;
       state: number;
       likeNum: number;
-      image: [
-        {
-          imgUrl: string;
-        }
-      ];
+      images: [string];
       area: number;
-    }
-  ];
-  pageInfo: {
-    page: number;
-    size: number;
-    totalPages: number;
-    totalElements: number;
-  };
-};
-
-// 거래 게시글 찜 하기
-export type ProductLikeAddType = {
-  memberLikeDealId: number;
-  dealId: number;
 };
 
 // 거래 후기 작성

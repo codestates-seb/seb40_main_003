@@ -1,5 +1,5 @@
 import { Navigate, useNavigate, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   ImageWrapper,
   SigButton,
@@ -25,11 +25,13 @@ import { ErrorMessage } from "../../Components/ErrorHandle";
 import { cannotLoad } from "../../Const/ErrorContent";
 import { CommentCard } from "../../Components/CommentCard";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import { editDataAtom } from "../../Recoil/atoms/editData";
 
 const CommunityDetail = () => {
   const { id } = useParams();
   const user = useRecoilValue(userState);
   const data = useFetch<communityDetailTypes>(`/community/${id}`);
+  const [editData, setEditData] = useRecoilState(editDataAtom)
   
   usePageTitle("커뮤니티");
   const axiosPrivate = useAxiosPrivate()
@@ -45,7 +47,10 @@ const CommunityDetail = () => {
             {String(data.member.memberId) === String(user?.memberId) && (
               <div>
                 {/* 수정버튼 */}
-                <button className="sub mr-16">수정</button>
+                <button className="sub mr-16" onClick={()=>{
+                  setEditData(data)
+                  navigate("/community/modify")
+                }}>수정</button>
                 {/* 삭제버튼 */}
                 <button className="sub" onClick={()=>{
                   if (window.confirm("게시글을 삭제 하시겠습니까?")) {
