@@ -11,7 +11,6 @@ import com.kittyhiker.sikjipsa.caring.mapper.ExpertReviewMapper;
 import com.kittyhiker.sikjipsa.caring.mapper.MemberLikeExpertMapper;
 import com.kittyhiker.sikjipsa.caring.service.ExpertService;
 import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
-import com.kittyhiker.sikjipsa.member.entity.Member;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -117,4 +116,12 @@ public class ExpertController {
 		return new ResponseEntity(expertReviewMapper.toExpertReviewResponseDto(response), HttpStatus.CREATED);
 	}
 
+//	// 돌봄 기록 /experts/success?page={page}&size={size}
+//	@GetMapping("/success")
+//	public ResponseEntity getExpertSuccess(@Positive @RequestParam int page,
+//										   @Positive @RequestParam int size) {
+//		Page<ExpertProfile> pageExpertProfile = expertService.getExpertSuccess(page - 1, size);
+//		List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
+//		return new ResponseEntity<>(new MultiResponseDto<>(expertMapper.toExpertSuccessResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
+//	}
 }
