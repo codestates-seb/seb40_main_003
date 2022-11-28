@@ -27,12 +27,14 @@ export const CareBookmarksMain = () => {
     // useInfiniteQuery
     const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
       "CareBookmarksQuery",
-      ({ pageParam = 1 }) => InfiniteFetch("/deal",pageParam),
+      ({ pageParam = 1 }) => InfiniteFetch("/experts/like",pageParam),
       {
         getNextPageParam: (lastPage) =>
           !lastPage.isLast ? lastPage.nextPage : undefined,
       }
     );
+    console.log(data)
+
     // 스크롤감지
     useEffect(() => {
       if (inView) fetchNextPage();
@@ -40,7 +42,6 @@ export const CareBookmarksMain = () => {
     
     if (status==="loading") return <LoadingSkeleton />;
     if (status==="error") return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
-  
     return (
       <>
       {data?.pages.map((page, index) => (
@@ -56,6 +57,7 @@ export const CareBookmarksMain = () => {
       </>
     )
   }
+  
 
 // 전체 페이지
 const CareBookmarks = () => {
