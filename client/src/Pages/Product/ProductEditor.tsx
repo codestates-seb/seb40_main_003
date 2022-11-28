@@ -11,6 +11,9 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { ProductCategoryConst } from "../../Const/Category";
+import useFetch from "../../Hooks/useFetch";
+import { ProductDetailDataType } from "../../types/productTypes";
+
 
 const ConfirmWrapper = styled.span`
   display: flex;
@@ -18,6 +21,7 @@ const ConfirmWrapper = styled.span`
 `;
 
 type Props = {};
+
 
 interface ProductEditorForm {
   title: string;
@@ -33,6 +37,8 @@ interface ProductEditorForm {
 const ProductEditor = (props: Props) => {
   const axiosPrivate = useAxiosPrivate();
   // const [user, setUser] = useRecoilState(userState);
+  
+  const data = useFetch<ProductDetailDataType>(`/deal/`);
 
   const {
     register,
@@ -77,8 +83,8 @@ const ProductEditor = (props: Props) => {
   return (
     <MainContentContainer
       as={"form"}
-      onSubmit={handleSubmit(onValid, onInValid)}
-    >
+      onSubmit={handleSubmit(onValid, onInValid)}>
+      {data?.area}
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>
           <>
