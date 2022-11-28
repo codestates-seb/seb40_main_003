@@ -1,6 +1,6 @@
 package com.kittyhiker.sikjipsa.config;
 
-import com.kittyhiker.sikjipsa.exception.CustomAuthenticationEntryPoint;
+import com.kittyhiker.sikjipsa.jwt.exception.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,10 +53,12 @@ public class SecurityConfig {
     }
 
 
+    // <<Advanced>> Security Cors로 변경 시도
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
+        // config.setAllowCredentials(true); // 이거 빼면 된다
+        // https://gareen.tistory.com/66
         config.addAllowedOrigin("*");
         config.addAllowedMethod("*");
         config.setAllowedMethods(List.of("GET","POST","DELETE","PATCH","OPTION","PUT"));
