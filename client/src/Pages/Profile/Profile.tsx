@@ -107,7 +107,7 @@ const Profile = () => {
           <SectionWrapper title="판매 상품" width={100}>
             <>
               {data.deals.map((e) => {
-                return <ProductCard data={e}/>;
+                // return <ProductCard data={e}/>;
               })}
             </>
           </SectionWrapper>

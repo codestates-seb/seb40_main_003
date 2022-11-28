@@ -45,10 +45,13 @@ import { userState } from "./Recoil/atoms/user";
 
 const App=()=>{
   const setUser = useSetRecoilState(userState)
+
   useEffect(() => {
+    const accessToken = secureLocalStorage.getItem("accessToken")
+    const refreshToken = secureLocalStorage.getItem("refreshToken")
     const userInfo:any = secureLocalStorage.getItem("userInfo")
     //로컬스토리지에 유저정보가 있고, 액세스토큰, 리프레시토큰 모두 있을때 (토큰 유효성검사는 안함)
-    if(userInfo&&secureLocalStorage.getItem("accessToken")&&secureLocalStorage.getItem("refreshToken")){
+    if(accessToken&&refreshToken&&userInfo){
       setUser(userInfo);
     }
   }, [])
