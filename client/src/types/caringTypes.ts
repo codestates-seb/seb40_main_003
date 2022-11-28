@@ -119,16 +119,23 @@ export type CareLikeAddType = {
 
 // 돌봄 찜 목록 조회
 export type CareLikeListType = {
-  data: [CareLikeType]
+  data: [CareLikeType],
+  pageInfo: {
+    page: number,
+    size: number,
+    totalElements: number,
+    totalPages: number
+        }
 }
-export type CareLikeType ={
-  memberLikeExpertId: number,
-  member:{
-      memberId: number,
-      nickname: string
-  },
-  expertProfileId: number
-}
+
+export type CareLikeType = {
+    memberLikeExpertId: number,
+    member:{
+        memberId: number,
+        nickname: string
+    },
+    expertProfileId: number
+    }
 
 // 돌봄 리뷰 작성
 export type CareReviewType = {
