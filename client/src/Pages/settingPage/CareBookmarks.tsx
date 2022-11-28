@@ -1,5 +1,5 @@
 import CareCard from "../../Components/main/CareCard";
-import { CareLikeAddType } from "../../types/caringTypes";
+import { CareLikeType } from "../../types/caringTypes";
 import { Link } from "react-router-dom";
 import {
   MainCenterWrapper,
@@ -8,8 +8,8 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { InfiniteFetchPrivate } from "../../Hooks/useFetch";
-import { QueryClient, QueryClientProvider, useInfiniteQuery, useQuery } from "react-query";
+import { InfiniteFetch } from "../../Hooks/useFetch";
+import { QueryClient, QueryClientProvider, useInfiniteQuery } from "react-query";
 
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
@@ -27,7 +27,7 @@ export const CareBookmarksMain = () => {
     // useInfiniteQuery
     const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
       "CareBookmarksQuery",
-      ({ pageParam = 1 }) => InfiniteFetchPrivate("/experts/like",pageParam),
+      ({ pageParam = 1 }) => InfiniteFetch("/experts/like",pageParam),
       {
         getNextPageParam: (lastPage) =>
           !lastPage.isLast ? lastPage.nextPage : undefined,
@@ -45,7 +45,7 @@ export const CareBookmarksMain = () => {
       <>
       {data?.pages.map((page, index) => (
             <React.Fragment key={index}>
-              {page.data.map((e:CareLikeAddType) => (
+              {page.data.map((e:CareLikeType) => (
             <Link key={e.memberLikeExpertId} to={`/caring/${e.memberLikeExpertId}`}>
             <CareCard data={e} />
           </Link>
