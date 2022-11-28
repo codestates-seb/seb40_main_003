@@ -34,8 +34,7 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
 
     formData.append("multipartFile", data.image[0]);
     formData.append(
-      "plantDto",
-      new Blob([plantDto], { type: "application/json" })
+      "plantDto", new Blob([plantDto], { type: "application/json" })
     );
     axiosPrivate
       .post("/plants", formData, {

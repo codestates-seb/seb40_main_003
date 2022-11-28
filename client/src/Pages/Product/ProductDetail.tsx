@@ -31,7 +31,7 @@ const CarouselImage= styled.img`
 const ProductBookmarksDetail = () => {
   const { id } = useParams();
   const isLogin = useRecoilValue(userState);
-  const data = useFetch<ProductDetailDataType>(id?`/deal/like/${id}`:"")
+  const data = useFetch<ProductDetailDataType>(id?`/deal/${id}`:"")
 
   console.log(data)
   return data !== undefined ? (
