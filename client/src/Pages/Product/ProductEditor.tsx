@@ -112,7 +112,7 @@ const ProductEditor = () => {
             <input
               className="image cursor"
               {...register("image", 
-              // {required: true}
+              {required: true}
               )}
               id="image"
               type="file"
