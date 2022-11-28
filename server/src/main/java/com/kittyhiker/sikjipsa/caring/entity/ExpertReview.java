@@ -13,9 +13,16 @@ public class ExpertReview {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "expert_review_id")
-	private Long id;
+	private Long expertSuccessId;
 
 	private String content;
+
+	public void setExpertProfile(ExpertProfile expertProfile) {
+		this.expertProfile = expertProfile;
+		if (!expertProfile.getExpertReviews().contains(this)) {
+			expertProfile.getExpertReviews().add(this);
+		}
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "expert_profile_id")

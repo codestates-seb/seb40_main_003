@@ -10,10 +10,10 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 public class ExpertReviewDto {
-	private Long id;
+	private Long expertSuccessId;
 	private String content;
-	private ExpertProfile expertProfile;
-	private Member member;
-	private LocalDateTime createdAt;
-	private LocalDateTime modifiedAt;
+//	private ExpertProfileDto2 expertProfile;
+//	private MemberDto3 member;
+//	private LocalDateTime createdAt;
+//	private LocalDateTime modifiedAt;
 }
