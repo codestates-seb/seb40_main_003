@@ -18,4 +18,6 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     Optional<Image> findByPlant(Plant plant);
     List<Image> findAllByDeal(Deal deal);
     List<Image> findAllByCommunity(Community community);
+
+    void deleteByImgUrl(String imagePath);
 }

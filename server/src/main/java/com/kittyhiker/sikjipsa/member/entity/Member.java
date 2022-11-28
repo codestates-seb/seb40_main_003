@@ -33,7 +33,7 @@ public class Member extends AuditingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
-	private Long id;
+	private Long memberId;
 
 	private String email;
 
@@ -100,4 +100,23 @@ public class Member extends AuditingEntity {
 	public void likeDeal(MemberLikeDeal likeDeal) {
 		this.memberLikeDeals.add(likeDeal);
 	}
+
+// MemberProfile
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void setMemberProfile(MemberProfile memberProfile) {
+		this.memberProfile = memberProfile;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	public void setMemberInformation(MemberInformation memberInformation) {
+		this.memberInformation = memberInformation;
+	}
+
+
 }

@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
 import java.util.List;
@@ -34,7 +35,7 @@ public class DealController {
      * 거래글 등록
      */
     @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity postDeal(@RequestPart DealPostDto dealPostDto,
+    public ResponseEntity postDeal(@RequestPart @Valid DealPostDto dealPostDto,
                                    @RequestPart(required = false) List<MultipartFile> images,
                                    @RequestHeader("Authorization") String token) throws IOException {
         DealResponseDto response = dealService.postDeal(dealPostDto, images, jwtTokenizer.getUserIdFromToken(token));
@@ -47,7 +48,7 @@ public class DealController {
     @PatchMapping(value = "/{deal-id}",
             consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity patchDeal(@PathVariable("deal-id") Long dealId,
-                                    @RequestPart DealPostDto dealPatchDto,
+                                    @RequestPart @Valid DealPostDto dealPatchDto,
                                     @RequestPart(required = false) List<MultipartFile> images) throws IOException {
         DealResponseDto response = dealService.patchDeal(dealId, images, dealPatchDto);
         return new ResponseEntity(response, HttpStatus.OK);
