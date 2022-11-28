@@ -37,7 +37,7 @@ const ProductEditor = () => {
   const axiosPrivate = useAxiosPrivate();
   // const [user, setUser] = useRecoilState(userState);
   
-  const data = useFetch<ProductDetailDataType>(`/deal/`);
+  // const data = useFetch<ProductDetailDataType>(`/deal/`);
 
   const {
     register,
@@ -83,7 +83,7 @@ const ProductEditor = () => {
     <MainContentContainer
       as={"form"}
       onSubmit={handleSubmit(onValid, onInValid)}>
-      {data?.area}
+      {/* {data?.area} */}
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>
           <>
