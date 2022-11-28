@@ -97,24 +97,6 @@ const CommunityModify = (props: Props) => {
           </>
         </SectionWrapper>
 
-        <SectionWrapper width={100} >
-          <>
-            <input
-            // defaultValue={editData.images[0]}
-              className="image cursor"
-              {...register("image", 
-              // {required: true}
-                )}
-              id="image"
-              type="file"
-              accept="image/*"
-              name="image"
-              multiple
-            />
-            <p className="font-alert-red sub">{errors.image?.message}</p>
-          </>
-        </SectionWrapper>
-
         <SectionWrapper width={100} borderNone={true}>
           <>
             <textarea
@@ -128,16 +110,6 @@ const CommunityModify = (props: Props) => {
             <p className="font-alert-red sub">{errors.content?.message}</p>
           </>
         </SectionWrapper>
-        <ConfirmWrapper>
-          <input
-          {...register("checked", { required: true })}
-          type="checkbox" className="border-none checkbox-20"/>
-          <label className={errors.checked?"sub font-gray":"sub alert-red"}>
-            식물처럼 싱그럽고 예쁜 말을 써주세요.
-            <br />
-            욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
-          </label>
-        </ConfirmWrapper>
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
