@@ -33,8 +33,6 @@ public class PlantService {
 	private final PlantRepository plantRepository;
 	private final MemberRepository memberRepository;
 	private final ImageRepository imageRepository;
-//	@Value("${com.sikjipsa.upload.path}")// import 시에 springframework로 시작하는 value, 설정 정보를 읽어 변수의 값으로 사용
-//	private String uploadPath;// 나중에 파일을 업로드하는 경로로 사용
 
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
@@ -48,18 +46,12 @@ public class PlantService {
 		if (multipartFile != null) {
 			String originalName = multipartFile.getOriginalFilename();
 			String uuid = UUID.randomUUID().toString();
-//			Path path = Paths.get(uploadPath, uuid + "_" + originalName);
 			String fileName = uuid + "_" + originalName;
 			try {
-//				multipartFile.transferTo(path);
-//				if (Files.probeContentType(path).startsWith("image")) {
-//					File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
-//					Thumbnailator.createThumbnail(path.toFile(), thumbFile, 200, 200);
-//				}
 				ObjectMetadata objectMetadata = new ObjectMetadata();
 				objectMetadata.setContentLength(multipartFile.getSize());
 				amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), objectMetadata);
-				String filePath = amazonS3.getUrl(bucket, originalName).toString();
+				String filePath = amazonS3.getUrl(bucket, fileName).toString();
 
 				Image image = new Image(fileName, originalName, filePath, "empty", plant);
 				plant.setImage(image);
@@ -81,8 +73,8 @@ public class PlantService {
 		Optional.ofNullable(plant.getType())
 				.ifPresent(findPlant::setType);
 
-		Optional.of(plant.getDays())
-				.ifPresent(findPlant::setDays);
+		Optional.of(plant.getYears())
+				.ifPresent(findPlant::setYears);
 
 		if (multipartFile != null) {
 			if (findPlant.getImage() != null) {
@@ -91,14 +83,8 @@ public class PlantService {
 
 			String originalName = multipartFile.getOriginalFilename();
 			String uuid = UUID.randomUUID().toString();
-//			Path path = Paths.get(uploadPath, uuid + "_" + originalName);
 			String fileName = uuid + "_" + originalName;
 			try {
-//				multipartFile.transferTo(path);
-//				if (Files.probeContentType(path).startsWith("image")) {
-//					File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
-//					Thumbnailator.createThumbnail(path.toFile(), thumbFile, 200, 200);
-//				}
 				ObjectMetadata objectMetadata = new ObjectMetadata();
 				objectMetadata.setContentLength(multipartFile.getSize());
 				amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), objectMetadata);
@@ -121,8 +107,8 @@ public class PlantService {
 		return plant;
 	}
 
-	public List<Plant> getPlants() {
-		return plantRepository.findAllByOrderByPlantIdDesc();
+	public List<Plant> getPlants(Long memberId) {
+		return plantRepository.findAllByMember_MemberIdOrderByPlantIdDesc(memberId);
 	}
 
 	public void deletePlant(Long plantId) {

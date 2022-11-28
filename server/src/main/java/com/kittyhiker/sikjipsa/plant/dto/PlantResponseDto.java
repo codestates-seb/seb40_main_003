@@ -15,8 +15,6 @@ public class PlantResponseDto {
 
 	private String years;
 
-	private String days;
-
 	private String type;
 
 	//private ImageDto photo;

@@ -70,7 +70,7 @@ public class MemberProfileService {
 				ObjectMetadata objectMetadata = new ObjectMetadata();
 				objectMetadata.setContentLength(multipartFile.getSize());
 				amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), objectMetadata);
-				String filePath = amazonS3.getUrl(bucket, originalName).toString();
+				String filePath = amazonS3.getUrl(bucket, fileName).toString();
 
 				Image image = new Image(fileName, originalName, filePath, "empty", findMember);
 				findMember.setImage(image);

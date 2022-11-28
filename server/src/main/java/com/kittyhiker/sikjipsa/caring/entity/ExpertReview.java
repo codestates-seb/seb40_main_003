@@ -24,7 +24,7 @@ public class ExpertReview {
 		}
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "expert_profile_id")
 	private ExpertProfile expertProfile;
 

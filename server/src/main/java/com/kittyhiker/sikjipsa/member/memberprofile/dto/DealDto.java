@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
@@ -23,6 +24,8 @@ public class DealDto {
 	//private int category;
 
 	private int state;
+
+	List<String> images;
 
 	private LocalDateTime createdAt;
 

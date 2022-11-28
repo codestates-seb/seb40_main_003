@@ -47,8 +47,8 @@ public class PlantController {
 	}
 
 	@GetMapping
-	public ResponseEntity getPlants() {
-		List<Plant> plants = plantService.getPlants();
+	public ResponseEntity getPlants(@RequestHeader("Authorization") String token) {
+		List<Plant> plants = plantService.getPlants(jwtTokenizer.getUserIdFromToken(token));
 		return new ResponseEntity(new MultiListResponseDto<>(plantMapper.toPlantResponseDtos(plants)), HttpStatus.OK);
 	}
 
