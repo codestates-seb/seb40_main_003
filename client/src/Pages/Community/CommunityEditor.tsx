@@ -1,3 +1,4 @@
+import styled from "@emotion/styled";
 import { FieldErrors, useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import {
@@ -8,9 +9,7 @@ import {
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
-import styled from "@emotion/styled";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import { useState, useRef } from "react";
 
 const ConfirmWrapper = styled.span`
   display: flex;
@@ -21,21 +20,16 @@ type Props = {};
 
 interface CommunityEditorForm {
   title: string;
-  content: string;
   image: FileList;
-  errors?: string;
   file: any;
+  content: string;
   checked: boolean;
+  errors?: string;
 }
 
 const CommunityEditor = (props: Props) => {
   const axiosPrivate = useAxiosPrivate();
   // const [user, setUser] = useRecoilState(userState);
-
-  const [file, setFile] = useState('');
-  const [previewURL, setPreviewURL] = useState('');
-  const [preview,setPreview] = useState(null);
-  const fileRef= useRef();
 
   const {
     register,
@@ -49,6 +43,8 @@ const CommunityEditor = (props: Props) => {
   const navigate = useNavigate();
 
   const onValid = async (data: CommunityEditorForm) => {
+    console.log(data);
+    
     const formData = new FormData();
     const postDto = JSON.stringify({ 
       title: data.title,
@@ -57,7 +53,6 @@ const CommunityEditor = (props: Props) => {
     formData.append("image", data.image[0]);
     formData.append("postDto", new Blob([postDto],{type:"application/json"}));
 
-      console.log(formData)
       axiosPrivate
       .post("/community", formData, {
         headers: {
@@ -101,7 +96,9 @@ const CommunityEditor = (props: Props) => {
           <>
             <input
               className="image cursor"
-              {...register("image")}
+              {...register("image", 
+              // {required: true}
+                )}
               id="image"
               type="file"
               accept="image/*"
