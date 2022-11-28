@@ -9,13 +9,12 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { FetchByParams, InfiniteFetch } from "../../Hooks/useFetch";
-import { QueryClient, QueryClientProvider, useInfiniteQuery, useQuery } from "react-query";
+import {  InfiniteFetch } from "../../Hooks/useFetch";
+import { QueryClient, QueryClientProvider, useInfiniteQuery } from "react-query";
 
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
-import { fetchingImageLimit } from "../../Const/fetchImage";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import React from "react";
@@ -26,6 +25,7 @@ const productQueryClient = new QueryClient();
 export const ProductMain = () => {
     // 무한스크롤 감지 Ref
     const { ref, inView } = useInView();
+
     // useInfiniteQuery
     const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
       "productQuery",

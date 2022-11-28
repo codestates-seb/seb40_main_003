@@ -86,9 +86,9 @@ export const SectionWrapper = ({
       borderNone={borderNone ? borderNone : false}
     >
       <ColumnWrapper width={width}>
-        {title ? <h2 className="bold font-main">{title}</h2> : null}
-        {content ? <p className="mt-8 text-overflow3">{content}</p> : null}
-        {tag ? (
+        {title && <h2 className="bold font-main">{title}</h2> }
+        {content && <p className="mt-8 text-overflow3">{content}</p>}
+        {tag && (
           <TagWrapper>
             <>
               {tag
@@ -102,7 +102,7 @@ export const SectionWrapper = ({
                 : null}
             </>
           </TagWrapper>
-        ) : null}
+        )}
         {children && children}
       </ColumnWrapper>
     </CenteringWrapper>

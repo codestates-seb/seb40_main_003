@@ -26,7 +26,7 @@ type props={
 const ProductCard = (props:props) => {
   const data = props.data
   return (
-    <ProductWrapper className={data.state === 0 ? "soldOut" : ""}>
+    <ProductWrapper className={data.state === 2 ? "soldOut" : ""}>
       <RowWrapper>
         <ImageWrapper
           size={"100"}
@@ -37,12 +37,12 @@ const ProductCard = (props:props) => {
         <DescriptionColumnWrapper>
           <span className="medium">{data.title}</span>
           <span className="sub mb-8">{getDateAgo(data.createdAt)}</span>
-          {data.state === 1 ? null : (
+          {data.state === 0 ? null : (
             <SigTag
               width={80}
-              className={data.state === 0 ? "disabled sub" : "ghost sub"}
+              className={data.state === 2 ? "disabled sub" : "ghost sub"}
             >
-              {data.state === 2 ? "예약중" : "거래완료"}
+              {data.state === 2 ? "판매완료" : "예약중"}
             </SigTag>
           )}
           <SpaceBetween>

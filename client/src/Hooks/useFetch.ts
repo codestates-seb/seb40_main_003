@@ -22,7 +22,7 @@ export const FetchByParams = async(url:string,params:FetchByParamsType={keyword:
 }
 /** body로 페치하는 훅으로, url->string, Body->오브젝트 형태 를 인자로 가짐 -준구짱-*/
 export const FetchByBody = async<T>(url:string,body?:object)=>{
-  const data = await axios.get(url,body)
+  const {data} = await axios.get(url,body)
   return data
 }
 /** url,pageParam,keyword를 받아서 data, nextpage, isLast를 반환하는 함수 */

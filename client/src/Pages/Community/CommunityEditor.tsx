@@ -60,6 +60,7 @@ const CommunityEditor = (props: Props) => {
         }
       })
       .then((res) => {
+        console.log(res.data)
         navigate(`/community/${res.data.communityId}`);
       }).catch ((err)=>{});
     }

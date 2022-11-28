@@ -5,10 +5,10 @@ import 'react-responsive-carousel/lib/styles/carousel.min.css'
 type carousel ={
     children:JSX.Element[]
 }
-export const TopCarousel= (props:carousel) =>{
+export const TopCarousel:React.FC<carousel>= ({children}) =>{
     return (
         <Carousel showThumbs={false} showStatus={false}>
-            {props.children}
+            {children}
         </Carousel>
     )
 }
