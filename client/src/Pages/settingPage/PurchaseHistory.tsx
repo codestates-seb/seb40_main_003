@@ -14,6 +14,7 @@ import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
+import { ProfileDealType } from "../../types/profileType";
 
 // 쿼리클라이언트
 const productQueryClient = new QueryClient();
@@ -32,7 +33,7 @@ export const ProductMain = () => {
   return (
     <>
       {data &&
-        data.data.data.map((e: ProductPreviewMappingType) => {
+        data.data.data.map((e: ProfileDealType) => {
           return (
             <Link key={e.dealId} to={`/deal/success${e.dealId}`}>
               <ProductCard data={e} />

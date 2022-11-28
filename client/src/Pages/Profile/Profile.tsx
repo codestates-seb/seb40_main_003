@@ -23,6 +23,7 @@ import Modal from "../../Components/Modal";
 import { useCallback, useState } from "react";
 import { CommentCard } from "../../Components/CommentCard";
 import PlantCardCarousel from "../../Components/profile/plantCardCarousel";
+import ProductCard from "../../Components/product/ProductCard";
 
 const Profile = () => {
   const { id } = useParams();
@@ -53,7 +54,7 @@ const Profile = () => {
           <>
             {isOpenModal && (
               <Modal onClickModal={onClickModal}>
-                <AddPlantModal closeModal={onClickModal}/>
+                <AddPlantModal closeModal={onClickModal} />
               </Modal>
             )}
           </>
@@ -109,13 +110,19 @@ const Profile = () => {
             )}
           </SectionWrapper>
           <SectionWrapper title="판매 상품" width={100}>
-            {data.deals.length!==0?
+            {data.deals.length !== 0 ? (
               <>
                 {data.deals.map((e) => {
-                  // return <ProductCard data={e}/>;
+                  return (
+                    <Link to={`/product/${e.dealId}`}>
+                      <ProductCard data={e} />
+                    </Link>
+                  );
                 })}
-              </>:<span className="mt-8">판매중인 상품이 없습니다</span>
-            }
+              </>
+            ) : (
+              <span className="mt-8">판매중인 상품이 없습니다</span>
+            )}
           </SectionWrapper>
         </MainCenterWrapper>
         <MainRightWrapper>

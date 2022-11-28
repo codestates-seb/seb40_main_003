@@ -21,8 +21,8 @@ export interface ProductPreviewMappingType {
   category: number;
   state: number;
   likeNum: number;
-  images: [string];
-  area: number;
+  images?: [string];
+  area?: number;
 }
 
 // 거래 게시글 상세 조회
