@@ -36,7 +36,7 @@ const CommunityDetail = () => {
   usePageTitle("커뮤니티");
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
-  console.log(data)
+  
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
