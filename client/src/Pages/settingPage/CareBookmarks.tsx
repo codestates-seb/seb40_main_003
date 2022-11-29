@@ -26,6 +26,7 @@ import React from "react";
 const CareBookmarksQueryClient = new QueryClient();
 
 export const CareBookmarksMain = () => {
+
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
   // useInfiniteQuery
@@ -38,6 +39,7 @@ export const CareBookmarksMain = () => {
     }
   );
 
+
   // 스크롤감지
   useEffect(() => {
     if (inView) fetchNextPage();
@@ -49,6 +51,7 @@ export const CareBookmarksMain = () => {
   return (
     <>
       {data?.pages.map((page, index) => (
+
         <React.Fragment key={index}>
           {page.data.map((e: CareLikeType) => (
             <Link
@@ -57,6 +60,7 @@ export const CareBookmarksMain = () => {
             >
               <CareCard data={e} />
             </Link>
+
           ))}
         </React.Fragment>
       ))}

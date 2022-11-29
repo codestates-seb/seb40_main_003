@@ -19,7 +19,7 @@ const purchaseHistoryQueryClient = new QueryClient();
 
 export const PurchaseHistoryMain = () => {
   const { data, isLoading, error,isSuccess } = useQuery(["purchaseHistoryQuery"], () => {
-    const data = FetchByParams("/deal", { page: 1, size: 5 });
+    const data = FetchByParams("/deal/success", { page: 1, size: 5 });
     return data;
     
   });
@@ -33,7 +33,7 @@ export const PurchaseHistoryMain = () => {
       {data &&
         data.data.data.map((e: DealSuccessDataType) => {
           return (
-            <Link key={e.dealId} to={`/deal/success${e.dealId}`}>
+            <Link key={e.dealId} to={`/product/${e.dealId}`}>
               <ProductCard data={e} />
             </Link>
           );
