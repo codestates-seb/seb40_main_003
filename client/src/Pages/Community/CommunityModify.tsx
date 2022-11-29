@@ -10,7 +10,7 @@ import {
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import { editDataAtom } from "../../Recoil/atoms/editData";
 
 const ConfirmWrapper = styled.span`
@@ -20,9 +20,10 @@ const ConfirmWrapper = styled.span`
 
 type Props = {};
 
-interface CommunityEditorForm {
+interface CommunityModifyForm {
   title: string;
-  communityId: number;
+  image: FileList;
+  file: any;
   content: string;
   checked: boolean;
   errors?: string;
@@ -30,53 +31,59 @@ interface CommunityEditorForm {
 
 const CommunityModify = (props: Props) => {
   const axiosPrivate = useAxiosPrivate();
-  // const [user, setUser] = useRecoilState(userState);
-  const editData = useRecoilValue(editDataAtom)
+  const [editData, setEditData] = useRecoilState(editDataAtom);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CommunityEditorForm>({
+  } = useForm<CommunityModifyForm>({
     mode: "onChange",
   });
 
-  const onInValid = (errors: FieldErrors) => {};
   const navigate = useNavigate();
 
-  const onValid = async (data: CommunityEditorForm) => {
-    console.log(data);
-    
+  const onValid = async (data: CommunityModifyForm) => {
     const formData = new FormData();
-    const patchDto = JSON.stringify({ 
+    const patchDto = JSON.stringify({
       title: data.title,
-      content: data.content });
+      content: data.content,
+    });
 
-    // formData.append("images", data.image[0]);
-    formData.append("patchDto", new Blob([patchDto],{type:"application/json"}));
+    formData.append("images", data.image[0]);
+    formData.append(
+      "patchDto",
+      new Blob([patchDto], { type: "application/json" })
+    );
 
-      axiosPrivate
-      .patch(`/community/${editData.communityId}`, formData, {
+    axiosPrivate
+      .patch(`/community/${editData?.communityId}`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((res) => {
-        console.log(res.data)
-        navigate(`/community/${editData.communityId}`);
-      }).catch ((err)=>{});
-    }
-  
+        console.log(res);
+        setEditData(null);
+        navigate(`/community/${editData?.communityId}`);
+      })
+      .catch((err) => {});
+  };
+
+  const onInValid = (errors: FieldErrors) => {};
+
   usePageTitle("커뮤니티 글 쓰기");
 
-
   return (
-    <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid, onInValid)}>
+    <MainContentContainer
+      as={"form"}
+      onSubmit={handleSubmit(onValid, onInValid)}
+    >
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>
           <>
             <input
-            defaultValue={editData.title}
+              defaultValue={editData?.title}
               className="title"
               {...register("title", {
                 required: true,
@@ -96,10 +103,29 @@ const CommunityModify = (props: Props) => {
           </>
         </SectionWrapper>
 
+        <SectionWrapper width={100}>
+          <>
+            <input
+              // defaultValue={editData.images[0]}
+              className="image cursor"
+              {...register(
+                "image"
+                // {required: true}
+              )}
+              id="image"
+              type="file"
+              accept="image/*"
+              name="image"
+              multiple
+            />
+            <p className="font-alert-red sub">{errors.image?.message}</p>
+          </>
+        </SectionWrapper>
+
         <SectionWrapper width={100} borderNone={true}>
           <>
             <textarea
-            defaultValue={editData.content}
+              defaultValue={editData?.content}
               className="content"
               {...register("content", {
                 required: true,
@@ -109,6 +135,18 @@ const CommunityModify = (props: Props) => {
             <p className="font-alert-red sub">{errors.content?.message}</p>
           </>
         </SectionWrapper>
+        <ConfirmWrapper>
+          <input
+            {...register("checked", { required: true })}
+            type="checkbox"
+            className="border-none checkbox-20"
+          />
+          <label className={errors.checked ? "sub font-gray" : "sub alert-red"}>
+            식물처럼 싱그럽고 예쁜 말을 써주세요.
+            <br />
+            욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
+          </label>
+        </ConfirmWrapper>
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
@@ -116,7 +154,7 @@ const CommunityModify = (props: Props) => {
             반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
           </p>
         </SectionWrapper>
-        <SigButton type="submit" value={"CommunityEditor"}>
+        <SigButton type="submit" value={"CommunityModify"}>
           수정 완료
         </SigButton>
       </MainRightWrapper>

@@ -68,13 +68,13 @@ type SectionWrapperType = {
   content?: string;
   price?: string;
   tag?: [{ techTagId: number; techTagName: string }];
-  children?: JSX.Element;
+  children?: JSX.Element|JSX.Element[]|string;
   width?: number;
   borderNone?: boolean;
   pb?: number;
   pt?: number;
 };
-export const SectionWrapper = ({
+export const SectionWrapper:React.FC<SectionWrapperType> = ({
   title,
   content,
   tag,
@@ -83,7 +83,7 @@ export const SectionWrapper = ({
   borderNone,
   pb = 16,
   pt = 16,
-}: SectionWrapperType) => {
+}) => {
   return (
     <CenteringWrapper
       pt={pt}

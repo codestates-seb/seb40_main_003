@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
+import { confirmCancel } from "../Const/message";
 
 interface ModalDefaultType {
   onClickModal: () => void;
@@ -15,7 +16,7 @@ function Modal({ onClickModal, children }: ModalDefaultType) {
           e.preventDefault();
           
           if(onClickModal){
-            if(window.confirm("작성을 취소하시겠습니까?")){
+            if(window.confirm(confirmCancel)){
               onClickModal();
             }
           }
