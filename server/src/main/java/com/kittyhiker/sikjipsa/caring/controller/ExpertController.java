@@ -122,6 +122,7 @@ public class ExpertController {
 										   @Positive @RequestParam int size) {
 		Page<ExpertProfile> pageExpertProfile = expertService.getExpertSuccess(page - 1, size);
 		List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
+
 		return new ResponseEntity<>(new MultiResponseDto<>(expertMapper.toExpertSuccessResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
 	}
 }
