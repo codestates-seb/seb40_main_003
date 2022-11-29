@@ -230,7 +230,7 @@ public class ExpertService {
 		return expertReviewRepository.save(expertReview);
 	}
 
-//	public Page<ExpertProfile> getExpertSuccess(int page, int size) {
-//		return expertRepository.findAll(PageRequest.of(page, size, Sort.by("expertId").descending()));
-//	}
+	public Page<ExpertProfile> getExpertSuccess(int page, int size) {
+		return expertRepository.findAll(PageRequest.of(page, size, Sort.by("expertId").descending()));
+	}
 }

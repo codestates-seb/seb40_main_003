@@ -116,12 +116,12 @@ public class ExpertController {
 		return new ResponseEntity(expertReviewMapper.toExpertReviewResponseDto(response), HttpStatus.CREATED);
 	}
 
-//	// 돌봄 기록 /experts/success?page={page}&size={size}
-//	@GetMapping("/success")
-//	public ResponseEntity getExpertSuccess(@Positive @RequestParam int page,
-//										   @Positive @RequestParam int size) {
-//		Page<ExpertProfile> pageExpertProfile = expertService.getExpertSuccess(page - 1, size);
-//		List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
-//		return new ResponseEntity<>(new MultiResponseDto<>(expertMapper.toExpertSuccessResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
-//	}
+	// 돌봄 기록 /experts/success?page={page}&size={size}
+	@GetMapping("/success")
+	public ResponseEntity getExpertSuccess(@Positive @RequestParam int page,
+										   @Positive @RequestParam int size) {
+		Page<ExpertProfile> pageExpertProfile = expertService.getExpertSuccess(page - 1, size);
+		List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
+		return new ResponseEntity<>(new MultiResponseDto<>(expertMapper.toExpertSuccessResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
+	}
 }
