@@ -22,7 +22,8 @@ type Props = {};
 
 interface CommunityEditorForm {
   title: string;
-  communityId: number;
+  image: FileList;
+  file: any;
   content: string;
   checked: boolean;
   errors?: string;
@@ -48,22 +49,22 @@ const CommunityModify = (props: Props) => {
     console.log(data);
     
     const formData = new FormData();
-    const patchDto = JSON.stringify({ 
+    const postDto = JSON.stringify({ 
       title: data.title,
       content: data.content });
 
-    // formData.append("images", data.image[0]);
-    formData.append("patchDto", new Blob([patchDto],{type:"application/json"}));
+    formData.append("images", data.image[0]);
+    formData.append("postDto", new Blob([postDto],{type:"application/json"}));
 
       axiosPrivate
-      .patch(`/community/${editData.communityId}`, formData, {
+      .patch("/community/", formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
       })
       .then((res) => {
         console.log(res.data)
-        navigate(`/community/${editData.communityId}`);
+        navigate(`/community/${res.data.communityId}`);
       }).catch ((err)=>{});
     }
   
@@ -96,6 +97,24 @@ const CommunityModify = (props: Props) => {
           </>
         </SectionWrapper>
 
+        <SectionWrapper width={100} >
+          <>
+            <input
+            // defaultValue={editData.images[0]}
+              className="image cursor"
+              {...register("image", 
+              // {required: true}
+                )}
+              id="image"
+              type="file"
+              accept="image/*"
+              name="image"
+              multiple
+            />
+            <p className="font-alert-red sub">{errors.image?.message}</p>
+          </>
+        </SectionWrapper>
+
         <SectionWrapper width={100} borderNone={true}>
           <>
             <textarea
@@ -109,6 +128,16 @@ const CommunityModify = (props: Props) => {
             <p className="font-alert-red sub">{errors.content?.message}</p>
           </>
         </SectionWrapper>
+        <ConfirmWrapper>
+          <input
+          {...register("checked", { required: true })}
+          type="checkbox" className="border-none checkbox-20"/>
+          <label className={errors.checked?"sub font-gray":"sub alert-red"}>
+            식물처럼 싱그럽고 예쁜 말을 써주세요.
+            <br />
+            욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
+          </label>
+        </ConfirmWrapper>
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>
@@ -117,7 +146,7 @@ const CommunityModify = (props: Props) => {
           </p>
         </SectionWrapper>
         <SigButton type="submit" value={"CommunityEditor"}>
-          수정 완료
+          작성 완료
         </SigButton>
       </MainRightWrapper>
     </MainContentContainer>
