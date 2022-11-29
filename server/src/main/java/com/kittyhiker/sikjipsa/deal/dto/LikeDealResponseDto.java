@@ -13,5 +13,4 @@ public class LikeDealResponseDto {
     Long likeDealId;
     Long dealId;
     Long memberId;
-    int likeNum;
 }

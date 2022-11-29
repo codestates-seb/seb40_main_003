@@ -6,7 +6,6 @@ import useRefreshToken from "./useRefreshToken";
 
 // 
 const useAxiosPrivate = () => {
-    // 수정하기
     const refresh = useRefreshToken();
     const accessToken = getLS("accessToken")
 

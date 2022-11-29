@@ -1,5 +1,7 @@
 package com.kittyhiker.sikjipsa.member.service;
 
+import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
+import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.jwt.dto.TokenDto;
 import com.kittyhiker.sikjipsa.jwt.entity.RefreshToken;
 import com.kittyhiker.sikjipsa.jwt.repository.TokenRepository;
@@ -7,7 +9,9 @@ import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
 import com.kittyhiker.sikjipsa.member.dto.*;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.entity.MemberInformation;
+import com.kittyhiker.sikjipsa.member.entity.MemberProfile;
 import com.kittyhiker.sikjipsa.member.mapper.MemberMapper;
+import com.kittyhiker.sikjipsa.member.memberprofile.repository.MemberProfileRepository;
 import com.kittyhiker.sikjipsa.member.repository.MemberInfoRepository;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import io.jsonwebtoken.Claims;
@@ -26,35 +30,43 @@ public class MemberService {
     private final JwtTokenizer jwtTokenizer;
     private final PasswordEncoder passwordEncoder;
     private final MemberMapper memberMapper;
+    private final MemberProfileRepository memberProfileRepository;
 
     public Long signUpUser(MemberSignupDto signupDto) {
-        if (!checkIfUserExists(signupDto.getEmail())) throw new IllegalArgumentException("ALREADY EXSITS EMAIL");
+        if (!checkIfUserExists(signupDto.getEmail())) {
+            throw new BusinessLogicException(ExceptionCode.ALREAD_EXISTS_EMAIL);
+        }
 
         Member member = memberMapper.memberSignupDtoToMember(signupDto);
         member.encryptingPassword(passwordEncoder);
         member.addRole("ROLE_USER,");
         Member savedUser = memberRepository.save(member);
-        MemberInformation newMemberInfo = MemberInformation.builder().member(savedUser).build();
-        memberInfoRepository.save(newMemberInfo);
-        return savedUser.getId();
+//        MemberInformation newMemberInfo = MemberInformation.builder().member(savedUser).build();
+//        memberInfoRepository.save(newMemberInfo);
+        MemberProfile memberProfile = MemberProfile.builder().member(savedUser).content("content").build();
+        memberProfileRepository.save(memberProfile);
+        return savedUser.getMemberId();
     }
 
     public MemberLoginResponseDto login(MemberLoginDto memberLoginDto) {
         Member member = memberMapper.memberLoginDtoToMember(memberLoginDto);
         Member findMember = memberRepository.findUserByEmail(member.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("INVALID_EMAIL"));
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_EMAIL));
 
         verifyPassword(member, findMember);
 
-        String accessToken = jwtTokenizer.createAccessToken(findMember.getId(), findMember.getEmail(), findMember.getRolesToList());
-        String refreshToken = jwtTokenizer.createRefreshToken(findMember.getId(), findMember.getEmail(), findMember.getRolesToList());
+        String accessToken = jwtTokenizer.createAccessToken(findMember.getMemberId(), findMember.getEmail(), findMember.getRolesToList());
+        String refreshToken = jwtTokenizer.createRefreshToken(findMember.getMemberId(), findMember.getEmail(), findMember.getRolesToList());
 
         tokenRepository.save(new RefreshToken(refreshToken));
+        String image = "";
+        if (findMember.getImage()!=null) image=findMember.getImage().getImgUrl();
 
         return MemberLoginResponseDto.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
-                .memberId(findMember.getId())
+                .memberId(findMember.getMemberId())
+                .image(image)
                 .nickname(findMember.getNickname()).build();
     }
 
@@ -69,21 +81,23 @@ public class MemberService {
 
     public MemberInfoResponseDto postMemberInfo(Long userId, MemberInfoPostDto infoPostDto) {
         MemberInformation info = memberMapper.memberInfoPostDtoToMemberInfo(infoPostDto);
-        Member registerMember = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+        Member registerMember = verifyMember(userId);
         info.setMember(registerMember);
         MemberInformation savedInfo = memberInfoRepository.save(info);
-        return memberMapper.memberInfoToResponseDto(savedInfo);
+        return memberMapper.memberInfoToResponseDto(savedInfo, registerMember.getMemberId()
+                , registerMember.getNickname());
     }
 
     public TokenDto reissueToken(String refreshToken) {
-        String[] tokenArr = refreshToken.split(",");
-        refreshToken = tokenArr[1];
+//        String[] tokenArr = refreshToken.split(",");
+//        refreshToken = tokenArr[1];
 
         tokenRepository.findRefreshTokenByValue(refreshToken)
-                .orElseThrow(() -> new IllegalArgumentException("INVALID REFRESHTOKEN"));
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.INVALID_REFRESH_TOKEN));
 
         Claims claims = jwtTokenizer.parseRefreshToken(refreshToken);
-        Long userId = (Long) claims.get("userId");
+
+        Long userId = Long.valueOf((Integer)claims.get("userId"));
         List roles = (List) claims.get("roles");
         String email = claims.getSubject();
 
@@ -98,10 +112,14 @@ public class MemberService {
                 .build();
     }
 
+    public Member verifyMember(Long memberId) {
+        return memberRepository.findById(memberId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+    }
 
     private void verifyPassword(Member user, Member findUser) {
         if (!passwordEncoder.matches(user.getPassword(), findUser.getPassword())) {
-            throw new IllegalArgumentException("INVALID PASSWORD");
+            throw new BusinessLogicException(ExceptionCode.WRONG_PASSWORD);
         }
     }
 
