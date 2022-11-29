@@ -22,7 +22,9 @@ export const DescriptionColumnWrapper = styled.div`
 `;
 
 type props={
-  data: ProfileDealType
+  // data: ProfileDealType
+  // 임시 처리
+  data: any
 }
 const ProductCard:React.FC<props> = ({data}) => {
   return (

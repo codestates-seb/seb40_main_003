@@ -22,7 +22,7 @@ import useFetch from "../../Hooks/useFetch";
 import { getDateAgo } from "../../utils/controller";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "../../Components/ErrorHandle";
-import { cannotLoad } from "../../Const/ErrorContent";
+import { cannotLoad } from "../../Const/message";
 import { CommentCard } from "../../Components/CommentCard";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { editDataAtom } from "../../Recoil/atoms/editData";

@@ -13,8 +13,8 @@ import {
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import axios from "../../Hooks/api";
-import secureLocalStorage from "react-secure-storage";
 import { ReactComponent as LogoMain } from "../../images/logoMain.svg";
+import { setLS } from "../../Hooks/useSecureLS";
 
 interface LoginForm {
   password: string;
@@ -58,10 +58,10 @@ const Login = () => {
           image: res.data.image,
         };
         setUser(userInfo);
-        secureLocalStorage.setItem("accessToken", res.data.accessToken);
-        secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
+        setLS("accessToken", res.data.accessToken);
+        setLS("refreshToken", res.data.refreshToken);
         if (data.autoLogin) {
-          secureLocalStorage.setItem("userInfo", userInfo);
+          setLS("userInfo", userInfo);
         }
       })
       .then(() => {

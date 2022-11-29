@@ -1,5 +1,4 @@
 import ProductCard from "../../Components/product/ProductCard";
-import { ProductPreviewMappingType } from "../../types/productTypes";
 import { Link } from "react-router-dom";
 import {
   MainCenterWrapper,
@@ -19,22 +18,26 @@ import {
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import React from "react";
 import { ProfileDealType } from "../../types/profileType";
+import { cannotLoad, searchbarComment } from "../../Const/message";
 
 // 쿼리클라이언트
 const productQueryClient = new QueryClient();
 
-export const ProductMain = () => {
+type productMain = {
+  searchKeyword?: string;
+};
+export const ProductMain = ({ searchKeyword }: productMain) => {
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
 
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    "productQuery",
-    ({ pageParam = 1 }) => InfiniteFetch("/deal", pageParam),
+    ["productQuery", searchKeyword],
+    ({ pageParam = 1 }) => InfiniteFetch("/deal", pageParam, searchKeyword),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextPage : undefined,
@@ -46,8 +49,7 @@ export const ProductMain = () => {
   }, [inView]);
 
   if (status === "loading") return <LoadingSkeleton />;
-  if (status === "error")
-    return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
+  if (status === "error") return <ErrorMessage content={cannotLoad} />;
 
   return (
     <>
@@ -67,16 +69,23 @@ export const ProductMain = () => {
 
 // 전체 페이지
 const Product = () => {
+  const [searchKeyWord, setSearchKeyWord] = useState("");
   usePageTitle("거래");
   return (
     <MainContentContainer>
       <MainCenterWrapper>
+        <input
+          type="text"
+          className="mb-4"
+          placeholder={searchbarComment}
+          onChange={(e) => {
+            setSearchKeyWord(e.target.value);
+          }}
+        />
         {/* 쿼리클라이언트로 감쌈 */}
-        <ErrorBoundary
-          fallback={<ErrorMessage content={"정보를 불러오는데 실패했습니다"} />}
-        >
+        <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
           <QueryClientProvider client={productQueryClient}>
-            <ProductMain />
+            <ProductMain searchKeyword={searchKeyWord} />
           </QueryClientProvider>
         </ErrorBoundary>
         {/* 쿼리클라이언트로 감쌈 */}

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import secureLocalStorage from "react-secure-storage";
 import { axiosPrivate } from "./api";
+import { getLS } from "./useSecureLS";
 // 수정하기
 import useRefreshToken from "./useRefreshToken";
 
@@ -8,7 +8,7 @@ import useRefreshToken from "./useRefreshToken";
 const useAxiosPrivate = () => {
     // 수정하기
     const refresh = useRefreshToken();
-    const accessToken = secureLocalStorage.getItem("accessToken")
+    const accessToken = getLS("accessToken")
 
     useEffect(() => {
         // 요청을 가로채는 인터셉터 (필요할때만 토큰을 싣기 위해)

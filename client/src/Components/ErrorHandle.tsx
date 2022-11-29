@@ -7,6 +7,7 @@ interface props  {
   content: string;
   className?:string
 };
+/** content에 에러시 메세지를 문자형태로 넣는다. 에러메세지는 const폴더에서 관리함 */
 export const ErrorMessage = (props: props) => {
   return (
     <ErrorWrapper className={props.className}>

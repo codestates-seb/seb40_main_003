@@ -106,7 +106,7 @@ const ProductEditor = () => {
                   value: 2,
                 },
                 maxLength: {
-                  message: "제목",
+                  message: "제목은 30글자 미만으로 작성해주세요",
                   value: 30,
                 },
               })}

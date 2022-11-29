@@ -14,6 +14,11 @@ export const MainContentContainer = styled.div`
     align-items: center;
     padding-bottom: 156px;
   }
+  &.fullscreen{
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+  }
 `;
 // 내용 영역(모바일~테블릿 크기까지 커짐과 유사)
 export const MainCenterWrapper = styled.main`

@@ -57,21 +57,6 @@ const PlaceHolder = styled.div`
 const Header = () => {
   const { title } = useRecoilValue(currentPage);
   const { width } = useWindowSize();
-  const url = () => {
-    let result = "";
-    switch (title) {
-      case "돌봄":
-        result = "caring";
-        break;
-      case "거래":
-        result = "product";
-        break;
-      case "커뮤니티":
-        result = "community";
-        break;
-    }
-    return result;
-  };
 
   return (
     <HeaderWrapper className="bold h4">
@@ -79,9 +64,7 @@ const Header = () => {
         <PlaceHolder>
           <BackButton />
           <span className="display-none-pc h4 bold">{title}</span>
-          <Link to={`/search/${url()}`}>
             <Search />
-          </Link>
         </PlaceHolder>
         {width !== undefined && width > 1024 ? <NavContent /> : null}
       </HeaderContent>

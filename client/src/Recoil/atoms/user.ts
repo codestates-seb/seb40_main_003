@@ -15,7 +15,7 @@ export const userState = atom<UserStateType|null>({
 });
 
 // 유저 role 저장 상태
-export const userRole = atom<boolean>({
-  key: "userRole",
+export const isExpert = atom<boolean>({
+  key: "isExpert",
   default: false,
 });

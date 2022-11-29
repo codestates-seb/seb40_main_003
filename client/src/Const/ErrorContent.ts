@@ -1,1 +1,0 @@
-export const cannotLoad = "컨텐츠를 불러오지 못했습니다"

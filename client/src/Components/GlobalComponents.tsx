@@ -1,9 +1,8 @@
 import styled from "@emotion/styled";
-import { getDateAgo, overKillo } from "../utils/controller";
+import { overKillo } from "../utils/controller";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import { UserStateType } from "../Recoil/atoms/user";
-import { useEffect, useRef, useState } from "react";
-import defaultProfile from "../images/defaultProfileImage.png"
+import defaultProfile from "../images/defaultProfileImage.png";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -21,12 +20,28 @@ export const SigButton = styled.button`
     background-color: var(--pure-white);
     border: 2px solid var(--main);
   }
+  &.ghost_hover {
+    color: var(--main);
+    background-color: var(--pure-white);
+    border: 2px solid var(--main);
+    &:hover {
+      background-color: var(--main);
+      color: var(--pure-white);
+    }
+  }
   &.disable {
     background-color: var(--line-gray);
     color: var(--pure-white);
     /* &:hover {
       background-color: var(--main);
     } */
+  }
+  &.disable_hover {
+    background-color: var(--line-gray);
+    color: var(--pure-white);
+    &:hover {
+      background-color: var(--main);
+    }
   }
 `;
 
@@ -121,13 +136,13 @@ export const ImageWrapper = styled.img`
   background-color: var(--bg-gray);
   border-radius: ${(props: imageWrapperProps) =>
     props.circle ? `${props.size}px` : "8px 0px"};
-  border:1px solid var(--line-light-gray);
+  border: 1px solid var(--line-light-gray);
   display: block;
   object-fit: cover;
   margin-right: 16px;
   &.communityImage {
     width: 100%;
-    height:25vw;
+    height: 25vw;
     margin-right: 0;
   }
 `;
@@ -165,18 +180,21 @@ export const ViewCounter = ({
   renameView = "조회수",
   renameLike = "찜",
 }: ViewCounterProps) => {
-  
   return (
     <ViewCounterWrapper>
-      {view!==undefined && (
+      {view !== undefined && (
         <ViewCounterColumn className="text-align-center mr-16">
-          <SubText className="medium font-gray mr-8">{renameView?renameView:"조회수"}</SubText>
+          <SubText className="medium font-gray mr-8">
+            {renameView ? renameView : "조회수"}
+          </SubText>
           <SubText className="font-gray ">{overKillo(view)}</SubText>
         </ViewCounterColumn>
       )}
-      {like!==undefined && (
+      {like !== undefined && (
         <ViewCounterColumn className="text-align-center ">
-          <SubText className="medium font-gray mr-8">{renameLike?renameLike:"찜"}</SubText>
+          <SubText className="medium font-gray mr-8">
+            {renameLike ? renameLike : "찜"}
+          </SubText>
           <SubText className="font-gray">{overKillo(like)}</SubText>
         </ViewCounterColumn>
       )}
@@ -216,13 +234,22 @@ type ProfileCardTypes = {
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
-  const { size = "36", src, alt, name, location, area, circle = false, tag } = props;
+  const {
+    size = "36",
+    src,
+    alt,
+    name,
+    location,
+    area,
+    circle = false,
+    tag,
+  } = props;
   return (
     <CenteringWrapper className="space-between" borderNone={true}>
       <RowWrapper className="align-center">
         <ImageWrapper
-          src={src?src:defaultProfile}
-          alt={alt?alt:"기본프로필사진"}
+          src={src ? src : defaultProfile}
+          alt={alt ? alt : "기본프로필사진"}
           size={size}
           className="mr-16"
           circle={circle}
@@ -230,8 +257,10 @@ export const ProfileCard = (props: ProfileCardTypes) => {
 
         <ColumnWrapper>
           <span className="medium">{name}</span>
-          {location&&<span className="sub font-gray">{location}</span>}
-          <span className="sub font-gray">{area?area:"지역이 등록되지 않았습니다"}</span>
+          {location && <span className="sub font-gray">{location}</span>}
+          <span className="sub font-gray">
+            {area ? area : "지역이 등록되지 않았습니다"}
+          </span>
         </ColumnWrapper>
       </RowWrapper>
 
@@ -239,7 +268,6 @@ export const ProfileCard = (props: ProfileCardTypes) => {
     </CenteringWrapper>
   );
 };
-
 
 // 프로필 반려식물
 export const ProfilePlantCardWrapper = styled.div`
@@ -256,7 +284,7 @@ type ProfilePlantCardTypes = {
   src: string;
   alt: string;
   name: string;
-  type: string|number;
+  type: string | number;
   age: number;
 };
 export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
@@ -290,7 +318,7 @@ export const AddProfilePlantCard = styled.button`
   border: 1px solid var(--main);
   color: var(--main);
   cursor: pointer;
-`
+`;
 
 // Comment 컴포넌트, 돌봄리뷰
 export const CommentCardWrapper = styled.div`

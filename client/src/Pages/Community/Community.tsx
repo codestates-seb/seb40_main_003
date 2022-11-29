@@ -12,21 +12,29 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import { InfiniteFetch } from "../../Hooks/useFetch";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "../../Components/ErrorHandle";
-import { LoadingSkeleton, LoadingSpinner } from "../../Components/Loading";
-import { QueryClient, QueryClientProvider, useInfiniteQuery } from "react-query";
+import { LoadingSkeleton } from "../../Components/Loading";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useInfiniteQuery,
+} from "react-query";
 import { communityPreviewDataTypes } from "../../types/communityTypes";
 import { useInView } from "react-intersection-observer";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { cannotLoad, searchbarComment } from "../../Const/message";
 
 const communityQueryClient = new QueryClient();
 
-export const CommunityMain = () => {
+type communityMain ={
+  searchKeyword?:string
+}
+export const CommunityMain = ({searchKeyword}:communityMain) => {
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    "communityQuery",
-    ({ pageParam = 1 }) => InfiniteFetch("/community",pageParam),
+    ["communityQuery",searchKeyword],
+    ({ pageParam = 1 }) => InfiniteFetch("/community", pageParam,searchKeyword),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextPage : undefined,
@@ -36,42 +44,54 @@ export const CommunityMain = () => {
   useEffect(() => {
     if (inView) fetchNextPage();
   }, [inView]);
-  
-  if (status==="loading") return <LoadingSkeleton />;
-  if (status==="error") return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
+
+  if (status === "loading") return <LoadingSkeleton />;
+  if (status === "error")
+    return <ErrorMessage content={cannotLoad}/>;
 
   return (
     <>
-    {data?.pages.map((page, index) => (
-          <React.Fragment key={index}>
-            {page.data.map((e:communityPreviewDataTypes) => (
-              <Link
+      {data?.pages.map((page, index) => (
+        <React.Fragment key={index}>
+          {page.data.map((e: communityPreviewDataTypes) => (
+            <Link
               to={`/community/${e.communityId}`}
               key={"member" + e.communityId}
             >
               <CommunityCard data={e} />
             </Link>
-            ))}
-          </React.Fragment>
-        ))}
-        {isFetchingNextPage?<LoadingSkeleton/>:<div ref={ref}></div>}
+          ))}
+        </React.Fragment>
+      ))}
+      {isFetchingNextPage ? <LoadingSkeleton /> : <div ref={ref}></div>}
     </>
-  )
-}
+  );
+};
 
 const Community = () => {
   usePageTitle("커뮤니티");
+  const [searchKeyWord, setSearchKeyWord] = useState("");
   return (
     <MainContentContainer>
+
       <MainCenterWrapper>
+      <input
+        type="text"
+        placeholder={searchbarComment}
+        className="mb-4"
+        onChange={(e) => {
+          setSearchKeyWord(e.target.value);
+        }}
+      />
         {/** 에러바운더리 fallback으로 에러시*/}
-        <ErrorBoundary fallback={<ErrorMessage content={"정보를 불러오는데 실패했습니다"} />}>
+        <ErrorBoundary
+          fallback={<ErrorMessage content={cannotLoad} />}
+        >
           {/* 쿼리클라이언트 */}
           <QueryClientProvider client={communityQueryClient}>
-            <CommunityMain />
+            <CommunityMain searchKeyword={searchKeyWord}/>
           </QueryClientProvider>
         </ErrorBoundary>
-        
       </MainCenterWrapper>
       <MainRightWrapper>
         {/* 우측 영역 */}
