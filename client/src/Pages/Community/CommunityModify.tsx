@@ -22,8 +22,7 @@ type Props = {};
 
 interface CommunityEditorForm {
   title: string;
-  image: FileList;
-  file: any;
+  communityId: number;
   content: string;
   checked: boolean;
   errors?: string;
@@ -49,22 +48,22 @@ const CommunityModify = (props: Props) => {
     console.log(data);
     
     const formData = new FormData();
-    const postDto = JSON.stringify({ 
+    const patchDto = JSON.stringify({ 
       title: data.title,
       content: data.content });
 
-    formData.append("images", data.image[0]);
-    formData.append("postDto", new Blob([postDto],{type:"application/json"}));
+    // formData.append("images", data.image[0]);
+    formData.append("patchDto", new Blob([patchDto],{type:"application/json"}));
 
       axiosPrivate
-      .patch("/community/", formData, {
+      .patch(`/community/${editData.communityId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
       })
       .then((res) => {
         console.log(res.data)
-        navigate(`/community/${res.data.communityId}`);
+        navigate(`/community/${editData.communityId}`);
       }).catch ((err)=>{});
     }
   
@@ -118,7 +117,7 @@ const CommunityModify = (props: Props) => {
           </p>
         </SectionWrapper>
         <SigButton type="submit" value={"CommunityEditor"}>
-          작성 완료
+          수정 완료
         </SigButton>
       </MainRightWrapper>
     </MainContentContainer>
