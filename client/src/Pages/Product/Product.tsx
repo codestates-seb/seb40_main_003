@@ -56,7 +56,7 @@ export const ProductMain = ({ searchKeyword }: productMain) => {
       {data?.pages.map((page, index) => (
         <React.Fragment key={index}>
           {page.data.map((e: ProfileDealType) => (
-            <Link key={e.dealId} to={`/product/${e.dealId}`}>
+            <Link key={e.dealId} to={`/deal/${e.dealId}`}>
               <ProductCard data={e} />
             </Link>
           ))}

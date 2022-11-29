@@ -1,4 +1,5 @@
 import CommunityCard from "../../Components/community/CommunityCard";
+
 import { Link } from "react-router-dom";
 import {
   MainCenterWrapper,
@@ -8,59 +9,95 @@ import {
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { FetchByParams } from "../../Hooks/useFetch";
+import { InfiniteFetch } from "../../Hooks/useFetch";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
-import { QueryClient, QueryClientProvider, useQuery } from "react-query";
-import { CommunityMyPreviewType } from "../../types/communityTypes";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useInfiniteQuery,
+} from "react-query";
+import { MyHistoryDataType } from "../../types/communityTypes"; 
+import { useInView } from "react-intersection-observer";
+import React, { useEffect, useState } from "react";
+import { cannotLoad, searchbarComment } from "../../Const/message";
 
-const communityQueryClient = new QueryClient();
+const myHistoryQueryClient = new QueryClient();
 
-export const CommunityMain = () => {
-  const { data, isLoading, error } = useQuery(["productQuery"], () => {
-    const data = FetchByParams("/community/my", { page: 1, size: 5 });
-    return data;
-  });
-  if (isLoading) return <LoadingSkeleton />;
-  if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
-  console.log(data)
+type myHistoryMain ={
+  searchKeyword?:string
+}
+export const MyHistoryMain = ({searchKeyword}:myHistoryMain) => {
+  // 무한스크롤 감지 Ref
+  const { ref, inView } = useInView();
+  // useInfiniteQuery
+  const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+    ["myHistoryQuery",searchKeyword],
+    ({ pageParam = 1 }) => InfiniteFetch("/community", pageParam,searchKeyword),
+    {
+      getNextPageParam: (lastPage) =>
+        !lastPage.isLast ? lastPage.nextPage : undefined,
+    }
+  );
+  // 스크롤감지
+  useEffect(() => {
+    if (inView) fetchNextPage();
+  }, [inView]);
+
+  if (status === "loading") return <LoadingSkeleton />;
+  if (status === "error")
+    return <ErrorMessage content={cannotLoad}/>;
+
   return (
     <>
-      {data &&
-        data.data.data.map((e: CommunityMyPreviewType) => {
-          return (<></>
-            // <Link
-            //   to={`/community/my${e.postId}`}
-            //   key={"member" + e.postId}
-            // >
-            //   log
-            //   <CommunityCard data={e} />
-            // </Link>
-          );
-        })}
+      {data?.pages.map((page, index) => (
+        <React.Fragment key={index}>
+          {page.data.map((e: MyHistoryDataType) => (
+            <Link
+              to={`/community/${e.postId}`}
+              key={"member" + e.postId}
+            >
+              <CommunityCard data={e} />
+            </Link>
+          ))}
+        </React.Fragment>
+      ))}
+      {isFetchingNextPage ? <LoadingSkeleton /> : <div ref={ref}></div>}
     </>
   );
 };
 
 const MyHistory = () => {
   usePageTitle("내 게시물");
+  const [searchKeyWord, setSearchKeyWord] = useState("");
   return (
     <MainContentContainer>
+
       <MainCenterWrapper>
-        {/* 에러바운더리 */}
-        <ErrorBoundary fallback={<ErrorMessage content={"정보를 불러오는데 실패했습니다"} />}>
+      <input
+        type="text"
+        placeholder={searchbarComment}
+        className="mb-4"
+        onChange={(e) => {
+          setSearchKeyWord(e.target.value);
+        }}
+      />
+        {/** 에러바운더리 fallback으로 에러시*/}
+        <ErrorBoundary
+          fallback={<ErrorMessage content={cannotLoad} />}
+        >
           {/* 쿼리클라이언트 */}
-          <QueryClientProvider client={communityQueryClient}>
-            <CommunityMain />
+          <QueryClientProvider client={myHistoryQueryClient}>
+            <MyHistoryMain searchKeyword={searchKeyWord}/>
           </QueryClientProvider>
         </ErrorBoundary>
-        
       </MainCenterWrapper>
       <MainRightWrapper>
+        {/* 우측 영역 */}
         <SectionWrapper borderNone={true}>
           <p className="h5 bold font-main mr-16">
-            내가 작성한 커뮤니티 글입니다.
+            내가 커뮤니티에 작성한 글 목록입니다.
           </p>
         </SectionWrapper>
       </MainRightWrapper>
@@ -68,4 +105,4 @@ const MyHistory = () => {
   );
 };
 
-export default MyHistory;
+export default MyHistory

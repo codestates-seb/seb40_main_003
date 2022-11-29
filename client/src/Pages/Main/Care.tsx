@@ -28,7 +28,7 @@ export const CareMain = () => {
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     "careQueryClient",
-    ({ pageParam = 1 }) => InfiniteFetch("/experts", pageParam),
+    ({ pageParam = 1 }) => InfiniteFetch("/caring", pageParam),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextPage : undefined,
