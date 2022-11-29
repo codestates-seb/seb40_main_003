@@ -3612,10 +3612,10 @@ cross-spawn@^7.0.2, cross-spawn@^7.0.3:
     shebang-command "^2.0.0"
     which "^2.0.1"
 
-crypto-js@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-4.1.1.tgz#9e485bcf03521041bd85844786b83fb7619736cf"
-  integrity sha512-o2JlM7ydqd3Qk9CA0L4NL6mTzU2sdx96a+oOfPu8Mkl/PK51vSyoi8/rQ8NknZtk44vq15lmhAj9CIAGwgeWKw==
+crypto-js@^3.1.6:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.3.0.tgz#846dd1cce2f68aacfa156c8578f926a609b7976b"
+  integrity sha512-DIT51nX0dCfKltpRiXV+/TVZq+Qq2NgF4644+K7Ttnla7zEzqc+kjJyiB96BHNyUTBxyjzRcZYpUdZa+QAqi6Q==
 
 crypto-random-string@^2.0.0:
   version "2.0.0"
@@ -6775,11 +6775,6 @@ multicast-dns@^7.2.5:
     dns-packet "^5.2.2"
     thunky "^1.0.2"
 
-murmurhash-js@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/murmurhash-js/-/murmurhash-js-1.0.0.tgz#b06278e21fc6c37fa5313732b0412bcb6ae15f51"
-  integrity sha512-TvmkNhkv8yct0SVBSy+o8wYzXjE4Zz3PCesbfs8HiCXXdcTuocApFv11UWlNFWKYsP2okqrhb7JNlSm9InBhIw==
-
 mute-stream@0.0.8:
   version "0.0.8"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.8.tgz#1630c42b2251ff81e2a283de96a5497ea92e5e0d"
@@ -8143,14 +8138,6 @@ react-scripts@5.0.1:
   optionalDependencies:
     fsevents "^2.3.2"
 
-react-secure-storage@^1.0.21:
-  version "1.0.21"
-  resolved "https://registry.yarnpkg.com/react-secure-storage/-/react-secure-storage-1.0.21.tgz#9425f79efbba7cb11e26f0a87cc782b989d7274d"
-  integrity sha512-9FDGfU8cz6RefutG4gzY9YCcUmTSiJMy8LReTM195ydXDtKhVUk+A1wy+STIpxs7ts3gnA9ghxyz1gSVPmZ6IA==
-  dependencies:
-    crypto-js "^4.1.1"
-    murmurhash-js "^1.0.0"
-
 react@^18.2.0:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react/-/react-18.2.0.tgz#555bd98592883255fa00de14f1151a917b5d77d5"
@@ -8523,6 +8510,14 @@ schema-utils@^4.0.0:
     ajv "^8.8.0"
     ajv-formats "^2.1.1"
     ajv-keywords "^5.0.0"
+
+secure-ls@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/secure-ls/-/secure-ls-1.2.6.tgz#0c54a4c7fa8317c3c101accbf6bb38d8d2072e46"
+  integrity sha512-g8vUSKl6elSfyAUHodybnNkuZW+mUYEOWj4SZIDg+xoQ1dq5ddktBoOFrtxQBUl88ZyAJOtGWQ1PRaOxkTAuZQ==
+  dependencies:
+    crypto-js "^3.1.6"
+    lz-string "^1.4.4"
 
 select-hose@^2.0.0:
   version "2.0.0"

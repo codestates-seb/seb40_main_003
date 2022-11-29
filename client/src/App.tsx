@@ -1,8 +1,8 @@
 import { Routes } from "react-router";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import { AuthProvider, HeaderLayout, LogOutOnly, SearchLayout } from "./Route";
-import Product, { ProductMain } from "./Pages/Product/Product";
+import { AuthProvider, HeaderLayout, LogOutOnly } from "./Route";
+import Product from "./Pages/Product/Product";
 import Navbar from "./Components/Navbar";
 
 import Profile from "./Pages/Profile/Profile";
@@ -21,7 +21,7 @@ import Resign from "./Pages/settingPage/Resign";
 
 import Missing from "./Pages/Missing";
 
-import Care, { CareMain } from "./Pages/Main/Care";
+import Care from "./Pages/Main/Care";
 import CareDetail from "./Pages/Main/CareDetail";
 import CareReviewEditor from "./Pages/Talk/CareReviewEditor";
 
@@ -29,34 +29,37 @@ import ProductDetail from "./Pages/Product/ProductDetail";
 import ProductEditor from "./Pages/Product/ProductEditor";
 import ProductReviewEditor from "./Pages/Talk/ProductReviewEditor";
 
-import Community, { CommunityMain } from "./Pages/Community/Community";
+import Community from "./Pages/Community/Community";
 import CommunityDetail from "./Pages/Community/CommunityDetail";
 import CommunityEditor from "./Pages/Community/CommunityEditor";
 import CommunityModify from "./Pages/Community/CommunityModify";
-import secureLocalStorage from "react-secure-storage";
 
 import Talk from "./Pages/Talk/Talk";
 import { DefaultLayout } from "./Route";
 import ProductCategory from "./Pages/Product/ProductCategory";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
-import { userState } from "./Recoil/atoms/user";
+import { isExpert, userState } from "./Recoil/atoms/user";
+import { getLS } from "./Hooks/useSecureLS";
 
 
 // import DevTools from "./Components/DevTools";
 
 const App=()=>{
   const setUser = useSetRecoilState(userState)
+  const setIsExpert = useSetRecoilState(isExpert)
+  
   useEffect(() => {
-    const accessToken = secureLocalStorage.getItem("accessToken")
-    const refreshToken = secureLocalStorage.getItem("refreshToken")
-    const userInfo:any = secureLocalStorage.getItem("userInfo")
+    setIsExpert(false)
+    const accessToken = getLS("accessToken")
+    const refreshToken = getLS("refreshToken")
+    const userInfo:any = getLS("userInfo")
 
     //로컬스토리지에 유저정보가 있고, 액세스토큰, 리프레시토큰 모두 있을때 (토큰 유효성검사는 안함)
     if(accessToken&&refreshToken&&userInfo){
       setUser(userInfo);
     }
-  }, [])
+  }, [setUser])
   
   return (
     <BrowserRouter>
@@ -65,7 +68,6 @@ const App=()=>{
       {/* <DevTools/> */}
       <Routes>
         {/* 보호된 라우팅 */}
-
         {/* <Route element={<AuthProvider />}> */}
         <Route path="/profile" element={<HeaderLayout />}>
           <Route path=":id" element={<Profile />} />
@@ -93,14 +95,6 @@ const App=()=>{
             <Route path=":id" element={<CommunityDetail />} />
             <Route path="modify" element={<CommunityModify />} />
             <Route path="write" element={<CommunityEditor />} />
-          </Route>
-          {/* 검색 */}
-          <Route path="/search">
-            <Route element={<SearchLayout />}>
-              <Route path="caring" element={<CareMain />} />
-              <Route path="product" element={<ProductMain />} />
-              <Route path="community" element={<CommunityMain />} />
-            </Route>
           </Route>
           {/* 로그인 */}
           <Route path="/login" element={<Login />} />
