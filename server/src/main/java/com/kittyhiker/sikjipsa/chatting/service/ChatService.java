@@ -1,7 +1,16 @@
 package com.kittyhiker.sikjipsa.chatting.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kittyhiker.sikjipsa.chatting.dto.ChatRoom;
+import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto;
+import com.kittyhiker.sikjipsa.chatting.entity.ChatRoom;
+import com.kittyhiker.sikjipsa.chatting.mapper.ChatRoomMapper;
+import com.kittyhiker.sikjipsa.chatting.repository.ChatRoomRepository;
+import com.kittyhiker.sikjipsa.deal.entity.Deal;
+import com.kittyhiker.sikjipsa.deal.service.DealService;
+import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
+import com.kittyhiker.sikjipsa.exception.ExceptionCode;
+import com.kittyhiker.sikjipsa.member.entity.Member;
+import com.kittyhiker.sikjipsa.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -18,28 +27,51 @@ import java.util.*;
 public class ChatService {
 
     private final ObjectMapper objectMapper;
-    private Map<String, ChatRoom> chatRooms;
+    private final ChatRoomMapper chatRoomMapper;
+    private final DealService dealService;
+    private final MemberService memberService;
+    private final ChatRoomRepository chatRoomRepository;
+    private Map<String, ChatRoomDto> chatRooms;
 
     @PostConstruct
     private void init() {
         chatRooms = new LinkedHashMap<>();
     }
 
-    public List<ChatRoom> findAllRoom() {
+    public List<ChatRoomDto> findAllRoom() {
         return new ArrayList<>(chatRooms.values());
     }
 
-    public ChatRoom findRoomById(String roomId) {
+    public ChatRoomDto findRoomById(String roomId) {
         return chatRooms.get(roomId);
     }
 
-    public ChatRoom createRoom(String name) {
+    public ChatRoomDto createDealRoom(Long userId, Long dealId) {
         String randomId = UUID.randomUUID().toString();
-        ChatRoom chatRoom = ChatRoom.builder()
-                .roomId(randomId)
-                .name(name)
-                .build();
-        chatRooms.put(randomId, chatRoom);
+        Deal deal = dealService.verifiedDeal(dealId);
+        Member member = memberService.verifyMember(userId);
+        if (chatRoomRepository.existsByDealAndSender(deal, member)) {
+            ChatRoom findChatRoom = chatRoomRepository.findByDealAndSender(deal, member)
+                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_CHATROOM));
+            ChatRoomDto response = chatRoomMapper.chatRoomToChatRoomDto(findChatRoom);
+            return response;
+        } else {
+            ChatRoom chatRoom = ChatRoom.builder()
+                    .roomName(randomId)
+                    .deal(deal)
+                    .sender(member).build();
+
+            ChatRoom savedChatRoom = chatRoomRepository.save(chatRoom);
+            ChatRoomDto chatRoomDto = chatRoomMapper.chatRoomToChatRoomDto(savedChatRoom);
+            chatRooms.put(randomId, chatRoomDto);
+            return chatRoomDto;
+        }
+    }
+
+    public ChatRoomDto createExpertRoom(Long userId, Long expertId) {
+        String randomId = UUID.randomUUID().toString();
+        ChatRoomDto chatRoom = ChatRoomDto.builder().build();
+//        chatRooms.put(randomId, chatRoom);
         return chatRoom;
     }
 

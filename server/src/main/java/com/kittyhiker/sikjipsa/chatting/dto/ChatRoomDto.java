@@ -9,17 +9,22 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Getter
-@Builder
-public class ChatRoom {
+public class ChatRoomDto {
 
-    private String roomId;
-    private String name;
+    private Long roomId;
+    private String roomName;
     private Set<WebSocketSession> sessions = new HashSet<>();
 
-    public void handlerActions(WebSocketSession session, ChatMessage chatMessage, ChatService chatService) {
-        if (chatMessage.getType().equals(ChatMessage.MessageType.ENTER)) {
+    @Builder
+    public ChatRoomDto(Long roomId, String roomName) {
+        this.roomId = roomId;
+        this.roomName = roomName;
+    }
+
+    public void handlerActions(WebSocketSession session, ChatMessageDto chatMessage, ChatService chatService) {
+        if (chatMessage.getType().equals(ChatMessageDto.MessageType.ENTER)) {
             sessions.add(session);
-            chatMessage.setMessage(chatMessage.getSender() +"님이 입장했습니다.");
+            chatMessage.setMessage(chatMessage.getSenderNickname() +"님이 입장했습니다.");
         }
         sendMessage(chatMessage, chatService);
     }
