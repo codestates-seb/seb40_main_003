@@ -12,6 +12,12 @@ import java.util.Optional;
 public interface ExpertRepository extends JpaRepository<ExpertProfile, Long> {
 	Page<ExpertProfile> findByTechTags_TechTagNameContaining(String keyword, Pageable pageable);
 
+	Page<ExpertProfile> findByAreaTags_AreaTagNameContaining(String area, Pageable pageable);
+
+	Page<ExpertProfile> findByTechTags_TechTagNameContainingAndAreaTags_AreaTagNameContaining(String keyword, String area, Pageable pageable);
+
+
+
 	Optional<ExpertProfile> findByMember_MemberId(Long memberId);
 
 	//@Query("select b from ExpertProfile b where b.title like concat('%',:q,'%')")

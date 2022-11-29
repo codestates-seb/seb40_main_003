@@ -10,7 +10,6 @@ import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberInfoMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberProfileMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.service.MemberInfoService;
 import com.kittyhiker.sikjipsa.member.memberprofile.service.MemberProfileService;
-import com.kittyhiker.sikjipsa.member.repository.MemberInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +33,7 @@ public class MemberProfileController {
 
 	// 테스트용
 	@PostMapping
-	public ResponseEntity postProfile(@RequestBody MemberInfoDto memberInfoDto,
+	public ResponseEntity postProfile(@Valid @RequestBody MemberInfoDto memberInfoDto,
 									  @RequestHeader("Authorization") String token) {
 		MemberInformation memberInformation = memberInfoMapper.toMemberInfo(memberInfoDto);
 		MemberInformation response = memberInfoService.postMemberInfo(memberInformation, jwtTokenizer.getUserIdFromToken(token));
@@ -50,11 +49,10 @@ public class MemberProfileController {
 	@PatchMapping("{user-id}")
 	public ResponseEntity patchProfile(@PathVariable("user-id") @Positive Long memberId,
 									   @Valid @RequestPart MemberPatchDto memberPatchDto,
-									   @RequestPart MultipartFile multipartFile) {
-		memberPatchDto.setMemberId(memberId);
+									   @RequestPart MultipartFile multipartFile,
+									   @RequestHeader("Authorization") String token) {
 		Member member = memberMapper.toProfile(memberPatchDto);
-		Member response = memberProfileService.patchProfile(member, multipartFile);
-
+		Member response = memberProfileService.patchProfile(member, multipartFile, memberId, jwtTokenizer.getUserIdFromToken(token));
 		return new ResponseEntity(memberProfileMapper.toProfileResponseDto(response), HttpStatus.OK);
 	}
 

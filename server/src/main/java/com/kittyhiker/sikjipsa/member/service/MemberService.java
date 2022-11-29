@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -43,8 +44,13 @@ public class MemberService {
         Member savedUser = memberRepository.save(member);
 //        MemberInformation newMemberInfo = MemberInformation.builder().member(savedUser).build();
 //        memberInfoRepository.save(newMemberInfo);
-        MemberProfile memberProfile = MemberProfile.builder().member(savedUser).content("content").build();
+
+        MemberInformation memberInformation = new MemberInformation(savedUser, "name", "01012345678", "20000101", 1, "address");
+        memberInfoRepository.save(memberInformation);
+
+        MemberProfile memberProfile = new MemberProfile("content", savedUser);
         memberProfileRepository.save(memberProfile);
+
         return savedUser.getMemberId();
     }
 
