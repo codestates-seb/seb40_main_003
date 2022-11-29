@@ -46,7 +46,7 @@ export const CareBookmarksMain = () => {
       {data?.pages.map((page, index) => (
             <React.Fragment key={index}>
               {page.data.map((e:CareLikeType) => (
-            <Link key={e.memberLikeExpertId} to={`/experts/${e.memberLikeExpertId}`}>
+            <Link key={e.memberLikeExpertId} to={`/experts/like/${e.memberLikeExpertId}`}>
             <CareCard data={e} />
           </Link>
               ))}

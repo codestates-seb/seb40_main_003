@@ -47,7 +47,7 @@ export const ProductBookmarksMain = () => {
       {data?.pages.map((page, index) => (
             <React.Fragment key={index}>
               {page.data.map((e:ProductLikeType) => (
-            <Link key={e.dealId} to={`/deal/${e.dealId}`}>
+            <Link key={e.dealId} to={`/deal/like/${e.dealId}`}>
             <ProductCard data={e} />
           </Link>
               ))}

@@ -5,23 +5,21 @@ import {
   SectionWrapper
 } from "../../Components/Wrapper";
 import ProductCard from "../../Components/product/ProductCard";
-import { ProductPreviewMappingType } from "../../types/productTypes";
+import { DealSuccessDataType } from "../../types/productTypes";
 import { Link } from "react-router-dom";
-import { SigButton } from "../../Components/GlobalComponents";
 import  usePageTitle  from "../../Hooks/usePageTitle";
 import { FetchByParams } from "../../Hooks/useFetch";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
-import { ProfileDealType } from "../../types/profileType";
 
 // 쿼리클라이언트
-const productQueryClient = new QueryClient();
+const purchaseHistoryQueryClient = new QueryClient();
 
-export const ProductMain = () => {
-  const { data, isLoading, error,isSuccess } = useQuery(["productQuery"], () => {
-    const data = FetchByParams("/deal/success", { page: 1, size: 5 });
+export const PurchaseHistoryMain = () => {
+  const { data, isLoading, error,isSuccess } = useQuery(["purchaseHistoryQuery"], () => {
+    const data = FetchByParams("/deal", { page: 1, size: 5 });
     return data;
     
   });
@@ -33,7 +31,7 @@ export const ProductMain = () => {
   return (
     <>
       {data &&
-        data.data.data.map((e: ProfileDealType) => {
+        data.data.data.map((e: DealSuccessDataType) => {
           return (
             <Link key={e.dealId} to={`/deal/success${e.dealId}`}>
               <ProductCard data={e} />
@@ -52,8 +50,8 @@ const PurchaseHistory = () => {
         <ErrorBoundary
           fallback={<ErrorMessage content={"정보를 불러오는데 실패했습니다"} />}
         >
-          <QueryClientProvider client={productQueryClient}>
-            <ProductMain />
+          <QueryClientProvider client={purchaseHistoryQueryClient}>
+            <PurchaseHistoryMain />
           </QueryClientProvider>
         </ErrorBoundary>
         {/* 쿼리클라이언트로 감쌈 */}
