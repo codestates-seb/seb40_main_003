@@ -1,12 +1,12 @@
 import styled from "@emotion/styled";
-import axios, { axiosPrivate } from "../Hooks/api";
+import axios from "../Hooks/api";
 import React from "react";
 import { useRecoilState } from "recoil";
 import { userState } from "../Recoil/atoms/user";
 import { SigButton } from "./GlobalComponents";
 import Pattern from "../images/pattern.png";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
-import secureLocalStorage from "react-secure-storage";
+import { getLS } from "../Hooks/useSecureLS";
 
 const DevBack = styled.section`
   background-image: url(${Pattern});
@@ -40,10 +40,6 @@ const DevTools = (props: Props) => {
           nickname: res.data.nickname,
           image: res.data.image,
         };
-        setUser(userInfo);
-        secureLocalStorage.setItem("accessToken", res.data.accessToken);
-        secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
-        console.log(secureLocalStorage.getItem("accessToken"))
       });
     }
   };
@@ -60,7 +56,7 @@ const DevTools = (props: Props) => {
       .post("/axiospravateTest")
       .then((res) => {})
       .catch((err) => {
-        console.log(`새로 발급받은 토큰 ${secureLocalStorage.getItem("accessToken")}`);
+        console.log(`새로 발급받은 토큰 ${getLS("accessToken")}`);
       });
   };
 

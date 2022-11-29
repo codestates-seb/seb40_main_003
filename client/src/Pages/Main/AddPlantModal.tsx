@@ -1,6 +1,5 @@
 import React from "react";
 import { FieldErrors, useForm } from "react-hook-form";
-import secureLocalStorage from "react-secure-storage";
 import { SigButton } from "../../Components/GlobalComponents";
 import { ColumnWrapper } from "../../Components/Wrapper";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";

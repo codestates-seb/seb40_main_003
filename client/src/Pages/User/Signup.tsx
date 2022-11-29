@@ -10,9 +10,9 @@ import {
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import axios from "../../Hooks/api";
-import secureLocalStorage from "react-secure-storage";
 import { useRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
+import { setLS } from "../../Hooks/useSecureLS";
 
 interface SignupForm {
   password: string;
@@ -84,8 +84,8 @@ const Signup = () => {
               image: res.data.image,
             };
             setUser(userInfo);
-            secureLocalStorage.setItem("accessToken", res.data.accessToken);
-            secureLocalStorage.setItem("refreshToken", res.data.refreshToken);
+            setLS("accessToken", res.data.accessToken);
+            setLS("refreshToken", res.data.refreshToken);
           })
           .then(() => {
             window.alert("회원가입에 성공했습니다");

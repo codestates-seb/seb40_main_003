@@ -1,5 +1,5 @@
-import secureLocalStorage from "react-secure-storage";
 import axios from "../../node_modules/axios/index";
+import { getLS } from "./useSecureLS";
 
 // axios.defaults.baseURL = "https://fbc9-121-162-186-109.jp.ngrok.io";
 
@@ -15,7 +15,7 @@ export const axiosPrivate = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    "Authorization": `Bearer ${secureLocalStorage.getItem("accessToken")}`,
+    "Authorization": `Bearer ${getLS("accessToken")}`,
   },
   withCredentials: true,
 });
