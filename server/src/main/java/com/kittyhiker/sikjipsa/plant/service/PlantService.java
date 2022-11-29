@@ -40,7 +40,7 @@ public class PlantService {
 
 
 	public Plant postPlant(Plant plant, MultipartFile multipartFile, Long memberId) {
-		Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+		Member member = findVerifiedMember(memberId);
 		plant.setMember(member);
 
 		if (multipartFile != null) {
@@ -64,8 +64,13 @@ public class PlantService {
 		return plantRepository.save(plant);
 	}
 
-	public Plant patchPlant(Plant plant, MultipartFile multipartFile) {
-		Plant findPlant = findVerifiedPlant(plant.getPlantId());
+	public Plant patchPlant(Plant plant, MultipartFile multipartFile, Long plantId, Long memberId) {
+		Member member = findVerifiedMember(memberId);
+		Plant findPlant = findVerifiedPlant(plantId);
+
+		if (findPlant.getMember() != member) {
+			throw new BusinessLogicException(ExceptionCode.MEMBER_FORBIDDEN);
+		}
 
 		Optional.ofNullable(plant.getName())
 				.ifPresent(findPlant::setName);
@@ -100,20 +105,33 @@ public class PlantService {
 		return findPlant;
 	}
 
-	private Plant findVerifiedPlant(Long id) {
-		Optional<Plant> optionalPlant = plantRepository.findById(id);
-		Plant plant = optionalPlant.orElseThrow(() ->
-				new BusinessLogicException(ExceptionCode.PLANT_NOT_FOUND));
-		return plant;
-	}
-
 	public List<Plant> getPlants(Long memberId) {
 		return plantRepository.findAllByMember_MemberIdOrderByPlantIdDesc(memberId);
 	}
 
-	public void deletePlant(Long plantId) {
-		Plant plant = findVerifiedPlant(plantId);
-		imageRepository.delete(plant.getImage());
-		plantRepository.delete(plant);
+	public void deletePlant(Long plantId, Long memberId) {
+		Member member = findVerifiedMember(memberId);
+		Plant findPlant = findVerifiedPlant(plantId);
+
+		if (findPlant.getMember() != member) {
+			throw new BusinessLogicException(ExceptionCode.MEMBER_FORBIDDEN);
+		}
+
+		imageRepository.delete(findPlant.getImage());
+		plantRepository.delete(findPlant);
+	}
+
+	private Member findVerifiedMember(Long memberId) {
+		Optional<Member> optionalMember = memberRepository.findById(memberId);
+		Member member = optionalMember.orElseThrow(() ->
+				new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+		return member;
+	}
+
+	private Plant findVerifiedPlant(Long plantId) {
+		Optional<Plant> optionalPlant = plantRepository.findById(plantId);
+		Plant plant = optionalPlant.orElseThrow(() ->
+				new BusinessLogicException(ExceptionCode.PLANT_NOT_FOUND));
+		return plant;
 	}
 }

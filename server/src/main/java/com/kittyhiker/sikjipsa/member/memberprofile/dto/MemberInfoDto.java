@@ -4,11 +4,15 @@ import com.kittyhiker.sikjipsa.caring.dto.MemberDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 public class MemberInfoDto {
 	private Long infoId;

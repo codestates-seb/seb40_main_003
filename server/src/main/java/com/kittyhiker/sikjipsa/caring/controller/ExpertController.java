@@ -34,7 +34,7 @@ public class ExpertController {
 	private final ExpertReviewMapper expertReviewMapper;
 
 	@PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-	public ResponseEntity postExpert(@RequestPart ExpertProfileDto expertProfileDto,
+	public ResponseEntity postExpert(@Valid @RequestPart ExpertProfileDto expertProfileDto,
 									 @RequestPart(required = false) MultipartFile multipartFile,
 									 @RequestHeader("Authorization") String token) {
 		ExpertProfile expertProfile = expertMapper.toExpert(expertProfileDto);
@@ -47,9 +47,9 @@ public class ExpertController {
 									  @Valid @RequestPart ExpertProfileDto expertProfileDto,
 									  @RequestPart(required = false) MultipartFile multipartFile,
 									  @RequestHeader("Authorization") String token) {
-		expertProfileDto.setExpertId(expertId); // 수정 필
+		//expertProfileDto.setExpertId(expertId); // 수정 필
 		ExpertProfile expertProfile = expertMapper.toExpert(expertProfileDto);
-		ExpertProfile response = expertService.patchExpert(expertProfile, multipartFile);
+		ExpertProfile response = expertService.patchExpert(expertProfile, multipartFile, expertId, jwtTokenizer.getUserIdFromToken(token));
 		return new ResponseEntity(expertMapper.toExpertResponseDto(response), HttpStatus.OK);
 	}
 
@@ -84,8 +84,9 @@ public class ExpertController {
 	}
 
 	@DeleteMapping("/{expert-id}")
-	public ResponseEntity deleteExpert(@PathVariable("expert-id") @Positive Long expertId) {
-		expertService.deleteExpert(expertId);
+	public ResponseEntity deleteExpert(@PathVariable("expert-id") @Positive Long expertId,
+									   @RequestHeader("Authorization") String token) {
+		expertService.deleteExpert(expertId, jwtTokenizer.getUserIdFromToken(token));
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
@@ -99,9 +100,10 @@ public class ExpertController {
 		return new ResponseEntity(memberLikeExpertMapper.toMemberLikeExpertResponseDto(response), HttpStatus.CREATED);
 	}
 
-	@GetMapping("/{expert-id}/like")
-	public ResponseEntity getExpertLike(@Positive @RequestParam int page, @Positive @RequestParam int size) {
-		Page<MemberLikeExpert> pageMemberLikeExpert = expertService.getExpertLikes(page - 1, size);
+	@GetMapping("/like")
+	public ResponseEntity getExpertLike(@Positive @RequestParam int page, @Positive @RequestParam int size,
+										@RequestHeader("Authorization") String token) {
+		Page<MemberLikeExpert> pageMemberLikeExpert = expertService.getExpertLikes(page - 1, size, jwtTokenizer.getUserIdFromToken(token));
 		List<MemberLikeExpert> memberLikeExperts = pageMemberLikeExpert.getContent();
 		return new ResponseEntity<>(new MultiResponseDto<>(memberLikeExpertMapper.toMemberLikeExpertResponseDtos(memberLikeExperts), pageMemberLikeExpert), HttpStatus.OK);
 	}
@@ -126,9 +128,11 @@ public class ExpertController {
 	}
 
 	// 돌봄 기록 /experts/success?page={page}&size={size}
+	// TODO
 	@GetMapping("/success")
 	public ResponseEntity getExpertSuccess(@Positive @RequestParam int page,
-										   @Positive @RequestParam int size) {
+										   @Positive @RequestParam int size,
+										   @RequestHeader("Authorization") String token) {
 		Page<ExpertProfile> pageExpertProfile = expertService.getExpertSuccess(page - 1, size);
 		List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
 
