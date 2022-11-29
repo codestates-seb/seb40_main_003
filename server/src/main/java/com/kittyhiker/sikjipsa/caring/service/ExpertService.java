@@ -156,6 +156,18 @@ public class ExpertService {
 		return expertProfiles;
 	}
 
+	public Page<ExpertProfile> getExpertsByArea(String area, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("expertId").descending());
+		Page<ExpertProfile> expertProfiles = expertRepository.findByAreaTags_AreaTagNameContaining(area, pageable);
+		return expertProfiles;
+	}
+
+	public Page<ExpertProfile> getExpertsByKeywordAndArea(String keyword, String area, int page, int size) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("expertId").descending());
+		Page<ExpertProfile> expertProfiles = expertRepository.findByTechTags_TechTagNameContainingAndAreaTags_AreaTagNameContaining(keyword, area, pageable);
+		return expertProfiles;
+	}
+
 	public void deleteExpert(Long expertId) {
 		ExpertProfile expertProfile = findVerifiedExpert(expertId);
 

@@ -61,9 +61,18 @@ public class ExpertController {
 
 	@GetMapping
 	public ResponseEntity getExperts(@RequestParam(required = false) String keyword,
+									 @RequestParam(required = false) String area,
 									 @Positive @RequestParam int page,
 									 @Positive @RequestParam int size) {
-		if (keyword != null) {
+		if (keyword != null & area != null) {
+			Page<ExpertProfile> pageExpertProfile = expertService.getExpertsByKeywordAndArea(keyword, area, page - 1, size);
+			List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
+			return new ResponseEntity<>(new MultiResponseDto<>(expertMapper.toExpertResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
+		} else if (area != null) {
+			Page<ExpertProfile> pageExpertProfile = expertService.getExpertsByArea(area, page - 1, size);
+			List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
+			return new ResponseEntity<>(new MultiResponseDto<>(expertMapper.toExpertResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
+		} else if (keyword != null) {
 			Page<ExpertProfile> pageExpertProfile = expertService.getExpertsByKeyword(keyword, page - 1, size);
 			List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
 			return new ResponseEntity<>(new MultiResponseDto<>(expertMapper.toExpertResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
