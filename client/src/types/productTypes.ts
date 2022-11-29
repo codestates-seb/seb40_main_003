@@ -98,22 +98,22 @@ export type DealReviewType = {
 
 // 추가 조회: 구매 내역
 export type DealSuccessPreviewType = {
-  data : [
-    {
-      dealId: number,
-      title: string,
-      photo: string,
-      price: number,
-      likeNum: number,
-      viewNum: number,
-      status: number,
-      createdAt: string
-    }
-  ],
+  data : [DealSuccessDataType],
   pageInfo: {
     page: number,
     size: number,
     totalPages: number,
     totalElements: number
   }
+}
+
+export type DealSuccessDataType = {
+  dealId: number,
+  title: string,
+  photo: string,
+  price: number,
+  likeNum: number,
+  viewNum: number,
+  status: number,
+  createdAt: string
 }

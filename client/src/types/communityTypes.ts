@@ -64,19 +64,8 @@ export type communityCommentType = {
 };
 
 // 추가 조회: 내 게시글
-export type CommunityMyPreviewType = {
-  data: [
-    {
-      postId: number;
-      title: string;
-      photo: string;
-      content: string;
-      likeNum: number;
-      commentNum: number;
-      viewNum: number;
-      createdAt: string;
-    }
-  ];
+export type MyHistoryPreviewType = {
+  data: [MyHistoryDataType];
   pageInfo: {
     page: number;
     size: number;
@@ -84,3 +73,14 @@ export type CommunityMyPreviewType = {
     totalElements: number;
   };
 };
+
+export type MyHistoryDataType = {
+    postId: number;
+    title: string;
+    photo: string;
+    content: string;
+    likeNum: number;
+    commentNum: number;
+    viewNum: number;
+    createdAt: string;
+}
