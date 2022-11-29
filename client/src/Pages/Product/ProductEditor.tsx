@@ -14,12 +14,10 @@ import { ProductCategoryConst } from "../../Const/Category";
 import useFetch from "../../Hooks/useFetch";
 import { ProductDetailDataType } from "../../types/productTypes";
 
-
 const ConfirmWrapper = styled.span`
   display: flex;
   justify-content: row;
 `;
-
 
 interface ProductEditorForm {
   title: string;
@@ -36,9 +34,15 @@ interface ProductEditorForm {
 const ProductEditor = () => {
   const axiosPrivate = useAxiosPrivate();
   // const [user, setUser] = useRecoilState(userState);
-  
+
+
+  // 윤정쓰가 남긴 악성코드 😠😠😠😠
+  // 윤정쓰가 남긴 악성코드 😠😠😠😠
+
   // const data = useFetch<ProductDetailDataType>(`/deal/`);
 
+  // 윤정쓰가 남긴 악성코드 😠😠😠😠
+    // 윤정쓰가 남긴 악성코드 😠😠😠😠
   const {
     register,
     handleSubmit,
@@ -62,11 +66,13 @@ const ProductEditor = () => {
       area: data.area,
     });
     formData.append("images", data.image[0]);
-    formData.append("dealPostDto", new Blob([dealPostDto], { type: "application/json" })
+    formData.append(
+      "dealPostDto",
+      new Blob([dealPostDto], { type: "application/json" })
     );
 
     axiosPrivate
-      .post("/deal",formData, {
+      .post("/deal", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -82,14 +88,18 @@ const ProductEditor = () => {
   return (
     <MainContentContainer
       as={"form"}
-      onSubmit={handleSubmit(onValid, onInValid)}>
+      onSubmit={handleSubmit(onValid, onInValid)}
+    >
+      {/* 윤정쓰가 남긴 악성코드 😠😠😠😠*/}
       {/* {data?.area} */}
+      {/* 윤정쓰가 남긴 악성코드 😠😠😠😠*/}
+
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>
           <>
             <input
               className="title"
-              {...register("title",{
+              {...register("title", {
                 required: true,
                 minLength: {
                   message: "제목은 2글자 이상으로 작성해주세요.",
@@ -111,9 +121,7 @@ const ProductEditor = () => {
           <>
             <input
               className="image cursor"
-              {...register("image", 
-              {required: true}
-              )}
+              {...register("image", { required: true })}
               id="image"
               type="file"
               accept="image/*"
@@ -125,10 +133,10 @@ const ProductEditor = () => {
         </SectionWrapper>
         <SectionWrapper width={100} borderNone={false}>
           <>
-            <select {...register("category", 
-            {required: true }
-              )}
-              name="category">
+            <select
+              {...register("category", { required: true })}
+              name="category"
+            >
               {ProductCategoryConst.map((e) => {
                 return (
                   <option key={`option ${e.number}`} value={e.number}>
@@ -185,8 +193,7 @@ const ProductEditor = () => {
         </ConfirmWrapper>
       </MainCenterWrapper>
       <MainRightWrapper center={true}>
-        <SigButton
-          type="submit" value={"ProductEditor"}>
+        <SigButton type="submit" value={"ProductEditor"}>
           작성 완료
         </SigButton>
       </MainRightWrapper>
