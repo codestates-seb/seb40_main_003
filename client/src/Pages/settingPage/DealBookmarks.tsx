@@ -28,7 +28,7 @@ export const ProductBookmarksMain = () => {
     // useInfiniteQuery
     const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
       "productBookmarksQuery",
-      ({ pageParam = 1 }) => InfiniteFetch("/product",pageParam),
+      ({ pageParam = 1 }) => InfiniteFetch("/deal/like",pageParam),
       {
         getNextPageParam: (lastPage) =>
           !lastPage.isLast ? lastPage.nextPage : undefined,
@@ -47,7 +47,7 @@ export const ProductBookmarksMain = () => {
       {data?.pages.map((page, index) => (
             <React.Fragment key={index}>
               {page.data.map((e:ProductLikeType) => (
-            <Link key={e.dealId} to={`/deal/like/${e.dealId}`}>
+            <Link key={e.dealId} to={`/product/${e.dealId}`}>
             <ProductCard data={e} />
           </Link>
               ))}

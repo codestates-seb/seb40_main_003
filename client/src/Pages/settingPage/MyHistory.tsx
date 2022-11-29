@@ -55,7 +55,7 @@ export const MyHistoryMain = ({searchKeyword}:myHistoryMain) => {
         <React.Fragment key={index}>
           {page.data.map((e: MyHistoryDataType) => (
             <Link
-              to={`/community/my/${e.postId}`}
+              to={`/community/${e.postId}`}
               key={"member" + e.postId}
             >
               <CommunityCard data={e} />

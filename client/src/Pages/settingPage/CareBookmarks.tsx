@@ -27,7 +27,7 @@ export const CareBookmarksMain = () => {
     // useInfiniteQuery
     const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
       "CareBookmarksQuery",
-      ({ pageParam = 1 }) => InfiniteFetch("/caring",pageParam),
+      ({ pageParam = 1 }) => InfiniteFetch("/experts/like",pageParam),
       {
         getNextPageParam: (lastPage) =>
           !lastPage.isLast ? lastPage.nextPage : undefined,
@@ -46,7 +46,7 @@ export const CareBookmarksMain = () => {
       {data?.pages.map((page, index) => (
             <React.Fragment key={index}>
               {page.data.map((e:CareLikeType) => (
-            <Link key={e.memberLikeExpertId} to={`/experts/like/${e.memberLikeExpertId}`}>
+            <Link key={e.memberLikeExpertId} to={`/caring/${e.memberLikeExpertId}`}>
             <CareCard data={e} />
           </Link>
               ))}
