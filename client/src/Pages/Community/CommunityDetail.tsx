@@ -22,7 +22,7 @@ import useFetch from "../../Hooks/useFetch";
 import { getDateAgo } from "../../utils/controller";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "../../Components/ErrorHandle";
-import { cannotLoad } from "../../Const/message";
+import { cannotLoad, confirmRemove } from "../../Const/message";
 import { CommentCard } from "../../Components/CommentCard";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { editDataAtom } from "../../Recoil/atoms/editData";
@@ -42,7 +42,7 @@ const CommunityDetail = () => {
       <MainCenterWrapper>
         <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
           <CommunityWrapper>
-            <span className="h4 bold font-main mb-16">{data.title}</span>{" "}
+            <span className="h4 bold font-main mb-16">{data.title}</span>
             {/* 게시글 수정, 삭제 버튼 */}
             {String(data.member.memberId) === String(user?.memberId) && (
               <div>
@@ -53,7 +53,7 @@ const CommunityDetail = () => {
                 }}>수정</button>
                 {/* 삭제버튼 */}
                 <button className="sub" onClick={()=>{
-                  if (window.confirm("게시글을 삭제 하시겠습니까?")) {
+                  if (window.confirm(confirmRemove("게시물을"))) {
                     axiosPrivate.delete(
                       `/community/${data.communityId}`
                     ).then((res)=>{
