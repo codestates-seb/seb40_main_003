@@ -7,6 +7,8 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
+import { useLogout } from "../../Hooks/useLogout";
+
 const ContentContainer = styled.div`
     
 `
@@ -17,6 +19,7 @@ const ContentWrapper = styled.div`
 
 const SettingPage = () => {
   usePageTitle("설정");
+  const logout = useLogout();
   // const data = useFetch("/");
   // return data !== undefined ? (
   return (
@@ -62,6 +65,10 @@ const SettingPage = () => {
                 <>내 게시물(3)</>
               </SectionWrapper>
             </Link>
+            <SectionWrapper>
+                <button onClick={logout}
+                  >로그아웃</button>
+            </SectionWrapper>
           </ContentWrapper>
         </ContentContainer>
       </MainCenterWrapper>
