@@ -16,7 +16,7 @@ export const useLogout = () => {
 		/**아톰 초기화 */
 		resetUserState()
 		/**로그인 페이지로 이동 */
-		navigate("/login")
+		navigate("/")
 		}}
 	return(logout)
 	}
