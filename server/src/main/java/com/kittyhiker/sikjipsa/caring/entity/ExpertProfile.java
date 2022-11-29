@@ -62,7 +62,7 @@ public class ExpertProfile {
 		}
 	}
 
-	@OneToMany(mappedBy = "expertProfile")
+	@OneToMany(mappedBy = "expertProfile", cascade = CascadeType.ALL)
 	private List<ExpertReview> expertReviews = new ArrayList<>();
 
 	public void setTechTags(List<TechTag> techTags) {

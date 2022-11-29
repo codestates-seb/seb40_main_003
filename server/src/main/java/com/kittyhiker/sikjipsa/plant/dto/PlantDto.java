@@ -14,7 +14,5 @@ public class PlantDto {
 
 	private String years;
 
-	private String days;
-
 	private String type;
 }

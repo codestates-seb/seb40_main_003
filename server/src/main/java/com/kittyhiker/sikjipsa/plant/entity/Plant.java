@@ -1,5 +1,6 @@
 package com.kittyhiker.sikjipsa.plant.entity;
 
+import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,13 @@ public class Plant {
 	private String days;
 
 	private String type;
+
+	public void setMember(Member member) {
+		this.member = member;
+		if (!member.getPlants().contains(this)) {
+			member.getPlants().add(this);
+		}
+	}
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")

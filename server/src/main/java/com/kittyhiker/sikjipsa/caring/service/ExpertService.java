@@ -13,7 +13,6 @@ import com.kittyhiker.sikjipsa.image.repository.ImageRepository;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,11 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -51,40 +46,19 @@ public class ExpertService {
 	private final AmazonS3 amazonS3;
 
 	public ExpertProfile postExpert(ExpertProfile expertProfile, MultipartFile multipartFile, Long memberId) {
+		verifyExists(memberId);
+
 		expertProfile.setMember(memberRepository.getReferenceById(memberId));
 
-//		if (multipartFile != null) {
-//			String originalName = multipartFile.getOriginalFilename();
-//			String uuid = UUID.randomUUID().toString();
-//			Path path = Paths.get(uploadPath, uuid + "_" + originalName);
-//			try {
-//				multipartFile.transferTo(path);
-//				if (Files.probeContentType(path).startsWith("image")) {
-//					File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
-//					Thumbnailator.createThumbnail(path.toFile(), thumbFile, 200, 200);
-//				}
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			Image image = new Image(originalName, uuid + "_" + originalName, path.toString(), "empty", expertProfile);
-//			expertProfile.setImage(image);
-//			imageRepository.save(image);
-//		}
 		if (multipartFile != null) {
 			String originalName = multipartFile.getOriginalFilename();
 			String uuid = UUID.randomUUID().toString();
-//			Path path = Paths.get(uploadPath, uuid + "_" + originalName);
 			String fileName = uuid + "_" + originalName;
 			try {
-//				multipartFile.transferTo(path);
-//				if (Files.probeContentType(path).startsWith("image")) {
-//					File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
-//					Thumbnailator.createThumbnail(path.toFile(), thumbFile, 200, 200);
-//				}
 				ObjectMetadata objectMetadata = new ObjectMetadata();
 				objectMetadata.setContentLength(multipartFile.getSize());
 				amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), objectMetadata);
-				String filePath = amazonS3.getUrl(bucket, originalName).toString();
+				String filePath = amazonS3.getUrl(bucket, fileName).toString();
 
 				Image image = new Image(fileName, originalName, filePath, "empty", expertProfile);
 				expertProfile.setImage(image);
@@ -142,27 +116,6 @@ public class ExpertService {
 					findExpertProfile.setAreaTags(areaTags);
 				});
 
-		// 이미지 변경
-//		if (multipartFile != null) {
-//			imageRepository.delete(findExpertProfile.getImage());
-//
-//			String originalName = multipartFile.getOriginalFilename();
-//			String uuid = UUID.randomUUID().toString();
-//			Path path = Paths.get(uploadPath, uuid + "_" + originalName);
-//			try {
-//				multipartFile.transferTo(path);
-//				if (Files.probeContentType(path).startsWith("image")) {
-//					File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
-//					Thumbnailator.createThumbnail(path.toFile(), thumbFile, 200, 200);
-//				}
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			Image image = new Image(originalName, uuid + "_" + originalName, path.toString(), "empty", findExpertProfile);
-//
-//			findExpertProfile.setImage(image);
-//			imageRepository.save(image);
-//		}
 		if (multipartFile != null) {
 			if (findExpertProfile.getImage() != null) {
 				imageRepository.delete(findExpertProfile.getImage());
@@ -175,7 +128,7 @@ public class ExpertService {
 				ObjectMetadata objectMetadata = new ObjectMetadata();
 				objectMetadata.setContentLength(multipartFile.getSize());
 				amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), objectMetadata);
-				String filePath = amazonS3.getUrl(bucket, originalName).toString();
+				String filePath = amazonS3.getUrl(bucket, fileName).toString();
 
 				Image image = new Image(fileName, originalName, filePath, "empty", findExpertProfile);
 				findExpertProfile.setImage(image);
@@ -205,7 +158,21 @@ public class ExpertService {
 
 	public void deleteExpert(Long expertId) {
 		ExpertProfile expertProfile = findVerifiedExpert(expertId);
+
+		techTagRepository.deleteAll(expertProfile.getTechTags());
+		areaTagRepository.deleteAll(expertProfile.getAreaTags());
+		expertReviewRepository.deleteAll(expertProfile.getExpertReviews());
+		// TODO
+		memberLikeExpertRepository.deleteAll(expertProfile.getMemberLikeExperts());
+		imageRepository.delete(expertProfile.getImage());
 		expertRepository.delete(expertProfile);
+	}
+
+	private void verifyExists(Long memberId) {
+		Optional<ExpertProfile> expertProfile = expertRepository.findByMember_MemberId(memberId);
+		if (expertProfile.isPresent()) {
+			throw new BusinessLogicException(ExceptionCode.EXPERT_PROFILE_EXISTS);
+		}
 	}
 
 	private ExpertProfile findVerifiedExpert(Long expertId) {
@@ -225,6 +192,8 @@ public class ExpertService {
 			expertProfile.setLikes(expertProfile.getLikes() + 1L);
 			memberLikeExpert.setMember(memberRepository.getReferenceById(1L));
 			memberLikeExpert.setExpertProfile(expertRepository.getReferenceById(expertId));
+		} else {
+			throw new BusinessLogicException(ExceptionCode.EXPERT_LIKE_EXISTS);
 		}
 		return memberLikeExpertRepository.save(memberLikeExpert);
 	}
