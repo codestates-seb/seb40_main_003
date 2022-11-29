@@ -31,9 +31,7 @@ interface CommunityModifyForm {
 
 const CommunityModify = (props: Props) => {
   const axiosPrivate = useAxiosPrivate();
-  // const [user, setUser] = useRecoilState(userState);
-  const [editData, setEditData] = useRecoilState(editDataAtom)
-
+  const [editData, setEditData] = useRecoilState(editDataAtom);
 
   const {
     register,
@@ -43,42 +41,49 @@ const CommunityModify = (props: Props) => {
     mode: "onChange",
   });
 
-  const onInValid = (errors: FieldErrors) => {};
   const navigate = useNavigate();
 
-  const  onValid =  async (data: CommunityModifyForm) => {
+  const onValid = async (data: CommunityModifyForm) => {
     const formData = new FormData();
-    const patchDto = JSON.stringify({ 
+    const patchDto = JSON.stringify({
       title: data.title,
-      content: data.content });
+      content: data.content,
+    });
 
     formData.append("images", data.image[0]);
-    formData.append("patchDto", new Blob([patchDto],{type:"application/json"}));
+    formData.append(
+      "patchDto",
+      new Blob([patchDto], { type: "application/json" })
+    );
 
-      axiosPrivate
+    axiosPrivate
       .patch(`/community/${editData?.communityId}`, formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((res) => {
-        console.log(res)
+        console.log(res);
         setEditData(null);
         navigate(`/community/${editData?.communityId}`);
-      }).catch ((err)=>{});
-    }
+      })
+      .catch((err) => {});
+  };
 
-  
+  const onInValid = (errors: FieldErrors) => {};
+
   usePageTitle("커뮤니티 글 쓰기");
 
-
   return (
-    <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid, onInValid)}>
+    <MainContentContainer
+      as={"form"}
+      onSubmit={handleSubmit(onValid, onInValid)}
+    >
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>
           <>
             <input
-            defaultValue={editData?.title}
+              defaultValue={editData?.title}
               className="title"
               {...register("title", {
                 required: true,
@@ -98,14 +103,15 @@ const CommunityModify = (props: Props) => {
           </>
         </SectionWrapper>
 
-        <SectionWrapper width={100} >
+        <SectionWrapper width={100}>
           <>
             <input
-            // defaultValue={editData.images[0]}
+              // defaultValue={editData.images[0]}
               className="image cursor"
-              {...register("image", 
-              // {required: true}
-                )}
+              {...register(
+                "image"
+                // {required: true}
+              )}
               id="image"
               type="file"
               accept="image/*"
@@ -119,7 +125,7 @@ const CommunityModify = (props: Props) => {
         <SectionWrapper width={100} borderNone={true}>
           <>
             <textarea
-            defaultValue={editData?.content}
+              defaultValue={editData?.content}
               className="content"
               {...register("content", {
                 required: true,
@@ -131,9 +137,11 @@ const CommunityModify = (props: Props) => {
         </SectionWrapper>
         <ConfirmWrapper>
           <input
-          {...register("checked", { required: true })}
-          type="checkbox" className="border-none checkbox-20"/>
-          <label className={errors.checked?"sub font-gray":"sub alert-red"}>
+            {...register("checked", { required: true })}
+            type="checkbox"
+            className="border-none checkbox-20"
+          />
+          <label className={errors.checked ? "sub font-gray" : "sub alert-red"}>
             식물처럼 싱그럽고 예쁜 말을 써주세요.
             <br />
             욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
@@ -146,7 +154,7 @@ const CommunityModify = (props: Props) => {
             반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
           </p>
         </SectionWrapper>
-        <SigButton type="submit"  value={"CommunityModify"}>
+        <SigButton type="submit" value={"CommunityModify"}>
           수정 완료
         </SigButton>
       </MainRightWrapper>
