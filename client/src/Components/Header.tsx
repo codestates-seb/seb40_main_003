@@ -64,7 +64,7 @@ const Header = () => {
         <PlaceHolder>
           <BackButton />
           <span className="display-none-pc h4 bold">{title}</span>
-            <Search />
+            <div />
         </PlaceHolder>
         {width !== undefined && width > 1024 ? <NavContent /> : null}
       </HeaderContent>

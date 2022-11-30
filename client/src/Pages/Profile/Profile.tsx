@@ -8,6 +8,7 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
+  ReverseWrap,
   SectionWrapper,
 } from "../../Components/Wrapper";
 import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
@@ -23,6 +24,7 @@ import PlantCardCarousel, {
 } from "../../Components/profile/plantCardCarousel";
 import ProductCard from "../../Components/product/ProductCard";
 import { useIsAuthor } from "../../Hooks/useIsAuthor";
+
 const Profile = () => {
   // 페이지주소
   const { id } = useParams();
@@ -53,7 +55,7 @@ const Profile = () => {
           <SectionWrapper content={data.memberProfile.content} pt={0} pb={8} />
 
           {/* 모달창 */}
-          
+
           <>
             {isOpenModal && (
               <Modal onClickModal={onClickModal}>
@@ -66,7 +68,7 @@ const Profile = () => {
             <PlantCardCarousel key={"reactCarousel"}>
               <>
                 {data.plants.map((e, i) => {
-                  console.log(e.plantId)
+                  console.log(e.plantId);
                   return (
                     <ProfilePlantCard
                       src={e.image.imgUrl}
@@ -112,15 +114,17 @@ const Profile = () => {
           </SectionWrapper>
           <SectionWrapper title="판매 상품" width={100}>
             {data.deals.length !== 0 ? (
-              <>
-                {data.deals.map((e) => {
-                  return (
-                    <Link to={`/product/${e.dealId}`}>
-                      <ProductCard data={e} />
-                    </Link>
-                  );
+              <ReverseWrap>
+                {data.deals.map((e, i) => {
+                  if (data.deals.length-i < 4) {
+                    return (
+                      <Link to={`/product/${e.dealId}`}>
+                        <ProductCard data={e} />
+                      </Link>
+                    );
+                  }
                 })}
-              </>
+              </ReverseWrap>
             ) : (
               <span className="mt-8">판매중인 상품이 없습니다</span>
             )}
@@ -137,5 +141,6 @@ const Profile = () => {
     <></>
   );
 };
+
 
 export default Profile;

@@ -69,7 +69,7 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
             {/* 팝업 사용법 */}
             {isAuthor(id) && (
               <Popup
-                trigger={<img src={seeMoreIcon} alt="더보기버튼" />}
+                trigger={<img src={seeMoreIcon} alt="더보기버튼" className={"cursor"}/>}
                 position={"bottom center"}
               >
                 <ColumnWrapper>
@@ -84,7 +84,7 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
         </SpaceBetween>
         <span className="sub font-gray">{type}</span>
         <SpaceEnd className="sub ">
-          {getDateFrom(age).replace("전", "차")}
+          {getDateFrom(age).replace("후", "차🌿")}
         </SpaceEnd>
       </ColumnWrapper>
     </ProfilePlantCardWrapper>
