@@ -35,7 +35,7 @@ export type CommentCardTypes = {
   src?: string;
   alt?: string;
   name?: string;
-  createdAt: string ;
+  createdAt: string;
   content?: string;
   tag?: [{ techId: number; name: string }];
   user: UserStateType | null;
@@ -156,6 +156,8 @@ export const CommentCard = (props: CommentCardTypes) => {
                           `/community/${communityId}/comment/${commentId}`
                         );
                       }
+                      // eslint-disable-next-line no-restricted-globals
+                      location.reload();
                     }}
                   >
                     삭제
@@ -178,6 +180,8 @@ export const CommentCard = (props: CommentCardTypes) => {
                           `/community/${communityId}/comment/${commentId}`
                         );
                       }
+                      // eslint-disable-next-line no-restricted-globals
+                      location.reload();
                     }}
                   >
                     삭제
