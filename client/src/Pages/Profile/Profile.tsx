@@ -53,18 +53,15 @@ const Profile = () => {
             size={"66"}
           />
           <SectionWrapper content={data.memberProfile.content} pt={0} pb={8} />
-
-          {/* 모달창 */}
-
-          <>
-            {isOpenModal && (
-              <Modal onClickModal={onClickModal}>
-                <AddPlantModal closeModal={onClickModal} />
-              </Modal>
-            )}
-          </>
-
           <SectionWrapper title="반려 식물">
+          {/* 모달창 */}
+            <>
+              {isOpenModal && (
+                <Modal onClickModal={onClickModal}>
+                  <AddPlantModal closeModal={onClickModal} />
+                </Modal>
+              )}
+            </>
             <PlantCardCarousel key={"reactCarousel"}>
               <>
                 {data.plants.map((e, i) => {
@@ -116,12 +113,15 @@ const Profile = () => {
             {data.deals.length !== 0 ? (
               <ReverseWrap>
                 <Link to={"/setting/sales-history"}>
-                <button className="mt-8 ml-50 bold font-gray">더 보기</button>
+                  <button className="mt-8 ml-50 bold font-gray">더 보기</button>
                 </Link>
                 {data.deals.map((e, i) => {
-                  if (data.deals.length-i < 4) {
+                  if (data.deals.length - i < 4) {
                     return (
-                      <Link to={`/product/${e.dealId}`} key={`product/${e.dealId}`}>
+                      <Link
+                        to={`/product/${e.dealId}`}
+                        key={`product/${e.dealId}`}
+                      >
                         <ProductCard data={e} />
                       </Link>
                     );
@@ -144,6 +144,5 @@ const Profile = () => {
     <></>
   );
 };
-
 
 export default Profile;

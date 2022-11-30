@@ -5,6 +5,8 @@ import {
   MainContentContainer,
   MainCenterWrapper,
   MainRightWrapper,
+  SpaceBetween,
+  SpaceEnd,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { InfiniteFetch } from "../../Hooks/useFetch";
@@ -17,19 +19,26 @@ import {
 import { ErrorBoundary } from "react-error-boundary";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import React from "react";
-import { cannotLoad, noContent } from "../../Const/message";
+import { cannotLoad, noContent, searchbarComment } from "../../Const/message";
+import Modal from "../../Components/Modal";
+import CategoryModal from "../../Components/product/CategoryModal";
+import { ReactComponent as Hamburger } from "../../images/hamburgerIcon.svg";
 
 const careQueryClient = new QueryClient();
 
-export const CareMain = () => {
+type CareMain = {
+  searchKeyword?: string;
+};
+export const CareMain = ({searchKeyword}:CareMain) => {
+
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    "careQueryClient",
-    ({ pageParam = 1 }) => InfiniteFetch("/experts", pageParam),
+    ["careQueryClient",searchKeyword],
+    ({ pageParam = 1 }) => InfiniteFetch("/experts", pageParam, searchKeyword),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextPage : undefined,
@@ -47,7 +56,7 @@ export const CareMain = () => {
       {data?.pages.map((page, index) => (
         <React.Fragment key={index}>
           {page.data.length === 0 ? (
-            <ErrorMessage content={noContent} className="fullscreen" />
+            <ErrorMessage  className="pt-16 width-100" content={noContent} />
           ) : (
             page.data.map((e: caringPreviewDataTypes) => {
               return (
@@ -66,15 +75,35 @@ export const CareMain = () => {
 
 const Care = () => {
   usePageTitle("돌봄");
+  const [searchKeyWord, setSearchKeyWord] = useState<string | undefined>(
+    undefined
+  );
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const onClickModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
+  console.log(searchKeyWord)
 
   return (
     <MainContentContainer>
       <MainCenterWrapper>
+        <SpaceEnd>
+          <button className="ml-16" onClick={onClickModal}>
+            <Hamburger />
+          </button>
+        </SpaceEnd>
+        <>
+          {isOpenModal && (
+            <Modal onClickModal={onClickModal} confirm={false}>
+              <CategoryModal onClickFunction={setSearchKeyWord} closeModal={setOpenModal} />
+            </Modal>
+          )}
+        </>
         <ErrorBoundary
           fallback={<ErrorMessage content="예상치 못한 에러가 발생했습니다" />}
         >
           <QueryClientProvider client={careQueryClient}>
-            <CareMain />
+            <CareMain searchKeyword={searchKeyWord}/>
           </QueryClientProvider>
         </ErrorBoundary>
       </MainCenterWrapper>
