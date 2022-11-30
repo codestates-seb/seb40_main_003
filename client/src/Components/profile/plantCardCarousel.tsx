@@ -4,6 +4,8 @@ import { getDateFrom } from "../../utils/controller";
 import { ImageWrapper } from "../GlobalComponents";
 import { ColumnWrapper, SpaceBetween, SpaceEnd } from "../Wrapper";
 import seeMoreIcon from "../../images/seeMoreIcon.svg";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import { useDelete } from "../../Hooks/useDelete";
 
 type Props = {
   children: JSX.Element[] | JSX.Element;
@@ -41,10 +43,12 @@ type ProfilePlantCardTypes = {
   name: string;
   type: string | number;
   age: string;
+  plandId: number;
 };
 export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
   // 비구조화할당
-  const { size, src, alt, name, type, age } = props;
+  const { size, src, alt, name, type, age, plandId } = props;
+  const deleteItem = useDelete(`/plants/${plandId}`);
   return (
     <ProfilePlantCardWrapper>
       <ImageWrapper
@@ -58,19 +62,24 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
         <SpaceBetween className="center">
           <span className="medium">{name}</span>{" "}
           <SpaceEnd>
+            {/* 팝업 사용법 */}
             <Popup
               trigger={<img src={seeMoreIcon} alt="더보기버튼" />}
               position={"bottom center"}
             >
               <ColumnWrapper>
-                <button className="font-gray">수정</button>
-                <button className="font-gray">삭제</button>
+                <button className="font-gray pd-8">수정</button>
+                <button className="font-gray pd-8" onClick={deleteItem}>
+                  삭제
+                </button>
               </ColumnWrapper>
             </Popup>
           </SpaceEnd>
         </SpaceBetween>
         <span className="sub font-gray">{type}</span>
-        <SpaceEnd className="sub ">{getDateFrom(age).replace("전", "차")}</SpaceEnd>
+        <SpaceEnd className="sub ">
+          {getDateFrom(age).replace("전", "차")}
+        </SpaceEnd>
       </ColumnWrapper>
     </ProfilePlantCardWrapper>
   );
