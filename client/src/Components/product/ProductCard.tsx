@@ -9,7 +9,6 @@ import { defaultImage } from "../../utils/defaultImage";
 
 
 const Price = styled.span`
-  margin-top: 16px;
   display: block;
   color: var(--font-main);
 `;
@@ -27,6 +26,7 @@ type props={
   data: any
 }
 const ProductCard:React.FC<props> = ({data}) => {
+  console.log(data)
   return (
     <ProductWrapper className={data.state === 2 ? "soldOut" : ""}>
       <RowWrapper>
@@ -38,7 +38,7 @@ const ProductCard:React.FC<props> = ({data}) => {
           onError={defaultImage}
         />
         <DescriptionColumnWrapper>
-          <span className="medium">{data.title}</span>
+          <span className="medium font-main">{data.title}</span>
           <span className="sub mb-8">{getDateAgo(data.createdAt)}</span>
           {data.state === 0 ? null : (
             <SigTag
@@ -48,7 +48,7 @@ const ProductCard:React.FC<props> = ({data}) => {
               {data.state === 2 ? "판매완료" : "예약중"}
             </SigTag>
           )}
-          <SpaceBetween>
+          <SpaceBetween className="mt-8">
             <Price className="bold">{data.price.toLocaleString()}원</Price>
             <SpaceEnd>
               <ViewCounter view={data.view} like={data.likeNum} />

@@ -33,16 +33,7 @@ interface ProductEditorForm {
 
 const ProductEditor = () => {
   const axiosPrivate = useAxiosPrivate();
-  // const [user, setUser] = useRecoilState(userState);
 
-
-  // 윤정쓰가 남긴 악성코드 😠😠😠😠
-  // 윤정쓰가 남긴 악성코드 😠😠😠😠
-
-  // const data = useFetch<ProductDetailDataType>(`/deal/`);
-
-  // 윤정쓰가 남긴 악성코드 😠😠😠😠
-    // 윤정쓰가 남긴 악성코드 😠😠😠😠
   const {
     register,
     handleSubmit,
@@ -55,8 +46,6 @@ const ProductEditor = () => {
   const navigate = useNavigate();
 
   const onValid = async (data: ProductEditorForm) => {
-    console.log(data);
-
     const formData = new FormData();
     const dealPostDto = JSON.stringify({
       title: data.title,
@@ -90,9 +79,6 @@ const ProductEditor = () => {
       as={"form"}
       onSubmit={handleSubmit(onValid, onInValid)}
     >
-      {/* 윤정쓰가 남긴 악성코드 😠😠😠😠*/}
-      {/* {data?.area} */}
-      {/* 윤정쓰가 남긴 악성코드 😠😠😠😠*/}
 
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>
@@ -137,6 +123,7 @@ const ProductEditor = () => {
               {...register("category", { required: true })}
               name="category"
             >
+              <option value="" hidden>카테고리 선택</option>
               {ProductCategoryConst.map((e) => {
                 return (
                   <option key={`option ${e.number}`} value={e.number}>
