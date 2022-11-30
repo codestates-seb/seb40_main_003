@@ -1,5 +1,6 @@
 package com.kittyhiker.sikjipsa.caring.entity;
 
+import com.kittyhiker.sikjipsa.entity.AuditingEntity;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,11 +10,11 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Setter
-public class ExpertReview {
+public class ExpertReview extends AuditingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "expert_review_id")
-	private Long expertSuccessId;
+	private Long expertReviewId;
 
 	private String content;
 
@@ -24,7 +25,7 @@ public class ExpertReview {
 		}
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "expert_profile_id")
 	private ExpertProfile expertProfile;
 

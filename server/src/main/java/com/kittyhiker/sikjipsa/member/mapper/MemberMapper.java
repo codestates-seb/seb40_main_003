@@ -3,8 +3,13 @@ package com.kittyhiker.sikjipsa.member.mapper;
 import com.kittyhiker.sikjipsa.member.dto.*;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.entity.MemberInformation;
+import com.kittyhiker.sikjipsa.member.entity.MemberProfile;
 import com.kittyhiker.sikjipsa.member.memberprofile.dto.MemberPatchDto;
+import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberInfoMapper;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
+import org.mapstruct.SubclassMapping;
 
 @Mapper(componentModel = "spring")
 public interface MemberMapper {
