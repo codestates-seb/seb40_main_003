@@ -126,7 +126,7 @@ const Signup = () => {
               {...register("email", {
                 required: true,
                 pattern: /^\S+@\S+$/i,
-                maxLength: 20,
+                maxLength: 30,
               })}
             />
             {errors.email && errors.email.type === "required" && (
