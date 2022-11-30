@@ -23,18 +23,18 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
   } = useForm<FormData>();
 
   const onValid = async (data: FormData) => {
-    console.log(data);
     const formData = new FormData();
     const plantDto = JSON.stringify({
       name: data.name,
-      years: data.years,
+      years: String(data.years).replaceAll("-",""),
       type: data.type,
     });
-
+    console.log(plantDto)
     formData.append("multipartFile", data.image[0]);
     formData.append(
       "plantDto", new Blob([plantDto], { type: "application/json" })
-    );
+      );
+
     axiosPrivate
       .post("/plants", formData, {
         headers: {

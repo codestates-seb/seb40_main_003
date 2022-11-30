@@ -5,11 +5,11 @@ import { ProductWrapper } from "../Loading";
 import { getDateAgo } from "../../utils/controller";
 import { ProfileDealType } from "../../types/profileType";
 import { defaultImage } from "../../utils/defaultImage";
+import { categoryNumberToString, ProductCategoryList } from "../../Const/Category";
 
 
 
 const Price = styled.span`
-  margin-top: 16px;
   display: block;
   color: var(--font-main);
 `;
@@ -22,24 +22,24 @@ export const DescriptionColumnWrapper = styled.div`
 `;
 
 type props={
-  // data: ProfileDealType
-  // 임시 처리
-  data: any
+  data: ProfileDealType
 }
 const ProductCard:React.FC<props> = ({data}) => {
+
   return (
-    <ProductWrapper className={data.state === 2 ? "soldOut" : ""}>
+    <ProductWrapper as={"section"} className={data.state === 2 ? "soldOut" : ""}>
       <RowWrapper>
         <ImageWrapper
           size={"100"}
-          src={data?.images?.length>0?data.images[0]:data.images}
+          src={data.images[0]}
           alt={`상품명 ${data.title}의 대표이미지`}
           loading="lazy"
           onError={defaultImage}
         />
         <DescriptionColumnWrapper>
-          <span className="medium">{data.title}</span>
-          <span className="sub mb-8">{getDateAgo(data.createdAt)}</span>
+          <h2 className="medium font-main">{data.title}</h2>
+          <span className="sub mb-8">{categoryNumberToString({number:data.category,arr:ProductCategoryList})}</span>
+          <span className="sub mb-4">{getDateAgo(data.createdAt)}</span>
           {data.state === 0 ? null : (
             <SigTag
               width={80}
@@ -48,7 +48,7 @@ const ProductCard:React.FC<props> = ({data}) => {
               {data.state === 2 ? "판매완료" : "예약중"}
             </SigTag>
           )}
-          <SpaceBetween>
+          <SpaceBetween className="mt-8">
             <Price className="bold">{data.price.toLocaleString()}원</Price>
             <SpaceEnd>
               <ViewCounter view={data.view} like={data.likeNum} />

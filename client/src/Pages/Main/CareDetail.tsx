@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import {
-  ProfileCard,
-  ProfilePlantCard,
-  SigButton,
+import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
+import PlantCardCarousel, {
   AddProfilePlantCard,
-} from "../../Components/GlobalComponents";
-import PlantCardCarousel from "../../Components/profile/plantCardCarousel";
+  ProfilePlantCard,
+} from "../../Components/profile/plantCardCarousel";
 import {
   MainContentContainer,
   MainCenterWrapper,
@@ -16,7 +13,6 @@ import {
   ColumnWrapper,
 } from "../../Components/Wrapper";
 
-import { userState } from "../../Recoil/atoms/user";
 import { CareDetailTypes } from "../../types/caringTypes";
 import Modal from "../../Components/Modal";
 import { useCallback } from "react";
@@ -25,21 +21,21 @@ import AddPlantModal from "./AddPlantModal";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
 import { CommentCard } from "../../Components/CommentCard";
+import { useIsAuthor } from "../../Hooks/useAuth";
+import { getDateAgo } from "../../utils/controller";
 
 const CareDetail = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const { id } = useParams();
-  const isLogin = useRecoilValue(userState);
-
+  const isAuthor = useIsAuthor();
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
 
   const data = useFetch<CareDetailTypes>(`/experts/${id}`);
 
-  usePageTitle(
-    data !== undefined ? `${data.name} 님의 프로필` : "프로필"
-  );
+  usePageTitle(data !== undefined ? `${data.name} 님의 프로필` : "프로필");
+  console.log(data);
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
@@ -65,10 +61,7 @@ const CareDetail = () => {
             </Modal>
           )}
         </>
-        {
-          // isLogin?.userId===id?
-          // :<></>
-        }
+
         <SectionWrapper title="반려 식물">
           <PlantCardCarousel key={"reactCarousel"}>
             <>
@@ -81,32 +74,31 @@ const CareDetail = () => {
                     type={e.type}
                     key={`profilePlantCard ${e.plantId}`}
                     age={e.years}
+                    plantId={e.plantId}
                   />
                 );
               })}
-              {/* {
-                  isLogin?.userId===id? */}
-              <ColumnWrapper center={true}>
-                <AddProfilePlantCard onClick={onClickModal}>
-                  +
-                </AddProfilePlantCard>
-              </ColumnWrapper>
-              {/* :<></>
-                } */}
+              {isAuthor(data.member.memberId) && (
+                <ColumnWrapper center={true}>
+                  <AddProfilePlantCard onClick={onClickModal}>
+                    +
+                  </AddProfilePlantCard>
+                </ColumnWrapper>
+              )}
             </>
           </PlantCardCarousel>
         </SectionWrapper>
-        <SectionWrapper title="보유기술" tag={data.techTags} borderNone={true} />
+        <SectionWrapper
+          title="보유기술"
+          tag={data.techTags}
+          borderNone={true}
+        />
         <SectionWrapper
           title="소개합니다"
           content={data.detailContent}
           borderNone={true}
         />
-        <SectionWrapper
-          title="기본비용"
-          price={data.price}
-          borderNone={true}
-        />
+        <SectionWrapper title="기본비용" price={data.price} borderNone={true} />
         <SectionWrapper
           title="추가비용"
           content={data.extra}
@@ -114,19 +106,17 @@ const CareDetail = () => {
         />
         <SectionWrapper title="돌봄 리뷰" borderNone={true}>
           <>
-            {data.expertReviews.map((e) => {
+            {data?.expertReviews.map((e) => {
               return (
                 <CommentCard
                   name={e.member.nickname}
-                  // ==================날짜 안날오옴==================
-                  createdAt={"날짜가 서버에서 안날아옵니다"}
+                  createdAt={getDateAgo(e.createdAt)}
                   content={e.content}
-                  user={isLogin}
                   author={e.member.memberId}
                   key={`돌봄 ${e.expertReviewId}`}
                 />
               );
-            })}
+            })&& <span className="mt-8">리뷰가 없습니다.</span>}
           </>
         </SectionWrapper>
       </MainCenterWrapper>
@@ -135,7 +125,7 @@ const CareDetail = () => {
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
-    <LoadingSpinner />
+    <LoadingSpinner fullscreen={true} />
   );
 };
 

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { axiosPrivate } from "./api";
-import { getLS } from "./useSecureLS";
+import { getLS, setLS } from "./useSecureLS";
 // 수정하기
 import useRefreshToken from "./useRefreshToken";
 
@@ -29,6 +29,7 @@ const useAxiosPrivate = () => {
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
                     console.log(`리프레시 토큰 성공함${newAccessToken}`);
+                    setLS("accessToken",newAccessToken)
                     prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
                     return axiosPrivate(prevRequest);
                 }

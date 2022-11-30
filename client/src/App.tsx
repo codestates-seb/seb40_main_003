@@ -36,11 +36,12 @@ import CommunityModify from "./Pages/Community/CommunityModify";
 
 import Talk from "./Pages/Talk/Talk";
 import { DefaultLayout } from "./Route";
-import ProductCategory from "./Pages/Product/ProductCategory";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { isExpert, userState } from "./Recoil/atoms/user";
 import { getLS } from "./Hooks/useSecureLS";
+import ProductModify from "./Pages/Product/ProductModify";
+
 
 
 // import DevTools from "./Components/DevTools";
@@ -58,6 +59,8 @@ const App=()=>{
     //로컬스토리지에 유저정보가 있고, 액세스토큰, 리프레시토큰 모두 있을때 (토큰 유효성검사는 안함)
     if(accessToken&&refreshToken&&userInfo){
       setUser(userInfo);
+    }else {
+      
     }
   }, [setUser])
   
@@ -87,7 +90,7 @@ const App=()=>{
             <Route index element={<Product />} />
             <Route path=":id" element={<ProductDetail />} />
             <Route path="write" element={<ProductEditor />} />
-            <Route path="category" element={<ProductCategory />} />
+            <Route path="modify" element={<ProductModify />} />
           </Route>
           {/* 커뮤니티 */}
           <Route path="/community" element={<DefaultLayout />}>
@@ -115,7 +118,7 @@ const App=()=>{
               <Route path="dealbookmarks" element={<DealBookmarks />} />
               <Route path="sales-history" element={<SalesHistory />} />
               <Route path="purchase-history" element={<PurchaseHistory />} />
-              <Route path="caring-history" element={<CaringHistory />} />
+              <Route path="experts-history" element={<CaringHistory />} />
               <Route path="my-history" element={<MyHistory />} />
               <Route path="edit" element={<EditAccount />} />
               <Route path="resign" element={<Resign />} />

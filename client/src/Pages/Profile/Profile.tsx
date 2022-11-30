@@ -1,41 +1,45 @@
 import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import useFetch, { FetchByBody } from "../../Hooks/useFetch";
+import { ReactComponent as AddIcon } from "../../images/addIcon.svg";
+import useFetch from "../../Hooks/useFetch";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { userState } from "../../Recoil/atoms/user";
+
 import {
   ColumnWrapper,
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
+  ReverseWrap,
   SectionWrapper,
 } from "../../Components/Wrapper";
-import {
-  AddProfilePlantCard,
-  ProfileCard,
-  ProfilePlantCard,
-  SigButton,
-} from "../../Components/GlobalComponents";
+import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
 import { Link } from "react-router-dom";
 import { profileType } from "../../types/profileType";
 import AddPlantModal from "../Main/AddPlantModal";
 import Modal from "../../Components/Modal";
 import { useCallback, useState } from "react";
 import { CommentCard } from "../../Components/CommentCard";
-import PlantCardCarousel from "../../Components/profile/plantCardCarousel";
+import PlantCardCarousel, {
+  AddProfilePlantCard,
+  ProfilePlantCard,
+} from "../../Components/profile/plantCardCarousel";
 import ProductCard from "../../Components/product/ProductCard";
+import { useIsAuthor } from "../../Hooks/useAuth";
 
 const Profile = () => {
+  // 페이지주소
   const { id } = useParams();
-  const userInfo = useRecoilValue(userState);
+  // 작성자와 로그인유저 확인
+  const isAuthor = useIsAuthor();
+  // 데이터 패칭
   const data = useFetch<profileType>(`/profile/${id}`);
-  // const data = MockData;
+  // 페이지 설정
   usePageTitle("프로필");
+  // 모달
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-  console.log(data);
+
   return data ? (
     <>
       <MainContentContainer>
@@ -49,23 +53,19 @@ const Profile = () => {
             size={"66"}
           />
           <SectionWrapper content={data.memberProfile.content} pt={0} pb={8} />
-
-          {/* 모달창 */}
-          <>
-            {isOpenModal && (
-              <Modal onClickModal={onClickModal}>
-                <AddPlantModal closeModal={onClickModal} />
-              </Modal>
-            )}
-          </>
-          {
-            // userInfo?.userId===id?
-            // :<></>
-          }
           <SectionWrapper title="반려 식물">
+            {/* 모달창 */}
+            <>
+              {isOpenModal && (
+                <Modal onClickModal={onClickModal}>
+                  <AddPlantModal closeModal={onClickModal} />
+                </Modal>
+              )}
+            </>
             <PlantCardCarousel key={"reactCarousel"}>
               <>
                 {data.plants.map((e, i) => {
+                  console.log(e.plantId);
                   return (
                     <ProfilePlantCard
                       src={e.image.imgUrl}
@@ -74,15 +74,12 @@ const Profile = () => {
                       type={e.type}
                       key={`profilePlantCard ${e.plantId}`}
                       age={e.years}
+                      plantId={e.plantId}
                     />
                   );
                 })}
-                {String(userInfo?.memberId) === String(id) ? (
-                  <ColumnWrapper center={true}>
-                    <AddProfilePlantCard onClick={onClickModal}>
-                      +
-                    </AddProfilePlantCard>
-                  </ColumnWrapper>
+                {isAuthor(id) ? (
+                  <AddIcon onClick={onClickModal} height={"36px"} />
                 ) : (
                   <></>
                 )}
@@ -98,7 +95,6 @@ const Profile = () => {
                       name={e.member.nickname}
                       createdAt={"날짜가 서버에서 안날아옵니다"}
                       content={e.content}
-                      user={userInfo}
                       author={e.member.memberId}
                       key={`거래후기 ${e.dealReviewId}`}
                     />
@@ -109,17 +105,25 @@ const Profile = () => {
               <span className="mt-8">거래후기가 없습니다</span>
             )}
           </SectionWrapper>
-          <SectionWrapper title="판매 상품" width={100}>
+          <SectionWrapper title="판매 상품" width={100} pb={0}>
             {data.deals.length !== 0 ? (
-              <>
-                {data.deals.map((e) => {
-                  return (
-                    <Link to={`/product/${e.dealId}`}>
-                      <ProductCard data={e} />
-                    </Link>
-                  );
+              <ReverseWrap>
+                <Link to={"/setting/sales-history"}>
+                  <button className="mt-8 ml-50 bold font-gray">더 보기</button>
+                </Link>
+                {data.deals.map((e, i) => {
+                  if (data.deals.length - i < 4) {
+                    return (
+                      <Link
+                        to={`/product/${e.dealId}`}
+                        key={`product/${e.dealId}`}
+                      >
+                        <ProductCard data={e} />
+                      </Link>
+                    );
+                  }
                 })}
-              </>
+              </ReverseWrap>
             ) : (
               <span className="mt-8">판매중인 상품이 없습니다</span>
             )}

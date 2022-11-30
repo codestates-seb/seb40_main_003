@@ -87,8 +87,19 @@ input.checkbox-20 {
   accent-color: var(--main);
   cursor: pointer;
 }
+.width-100{
+  width: 100%;
+}
 
-
+.popup-arrow{
+  display: none;
+}
+.popup-content{
+  margin-top: -26px;
+  border: 1px solid var(--line-gray);
+  /* padding: 4px; */
+  background-color: var(--pure-white);
+}
 
 /* 아이콘 active */
 .activeIcon span {
@@ -259,6 +270,16 @@ input.checkbox-20 {
   margin-left: -45px;
 }
 
+.ml-50 {
+  margin-left: 50%;
+}
+
+.pd-4{
+  padding: 4px;
+}
+.pd-8{
+  padding: 8px;
+}
 .pb-16 {
   padding-bottom: 16px;
 }
@@ -285,6 +306,9 @@ input.checkbox-20 {
 
 .text-align-center {
   text-align: center;
+}
+.text-align-end {
+  text-align: end;
 }
 
 .display-none {

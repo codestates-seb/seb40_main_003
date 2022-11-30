@@ -1,12 +1,9 @@
 import styled from "@emotion/styled";
 import { getDateAgo } from "../../utils/controller";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
-import { ColumnWrapper, RowWrapper, SectionWrapper } from "../Wrapper";
+import { ColumnWrapper, RowWrapper, SectionWrapper, SpaceBetween } from "../Wrapper";
 
-export const CommunityWrapper = styled.footer`
-  display: flex;
-  justify-content: space-between;
-`;
+
 
 const CommunityCard = ({ data }: any) => {
   // console.log(data)
@@ -26,7 +23,7 @@ const CommunityCard = ({ data }: any) => {
             <></>
           )}
 
-          <CommunityWrapper className='mt-8'>
+          <SpaceBetween className='mt-8'>
             <RowWrapper>
               <span className='sub font-gray mr-8'>{getDateAgo(data.createdAt)}</span>
               {/* <span className='sub font-gray ml-16'>
@@ -39,7 +36,7 @@ const CommunityCard = ({ data }: any) => {
               renameLike='댓글'
               like={data.commentNum}
             />
-          </CommunityWrapper>
+          </SpaceBetween>
         </>
       </SectionWrapper>
     </ColumnWrapper>

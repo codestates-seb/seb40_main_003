@@ -11,10 +11,13 @@ import {
   MainRightWrapper,
   RowWrapper,
   SectionWrapper,
+  SpaceBetween,
 } from "../../Components/Wrapper";
 import { userState } from "../../Recoil/atoms/user";
-import { communityCommentType, communityDetailTypes } from "../../types/communityTypes";
-import { CommunityWrapper } from "../../Components/community/CommunityCard";
+import {
+  communityCommentType,
+  communityDetailTypes,
+} from "../../types/communityTypes";
 import { Link } from "react-router-dom";
 import CommentInput from "../../Components/UserInput";
 import usePageTitle from "../../Hooks/usePageTitle";
@@ -26,55 +29,56 @@ import { cannotLoad, confirmRemove } from "../../Const/message";
 import { CommentCard } from "../../Components/CommentCard";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { editDataAtom } from "../../Recoil/atoms/editData";
+import { useIsAuthor } from "../../Hooks/useAuth";
+import { EditAndDeleteButton } from "../../Components/profile/plantCardCarousel";
 
 const CommunityDetail = () => {
   const { id } = useParams();
   const user = useRecoilValue(userState);
   const data = useFetch<communityDetailTypes>(`/community/${id}`);
-  const [editData, setEditData] = useRecoilState(editDataAtom)
-  
+  const [editData, setEditData] = useRecoilState(editDataAtom);
+
   usePageTitle("커뮤니티");
-  const axiosPrivate = useAxiosPrivate()
-  const navigate = useNavigate()
-  
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const isAuthor = useIsAuthor();
+
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
         <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
-          <CommunityWrapper>
-            <span className="h4 bold font-main mb-16">{data.title}</span>
+          <SpaceBetween>
+            <span className="h4 bold font-main">{data.title}</span>
             {/* 게시글 수정, 삭제 버튼 */}
-            {String(data.member.memberId) === String(user?.memberId) && (
-              <div>
-                {/* 수정버튼 */}
-                <button className="sub mr-16" onClick={()=>{
-                  setEditData(data)
-                  navigate("/community/modify")
-                }}>수정</button>
-                {/* 삭제버튼 */}
-                <button className="sub" onClick={()=>{
+            {isAuthor(data.member.memberId) && (
+              <EditAndDeleteButton
+                deleteFunction={() => {
                   if (window.confirm(confirmRemove("게시물을"))) {
-                    axiosPrivate.delete(
-                      `/community/${data.communityId}`
-                    ).then((res)=>{
-                      window.alert("삭제가 완료되었습니다")
-                      navigate("/community")
-                    });
+                    axiosPrivate
+                      .delete(`/community/${data.communityId}`)
+                      .then((res) => {
+                        window.alert("삭제가 완료되었습니다");
+                        navigate("/community");
+                      });
                   }
-                }}>삭제</button>
-              </div>
+                }}
+                editFunction={() => {
+                  setEditData(data);
+                  navigate("/community/modify");
+                }}
+              />
             )}
-          </CommunityWrapper>
+          </SpaceBetween>
           {data.images[0] ? (
             <ImageWrapper
-              className="communityImage"
+              className="communityImage mt-16"
               size={"240"}
               src={data.images[0]}
               alt={`상품명 ${data.title}의 대표이미지`}
             />
           ) : null}
           <p className="font-black mt-16 text-overflow">{data.content}</p>
-          <CommunityWrapper className="mt-16">
+          <SpaceBetween className="mt-16">
             <RowWrapper>
               <span className="sub font-gray">
                 {getDateAgo(data.createdAt)}
@@ -86,25 +90,28 @@ const CommunityDetail = () => {
               renameLike="좋아요"
               like={data.likeNum}
             />
-          </CommunityWrapper>
+          </SpaceBetween>
           <CommentInput url={id} />
-          {data.comments.length!==0?data.comments.map((e: communityCommentType) => {
-            return (
-              <CommentCard
-                src={e.writer.image}
-                alt={`${e.writer.nickname}의 대표이미지`}
-                size={"36"}
-                name={e.writer.nickname}
-                createdAt={e.createdAt}
-                content={e.content}
-                commentId={e.commentId}
-                key={e.commentId}
-                author={e.writer.memberId}
-                user={user}
-                communityId={id ? id : ""}
-              />
-            );
-          }):<></>}
+          {data.comments.length !== 0 ? (
+            data.comments.map((e: communityCommentType) => {
+              return (
+                <CommentCard
+                  src={e.writer.image}
+                  alt={`${e.writer.nickname}의 대표이미지`}
+                  size={"36"}
+                  name={e.writer.nickname}
+                  createdAt={e.createdAt}
+                  content={e.content}
+                  commentId={e.commentId}
+                  key={e.commentId}
+                  author={e.writer.memberId}
+                  communityId={id ? id : ""}
+                />
+              );
+            })
+          ) : (
+            <></>
+          )}
         </ErrorBoundary>
       </MainCenterWrapper>
       <MainRightWrapper>

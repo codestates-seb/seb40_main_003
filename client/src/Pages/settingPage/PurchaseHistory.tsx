@@ -5,7 +5,6 @@ import {
   SectionWrapper
 } from "../../Components/Wrapper";
 import ProductCard from "../../Components/product/ProductCard";
-import { DealSuccessDataType } from "../../types/productTypes";
 import { Link } from "react-router-dom";
 import  usePageTitle  from "../../Hooks/usePageTitle";
 import { FetchByParams } from "../../Hooks/useFetch";
@@ -13,6 +12,7 @@ import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
+import { ProfileDealType } from "../../types/profileType";
 
 // 쿼리클라이언트
 const purchaseHistoryQueryClient = new QueryClient();
@@ -31,7 +31,7 @@ export const PurchaseHistoryMain = () => {
   return (
     <>
       {data &&
-        data.data.data.map((e: DealSuccessDataType) => {
+        data.data.data.map((e: ProfileDealType) => {
           return (
             <Link key={e.dealId} to={`/product/${e.dealId}`}>
               <ProductCard data={e} />

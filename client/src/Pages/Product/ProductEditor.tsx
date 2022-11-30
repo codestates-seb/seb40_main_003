@@ -10,9 +10,7 @@ import {
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import { ProductCategoryConst } from "../../Const/Category";
-import useFetch from "../../Hooks/useFetch";
-import { ProductDetailDataType } from "../../types/productTypes";
+import { ProductCategoryList } from "../../Const/Category";
 
 const ConfirmWrapper = styled.span`
   display: flex;
@@ -33,16 +31,7 @@ interface ProductEditorForm {
 
 const ProductEditor = () => {
   const axiosPrivate = useAxiosPrivate();
-  // const [user, setUser] = useRecoilState(userState);
 
-
-  // 윤정쓰가 남긴 악성코드 😠😠😠😠
-  // 윤정쓰가 남긴 악성코드 😠😠😠😠
-
-  // const data = useFetch<ProductDetailDataType>(`/deal/`);
-
-  // 윤정쓰가 남긴 악성코드 😠😠😠😠
-    // 윤정쓰가 남긴 악성코드 😠😠😠😠
   const {
     register,
     handleSubmit,
@@ -55,8 +44,6 @@ const ProductEditor = () => {
   const navigate = useNavigate();
 
   const onValid = async (data: ProductEditorForm) => {
-    console.log(data);
-
     const formData = new FormData();
     const dealPostDto = JSON.stringify({
       title: data.title,
@@ -65,7 +52,10 @@ const ProductEditor = () => {
       category: data.category,
       area: data.area,
     });
-    formData.append("images", data.image[0]);
+    for(let i = 0; i<data.image.length; i++){
+      formData.append("images", data.image[i]);
+    }
+    
     formData.append(
       "dealPostDto",
       new Blob([dealPostDto], { type: "application/json" })
@@ -90,9 +80,6 @@ const ProductEditor = () => {
       as={"form"}
       onSubmit={handleSubmit(onValid, onInValid)}
     >
-      {/* 윤정쓰가 남긴 악성코드 😠😠😠😠*/}
-      {/* {data?.area} */}
-      {/* 윤정쓰가 남긴 악성코드 😠😠😠😠*/}
 
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>
@@ -137,7 +124,8 @@ const ProductEditor = () => {
               {...register("category", { required: true })}
               name="category"
             >
-              {ProductCategoryConst.map((e) => {
+              <option value="" hidden>카테고리 선택</option>
+              {ProductCategoryList.map((e) => {
                 return (
                   <option key={`option ${e.number}`} value={e.number}>
                     {e.name}

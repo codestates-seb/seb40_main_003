@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { keyframes, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { DescriptionColumnWrapper } from "./product/ProductCard";
@@ -11,16 +11,19 @@ const spin = keyframes`
   }
   `;
 
-type LoadingSpinnerProps = {
-  size?: number;
-};
+
 const LoadingWrapper = styled.section`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: ${(props:spinnerProps)=>props.fullscreen?"90vh":0};
 `;
+
+type LoadingSpinnerProps = {
+  size?: number;
+};
 const LoadingElem = styled.div`
   display: block;
   width: ${(props: LoadingSpinnerProps) => (props.size ? props.size : "70")}px;
@@ -30,10 +33,12 @@ const LoadingElem = styled.div`
   border-top-color: var(--main);
   animation: ${spin} 500ms linear infinite;
 `;
-
-export const LoadingSpinner = () => {
+type spinnerProps={
+  fullscreen?:boolean
+}
+export const LoadingSpinner = ({fullscreen=true}:spinnerProps) => {
   return (
-    <LoadingWrapper>
+    <LoadingWrapper fullscreen={fullscreen}>
       <LoadingElem />
     </LoadingWrapper>
   );

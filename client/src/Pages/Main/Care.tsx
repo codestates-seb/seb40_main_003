@@ -5,6 +5,8 @@ import {
   MainContentContainer,
   MainCenterWrapper,
   MainRightWrapper,
+  SpaceBetween,
+  SpaceEnd,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { InfiniteFetch } from "../../Hooks/useFetch";
@@ -17,18 +19,25 @@ import {
 import { ErrorBoundary } from "react-error-boundary";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import React from "react";
+import { cannotLoad, noContent, searchbarComment } from "../../Const/message";
+import Modal from "../../Components/Modal";
+import CategoryModal from "../../Components/product/CategoryModal";
+import { ReactComponent as Hamburger } from "../../images/hamburgerIcon.svg";
 
 const careQueryClient = new QueryClient();
 
-export const CareMain = () => {
+type CareMain = {
+  searchKeyword?: string;
+};
+export const CareMain = ({ searchKeyword }: CareMain) => {
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    "careQueryClient",
-    ({ pageParam = 1 }) => InfiniteFetch("/caring", pageParam),
+    ["careQueryClient", searchKeyword],
+    ({ pageParam = 1 }) => InfiniteFetch("/experts", pageParam, searchKeyword),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextPage : undefined,
@@ -40,18 +49,22 @@ export const CareMain = () => {
   }, [inView]);
 
   if (status === "loading") return <LoadingSkeleton />;
-  if (status === "error")
-    return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
-
+  if (status === "error") return <ErrorMessage content={cannotLoad} />;
   return (
     <>
       {data?.pages.map((page, index) => (
         <React.Fragment key={index}>
-          {page.data.map((e: caringPreviewDataTypes) => (
-            <Link key={e.expertId} to={`/caring/${e.expertId}`}>
-              <CareCard data={e} />
-            </Link>
-          ))}
+          {page.data.length === 0 ? (
+            <ErrorMessage className="pt-16 width-100" content={noContent} />
+          ) : (
+            page.data.map((e: caringPreviewDataTypes) => {
+              return (
+                <Link key={e.expertId} to={`/caring/${e.expertId}`}>
+                  <CareCard data={e} />
+                </Link>
+              );
+            })
+          )}
         </React.Fragment>
       ))}
       {isFetchingNextPage ? <LoadingSkeleton /> : <div ref={ref}></div>}
@@ -61,22 +74,49 @@ export const CareMain = () => {
 
 const Care = () => {
   usePageTitle("돌봄");
+  const [searchKeyWord, setSearchKeyWord] = useState<string | undefined>(
+    undefined
+  );
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const onClickModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
 
   return (
     <MainContentContainer>
       <MainCenterWrapper>
+        <SpaceBetween>
+          <select name="sorting" className="medium font-gray" id="option">
+            <option value="정렬">최신순</option>
+            <option value="정렬">찜순</option>
+            <option value="정렬">찜순</option>
+          </select>
+          <button className="ml-16" onClick={onClickModal}>
+            <Hamburger />
+          </button>
+        </SpaceBetween>
+        <>
+          {isOpenModal && (
+            <Modal onClickModal={onClickModal} confirm={false}>
+              <CategoryModal
+                onClickFunction={setSearchKeyWord}
+                closeModal={setOpenModal}
+              />
+            </Modal>
+          )}
+        </>
         <ErrorBoundary
           fallback={<ErrorMessage content="예상치 못한 에러가 발생했습니다" />}
         >
-          {/* <QueryClientProvider client={careQueryClient}>
-            <CareMain />
-          </QueryClientProvider> */}
+          <QueryClientProvider client={careQueryClient}>
+            <CareMain searchKeyword={searchKeyWord} />
+          </QueryClientProvider>
         </ErrorBoundary>
       </MainCenterWrapper>
       <MainRightWrapper>
-      <p className="h5 bold font-main mr-16">
-            우리 동네 식물 전문가를 만나보세요.🌿
-          </p>
+        <p className="h5 bold font-main mr-16">
+          우리 동네 식물 전문가를 만나보세요.🌿
+        </p>
       </MainRightWrapper>
     </MainContentContainer>
   );

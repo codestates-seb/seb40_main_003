@@ -124,6 +124,10 @@ type columnWrapperType = {
   width?: number;
   center?: boolean;
 };
+export const ReverseWrap = styled.section`
+  display: flex;
+  flex-flow: nowrap column-reverse;
+`;
 export const ColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -143,6 +147,7 @@ export const SpaceEnd = styled.div`
 export const RowWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
   &.align-center {
     align-items: center;
   }
@@ -150,5 +155,8 @@ export const RowWrapper = styled.div`
 export const SpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
+  &.center{
+    align-items: center;
+  }
 `;
 export default MainLeftWrapper;

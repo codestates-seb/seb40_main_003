@@ -1,6 +1,9 @@
 // 의미없는 테스트용 함수입니다
-
 import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import "dayjs/locale/ko";
+import utc from "dayjs/plugin/utc";
+import timezone from "dayjs/plugin/timezone";
 
 function isOdd(elem: number): boolean {
   return Boolean(elem % 2);
@@ -20,16 +23,19 @@ export const overKillo = (number: number) => {
 export default isOdd;
 
 export const getDateAgo = (date: string) => {
+  dayjs.extend(relativeTime);
+  dayjs.locale("ko");
+  dayjs.extend(utc);
+  dayjs.extend(timezone);
   // 작성일자 시간객체로
-  const parsedDate = dayjs(date, "YYYY-MM-DD HH:mm:sss");
-// 시간차 구하기
-  let hours = parsedDate.diff(new Date(), "hours");
-  hours = Math.abs(hours + 9);
-  const days = Math.floor(hours / 24);
-  hours = hours - days * 24;
-  if (hours < 24) {
-    return hours+"시간 전";
-  }else if (hours>24){
-    return Math.floor(hours / 24)+"일 전"
-  }
+  const parsedDate = dayjs(date, "YYYY-MM-DD HH:mm:sss").add(9,"hours");
+
+  // 시간차 구하기
+  return parsedDate.fromNow();
+};
+/** 날짜 (YYYY-MM-DD) 를 받아서 ~일/ 전 을 리턴하는 함수*/
+export const getDateFrom = (date: string) => {
+  dayjs.extend(relativeTime);
+  dayjs.locale("ko");
+  return dayjs(date).toNow();
 };

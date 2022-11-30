@@ -5,6 +5,7 @@ import {
   MainContentContainer,
   MainRightWrapper,
   SectionWrapper,
+  SpaceBetween,
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
@@ -18,11 +19,14 @@ import {
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import React from "react";
 import { ProfileDealType } from "../../types/profileType";
 import { cannotLoad, searchbarComment } from "../../Const/message";
+import { ReactComponent as Hamburger } from "../../images/hamburgerIcon.svg";
+import Modal from "../../Components/Modal";
+import CategoryModal from "../../Components/product/CategoryModal";
 
 // 쿼리클라이언트
 const productQueryClient = new QueryClient();
@@ -69,42 +73,61 @@ export const ProductMain = ({ searchKeyword }: productMain) => {
 
 // 전체 페이지
 const Product = () => {
-  const [searchKeyWord, setSearchKeyWord] = useState("");
+  const [searchKeyWord, setSearchKeyWord] = useState<string | undefined>(
+    undefined
+  );
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const onClickModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
+
   usePageTitle("거래");
   return (
-    <MainContentContainer>
-      <MainCenterWrapper>
-        <input
-          type="text"
-          className="mb-4"
-          placeholder={searchbarComment}
-          onChange={(e) => {
-            setSearchKeyWord(e.target.value);
-          }}
-        />
-        {/* 쿼리클라이언트로 감쌈 */}
-        <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
-          <QueryClientProvider client={productQueryClient}>
-            <ProductMain searchKeyword={searchKeyWord} />
-          </QueryClientProvider>
-        </ErrorBoundary>
-        {/* 쿼리클라이언트로 감쌈 */}
-      </MainCenterWrapper>
-      <MainRightWrapper>
-        <SectionWrapper borderNone={true}>
-          <p className="h5 bold font-main mr-16">
-            반려식물을 분양하고 원예 용품을 판매해보세요.🌿
-          </p>
-        </SectionWrapper>
-        <span className="h4 bold"></span>
-        <Link to={"/product/write"}>
-          <SigButton type="submit">새 글쓰기</SigButton>
-        </Link>
-        <Link to={"/product/category"}>
-          <SigButton>거래 카테고리</SigButton>
-        </Link>
-      </MainRightWrapper>
-    </MainContentContainer>
+    <>
+      <>
+        {isOpenModal && (
+          <Modal onClickModal={onClickModal} confirm={false}>
+            <CategoryModal onClickFunction={() => { } } closeModal={onClickModal} />
+          </Modal>
+        )}
+      </>
+      <MainContentContainer>
+        <MainCenterWrapper>
+          <SpaceBetween>
+            <input
+              type="text"
+              className="mb-4 width-100"
+              placeholder={searchbarComment}
+              onChange={(e) => {
+                setSearchKeyWord(e.target.value);
+              }}
+            />
+            <button className="ml-16" onClick={onClickModal}>
+              <Hamburger />
+            </button>
+          </SpaceBetween>
+          {/* 쿼리클라이언트로 감쌈 */}
+
+          <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
+            <QueryClientProvider client={productQueryClient}>
+              <ProductMain searchKeyword={searchKeyWord} />
+            </QueryClientProvider>
+          </ErrorBoundary>
+          {/* 쿼리클라이언트로 감쌈 */}
+        </MainCenterWrapper>
+        <MainRightWrapper>
+          <SectionWrapper borderNone={true}>
+            <p className="h5 bold font-main mr-16">
+              반려식물을 분양하고 원예 용품을 판매해보세요.🌿
+            </p>
+          </SectionWrapper>
+          <span className="h4 bold"></span>
+          <Link to={"/product/write"}>
+            <SigButton type="submit">새 글쓰기</SigButton>
+          </Link>
+        </MainRightWrapper>
+      </MainContentContainer>
+    </>
   );
 };
 

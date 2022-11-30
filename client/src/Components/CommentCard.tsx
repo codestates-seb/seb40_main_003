@@ -10,6 +10,7 @@ import {
 } from "../Components/GlobalComponents";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
+import { useIsAuthor } from "../Hooks/useAuth";
 export const CommentCardWrapper = styled.div`
   width: 100%;
   padding: 16px 16px;
@@ -35,10 +36,10 @@ export type CommentCardTypes = {
   src?: string;
   alt?: string;
   name?: string;
-  createdAt: string ;
+  createdAt: string;
   content?: string;
   tag?: [{ techId: number; name: string }];
-  user: UserStateType | null;
+
   author: number;
   commentId?: number;
   communityId?: string;
@@ -54,11 +55,11 @@ export const CommentCard = (props: CommentCardTypes) => {
     createdAt,
     content,
     tag,
-    user,
     author,
     commentId,
     communityId,
   } = props;
+  const isAuthor = useIsAuthor()
   const ref = useRef<HTMLDivElement>(null);
   const [text, setText] = useState(content);
   const [editable, setEditable] = useState(false);
@@ -123,9 +124,9 @@ export const CommentCard = (props: CommentCardTypes) => {
       </RowWrapper>
       <GridWrapper>
         <ColumnWrapper>
-          <div className="sub font-gray mb-6 ml-4">{getDateAgo(createdAt)}</div>
+          <div className="sub font-gray mb-6 ml-4 text-align-end">{getDateAgo(createdAt)}</div>
           {/* 유저와 작성자가 같다면 */}
-          {String(author) === String(user?.memberId) ? (
+          {isAuthor(author) ? (
             <CommentButtonWrapper>
               {editable ? (
                 <>
@@ -156,6 +157,8 @@ export const CommentCard = (props: CommentCardTypes) => {
                           `/community/${communityId}/comment/${commentId}`
                         );
                       }
+                      // eslint-disable-next-line no-restricted-globals
+                      location.reload();
                     }}
                   >
                     삭제
@@ -178,6 +181,8 @@ export const CommentCard = (props: CommentCardTypes) => {
                           `/community/${communityId}/comment/${commentId}`
                         );
                       }
+                      // eslint-disable-next-line no-restricted-globals
+                      location.reload();
                     }}
                   >
                     삭제
