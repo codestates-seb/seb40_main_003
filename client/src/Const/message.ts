@@ -10,4 +10,7 @@ export const confirmRemove = (title:string)=>{return `${title} 삭제 하시겠�
 export const confirmCancel = "작성을 취소하시겠습니까?" as const
 
 export const confirmLogout = "로그아웃 하시겠습니까?" as const
+
+export const confirmSignout = "회원을 탈퇴하시겠습니까?" as const
+
 export const confirmDelete = "정말 삭제 하시겠습니까?" as const

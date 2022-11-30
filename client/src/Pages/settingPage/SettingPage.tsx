@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   MainCenterWrapper,
   MainContentContainer,
@@ -8,6 +8,8 @@ import {
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useLogout } from "../../Hooks/useLogout";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import { confirmSignout } from "../../Const/message";
 
 const ContentContainer = styled.div`
     
@@ -20,6 +22,19 @@ const ContentWrapper = styled.div`
 const SettingPage = () => {
   usePageTitle("설정");
   const logout = useLogout();
+  const axiosPrivate = useAxiosPrivate();
+	const navigate = useNavigate();
+  const signout = prompt('탈퇴를 원하시면 "굿바이 플랜트하이커" 라고 입력해주세요.');
+  const handleSubmit = async () => {
+    if (window.confirm(confirmSignout)) {
+      if (signout === "굿바이 플랜트하이커") {
+        axiosPrivate.delete(`/users`)
+        .then (()=>{
+          navigate("/")
+        })
+      } 
+    } 
+}
   // const data = useFetch("/");
   // return data !== undefined ? (
   return (
@@ -55,7 +70,7 @@ const SettingPage = () => {
                 <>구매 내역(3)</>
               </SectionWrapper>
             </Link>
-            <Link to={"/setting/caring-history"}>
+            <Link to={"/setting/experts-history"}>
               <SectionWrapper>
                 <>돌봄 기록(3)</>
               </SectionWrapper>
@@ -65,11 +80,20 @@ const SettingPage = () => {
                 <>내 게시물(3)</>
               </SectionWrapper>
             </Link>
-            <SectionWrapper>
-                <button onClick={logout}
-                  >로그아웃</button>
+            </ContentWrapper>
+            <SectionWrapper title="계정">    
             </SectionWrapper>
-          </ContentWrapper>
+            <ContentWrapper>
+              <SectionWrapper>
+                <button onClick={logout}
+                  >로그아웃(1)</button>
+              </SectionWrapper>
+              <SectionWrapper>
+                <button onClick={()=>{handleSubmit()}}
+                  >회원 탈퇴(1)</button>
+              </SectionWrapper>
+            </ContentWrapper>
+
         </ContentContainer>
       </MainCenterWrapper>
       <MainRightWrapper></MainRightWrapper>

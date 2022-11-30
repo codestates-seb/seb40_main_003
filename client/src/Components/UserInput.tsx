@@ -3,6 +3,8 @@ import { RowWrapper, SectionWrapper } from "./Wrapper";
 import { useState } from "react";
 import { SigTag } from "./GlobalComponents";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
+import { useResetRecoilState } from "recoil";
+import { userState } from "../Recoil/atoms/user";
 
 type props = {
   url: string | undefined;
@@ -19,7 +21,7 @@ const Textarea = styled.textarea`
 const CommentInput = (props: props) => {
   const [value, setValue] = useState("");
   const axiosPrivate = useAxiosPrivate();
-
+  
   const handleSubmit = async () => {
     axiosPrivate.post(
       `/community/${props.url}/comment`,
