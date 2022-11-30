@@ -26,6 +26,7 @@ import { cannotLoad, confirmRemove } from "../../Const/message";
 import { CommentCard } from "../../Components/CommentCard";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { editDataAtom } from "../../Recoil/atoms/editData";
+import { useIsAuthor } from "../../Hooks/useIsAuthor";
 
 const CommunityDetail = () => {
   const { id } = useParams();
@@ -36,6 +37,7 @@ const CommunityDetail = () => {
   usePageTitle("커뮤니티");
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
+  const isAuthor = useIsAuthor()
   
   return data !== undefined ? (
     <MainContentContainer>
@@ -44,7 +46,7 @@ const CommunityDetail = () => {
           <NoticeboardWrapper>
             <span className="h4 bold font-main mb-16">{data.title}</span>
             {/* 게시글 수정, 삭제 버튼 */}
-            {String(data.member.memberId) === String(user?.memberId) && (
+            {isAuthor(data.member.memberId) && (
               <div>
                 {/* 수정버튼 */}
                 <button className="sub mr-16" onClick={()=>{

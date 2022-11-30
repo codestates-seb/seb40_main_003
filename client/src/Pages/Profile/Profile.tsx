@@ -53,6 +53,7 @@ const Profile = () => {
           <SectionWrapper content={data.memberProfile.content} pt={0} pb={8} />
 
           {/* 모달창 */}
+          
           <>
             {isOpenModal && (
               <Modal onClickModal={onClickModal}>
@@ -60,14 +61,12 @@ const Profile = () => {
               </Modal>
             )}
           </>
-          {
-            // userInfo?.userId===id?
-            // :<></>
-          }
+
           <SectionWrapper title="반려 식물">
             <PlantCardCarousel key={"reactCarousel"}>
               <>
                 {data.plants.map((e, i) => {
+                  console.log(e.plantId)
                   return (
                     <ProfilePlantCard
                       src={e.image.imgUrl}
