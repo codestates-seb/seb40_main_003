@@ -150,5 +150,8 @@ export const RowWrapper = styled.div`
 export const SpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
+  &.center{
+    align-items: center;
+  }
 `;
 export default MainLeftWrapper;

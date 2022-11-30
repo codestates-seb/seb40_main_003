@@ -6,7 +6,7 @@ import { ColumnWrapper, SpaceBetween, SpaceEnd } from "../Wrapper";
 import seeMoreIcon from "../../images/seeMoreIcon.svg";
 
 type Props = {
-  children: JSX.Element[]|JSX.Element;
+  children: JSX.Element[] | JSX.Element;
 };
 const CarouselWrapper = styled.div`
   /* height: 90px; */
@@ -19,12 +19,13 @@ const CarouselWrapper = styled.div`
 `;
 
 function PlantCardCarousel({ children }: Props) {
-  return <CarouselWrapper >{children}</CarouselWrapper>;
+  return <CarouselWrapper>{children}</CarouselWrapper>;
 }
 export default PlantCardCarousel;
 
 // 프로필 반려식물
 export const ProfilePlantCardWrapper = styled.div`
+  min-width: 200px;
   max-width: 250px;
   padding: 8px;
   margin-right: 8px;
@@ -53,8 +54,8 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
         className="mr-16"
         loading="lazy"
       ></ImageWrapper>
-      <ColumnWrapper>
-        <SpaceBetween>
+      <ColumnWrapper width={100}>
+        <SpaceBetween className="center">
           <span className="medium">{name}</span>{" "}
           <SpaceEnd>
             <Popup
@@ -69,9 +70,7 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
           </SpaceEnd>
         </SpaceBetween>
         <span className="sub font-gray">{type}</span>
-        <div className="sub font-gray ml-54">
-          {getDateFrom(age).replace("전", "차")}
-        </div>
+        <SpaceEnd className="sub ">{getDateFrom(age).replace("전", "차")}</SpaceEnd>
       </ColumnWrapper>
     </ProfilePlantCardWrapper>
   );

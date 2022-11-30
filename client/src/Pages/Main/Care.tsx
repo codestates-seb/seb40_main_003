@@ -42,16 +42,18 @@ export const CareMain = () => {
   if (status === "loading") return <LoadingSkeleton />;
   if (status === "error")
     return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
-
   return (
     <>
       {data?.pages.map((page, index) => (
         <React.Fragment key={index}>
-          {page.data.map((e: caringPreviewDataTypes) => (
-            <Link key={e.expertId} to={`/caring/${e.expertId}`}>
-              <CareCard data={e} />
-            </Link>
-          ))}
+          {page.data.map((e: caringPreviewDataTypes) => {
+            console.log(e);
+            return (
+              <Link key={e.expertId} to={`/caring/${e.expertId}`}>
+                <CareCard data={e} />
+              </Link>
+            );
+          })}
         </React.Fragment>
       ))}
       {isFetchingNextPage ? <LoadingSkeleton /> : <div ref={ref}></div>}
@@ -74,9 +76,9 @@ const Care = () => {
         </ErrorBoundary>
       </MainCenterWrapper>
       <MainRightWrapper>
-      <p className="h5 bold font-main mr-16">
-            우리 동네 식물 전문가를 만나보세요.🌿
-          </p>
+        <p className="h5 bold font-main mr-16">
+          우리 동네 식물 전문가를 만나보세요.🌿
+        </p>
       </MainRightWrapper>
     </MainContentContainer>
   );
