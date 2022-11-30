@@ -93,6 +93,9 @@ input.checkbox-20 {
 }
 .popup-content{
   margin-top: -26px;
+  border: 1px solid var(--line-gray);
+  /* padding: 4px; */
+  background-color: var(--pure-white);
 }
 
 /* 아이콘 active */
@@ -264,6 +267,12 @@ input.checkbox-20 {
   margin-left: -45px;
 }
 
+.pd-4{
+  padding: 4px;
+}
+.pd-8{
+  padding: 8px;
+}
 .pb-16 {
   padding-bottom: 16px;
 }
