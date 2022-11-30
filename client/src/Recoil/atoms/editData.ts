@@ -7,7 +7,7 @@ export const editDataAtom = atom<communityDetailTypes | null>({
   default: null
 });
 
-export const producteditDataAtom = atom<ProductDetailDataType | null>({
-  key: "producteditData",
+export const productEditDataAtom = atom<ProductDetailDataType | null>({
+  key: "productEditData",
   default: null
 });

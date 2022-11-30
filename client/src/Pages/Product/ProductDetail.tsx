@@ -18,7 +18,7 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
 import { getDateAgo } from "../../utils/controller";
 import styled from "@emotion/styled";
-import { editDataAtom, producteditDataAtom } from "../../Recoil/atoms/editData";
+import { productEditDataAtom } from "../../Recoil/atoms/editData";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { confirmRemove } from "../../Const/message";
 import { NoticeboardWrapper } from "../../Components/community/CommunityCard";
@@ -36,11 +36,11 @@ const ProductBookmarksDetail = () => {
   const { id } = useParams();
   const user = useRecoilValue(userState);
   const data = useFetch<ProductDetailDataType>(id?`/deal/${id}`:"");
-  const [producteditData, setProducteditData] = useRecoilState(producteditDataAtom);
+  const [productEditData, setProductEditData] = useRecoilState(productEditDataAtom);
   const axiosPrivate = useAxiosPrivate()
   const navigate = useNavigate()
-  
   return data !== undefined ? (
+    
     // 메인 컨테이너 (반응형 제공!)
     <MainContentContainer>
       <MainCenterWrapper>
@@ -71,8 +71,8 @@ const ProductBookmarksDetail = () => {
           <div>
             {/* 수정버튼 */}
             <button className="sub mr-16 mt-16" onClick={()=>{
-              setProducteditData(data)
-              navigate("/")
+              setProductEditData(data)
+              navigate("/product/modify")
             }}>수정</button>
             {/* 삭제버튼 */}
             <button className="sub" onClick={() => {
