@@ -13,7 +13,10 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import { userState } from "../../Recoil/atoms/user";
-import { communityCommentType, communityDetailTypes } from "../../types/communityTypes";
+import {
+  communityCommentType,
+  communityDetailTypes,
+} from "../../types/communityTypes";
 import { NoticeboardWrapper } from "../../Components/community/CommunityCard";
 import { Link } from "react-router-dom";
 import CommentInput from "../../Components/UserInput";
@@ -26,50 +29,49 @@ import { cannotLoad, confirmRemove } from "../../Const/message";
 import { CommentCard } from "../../Components/CommentCard";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { editDataAtom } from "../../Recoil/atoms/editData";
-import { useIsAuthor } from "../../Hooks/useIsAuthor";
+import { useIsAuthor } from "../../Hooks/useAuth";
+import { EditAndDeleteButton } from "../../Components/profile/plantCardCarousel";
 
 const CommunityDetail = () => {
   const { id } = useParams();
   const user = useRecoilValue(userState);
   const data = useFetch<communityDetailTypes>(`/community/${id}`);
-  const [editData, setEditData] = useRecoilState(editDataAtom)
-  
+  const [editData, setEditData] = useRecoilState(editDataAtom);
+
   usePageTitle("커뮤니티");
-  const axiosPrivate = useAxiosPrivate()
-  const navigate = useNavigate()
-  const isAuthor = useIsAuthor()
-  
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const isAuthor = useIsAuthor();
+
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
         <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
           <NoticeboardWrapper>
-            <span className="h4 bold font-main mb-16">{data.title}</span>
+            <span className="h4 bold font-main">{data.title}</span>
             {/* 게시글 수정, 삭제 버튼 */}
             {isAuthor(data.member.memberId) && (
-              <div>
-                {/* 수정버튼 */}
-                <button className="sub mr-16" onClick={()=>{
-                  setEditData(data)
-                  navigate("/community/modify")
-                }}>수정</button>
-                {/* 삭제버튼 */}
-                <button className="sub" onClick={()=>{
+              <EditAndDeleteButton
+                deleteFunction={() => {
                   if (window.confirm(confirmRemove("게시물을"))) {
-                    axiosPrivate.delete(
-                      `/community/${data.communityId}`
-                    ).then((res)=>{
-                      window.alert("삭제가 완료되었습니다")
-                      navigate("/community")
-                    });
+                    axiosPrivate
+                      .delete(`/community/${data.communityId}`)
+                      .then((res) => {
+                        window.alert("삭제가 완료되었습니다");
+                        navigate("/community");
+                      });
                   }
-                }}>삭제</button>
-              </div>
+                }}
+                editFunction={() => {
+                  setEditData(data);
+                  navigate("/community/modify");
+                }}
+              />
             )}
           </NoticeboardWrapper>
           {data.images[0] ? (
             <ImageWrapper
-              className="communityImage"
+              className="communityImage mt-16"
               size={"240"}
               src={data.images[0]}
               alt={`상품명 ${data.title}의 대표이미지`}
@@ -90,22 +92,26 @@ const CommunityDetail = () => {
             />
           </NoticeboardWrapper>
           <CommentInput url={id} />
-          {data.comments.length!==0?data.comments.map((e: communityCommentType) => {
-            return (
-              <CommentCard
-                src={e.writer.image}
-                alt={`${e.writer.nickname}의 대표이미지`}
-                size={"36"}
-                name={e.writer.nickname}
-                createdAt={e.createdAt}
-                content={e.content}
-                commentId={e.commentId}
-                key={e.commentId}
-                author={e.writer.memberId}
-                communityId={id ? id : ""}
-              />
-            );
-          }):<></>}
+          {data.comments.length !== 0 ? (
+            data.comments.map((e: communityCommentType) => {
+              return (
+                <CommentCard
+                  src={e.writer.image}
+                  alt={`${e.writer.nickname}의 대표이미지`}
+                  size={"36"}
+                  name={e.writer.nickname}
+                  createdAt={e.createdAt}
+                  content={e.content}
+                  commentId={e.commentId}
+                  key={e.commentId}
+                  author={e.writer.memberId}
+                  communityId={id ? id : ""}
+                />
+              );
+            })
+          ) : (
+            <></>
+          )}
         </ErrorBoundary>
       </MainCenterWrapper>
       <MainRightWrapper>

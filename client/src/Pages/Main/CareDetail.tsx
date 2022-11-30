@@ -25,7 +25,7 @@ import AddPlantModal from "./AddPlantModal";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
 import { CommentCard } from "../../Components/CommentCard";
-import { useIsAuthor } from "../../Hooks/useIsAuthor";
+import { useIsAuthor } from "../../Hooks/useAuth";
 
 const CareDetail = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -40,7 +40,9 @@ const CareDetail = () => {
   usePageTitle(
     data !== undefined ? `${data.name} 님의 프로필` : "프로필"
   );
+  console.log(data)
   return data !== undefined ? (
+    
     <MainContentContainer>
       <MainCenterWrapper>
         <ProfileCard
@@ -82,7 +84,7 @@ const CareDetail = () => {
                   />
                 );
               })}
-            {isAuthor(id)&&
+            {isAuthor(data.member.memberId)&&
               <ColumnWrapper center={true}>
                 <AddProfilePlantCard onClick={onClickModal}>
                   +

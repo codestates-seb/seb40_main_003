@@ -69,7 +69,7 @@ export const ProductMain = ({ searchKeyword }: productMain) => {
 
 // 전체 페이지
 const Product = () => {
-  const [searchKeyWord, setSearchKeyWord] = useState("");
+  const [searchKeyWord, setSearchKeyWord] = useState<string|undefined>(undefined);
   usePageTitle("거래");
   return (
     <MainContentContainer>

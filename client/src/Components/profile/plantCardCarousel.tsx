@@ -4,9 +4,8 @@ import { getDateFrom } from "../../utils/controller";
 import { ImageWrapper } from "../GlobalComponents";
 import { ColumnWrapper, SpaceBetween, SpaceEnd } from "../Wrapper";
 import seeMoreIcon from "../../images/seeMoreIcon.svg";
-import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { useDelete } from "../../Hooks/useDelete";
-import { useIsAuthor } from "../../Hooks/useIsAuthor";
+import { useIsAuthor } from "../../Hooks/useAuth";
 import { useParams } from "react-router-dom";
 
 type Props = {
@@ -49,7 +48,7 @@ type ProfilePlantCardTypes = {
 };
 export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
   // 비구조화할당
-  const {id} = useParams()
+  const { id } = useParams();
   const { size, src, alt, name, type, age, plandId } = props;
   const deleteItem = useDelete(`/plants/${plandId}`);
   const isAuthor = useIsAuthor();
@@ -67,27 +66,40 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
           <span className="medium">{name}</span>
           <SpaceEnd>
             {/* 팝업 사용법 */}
-            {isAuthor(id) && (
-              <Popup
-                trigger={<img src={seeMoreIcon} alt="더보기버튼" className={"cursor"}/>}
-                position={"bottom center"}
-              >
-                <ColumnWrapper>
-                  <button className="font-gray pd-8">수정</button>
-                  <button className="font-gray pd-8" onClick={deleteItem}>
-                    삭제
-                  </button>
-                </ColumnWrapper>
-              </Popup>
-            )}
+            {isAuthor(id) && <EditAndDeleteButton deleteFunction={deleteItem} editFunction={()=>{}} />}
           </SpaceEnd>
         </SpaceBetween>
         <span className="sub font-gray">{type}</span>
         <SpaceEnd className="sub ">
-          {getDateFrom(age).replace("후", "차🌿")}
+          {getDateFrom(age).replace("후", "차")}
         </SpaceEnd>
       </ColumnWrapper>
     </ProfilePlantCardWrapper>
+  );
+};
+
+type editAndDeleteButton = {
+  deleteFunction: Function;
+  editFunction: Function;
+};
+export const EditAndDeleteButton = ({
+  deleteFunction,
+  editFunction,
+}: editAndDeleteButton) => {
+  return (
+    <Popup
+      trigger={<img src={seeMoreIcon} alt="더보기버튼" className={"cursor"} />}
+      position={"bottom center"}
+    >
+      <ColumnWrapper>
+        <button className="font-gray pd-8" onClick={() => editFunction()}>
+          수정
+        </button>
+        <button className="font-gray pd-8" onClick={() => deleteFunction()}>
+          삭제
+        </button>
+      </ColumnWrapper>
+    </Popup>
   );
 };
 

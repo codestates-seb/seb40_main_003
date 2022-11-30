@@ -23,7 +23,7 @@ import PlantCardCarousel, {
   ProfilePlantCard,
 } from "../../Components/profile/plantCardCarousel";
 import ProductCard from "../../Components/product/ProductCard";
-import { useIsAuthor } from "../../Hooks/useIsAuthor";
+import { useIsAuthor } from "../../Hooks/useAuth";
 
 const Profile = () => {
   // 페이지주소

@@ -10,7 +10,7 @@ import {
 } from "../Components/GlobalComponents";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
-import { useIsAuthor } from "../Hooks/useIsAuthor";
+import { useIsAuthor } from "../Hooks/useAuth";
 export const CommentCardWrapper = styled.div`
   width: 100%;
   padding: 16px 16px;
