@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-
+import { ReactComponent as AddIcon } from "../../images/addIcon.svg";
 import useFetch from "../../Hooks/useFetch";
 import usePageTitle from "../../Hooks/usePageTitle";
 
@@ -54,7 +54,7 @@ const Profile = () => {
           />
           <SectionWrapper content={data.memberProfile.content} pt={0} pb={8} />
           <SectionWrapper title="반려 식물">
-          {/* 모달창 */}
+            {/* 모달창 */}
             <>
               {isOpenModal && (
                 <Modal onClickModal={onClickModal}>
@@ -79,11 +79,7 @@ const Profile = () => {
                   );
                 })}
                 {isAuthor(id) ? (
-                  <ColumnWrapper center={true}>
-                    <AddProfilePlantCard onClick={onClickModal}>
-                      +
-                    </AddProfilePlantCard>
-                  </ColumnWrapper>
+                  <AddIcon onClick={onClickModal} height={"36px"} />
                 ) : (
                   <></>
                 )}

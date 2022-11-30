@@ -63,7 +63,7 @@ const ProductBookmarksDetail = () => {
           />
         </Link>
         <SpaceBetween>
-          <h1 className="h4 bold mt-16">{data.title}</h1>
+          <h1 className="h3 bold mt-16 mb-4">{data.title}</h1>
           {/* 게시글 수정, 삭제 버튼 */}
           {isAuthor(data.member.memberId) && (
             // 수정삭제 버튼팝업

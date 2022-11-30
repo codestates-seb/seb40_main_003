@@ -31,13 +31,12 @@ const careQueryClient = new QueryClient();
 type CareMain = {
   searchKeyword?: string;
 };
-export const CareMain = ({searchKeyword}:CareMain) => {
-
+export const CareMain = ({ searchKeyword }: CareMain) => {
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["careQueryClient",searchKeyword],
+    ["careQueryClient", searchKeyword],
     ({ pageParam = 1 }) => InfiniteFetch("/experts", pageParam, searchKeyword),
     {
       getNextPageParam: (lastPage) =>
@@ -56,7 +55,7 @@ export const CareMain = ({searchKeyword}:CareMain) => {
       {data?.pages.map((page, index) => (
         <React.Fragment key={index}>
           {page.data.length === 0 ? (
-            <ErrorMessage  className="pt-16 width-100" content={noContent} />
+            <ErrorMessage className="pt-16 width-100" content={noContent} />
           ) : (
             page.data.map((e: caringPreviewDataTypes) => {
               return (
@@ -82,20 +81,27 @@ const Care = () => {
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-  console.log(searchKeyWord)
 
   return (
     <MainContentContainer>
       <MainCenterWrapper>
-        <SpaceEnd>
+        <SpaceBetween>
+          <select name="sorting" className="medium font-gray" id="option">
+            <option value="정렬">최신순</option>
+            <option value="정렬">찜순</option>
+            <option value="정렬">찜순</option>
+          </select>
           <button className="ml-16" onClick={onClickModal}>
             <Hamburger />
           </button>
-        </SpaceEnd>
+        </SpaceBetween>
         <>
           {isOpenModal && (
             <Modal onClickModal={onClickModal} confirm={false}>
-              <CategoryModal onClickFunction={setSearchKeyWord} closeModal={setOpenModal} />
+              <CategoryModal
+                onClickFunction={setSearchKeyWord}
+                closeModal={setOpenModal}
+              />
             </Modal>
           )}
         </>
@@ -103,7 +109,7 @@ const Care = () => {
           fallback={<ErrorMessage content="예상치 못한 에러가 발생했습니다" />}
         >
           <QueryClientProvider client={careQueryClient}>
-            <CareMain searchKeyword={searchKeyWord}/>
+            <CareMain searchKeyword={searchKeyWord} />
           </QueryClientProvider>
         </ErrorBoundary>
       </MainCenterWrapper>
