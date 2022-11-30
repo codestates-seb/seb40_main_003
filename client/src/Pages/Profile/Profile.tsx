@@ -77,7 +77,7 @@ const Profile = () => {
                       type={e.type}
                       key={`profilePlantCard ${e.plantId}`}
                       age={e.years}
-                      plandId={e.plantId}
+                      plantId={e.plantId}
                     />
                   );
                 })}

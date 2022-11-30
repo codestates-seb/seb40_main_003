@@ -44,13 +44,13 @@ type ProfilePlantCardTypes = {
   name: string;
   type: string ;
   age: string;
-  plandId: number;
+  plantId: number;
 };
 export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
   // 비구조화할당
   const { id } = useParams();
-  const { size, src, alt, name, type, age, plandId } = props;
-  const deleteItem = useDelete(`/plants/${plandId}`);
+  const { size, src, alt, name, type, age, plantId } = props;
+  const deleteItem = useDelete(`/plants/${plantId}`);
   const isAuthor = useIsAuthor();
   return (
     <ProfilePlantCardWrapper>
