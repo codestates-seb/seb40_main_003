@@ -19,6 +19,7 @@ import { LoadingSkeleton } from "../../Components/Loading";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import React from "react";
+import { cannotLoad, noContent } from "../../Const/message";
 
 const careQueryClient = new QueryClient();
 
@@ -40,20 +41,22 @@ export const CareMain = () => {
   }, [inView]);
 
   if (status === "loading") return <LoadingSkeleton />;
-  if (status === "error")
-    return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
+  if (status === "error") return <ErrorMessage content={cannotLoad} />;
   return (
     <>
       {data?.pages.map((page, index) => (
         <React.Fragment key={index}>
-          {page.data.map((e: caringPreviewDataTypes) => {
-            
-            return (
-              <Link key={e.expertId} to={`/caring/${e.expertId}`}>
-                <CareCard data={e} />
-              </Link>
-            );
-          })}
+          {page.data.length === 0 ? (
+            <ErrorMessage content={noContent} className="fullscreen" />
+          ) : (
+            page.data.map((e: caringPreviewDataTypes) => {
+              return (
+                <Link key={e.expertId} to={`/caring/${e.expertId}`}>
+                  <CareCard data={e} />
+                </Link>
+              );
+            })
+          )}
         </React.Fragment>
       ))}
       {isFetchingNextPage ? <LoadingSkeleton /> : <div ref={ref}></div>}

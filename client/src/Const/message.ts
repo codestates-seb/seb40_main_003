@@ -1,4 +1,5 @@
 export const cannotLoad = "컨텐츠를 불러오지 못했습니다" as const
+export const noContent = "컨텐츠가 존재하지 않습니다" as const
 
 export const searchbarComment = "궁금한게 있다면? 검색해보세요" as const
 

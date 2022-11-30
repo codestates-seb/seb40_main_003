@@ -134,7 +134,7 @@ const CareDetail = () => {
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
-    <LoadingSpinner />
+    <LoadingSpinner fullscreen={true}/>
   );
 };
 
