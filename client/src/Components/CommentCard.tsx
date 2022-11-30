@@ -10,6 +10,7 @@ import {
 } from "../Components/GlobalComponents";
 import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
+import { useIsAuthor } from "../Hooks/useIsAuthor";
 export const CommentCardWrapper = styled.div`
   width: 100%;
   padding: 16px 16px;
@@ -38,7 +39,7 @@ export type CommentCardTypes = {
   createdAt: string;
   content?: string;
   tag?: [{ techId: number; name: string }];
-  user: UserStateType | null;
+
   author: number;
   commentId?: number;
   communityId?: string;
@@ -54,11 +55,11 @@ export const CommentCard = (props: CommentCardTypes) => {
     createdAt,
     content,
     tag,
-    user,
     author,
     commentId,
     communityId,
   } = props;
+  const isAuthor = useIsAuthor()
   const ref = useRef<HTMLDivElement>(null);
   const [text, setText] = useState(content);
   const [editable, setEditable] = useState(false);
@@ -125,7 +126,7 @@ export const CommentCard = (props: CommentCardTypes) => {
         <ColumnWrapper>
           <div className="sub font-gray mb-6 ml-4">{getDateAgo(createdAt)}</div>
           {/* 유저와 작성자가 같다면 */}
-          {String(author) === String(user?.memberId) ? (
+          {isAuthor(author) ? (
             <CommentButtonWrapper>
               {editable ? (
                 <>
