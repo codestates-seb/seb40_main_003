@@ -42,42 +42,40 @@ const SettingPage = () => {
       <MainCenterWrapper>
         <ContentContainer>
           <SectionWrapper title="북마크">
-            <></>
           </SectionWrapper>
           <ContentWrapper>
             <Link to={"/setting/carebookmarks"}>
               <SectionWrapper>
-                <>돌봄 전문가 찜 목록(2)</>
+                돌봄 전문가 찜 목록(2)
               </SectionWrapper>
             </Link>
             <Link to={"/setting/dealbookmarks"}>
               <SectionWrapper>
-                <>거래글 찜 목록(2)</>
+                거래글 찜 목록(2)
               </SectionWrapper>
             </Link>
           </ContentWrapper>
           <SectionWrapper title="내역">
-            <></>
           </SectionWrapper>
         <ContentWrapper>
             <Link to={"/setting/sales-history"}>
               <SectionWrapper>
-                <>판매 내역(3)</>
+                판매 내역(3)
               </SectionWrapper>
             </Link>
             <Link to={"/setting/purchase-history"}>
               <SectionWrapper>
-                <>구매 내역(3)</>
+                구매 내역(3)
               </SectionWrapper>
             </Link>
             <Link to={"/setting/experts-history"}>
               <SectionWrapper>
-                <>돌봄 기록(3)</>
+                돌봄 기록(3)
               </SectionWrapper>
             </Link>
             <Link to={"/setting/my-history"}>
               <SectionWrapper>
-                <>내 게시물(3)</>
+                내 게시물(3)
               </SectionWrapper>
             </Link>
             </ContentWrapper>
