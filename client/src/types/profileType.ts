@@ -20,7 +20,7 @@ export type profileType = {
 export type ProfilePlantType = {
   plantId: number;
   name: string;
-  years: number;
+  years: string;
   type:number|string;
   image: {
     imageId: number;
