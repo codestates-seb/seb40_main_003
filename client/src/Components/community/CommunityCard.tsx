@@ -3,7 +3,7 @@ import { getDateAgo } from "../../utils/controller";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper, RowWrapper, SectionWrapper } from "../Wrapper";
 
-export const CommunityWrapper = styled.footer`
+export const NoticeboardWrapper = styled.footer`
   display: flex;
   justify-content: space-between;
 `;
@@ -26,7 +26,7 @@ const CommunityCard = ({ data }: any) => {
             <></>
           )}
 
-          <CommunityWrapper className='mt-8'>
+          <NoticeboardWrapper className='mt-8'>
             <RowWrapper>
               <span className='sub font-gray mr-8'>{getDateAgo(data.createdAt)}</span>
               {/* <span className='sub font-gray ml-16'>
@@ -39,7 +39,7 @@ const CommunityCard = ({ data }: any) => {
               renameLike='댓글'
               like={data.commentNum}
             />
-          </CommunityWrapper>
+          </NoticeboardWrapper>
         </>
       </SectionWrapper>
     </ColumnWrapper>

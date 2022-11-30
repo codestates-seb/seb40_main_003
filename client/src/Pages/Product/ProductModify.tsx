@@ -10,69 +10,74 @@ import {
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import { ProductCategoryConst } from "../../Const/Category";
+import useFetch from "../../Hooks/useFetch";
+import { ProductDetailDataType } from "../../types/productTypes";
 import { useRecoilState } from "recoil";
-import { editDataAtom } from "../../Recoil/atoms/editData";
+import { productEditDataAtom } from "../../Recoil/atoms/editData";
+
 
 const ConfirmWrapper = styled.span`
   display: flex;
   justify-content: row;
 `;
 
-type Props = {};
-
-interface CommunityModifyForm {
+interface ProductEditorForm {
   title: string;
   image: FileList;
-  file: any;
+  category: number;
+  gudong: number;
+  price: number;
   content: string;
   checked: boolean;
+  area: number;
   errors?: string;
 }
 
-const CommunityModify = (props: Props) => {
+const ProductModify = () => {
   const axiosPrivate = useAxiosPrivate();
-  const [editData, setEditData] = useRecoilState(editDataAtom);
-
+  const [productEditData, setProducteditData] = useRecoilState(productEditDataAtom);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<CommunityModifyForm>({
+  } = useForm<ProductEditorForm>({
     mode: "onChange",
   });
 
+  const onInValid = (errors: FieldErrors) => {};
   const navigate = useNavigate();
 
-  const onValid = async (data: CommunityModifyForm) => {
+  const onValid = async (data: ProductEditorForm) => {
+    console.log(data);
+
     const formData = new FormData();
-    const patchDto = JSON.stringify({
+    const dealPatchDto = JSON.stringify({
       title: data.title,
       content: data.content,
+      price: data.price,
+      category: data.category,
+      area: data.area,
     });
-
     formData.append("images", data.image[0]);
     formData.append(
-      "patchDto",
-      new Blob([patchDto], { type: "application/json" })
+      "dealPatchDto",
+      new Blob([dealPatchDto], { type: "application/json" })
     );
 
     axiosPrivate
-      .patch(`/community/${editData?.communityId}`, formData, {
+      .patch(`/deal/${productEditData?.dealId}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       })
       .then((res) => {
-        console.log(res);
-        setEditData(null);
-        navigate(`/community/${editData?.communityId}`);
+        navigate(`/product/${productEditData?.dealId}`);
       })
       .catch((err) => {});
   };
 
-  const onInValid = (errors: FieldErrors) => {};
-
-  usePageTitle("커뮤니티 글 수정");
+  usePageTitle("거래 글 수정");
 
   return (
     <MainContentContainer
@@ -83,7 +88,7 @@ const CommunityModify = (props: Props) => {
         <SectionWrapper width={100} borderNone={true}>
           <>
             <input
-              defaultValue={editData?.title}
+              defaultValue={productEditData?.title}
               className="title"
               {...register("title", {
                 required: true,
@@ -92,7 +97,7 @@ const CommunityModify = (props: Props) => {
                   value: 2,
                 },
                 maxLength: {
-                  message: "제목",
+                  message: "제목은 30글자 미만으로 작성해주세요",
                   value: 30,
                 },
               })}
@@ -103,15 +108,11 @@ const CommunityModify = (props: Props) => {
           </>
         </SectionWrapper>
 
-        <SectionWrapper width={100}>
+        <SectionWrapper width={100} borderNone={false}>
           <>
             <input
-              // defaultValue={editData.images[0]}
               className="image cursor"
-              {...register(
-                "image"
-                // {required: true}
-              )}
+              {...register("image")}
               id="image"
               type="file"
               accept="image/*"
@@ -121,11 +122,46 @@ const CommunityModify = (props: Props) => {
             <p className="font-alert-red sub">{errors.image?.message}</p>
           </>
         </SectionWrapper>
+        <SectionWrapper width={100} borderNone={false}>
+          <>
+            <select
+              {...register("category", { required: true })}
+              name="category"
+            >
+              {ProductCategoryConst.map((e) => {
+                return (
+                  <option key={`option ${e.number}`} value={e.number}>
+                    {e.name}
+                  </option>
+                );
+              })}
+            </select>
+          </>
+        </SectionWrapper>
 
         <SectionWrapper width={100} borderNone={true}>
           <>
+            <input
+            defaultValue={productEditData?.price}
+              className="price"
+              {...register("price", {
+                required: true,
+                pattern: /^[0-9.]{1,9}$/g,
+              })}
+              type="text"
+              placeholder="가격"
+            />
+            {errors.price && errors.price.type === "pattern" && (
+              <span className="font-alert-red sub mt-4">
+                숫자만 입력해주세요
+              </span>
+            )}
+          </>
+        </SectionWrapper>
+        <SectionWrapper width={100} borderNone={true}>
+          <>
             <textarea
-              defaultValue={editData?.content}
+            defaultValue={productEditData?.content}
               className="content"
               {...register("content", {
                 required: true,
@@ -135,31 +171,27 @@ const CommunityModify = (props: Props) => {
             <p className="font-alert-red sub">{errors.content?.message}</p>
           </>
         </SectionWrapper>
+
         <ConfirmWrapper>
           <input
             {...register("checked", { required: true })}
             type="checkbox"
             className="border-none checkbox-20"
-          />
-          <label className={errors.checked ? "sub font-gray" : "sub alert-red"}>
+          ></input>
+          <p className="sub font-gray">
             식물처럼 싱그럽고 예쁜 말을 써주세요.
             <br />
             욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
-          </label>
+          </p>
         </ConfirmWrapper>
       </MainCenterWrapper>
-      <MainRightWrapper>
-        <SectionWrapper borderNone={true}>
-          <p className="h5 bold font-main mr-16">
-            반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
-          </p>
-        </SectionWrapper>
-        <SigButton type="submit" value={"CommunityModify"}>
-          수정 완료
+      <MainRightWrapper center={true}>
+        <SigButton type="submit" value={"ProductEditor"}>
+          작성 완료
         </SigButton>
       </MainRightWrapper>
     </MainContentContainer>
   );
 };
 
-export default CommunityModify;
+export default ProductModify;

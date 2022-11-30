@@ -42,6 +42,8 @@ import { useSetRecoilState } from "recoil";
 import { isExpert, userState } from "./Recoil/atoms/user";
 import { getLS } from "./Hooks/useSecureLS";
 import { useLogout } from "./Hooks/useLogout";
+import ProductModify from "./Pages/Product/ProductModify";
+
 
 
 // import DevTools from "./Components/DevTools";
@@ -88,6 +90,7 @@ const App=()=>{
             <Route index element={<Product />} />
             <Route path=":id" element={<ProductDetail />} />
             <Route path="write" element={<ProductEditor />} />
+            <Route path="modify" element={<ProductModify />} />
             <Route path="category" element={<ProductCategory />} />
           </Route>
           {/* 커뮤니티 */}
