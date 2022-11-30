@@ -22,6 +22,7 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
 import { CommentCard } from "../../Components/CommentCard";
 import { useIsAuthor } from "../../Hooks/useAuth";
+import { getDateAgo } from "../../utils/controller";
 
 const CareDetail = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -105,17 +106,17 @@ const CareDetail = () => {
         />
         <SectionWrapper title="돌봄 리뷰" borderNone={true}>
           <>
-            {data.expertReviews.map((e) => {
+            {data?.expertReviews.map((e) => {
               return (
                 <CommentCard
                   name={e.member.nickname}
-                  createdAt={e.createdAt}
+                  createdAt={getDateAgo(e.createdAt)}
                   content={e.content}
                   author={e.member.memberId}
                   key={`돌봄 ${e.expertReviewId}`}
                 />
               );
-            })}
+            })&& <span className="mt-8">리뷰가 없습니다.</span>}
           </>
         </SectionWrapper>
       </MainCenterWrapper>
