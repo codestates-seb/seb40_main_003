@@ -1,13 +1,10 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import {
-  ProfileCard,
-
-  SigButton,
-
-} from "../../Components/GlobalComponents";
-import PlantCardCarousel, { AddProfilePlantCard, ProfilePlantCard } from "../../Components/profile/plantCardCarousel";
+import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
+import PlantCardCarousel, {
+  AddProfilePlantCard,
+  ProfilePlantCard,
+} from "../../Components/profile/plantCardCarousel";
 import {
   MainContentContainer,
   MainCenterWrapper,
@@ -16,7 +13,6 @@ import {
   ColumnWrapper,
 } from "../../Components/Wrapper";
 
-import { userState } from "../../Recoil/atoms/user";
 import { CareDetailTypes } from "../../types/caringTypes";
 import Modal from "../../Components/Modal";
 import { useCallback } from "react";
@@ -30,19 +26,16 @@ import { useIsAuthor } from "../../Hooks/useAuth";
 const CareDetail = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const { id } = useParams();
-  const isAuthor = useIsAuthor()
+  const isAuthor = useIsAuthor();
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
 
   const data = useFetch<CareDetailTypes>(`/experts/${id}`);
 
-  usePageTitle(
-    data !== undefined ? `${data.name} 님의 프로필` : "프로필"
-  );
-  console.log(data)
+  usePageTitle(data !== undefined ? `${data.name} 님의 프로필` : "프로필");
+  console.log(data);
   return data !== undefined ? (
-    
     <MainContentContainer>
       <MainCenterWrapper>
         <ProfileCard
@@ -84,27 +77,27 @@ const CareDetail = () => {
                   />
                 );
               })}
-            {isAuthor(data.member.memberId)&&
-              <ColumnWrapper center={true}>
-                <AddProfilePlantCard onClick={onClickModal}>
-                  +
-                </AddProfilePlantCard>
-              </ColumnWrapper>}
-
+              {isAuthor(data.member.memberId) && (
+                <ColumnWrapper center={true}>
+                  <AddProfilePlantCard onClick={onClickModal}>
+                    +
+                  </AddProfilePlantCard>
+                </ColumnWrapper>
+              )}
             </>
           </PlantCardCarousel>
         </SectionWrapper>
-        <SectionWrapper title="보유기술" tag={data.techTags} borderNone={true} />
+        <SectionWrapper
+          title="보유기술"
+          tag={data.techTags}
+          borderNone={true}
+        />
         <SectionWrapper
           title="소개합니다"
           content={data.detailContent}
           borderNone={true}
         />
-        <SectionWrapper
-          title="기본비용"
-          price={data.price}
-          borderNone={true}
-        />
+        <SectionWrapper title="기본비용" price={data.price} borderNone={true} />
         <SectionWrapper
           title="추가비용"
           content={data.extra}
@@ -116,8 +109,7 @@ const CareDetail = () => {
               return (
                 <CommentCard
                   name={e.member.nickname}
-                  // ==================날짜 안날오옴==================
-                  createdAt={"날짜가 서버에서 안날아옵니다"}
+                  createdAt={e.createdAt}
                   content={e.content}
                   author={e.member.memberId}
                   key={`돌봄 ${e.expertReviewId}`}
@@ -132,7 +124,7 @@ const CareDetail = () => {
       </MainRightWrapper>
     </MainContentContainer>
   ) : (
-    <LoadingSpinner fullscreen={true}/>
+    <LoadingSpinner fullscreen={true} />
   );
 };
 
