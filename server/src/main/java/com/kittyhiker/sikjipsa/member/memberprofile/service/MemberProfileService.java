@@ -2,11 +2,17 @@ package com.kittyhiker.sikjipsa.member.memberprofile.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.kittyhiker.sikjipsa.deal.dto.DealResponseDto;
+import com.kittyhiker.sikjipsa.deal.mapper.DealMapper;
 import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
 import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.repository.ImageRepository;
+import com.kittyhiker.sikjipsa.image.service.ImageService;
+import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
+import com.kittyhiker.sikjipsa.member.memberprofile.dto.ProfileResponseDto;
+import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberProfileMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.repository.MemberProfileRepository;
 import com.kittyhiker.sikjipsa.member.repository.MemberInfoRepository;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
@@ -14,6 +20,7 @@ import com.kittyhiker.sikjipsa.plant.entity.Plant;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,8 +30,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -34,16 +44,35 @@ public class MemberProfileService {
 	private final MemberInfoRepository memberInfoRepository;
 	private final MemberRepository memberRepository;
 	private final ImageRepository imageRepository;
+	private final ImageService imageService;
+	private final DealMapper dealMapper;
+	private final MemberProfileMapper memberProfileMapper;
 
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 	private final AmazonS3 amazonS3;
 
-	public Member getProfile(Long memberId) {
-		return findVerifiedMember(memberId);
+	public ProfileResponseDto getProfile(Long memberId) {
+		Member verifiedMember = findVerifiedMember(memberId);
+		List<DealResponseDto> response = new ArrayList<>();
+		verifiedMember.getDeals().stream().forEach(
+				deal -> {
+					List<Image> images = imageService.findImage(deal);
+					List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+					Member dealMember = deal.getMember();
+					MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
+							.nickname(dealMember.getNickname())
+							.image(imageService.findImage(dealMember)).build();
+					DealResponseDto dealResponseDto = dealMapper.dealToDealResponseDto(deal, responseImage, responseMember);
+					response.add(dealResponseDto);
+				}
+		);
+		ProfileResponseDto profileResponseDto = memberProfileMapper.toProfileResponseDto(verifiedMember);
+		profileResponseDto.setDeals(response);
+		return profileResponseDto;
 	}
 
-	public Member patchProfile(Member member, MultipartFile multipartFile, Long memberId, Long token) {
+	public ProfileResponseDto patchProfile(Member member, MultipartFile multipartFile, Long memberId, Long token) {
 		Member findMemberByToken = findVerifiedMember(token);
 		Member findMember = findVerifiedMember(memberId);
 
@@ -94,7 +123,23 @@ public class MemberProfileService {
 			}
 		}
 
-		return findMember;
+		List<DealResponseDto> response = new ArrayList<>();
+		findMember.getDeals().stream().forEach(
+				deal -> {
+					List<Image> images = imageService.findImage(deal);
+					List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+					Member dealMember = deal.getMember();
+					MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
+							.nickname(dealMember.getNickname())
+							.image(imageService.findImage(dealMember)).build();
+					DealResponseDto dealResponseDto = dealMapper.dealToDealResponseDto(deal, responseImage, responseMember);
+					response.add(dealResponseDto);
+				}
+		);
+		ProfileResponseDto profileResponseDto = memberProfileMapper.toProfileResponseDto(findMember);
+		profileResponseDto.setDeals(response);
+
+		return profileResponseDto;
 	}
 
 	private Member findVerifiedMember(Long memberId) {

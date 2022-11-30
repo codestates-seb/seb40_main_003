@@ -6,6 +6,7 @@ import com.kittyhiker.sikjipsa.member.entity.MemberInformation;
 import com.kittyhiker.sikjipsa.member.mapper.MemberMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.dto.MemberInfoDto;
 import com.kittyhiker.sikjipsa.member.memberprofile.dto.MemberPatchDto;
+import com.kittyhiker.sikjipsa.member.memberprofile.dto.ProfileResponseDto;
 import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberInfoMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberProfileMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.service.MemberInfoService;
@@ -42,8 +43,10 @@ public class MemberProfileController {
 
 	@GetMapping("{user-id}")
 	public ResponseEntity getProfile(@PathVariable("user-id") @Positive Long memberId) {
-		Member response = memberProfileService.getProfile(memberId);
-		return new ResponseEntity(memberProfileMapper.toProfileResponseDto(response), HttpStatus.OK);
+		//Member response = memberProfileService.getProfile(memberId);
+
+		ProfileResponseDto response = memberProfileService.getProfile(memberId);
+		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
 	@PatchMapping("{user-id}")
@@ -52,8 +55,8 @@ public class MemberProfileController {
 									   @RequestPart MultipartFile multipartFile,
 									   @RequestHeader("Authorization") String token) {
 		Member member = memberMapper.toProfile(memberPatchDto);
-		Member response = memberProfileService.patchProfile(member, multipartFile, memberId, jwtTokenizer.getUserIdFromToken(token));
-		return new ResponseEntity(memberProfileMapper.toProfileResponseDto(response), HttpStatus.OK);
+		ProfileResponseDto response = memberProfileService.patchProfile(member, multipartFile, memberId, jwtTokenizer.getUserIdFromToken(token));
+		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
 }
