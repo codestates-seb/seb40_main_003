@@ -11,10 +11,6 @@ import { useLogout } from "../../Hooks/useLogout";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { confirmSignout } from "../../Const/message";
 
-const ContentContainer = styled.div`
-    
-`
-
 const ContentWrapper = styled.div`
     margin-left: 18px;
 `
@@ -25,22 +21,22 @@ const SettingPage = () => {
   const axiosPrivate = useAxiosPrivate();
 	const navigate = useNavigate();
   const handleSubmit = async () => {
-    if (window.prompt('탈퇴를 원하시면 "굿바이 플랜트하이커" 라고 입력해주세요.')) {
+    if (window.prompt('탈퇴를 원하시면 "굿바이 플랜트하이커"라고 작성해주세요.') === "굿바이 플랜트하이커") {
         axiosPrivate.delete(`/users`)
         .then ((res)=>{
           navigate("/")
-          console.log(res);
+          console.log(res);   
+          })
+        } else {
+          window.alert("다시 입력해주세요.")
+        }
+      }
 
-        })
-      
-    } 
-}
   // const data = useFetch("/");
   // return data !== undefined ? (
   return (
     <MainContentContainer>
       <MainCenterWrapper>
-        <ContentContainer>
           <SectionWrapper title="북마크">
           </SectionWrapper>
           <ContentWrapper>
@@ -91,8 +87,6 @@ const SettingPage = () => {
                   >회원 탈퇴(1)</button>
               </SectionWrapper>
             </ContentWrapper>
-
-        </ContentContainer>
       </MainCenterWrapper>
       <MainRightWrapper></MainRightWrapper>
     </MainContentContainer>
