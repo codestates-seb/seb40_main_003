@@ -25,11 +25,12 @@ import AddPlantModal from "./AddPlantModal";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
 import { CommentCard } from "../../Components/CommentCard";
+import { useIsAuthor } from "../../Hooks/useIsAuthor";
 
 const CareDetail = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const { id } = useParams();
-
+  const isAuthor = useIsAuthor()
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
@@ -64,10 +65,7 @@ const CareDetail = () => {
             </Modal>
           )}
         </>
-        {
-          // isLogin?.userId===id?
-          // :<></>
-        }
+
         <SectionWrapper title="반려 식물">
           <PlantCardCarousel key={"reactCarousel"}>
             <>
@@ -84,15 +82,13 @@ const CareDetail = () => {
                   />
                 );
               })}
-              {/* {
-                  isLogin?.userId===id? */}
+            {isAuthor(id)&&
               <ColumnWrapper center={true}>
                 <AddProfilePlantCard onClick={onClickModal}>
                   +
                 </AddProfilePlantCard>
-              </ColumnWrapper>
-              {/* :<></>
-                } */}
+              </ColumnWrapper>}
+
             </>
           </PlantCardCarousel>
         </SectionWrapper>

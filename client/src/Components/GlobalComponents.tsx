@@ -245,6 +245,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
     circle = false,
     tag,
   } = props;
+  console.log(tag)
   return (
     <CenteringWrapper className="space-between" borderNone={true}>
       <RowWrapper className="align-center">
@@ -265,7 +266,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         </ColumnWrapper>
       </RowWrapper>
 
-      {tag && <SigTag className="ghost sub">{tag}번 고용</SigTag>}
+      {tag!==undefined && <SigTag className="ghost sub">{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
