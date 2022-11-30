@@ -1,6 +1,7 @@
 package com.kittyhiker.sikjipsa.chatting.entity;
 
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
+import com.kittyhiker.sikjipsa.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,4 +23,10 @@ public class ChatMessage extends AuditingEntity {
     private String roomName;
 
     private String message;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "sender_id")
+    private Member sender;
+
+    private int isRead=0;
 }

@@ -19,12 +19,12 @@ public class ChatRoom {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chat_room_id")
-    private Long chatRoomId;
+    private Long roomId;
 
     private String roomName;
 
     @OneToOne
-    @JoinColumn(name = "sender_id")
+    @JoinColumn(name = "buyer_id")
     private Member sender;
 
     @ManyToOne

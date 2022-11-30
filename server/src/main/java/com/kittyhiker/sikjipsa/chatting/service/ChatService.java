@@ -1,10 +1,13 @@
 package com.kittyhiker.sikjipsa.chatting.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kittyhiker.sikjipsa.chatting.dto.ChatMessageDto;
 import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto;
+import com.kittyhiker.sikjipsa.chatting.entity.ChatMessage;
 import com.kittyhiker.sikjipsa.chatting.entity.ChatRoom;
 import com.kittyhiker.sikjipsa.chatting.mapper.ChatRoomMapper;
 import com.kittyhiker.sikjipsa.chatting.repository.ChatRoomRepository;
+import com.kittyhiker.sikjipsa.chatting.repository.MessageRepository;
 import com.kittyhiker.sikjipsa.deal.entity.Deal;
 import com.kittyhiker.sikjipsa.deal.service.DealService;
 import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
@@ -31,19 +34,27 @@ public class ChatService {
     private final DealService dealService;
     private final MemberService memberService;
     private final ChatRoomRepository chatRoomRepository;
-    private Map<String, ChatRoomDto> chatRooms;
+    private final MessageRepository messageRepository;
+    private final Map<String, ChatRoomDto> chatRooms = new LinkedHashMap<>();
 
-    @PostConstruct
-    private void init() {
-        chatRooms = new LinkedHashMap<>();
-    }
+//    @PostConstruct
+//    private void init() {
+//        chatRooms = new LinkedHashMap<>();
+//    }
 
     public List<ChatRoomDto> findAllRoom() {
         return new ArrayList<>(chatRooms.values());
     }
 
-    public ChatRoomDto findRoomById(String roomId) {
-        return chatRooms.get(roomId);
+    public ChatRoomDto findRoomByName(String roomName) {
+        if (chatRooms.get(roomName)!=null) return chatRooms.get(roomName);
+        else {
+            ChatRoom chatRoom = chatRoomRepository.findByRoomName(roomName).orElseThrow(() ->
+                    new BusinessLogicException(ExceptionCode.NOT_FOUND_CHATROOM));
+            ChatRoomDto chatRoomDto = chatRoomMapper.chatRoomToChatRoomDto(chatRoom);
+            chatRooms.put(roomName, chatRoomDto);
+            return chatRoomDto;
+        }
     }
 
     public ChatRoomDto createDealRoom(Long userId, Long dealId) {
@@ -63,7 +74,7 @@ public class ChatService {
 
             ChatRoom savedChatRoom = chatRoomRepository.save(chatRoom);
             ChatRoomDto chatRoomDto = chatRoomMapper.chatRoomToChatRoomDto(savedChatRoom);
-            chatRooms.put(randomId, chatRoomDto);
+            chatRooms.put(chatRoomDto.getRoomName(), chatRoomDto);
             return chatRoomDto;
         }
     }
@@ -75,9 +86,16 @@ public class ChatService {
         return chatRoom;
     }
 
-    public <T> void sendMessage(WebSocketSession session, T message) {
+
+    public void sendMessage(WebSocketSession session, ChatMessageDto message) {
+        Member member = memberService.verifyMember(message.getSenderId());
+        ChatMessage chatMessage = chatRoomMapper.messageDtoToChatMessage(message, member);
+        messageRepository.save(chatMessage);
+
         try {
-            session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+            synchronized (session) {
+                session.sendMessage(new TextMessage(objectMapper.writeValueAsString(message)));
+            }
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
