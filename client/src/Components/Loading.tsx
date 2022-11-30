@@ -36,7 +36,7 @@ const LoadingElem = styled.div`
 type spinnerProps={
   fullscreen?:boolean
 }
-export const LoadingSpinner = ({fullscreen}:spinnerProps) => {
+export const LoadingSpinner = ({fullscreen=true}:spinnerProps) => {
   return (
     <LoadingWrapper fullscreen={fullscreen}>
       <LoadingElem />

@@ -147,6 +147,7 @@ export const SpaceEnd = styled.div`
 export const RowWrapper = styled.div`
   display: flex;
   flex-direction: row;
+  width: 100%;
   &.align-center {
     align-items: center;
   }

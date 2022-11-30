@@ -121,7 +121,7 @@ const Profile = () => {
                 {data.deals.map((e, i) => {
                   if (data.deals.length-i < 4) {
                     return (
-                      <Link to={`/product/${e.dealId}`}>
+                      <Link to={`/product/${e.dealId}`} key={`product/${e.dealId}`}>
                         <ProductCard data={e} />
                       </Link>
                     );

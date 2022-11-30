@@ -100,9 +100,6 @@ const Product = () => {
         <Link to={"/product/write"}>
           <SigButton type="submit">새 글쓰기</SigButton>
         </Link>
-        <Link to={"/product/category"}>
-          <SigButton>거래 카테고리</SigButton>
-        </Link>
       </MainRightWrapper>
     </MainContentContainer>
   );
