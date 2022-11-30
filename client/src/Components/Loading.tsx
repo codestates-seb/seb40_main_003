@@ -11,16 +11,19 @@ const spin = keyframes`
   }
   `;
 
-type LoadingSpinnerProps = {
-  size?: number;
-};
+
 const LoadingWrapper = styled.section`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  min-height: ${(props:{fullscreen?:boolean})=>props.fullscreen?"90vh":0};
 `;
+
+type LoadingSpinnerProps = {
+  size?: number;
+};
 const LoadingElem = styled.div`
   display: block;
   width: ${(props: LoadingSpinnerProps) => (props.size ? props.size : "70")}px;
@@ -31,9 +34,9 @@ const LoadingElem = styled.div`
   animation: ${spin} 500ms linear infinite;
 `;
 
-export const LoadingSpinner = () => {
+export const LoadingSpinner = (fullscreen?:boolean) => {
   return (
-    <LoadingWrapper>
+    <LoadingWrapper fullscreen={fullscreen}>
       <LoadingElem />
     </LoadingWrapper>
   );
