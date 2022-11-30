@@ -117,7 +117,7 @@ const App=()=>{
               <Route path="dealbookmarks" element={<DealBookmarks />} />
               <Route path="sales-history" element={<SalesHistory />} />
               <Route path="purchase-history" element={<PurchaseHistory />} />
-              <Route path="caring-history" element={<CaringHistory />} />
+              <Route path="experts-history" element={<CaringHistory />} />
               <Route path="my-history" element={<MyHistory />} />
               <Route path="edit" element={<EditAccount />} />
               <Route path="resign" element={<Resign />} />
