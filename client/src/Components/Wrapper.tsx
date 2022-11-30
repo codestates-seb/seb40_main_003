@@ -124,6 +124,10 @@ type columnWrapperType = {
   width?: number;
   center?: boolean;
 };
+export const ReverseWrap = styled.section`
+  display: flex;
+  flex-flow: nowrap column-reverse;
+`;
 export const ColumnWrapper = styled.div`
   display: flex;
   flex-direction: column;
