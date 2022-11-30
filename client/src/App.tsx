@@ -41,6 +41,7 @@ import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { isExpert, userState } from "./Recoil/atoms/user";
 import { getLS } from "./Hooks/useSecureLS";
+import { useLogout } from "./Hooks/useLogout";
 
 
 // import DevTools from "./Components/DevTools";
