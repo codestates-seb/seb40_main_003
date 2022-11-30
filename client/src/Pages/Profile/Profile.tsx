@@ -112,9 +112,12 @@ const Profile = () => {
               <span className="mt-8">거래후기가 없습니다</span>
             )}
           </SectionWrapper>
-          <SectionWrapper title="판매 상품" width={100}>
+          <SectionWrapper title="판매 상품" width={100} pb={0}>
             {data.deals.length !== 0 ? (
               <ReverseWrap>
+                <Link to={"/setting/sales-history"}>
+                <button className="mt-8 bold font-gray">더 보기</button>
+                </Link>
                 {data.deals.map((e, i) => {
                   if (data.deals.length-i < 4) {
                     return (
