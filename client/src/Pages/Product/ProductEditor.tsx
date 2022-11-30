@@ -46,8 +46,6 @@ const ProductEditor = () => {
   const navigate = useNavigate();
 
   const onValid = async (data: ProductEditorForm) => {
-    console.log(data);
-
     const formData = new FormData();
     const dealPostDto = JSON.stringify({
       title: data.title,
@@ -125,6 +123,7 @@ const ProductEditor = () => {
               {...register("category", { required: true })}
               name="category"
             >
+              <option value="" hidden>카테고리 선택</option>
               {ProductCategoryConst.map((e) => {
                 return (
                   <option key={`option ${e.number}`} value={e.number}>
