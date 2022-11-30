@@ -82,7 +82,7 @@ const ProductBookmarksDetail = () => {
                 ).then((res) => {
                   console.log(res);
                   window.alert("삭제가 완료되었습니다.")
-                  navigate("/deal")
+                  navigate("/product")
                 });
               }
             }}>삭제</button>

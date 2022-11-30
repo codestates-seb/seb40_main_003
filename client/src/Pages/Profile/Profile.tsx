@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import useFetch, { FetchByBody } from "../../Hooks/useFetch";
+
+import useFetch from "../../Hooks/useFetch";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { userState } from "../../Recoil/atoms/user";
+
 import {
   ColumnWrapper,
   MainCenterWrapper,
@@ -10,32 +10,34 @@ import {
   MainRightWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
-import {
-  AddProfilePlantCard,
-  ProfileCard,
-  ProfilePlantCard,
-  SigButton,
-} from "../../Components/GlobalComponents";
+import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
 import { Link } from "react-router-dom";
 import { profileType } from "../../types/profileType";
 import AddPlantModal from "../Main/AddPlantModal";
 import Modal from "../../Components/Modal";
 import { useCallback, useState } from "react";
 import { CommentCard } from "../../Components/CommentCard";
-import PlantCardCarousel from "../../Components/profile/plantCardCarousel";
+import PlantCardCarousel, {
+  AddProfilePlantCard,
+  ProfilePlantCard,
+} from "../../Components/profile/plantCardCarousel";
 import ProductCard from "../../Components/product/ProductCard";
-
+import { useIsAuthor } from "../../Hooks/useIsAuthor";
 const Profile = () => {
+  // 페이지주소
   const { id } = useParams();
-  const userInfo = useRecoilValue(userState);
+  // 작성자와 로그인유저 확인
+  const isAuthor = useIsAuthor();
+  // 데이터 패칭
   const data = useFetch<profileType>(`/profile/${id}`);
-  // const data = MockData;
+  // 페이지 설정
   usePageTitle("프로필");
+  // 모달
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-  console.log(data);
+
   return data ? (
     <>
       <MainContentContainer>
@@ -74,10 +76,11 @@ const Profile = () => {
                       type={e.type}
                       key={`profilePlantCard ${e.plantId}`}
                       age={e.years}
+                      plandId={e.plantId}
                     />
                   );
                 })}
-                {String(userInfo?.memberId) === String(id) ? (
+                {isAuthor(id) ? (
                   <ColumnWrapper center={true}>
                     <AddProfilePlantCard onClick={onClickModal}>
                       +
@@ -98,7 +101,6 @@ const Profile = () => {
                       name={e.member.nickname}
                       createdAt={"날짜가 서버에서 안날아옵니다"}
                       content={e.content}
-                      user={userInfo}
                       author={e.member.memberId}
                       key={`거래후기 ${e.dealReviewId}`}
                     />

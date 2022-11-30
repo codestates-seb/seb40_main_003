@@ -4,6 +4,7 @@ import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import { UserStateType } from "../Recoil/atoms/user";
 import defaultProfile from "../images/defaultProfileImage.png";
 
+
 // 버튼앨리먼트
 export const SigButton = styled.button`
   padding: 16px 0;
@@ -269,56 +270,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
   );
 };
 
-// 프로필 반려식물
-export const ProfilePlantCardWrapper = styled.div`
-  max-width: 250px;
-  padding: 8px;
-  margin-right: 8px;
-  border: 1px solid var(--line-light-gray);
-  display: flex;
-  align-items: center;
-  border-radius: var(--sig-border-8);
-`;
-type ProfilePlantCardTypes = {
-  size?: string;
-  src: string;
-  alt: string;
-  name: string;
-  type: string | number;
-  age: number;
-};
-export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
-  // 비구조화할당
-  const { size, src, alt, name, type, age } = props;
-  return (
-    <ProfilePlantCardWrapper>
-      <ImageWrapper
-        src={src}
-        alt={alt}
-        size={size === "sm" ? "36" : "66"}
-        className="mr-16"
-        loading="lazy"
-      ></ImageWrapper>
-      <ColumnWrapper>
-        <span className="medium">{name}</span>
-        <span className="sub font-gray">{type}</span>
-        <div className="sub font-gray ml-54">{age}년차</div>
-      </ColumnWrapper>
-    </ProfilePlantCardWrapper>
-  );
-};
 
-export const AddProfilePlantCard = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
-  background-color: var(--pure-white);
-  border-radius: var(--sig-border-8);
-  border: 1px solid var(--main);
-  color: var(--main);
-  cursor: pointer;
-`;
 
 // Comment 컴포넌트, 돌봄리뷰
 export const CommentCardWrapper = styled.div`

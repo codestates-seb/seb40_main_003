@@ -100,7 +100,6 @@ const CommunityDetail = () => {
                 commentId={e.commentId}
                 key={e.commentId}
                 author={e.writer.memberId}
-                user={user}
                 communityId={id ? id : ""}
               />
             );
