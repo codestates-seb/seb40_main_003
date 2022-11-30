@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { keyframes, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { DescriptionColumnWrapper } from "./product/ProductCard";
