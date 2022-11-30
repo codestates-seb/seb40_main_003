@@ -266,7 +266,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         </ColumnWrapper>
       </RowWrapper>
 
-      {String(tag) && <SigTag className="ghost sub">{tag}번 고용</SigTag>}
+      {tag!==undefined && <SigTag className="ghost sub">{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
