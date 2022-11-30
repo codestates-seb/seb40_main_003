@@ -10,9 +10,7 @@ import {
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import { ProductCategoryConst } from "../../Const/Category";
-import useFetch from "../../Hooks/useFetch";
-import { ProductDetailDataType } from "../../types/productTypes";
+import { ProductCategoryList } from "../../Const/Category";
 import { useRecoilState } from "recoil";
 import { productEditDataAtom } from "../../Recoil/atoms/editData";
 
@@ -128,7 +126,7 @@ const ProductModify = () => {
               {...register("category", { required: true })}
               name="category"
             >
-              {ProductCategoryConst.map((e) => {
+              {ProductCategoryList.map((e) => {
                 return (
                   <option key={`option ${e.number}`} value={e.number}>
                     {e.name}

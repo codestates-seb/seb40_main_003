@@ -4,7 +4,9 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
+  RowWrapper,
   SectionWrapper,
+  SpaceBetween,
 } from "../../Components/Wrapper";
 import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
@@ -23,6 +25,7 @@ import { useInView } from "react-intersection-observer";
 import React from "react";
 import { ProfileDealType } from "../../types/profileType";
 import { cannotLoad, searchbarComment } from "../../Const/message";
+import { ReactComponent as Hamburger } from "../../images/hamburgerIcon.svg";
 
 // 쿼리클라이언트
 const productQueryClient = new QueryClient();
@@ -69,19 +72,24 @@ export const ProductMain = ({ searchKeyword }: productMain) => {
 
 // 전체 페이지
 const Product = () => {
-  const [searchKeyWord, setSearchKeyWord] = useState<string|undefined>(undefined);
+  const [searchKeyWord, setSearchKeyWord] = useState<string | undefined>(
+    undefined
+  );
   usePageTitle("거래");
   return (
     <MainContentContainer>
       <MainCenterWrapper>
-        <input
-          type="text"
-          className="mb-4"
-          placeholder={searchbarComment}
-          onChange={(e) => {
-            setSearchKeyWord(e.target.value);
-          }}
-        />
+        <SpaceBetween>
+          <input
+            type="text"
+            className="mb-4 width100"
+            placeholder={searchbarComment}
+            onChange={(e) => {
+              setSearchKeyWord(e.target.value);
+            }}
+          />
+          <button><Hamburger/></button>
+        </SpaceBetween>
         {/* 쿼리클라이언트로 감쌈 */}
         <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
           <QueryClientProvider client={productQueryClient}>

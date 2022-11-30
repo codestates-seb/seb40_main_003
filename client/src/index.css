@@ -87,6 +87,9 @@ input.checkbox-20 {
   accent-color: var(--main);
   cursor: pointer;
 }
+.width-100{
+  width: 100%;
+}
 
 .popup-arrow{
   display: none;
@@ -303,6 +306,9 @@ input.checkbox-20 {
 
 .text-align-center {
   text-align: center;
+}
+.text-align-end {
+  text-align: end;
 }
 
 .display-none {

@@ -10,7 +10,6 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
-  RowWrapper,
   SpaceBetween,
 } from "../../Components/Wrapper";
 import { userState } from "../../Recoil/atoms/user";

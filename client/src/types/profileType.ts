@@ -21,7 +21,7 @@ export type ProfilePlantType = {
   plantId: number;
   name: string;
   years: string;
-  type:number|string;
+  type: string;
   image: {
     imageId: number;
     imgUrl: string;
@@ -47,4 +47,5 @@ export type ProfileDealType = {
   state: number;
   images: string[]|string;
   createdAt: string;
+  category:number
 };

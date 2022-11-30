@@ -42,7 +42,7 @@ type ProfilePlantCardTypes = {
   src: string;
   alt: string;
   name: string;
-  type: string | number;
+  type: string ;
   age: string;
   plandId: number;
 };

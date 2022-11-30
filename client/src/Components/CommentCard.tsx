@@ -124,7 +124,7 @@ export const CommentCard = (props: CommentCardTypes) => {
       </RowWrapper>
       <GridWrapper>
         <ColumnWrapper>
-          <div className="sub font-gray mb-6 ml-4">{getDateAgo(createdAt)}</div>
+          <div className="sub font-gray mb-6 ml-4 text-align-end">{getDateAgo(createdAt)}</div>
           {/* 유저와 작성자가 같다면 */}
           {isAuthor(author) ? (
             <CommentButtonWrapper>
