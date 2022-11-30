@@ -24,15 +24,15 @@ const SettingPage = () => {
   const logout = useLogout();
   const axiosPrivate = useAxiosPrivate();
 	const navigate = useNavigate();
-  const signout = prompt('탈퇴를 원하시면 "굿바이 플랜트하이커" 라고 입력해주세요.');
   const handleSubmit = async () => {
-    if (window.confirm(confirmSignout)) {
-      if (signout === "굿바이 플랜트하이커") {
+    if (window.prompt('탈퇴를 원하시면 "굿바이 플랜트하이커" 라고 입력해주세요.')) {
         axiosPrivate.delete(`/users`)
-        .then (()=>{
+        .then ((res)=>{
           navigate("/")
+          console.log(res);
+
         })
-      } 
+      
     } 
 }
   // const data = useFetch("/");
