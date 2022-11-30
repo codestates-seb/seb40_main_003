@@ -36,7 +36,6 @@ import CommunityModify from "./Pages/Community/CommunityModify";
 
 import Talk from "./Pages/Talk/Talk";
 import { DefaultLayout } from "./Route";
-import ProductCategory from "./Pages/Product/ProductCategory";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { isExpert, userState } from "./Recoil/atoms/user";
@@ -61,6 +60,8 @@ const App=()=>{
     //로컬스토리지에 유저정보가 있고, 액세스토큰, 리프레시토큰 모두 있을때 (토큰 유효성검사는 안함)
     if(accessToken&&refreshToken&&userInfo){
       setUser(userInfo);
+    }else {
+      
     }
   }, [setUser])
   
@@ -91,7 +92,6 @@ const App=()=>{
             <Route path=":id" element={<ProductDetail />} />
             <Route path="write" element={<ProductEditor />} />
             <Route path="modify" element={<ProductModify />} />
-            <Route path="category" element={<ProductCategory />} />
           </Route>
           {/* 커뮤니티 */}
           <Route path="/community" element={<DefaultLayout />}>
