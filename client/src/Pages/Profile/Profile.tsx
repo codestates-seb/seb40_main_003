@@ -116,7 +116,7 @@ const Profile = () => {
             {data.deals.length !== 0 ? (
               <ReverseWrap>
                 <Link to={"/setting/sales-history"}>
-                <button className="mt-8 bold font-gray">더 보기</button>
+                <button className="mt-8 ml-50 bold font-gray">더 보기</button>
                 </Link>
                 {data.deals.map((e, i) => {
                   if (data.deals.length-i < 4) {

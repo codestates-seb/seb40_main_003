@@ -267,6 +267,10 @@ input.checkbox-20 {
   margin-left: -45px;
 }
 
+.ml-50 {
+  margin-left: 50%;
+}
+
 .pd-4{
   padding: 4px;
 }
