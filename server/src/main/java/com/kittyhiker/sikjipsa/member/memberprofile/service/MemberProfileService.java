@@ -8,7 +8,9 @@ import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.repository.ImageRepository;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.memberprofile.repository.MemberProfileRepository;
+import com.kittyhiker.sikjipsa.member.repository.MemberInfoRepository;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
+import com.kittyhiker.sikjipsa.plant.entity.Plant;
 import lombok.RequiredArgsConstructor;
 import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,34 +31,40 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MemberProfileService {
 	private final MemberProfileRepository memberProfileRepository;
+	private final MemberInfoRepository memberInfoRepository;
 	private final MemberRepository memberRepository;
 	private final ImageRepository imageRepository;
-//	@Value("${com.sikjipsa.upload.path}")
-//	private String uploadPath;
 
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 	private final AmazonS3 amazonS3;
 
 	public Member getProfile(Long memberId) {
-		Member member = findVerifiedMember(memberId);
-		return member;
+		return findVerifiedMember(memberId);
 	}
 
-	private Member findVerifiedMember(Long memberId) {
-		Optional<Member> optionalMember = memberRepository.findById(memberId);
-		Member member = optionalMember.orElseThrow(() ->
-				new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
-		return member;
-	}
+	public Member patchProfile(Member member, MultipartFile multipartFile, Long memberId, Long token) {
+		Member findMemberByToken = findVerifiedMember(token);
+		Member findMember = findVerifiedMember(memberId);
 
-	public Member patchProfile(Member member, MultipartFile multipartFile) {
-		Optional<Member> optionalMember = memberRepository.findById(member.getMemberId());
-		Member findMember = optionalMember.orElseThrow(() ->
-				new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+		if (findMember != findMemberByToken) {
+			throw new BusinessLogicException(ExceptionCode.MEMBER_FORBIDDEN);
+		}
 
 		Optional.ofNullable(member.getNickname())
 				.ifPresent(findMember::setNickname);
+
+		Optional.ofNullable(member.getMemberProfile())
+				.ifPresent(memberProfile -> {
+					memberProfileRepository.delete(findMember.getMemberProfile());
+					findMember.setMemberProfile(memberProfile);
+				});
+
+		Optional.ofNullable(member.getMemberInformation())
+				.ifPresent(memberInformation -> {
+					memberInfoRepository.delete(findMember.getMemberInformation());
+					findMember.setMemberInformation(memberInformation);
+				});
 
 		if (multipartFile != null) {
 			if (findMember.getImage() != null) {
@@ -70,7 +78,7 @@ public class MemberProfileService {
 				ObjectMetadata objectMetadata = new ObjectMetadata();
 				objectMetadata.setContentLength(multipartFile.getSize());
 				amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), objectMetadata);
-				String filePath = amazonS3.getUrl(bucket, originalName).toString();
+				String filePath = amazonS3.getUrl(bucket, fileName).toString();
 
 				Image image = new Image(fileName, originalName, filePath, "empty", findMember);
 				findMember.setImage(image);
@@ -81,5 +89,12 @@ public class MemberProfileService {
 		}
 
 		return findMember;
+	}
+
+	private Member findVerifiedMember(Long memberId) {
+		Optional<Member> optionalMember = memberRepository.findById(memberId);
+		Member member = optionalMember.orElseThrow(() ->
+				new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+		return member;
 	}
 }

@@ -12,11 +12,13 @@ import java.time.LocalDateTime;
 public class MemberReviewDto {
 	private Long dealReviewId;
 
-	private String content;
+	private Long dealId;
 
 //	private Deal deal;
 
-	private MemberDto member; // 구매자
-	private LocalDateTime createdAt;
-	private LocalDateTime modifiedAt;
+	private MemberDto buyer; // 구매자
+
+	private String content;
+//	private LocalDateTime createdAt;
+//	private LocalDateTime modifiedAt;
 }

@@ -19,7 +19,7 @@ public class MemberLikeExpert {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "expert_profile_id")
 	private ExpertProfile expertProfile;
 }

@@ -13,7 +13,7 @@ public class PlantResponseDto {
 
 	//private int age;
 
-	private String days;
+	private String years;
 
 	private String type;
 
