@@ -22,7 +22,6 @@ import styled from "@emotion/styled";
 import { productEditDataAtom } from "../../Recoil/atoms/editData";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { confirmRemove } from "../../Const/message";
-import { NoticeboardWrapper } from "../../Components/community/CommunityCard";
 import { useIsAuthor } from "../../Hooks/useAuth";
 import { EditAndDeleteButton } from "../../Components/profile/plantCardCarousel";
 
@@ -64,7 +63,7 @@ const ProductBookmarksDetail = () => {
             circle={true}
           />
         </Link>
-        <NoticeboardWrapper>
+        <SpaceBetween>
           <h1 className="h4 bold mt-16">{data.title}</h1>
           {/* 게시글 수정, 삭제 버튼 */}
           {isAuthor(data.member.memberId) && (
@@ -87,7 +86,7 @@ const ProductBookmarksDetail = () => {
               }}
             />
           )}
-        </NoticeboardWrapper>
+        </SpaceBetween>
         <SpaceBetween>
           <span className="sub font-gray mb-8">
             {getDateAgo(data.createdAt)}
