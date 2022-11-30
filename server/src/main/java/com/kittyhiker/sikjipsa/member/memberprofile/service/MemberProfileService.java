@@ -51,6 +51,12 @@ public class MemberProfileService {
 			throw new BusinessLogicException(ExceptionCode.MEMBER_FORBIDDEN);
 		}
 
+//		Optional.ofNullable(member.getPassword())
+//				.ifPresent(findMember::setPassword);
+//
+//		Optional.ofNullable(member.getEmail())
+//				.ifPresent(findMember::setEmail);
+
 		Optional.ofNullable(member.getNickname())
 				.ifPresent(findMember::setNickname);
 
