@@ -31,23 +31,24 @@ const EndWrapper = styled.div`
 `
 
 const CareCard = ({ data }: any) => {
+  
   return (
         <>
       <CardWrapper>
           <CareDescription>
             <ImageWrapper
               size={"100"}
-              src={data.member.image.imgUrl}
-              alt={`상품명 ${data.member.name}의 대표이미지`}
+              src={data.image.imgUrl}
+              alt={`상품명 ${data.name}의 대표이미지`}
               loading="lazy"
             />
             <DescriptionColumnWrapper>
               <ColumnWrapper>
-                  <span className="medium font-main">{data.member.name} / {data.member.age}세 / {data.member.gender}</span>
+                  <span className="medium font-main">{data.name} / {data.age}세 / {data.gender}</span>
                   <span className="font-gray sub">{data.simpleContent}</span>
-                  <span>{data.techTagId}</span>
+                  <span>{data.techTagName}</span>
                   <TagWrapper>
-                    {data.techTag.map((e:any) => {
+                    {data.techTags.map((e:any) => {
                       return (
                         <SigTag className="ghostgray sub" key={e.techTagId}>{e.techTagName}</SigTag>
                     )})}
@@ -55,7 +56,7 @@ const CareCard = ({ data }: any) => {
               </ColumnWrapper>
               <EndWrapper>
               <span className="medium font-gray sub">{data.address}</span>
-              <ViewCounter view={data.view} like={data.like} />                
+              <ViewCounter view={data.view} like={data.likes} />                
               </EndWrapper>          
             </DescriptionColumnWrapper>
             </CareDescription>

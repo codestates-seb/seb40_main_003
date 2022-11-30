@@ -47,7 +47,7 @@ export const CareMain = () => {
       {data?.pages.map((page, index) => (
         <React.Fragment key={index}>
           {page.data.map((e: caringPreviewDataTypes) => {
-            console.log(e);
+            
             return (
               <Link key={e.expertId} to={`/caring/${e.expertId}`}>
                 <CareCard data={e} />
