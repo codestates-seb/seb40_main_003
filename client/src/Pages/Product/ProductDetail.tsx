@@ -1,5 +1,5 @@
-import { Link, useParams } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { TopCarousel } from "../../Components/Carousel";
 import {
   ProfileCard,
@@ -18,6 +18,10 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import useFetch from "../../Hooks/useFetch";
 import { getDateAgo } from "../../utils/controller";
 import styled from "@emotion/styled";
+import { editDataAtom, producteditDataAtom } from "../../Recoil/atoms/editData";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import { confirmRemove } from "../../Const/message";
+import { NoticeboardWrapper } from "../../Components/community/CommunityCard";
 
 const CarouselImage= styled.img`
   width: 100%;
@@ -30,10 +34,12 @@ const CarouselImage= styled.img`
 
 const ProductBookmarksDetail = () => {
   const { id } = useParams();
-  const isLogin = useRecoilValue(userState);
-  const data = useFetch<ProductDetailDataType>(id?`/deal/${id}`:"")
-
-  console.log(data)
+  const user = useRecoilValue(userState);
+  const data = useFetch<ProductDetailDataType>(id?`/deal/${id}`:"");
+  const [producteditData, setProducteditData] = useRecoilState(producteditDataAtom);
+  const axiosPrivate = useAxiosPrivate()
+  const navigate = useNavigate()
+  
   return data !== undefined ? (
     // 메인 컨테이너 (반응형 제공!)
     <MainContentContainer>
@@ -58,8 +64,31 @@ const ProductBookmarksDetail = () => {
             circle={true}
           />
         </Link> */}
-        
+        <NoticeboardWrapper>
         <h1 className="h4 bold mt-16">{data.title}</h1>
+        {/* 게시글 수정, 삭제 버튼 */}
+        {String(data.member.memberId) === String(user?.memberId)&&(
+          <div>
+            {/* 수정버튼 */}
+            <button className="sub mr-16 mt-16" onClick={()=>{
+              setProducteditData(data)
+              navigate("/")
+            }}>수정</button>
+            {/* 삭제버튼 */}
+            <button className="sub" onClick={() => {
+              if (window.confirm(confirmRemove("게시물을"))) {
+                axiosPrivate.delete(
+                  `/deal/${data.dealId}`
+                ).then((res) => {
+                  console.log(res);
+                  window.alert("삭제가 완료되었습니다.")
+                  navigate("/deal")
+                });
+              }
+            }}>삭제</button>
+          </div>
+        )}
+        </NoticeboardWrapper>
         <span className="sub font-gray mb-8">{getDateAgo(data.createdAt)}</span>
         <ViewCounter like={data.likeNum} view={data.view} />
         <p className="mt-16">{data.content}</p>

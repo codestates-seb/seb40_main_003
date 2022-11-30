@@ -14,7 +14,7 @@ import {
 } from "../../Components/Wrapper";
 import { userState } from "../../Recoil/atoms/user";
 import { communityCommentType, communityDetailTypes } from "../../types/communityTypes";
-import { CommunityWrapper } from "../../Components/community/CommunityCard";
+import { NoticeboardWrapper } from "../../Components/community/CommunityCard";
 import { Link } from "react-router-dom";
 import CommentInput from "../../Components/UserInput";
 import usePageTitle from "../../Hooks/usePageTitle";
@@ -41,7 +41,7 @@ const CommunityDetail = () => {
     <MainContentContainer>
       <MainCenterWrapper>
         <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
-          <CommunityWrapper>
+          <NoticeboardWrapper>
             <span className="h4 bold font-main mb-16">{data.title}</span>
             {/* 게시글 수정, 삭제 버튼 */}
             {String(data.member.memberId) === String(user?.memberId) && (
@@ -64,7 +64,7 @@ const CommunityDetail = () => {
                 }}>삭제</button>
               </div>
             )}
-          </CommunityWrapper>
+          </NoticeboardWrapper>
           {data.images[0] ? (
             <ImageWrapper
               className="communityImage"
@@ -74,7 +74,7 @@ const CommunityDetail = () => {
             />
           ) : null}
           <p className="font-black mt-16 text-overflow">{data.content}</p>
-          <CommunityWrapper className="mt-16">
+          <NoticeboardWrapper className="mt-16">
             <RowWrapper>
               <span className="sub font-gray">
                 {getDateAgo(data.createdAt)}
@@ -86,7 +86,7 @@ const CommunityDetail = () => {
               renameLike="좋아요"
               like={data.likeNum}
             />
-          </CommunityWrapper>
+          </NoticeboardWrapper>
           <CommentInput url={id} />
           {data.comments.length!==0?data.comments.map((e: communityCommentType) => {
             return (
