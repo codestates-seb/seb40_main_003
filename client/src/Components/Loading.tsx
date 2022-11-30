@@ -18,7 +18,7 @@ const LoadingWrapper = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: ${(props:{fullscreen?:boolean})=>props.fullscreen?"90vh":0};
+  min-height: ${(props:spinnerProps)=>props.fullscreen?"90vh":0};
 `;
 
 type LoadingSpinnerProps = {
@@ -33,8 +33,10 @@ const LoadingElem = styled.div`
   border-top-color: var(--main);
   animation: ${spin} 500ms linear infinite;
 `;
-
-export const LoadingSpinner = (fullscreen?:boolean) => {
+type spinnerProps={
+  fullscreen?:boolean
+}
+export const LoadingSpinner = ({fullscreen}:spinnerProps) => {
   return (
     <LoadingWrapper fullscreen={fullscreen}>
       <LoadingElem />
