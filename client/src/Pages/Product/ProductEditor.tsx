@@ -33,16 +33,7 @@ interface ProductEditorForm {
 
 const ProductEditor = () => {
   const axiosPrivate = useAxiosPrivate();
-  // const [user, setUser] = useRecoilState(userState);
 
-
-  // 윤정쓰가 남긴 악성코드 😠😠😠😠
-  // 윤정쓰가 남긴 악성코드 😠😠😠😠
-
-  // const data = useFetch<ProductDetailDataType>(`/deal/`);
-
-  // 윤정쓰가 남긴 악성코드 😠😠😠😠
-    // 윤정쓰가 남긴 악성코드 😠😠😠😠
   const {
     register,
     handleSubmit,
@@ -90,9 +81,6 @@ const ProductEditor = () => {
       as={"form"}
       onSubmit={handleSubmit(onValid, onInValid)}
     >
-      {/* 윤정쓰가 남긴 악성코드 😠😠😠😠*/}
-      {/* {data?.area} */}
-      {/* 윤정쓰가 남긴 악성코드 😠😠😠😠*/}
 
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>
