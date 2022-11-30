@@ -1,5 +1,9 @@
 import styled from "@emotion/styled";
-import React from "react";
+import Popup from "reactjs-popup";
+import { getDateFrom } from "../../utils/controller";
+import { ImageWrapper } from "../GlobalComponents";
+import { ColumnWrapper, SpaceBetween, SpaceEnd } from "../Wrapper";
+import seeMoreIcon from "../../images/seeMoreIcon.svg";
 
 type Props = {
   children: JSX.Element[]|JSX.Element;
@@ -18,3 +22,69 @@ function PlantCardCarousel({ children }: Props) {
   return <CarouselWrapper >{children}</CarouselWrapper>;
 }
 export default PlantCardCarousel;
+
+// 프로필 반려식물
+export const ProfilePlantCardWrapper = styled.div`
+  max-width: 250px;
+  padding: 8px;
+  margin-right: 8px;
+  border: 1px solid var(--line-light-gray);
+  display: flex;
+  align-items: center;
+  border-radius: var(--sig-border-8);
+`;
+type ProfilePlantCardTypes = {
+  size?: string;
+  src: string;
+  alt: string;
+  name: string;
+  type: string | number;
+  age: string;
+};
+export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
+  // 비구조화할당
+  const { size, src, alt, name, type, age } = props;
+  return (
+    <ProfilePlantCardWrapper>
+      <ImageWrapper
+        src={src}
+        alt={alt}
+        size={size === "sm" ? "36" : "66"}
+        className="mr-16"
+        loading="lazy"
+      ></ImageWrapper>
+      <ColumnWrapper>
+        <SpaceBetween>
+          <span className="medium">{name}</span>{" "}
+          <SpaceEnd>
+            <Popup
+              trigger={<img src={seeMoreIcon} alt="더보기버튼" />}
+              position={"bottom center"}
+            >
+              <ColumnWrapper>
+                <button className="font-gray">수정</button>
+                <button className="font-gray">삭제</button>
+              </ColumnWrapper>
+            </Popup>
+          </SpaceEnd>
+        </SpaceBetween>
+        <span className="sub font-gray">{type}</span>
+        <div className="sub font-gray ml-54">
+          {getDateFrom(age).replace("전", "차")}
+        </div>
+      </ColumnWrapper>
+    </ProfilePlantCardWrapper>
+  );
+};
+
+export const AddProfilePlantCard = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background-color: var(--pure-white);
+  border-radius: var(--sig-border-8);
+  border: 1px solid var(--main);
+  color: var(--main);
+  cursor: pointer;
+`;

@@ -3,11 +3,11 @@ import { useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import {
   ProfileCard,
-  ProfilePlantCard,
+
   SigButton,
-  AddProfilePlantCard,
+
 } from "../../Components/GlobalComponents";
-import PlantCardCarousel from "../../Components/profile/plantCardCarousel";
+import PlantCardCarousel, { AddProfilePlantCard, ProfilePlantCard } from "../../Components/profile/plantCardCarousel";
 import {
   MainContentContainer,
   MainCenterWrapper,

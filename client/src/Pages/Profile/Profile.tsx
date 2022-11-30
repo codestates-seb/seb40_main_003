@@ -11,9 +11,9 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import {
-  AddProfilePlantCard,
+
   ProfileCard,
-  ProfilePlantCard,
+
   SigButton,
 } from "../../Components/GlobalComponents";
 import { Link } from "react-router-dom";
@@ -22,9 +22,8 @@ import AddPlantModal from "../Main/AddPlantModal";
 import Modal from "../../Components/Modal";
 import { useCallback, useState } from "react";
 import { CommentCard } from "../../Components/CommentCard";
-import PlantCardCarousel from "../../Components/profile/plantCardCarousel";
+import PlantCardCarousel, { AddProfilePlantCard, ProfilePlantCard } from "../../Components/profile/plantCardCarousel";
 import ProductCard from "../../Components/product/ProductCard";
-
 const Profile = () => {
   const { id } = useParams();
   const userInfo = useRecoilValue(userState);
@@ -35,7 +34,7 @@ const Profile = () => {
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-  console.log(data);
+
   return data ? (
     <>
       <MainContentContainer>

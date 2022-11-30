@@ -1,3 +1,5 @@
+import { ProfilePlantType } from "./profileType";
+
 // 돌봄 프로필 리스트 조회 / 검색
 export type caringPreviewTypes = {
   data: [caringPreviewDataTypes],
@@ -69,17 +71,7 @@ export type CareDetailTypes = {
   member: {
       memberId: number,
       plants: [
-            {
-              plantId: number,
-              name: string,
-              years: number,
-              type: string,
-              image: {
-                  imageId: number,
-                  imgUrl: string,
-                  isRepImg: string
-                }
-            }
+        ProfilePlantType
         ]
     },
   techTags: [
