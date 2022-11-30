@@ -29,7 +29,6 @@ import { CommentCard } from "../../Components/CommentCard";
 const CareDetail = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const { id } = useParams();
-  const isLogin = useRecoilValue(userState);
 
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
@@ -81,6 +80,7 @@ const CareDetail = () => {
                     type={e.type}
                     key={`profilePlantCard ${e.plantId}`}
                     age={e.years}
+                    plandId={e.plantId}
                   />
                 );
               })}
@@ -121,7 +121,6 @@ const CareDetail = () => {
                   // ==================날짜 안날오옴==================
                   createdAt={"날짜가 서버에서 안날아옵니다"}
                   content={e.content}
-                  user={isLogin}
                   author={e.member.memberId}
                   key={`돌봄 ${e.expertReviewId}`}
                 />
