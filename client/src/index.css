@@ -138,6 +138,12 @@ input.checkbox-20 {
   color: var(--alert-red);
 }
 
+/* 배너 폰트 */
+.B-font {
+  font-family: 'GmarketSansMedium';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
+
+}
 /* 폰트 두께 설정 */
 .light {
   font-weight: 200;
