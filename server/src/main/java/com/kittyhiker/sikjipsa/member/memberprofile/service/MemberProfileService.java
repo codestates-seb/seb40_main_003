@@ -11,6 +11,7 @@ import com.kittyhiker.sikjipsa.image.repository.ImageRepository;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
 import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
+import com.kittyhiker.sikjipsa.member.entity.MemberInformation;
 import com.kittyhiker.sikjipsa.member.memberprofile.dto.ProfileResponseDto;
 import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberProfileMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.repository.MemberProfileRepository;
@@ -95,11 +96,14 @@ public class MemberProfileService {
 					findMember.setMemberProfile(memberProfile);
 				});
 
-		Optional.ofNullable(member.getMemberInformation())
-				.ifPresent(memberInformation -> {
-					memberInfoRepository.delete(findMember.getMemberInformation());
-					findMember.setMemberInformation(memberInformation);
-				});
+		if(findMember.getMemberInformation() != null) {
+			Optional.ofNullable(member.getMemberInformation())
+					.ifPresent(memberInformation -> {
+						MemberInformation memberInfo = findVerifiedMemberInfo(findMember);
+						memberInfo.setAddress(memberInformation.getAddress());
+						findMember.setMemberInformation(memberInfo);
+					});
+		}
 
 		if (multipartFile != null) {
 			if (findMember.getImage() != null) {
@@ -147,5 +151,12 @@ public class MemberProfileService {
 		Member member = optionalMember.orElseThrow(() ->
 				new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
 		return member;
+	}
+
+	private MemberInformation findVerifiedMemberInfo(Member member) {
+		Optional<MemberInformation> optionalMemberInfo = memberInfoRepository.findByMember(member);
+		MemberInformation memberInfo = optionalMemberInfo.orElseThrow(() ->
+				new BusinessLogicException(ExceptionCode.MEMBER_INFO_NOT_FOUND));
+		return memberInfo;
 	}
 }
