@@ -320,7 +320,9 @@ input.checkbox-20 {
 .sig-border4 {
   border-radius: 4px 0px 4px 0px;
 }
-
+.text-align-left {
+  text-align: left;
+}
 .text-align-center {
   text-align: center;
 }
