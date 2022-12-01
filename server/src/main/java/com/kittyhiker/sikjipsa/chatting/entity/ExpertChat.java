@@ -1,4 +1,4 @@
 package com.kittyhiker.sikjipsa.chatting.entity;
 
-public class DealChat {
+public class ExpertChat {
 }
