@@ -27,7 +27,7 @@ export const MainCenterWrapper = styled.main`
   width: 100%;
   min-width: 312px;
   min-height: 80vh;
-  max-width: 730px;
+  max-width: 1024px;
   padding: 24px;
   /* margin-bottom: 156px; */
   background-color: var(--pure-white);
@@ -36,6 +36,9 @@ export const MainCenterWrapper = styled.main`
   /* @media screen and (max-width: 1024px) {
     margin-bottom: 156px;
   } */
+  &.pd-0{
+    padding:0;
+  }
 `;
 export const MainRightWrapper = styled.aside`
   width: 298px;

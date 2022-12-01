@@ -9,6 +9,7 @@
   font-weight: 400;
   text-decoration: none;
   letter-spacing: 0;
+  white-space: normal;
   word-break: keep-all;
   object-fit: contain;
   list-style: none;
@@ -102,19 +103,26 @@ input.checkbox-20 {
 }
 
 /* 아이콘 active */
-.activeIcon span {
+.activeIcon span,.activeStroke span {
   color: var(--main);
   font-weight: var(--bold);
 }
 
-.activeIcon svg,
-.activeIcon p {
+.activeIcon svg{
   fill: var(--main);
 }
 
-.disableIcon svg,
-.activeIcon p {
+.disableIcon svg{
   fill: var(--font-gray);
+}
+
+.activeStroke svg{
+  stroke: var(--main);
+  color: var(--main);
+}
+
+.disableStroke svg{
+  stroke: var(--font-gray);
 }
 
 /* 폰트 색깔 설정 */

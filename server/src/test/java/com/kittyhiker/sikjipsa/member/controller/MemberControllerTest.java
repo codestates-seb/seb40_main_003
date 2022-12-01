@@ -105,6 +105,7 @@ class MemberControllerTest {
                 .memberId(1L)
                 .accessToken("Bearer testToken")
                 .refreshToken("Bearer testToken")
+                .image("")
                 .nickname("감자").build();
 
         BDDMockito.given(memberService.login(Mockito.any(MemberLoginDto.class))).willReturn(response);
@@ -124,6 +125,7 @@ class MemberControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.refreshToken").value(response.getRefreshToken()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.memberId").value(response.getMemberId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nickname").value(response.getNickname()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.image").value(response.getImage()))
                 .andDo(
                         MockMvcRestDocumentation.document("login-member",
                                 Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
@@ -136,7 +138,8 @@ class MemberControllerTest {
                                         PayloadDocumentation.fieldWithPath("accessToken").type(JsonFieldType.STRING).description("액세스토큰"),
                                         PayloadDocumentation.fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("리프레시토큰"),
                                         PayloadDocumentation.fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 PK"),
-                                        PayloadDocumentation.fieldWithPath("nickname").type(JsonFieldType.STRING).description("회원 닉네임")
+                                        PayloadDocumentation.fieldWithPath("nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
+                                        PayloadDocumentation.fieldWithPath("image").type(JsonFieldType.STRING).description("프로필 사진")
                                 )
                         )
                 )

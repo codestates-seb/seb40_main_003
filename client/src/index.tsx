@@ -6,21 +6,24 @@ import reportWebVitals from "./reportWebVitals";
 import { RecoilRoot } from "recoil";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "./Components/ErrorHandle";
+import { malfunction } from "./Const/message";
 
 // if (process.env.NODE_ENV === "development") {
 //   const { worker } = require("./mocks/browser");
 //   worker.start();
 // }
+
 if(process.env.NODE_ENV ==="production"){
   console.log(()=>{})
 }
+
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <ErrorBoundary
-    fallback={<ErrorMessage content={"컨텐츠를 불러오지 못했습니다"} />}
+    fallback={<ErrorMessage content={malfunction}  />}
   >
     <React.StrictMode>
       <RecoilRoot>

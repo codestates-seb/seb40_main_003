@@ -14,12 +14,11 @@ import {
 import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
 import { Link } from "react-router-dom";
 import { profileType } from "../../types/profileType";
-import AddPlantModal from "../Main/AddPlantModal";
+import AddPlantModal from "../Care/AddPlantModal";
 import Modal from "../../Components/Modal";
 import { useCallback, useState } from "react";
 import { CommentCard } from "../../Components/CommentCard";
 import PlantCardCarousel, {
-  AddProfilePlantCard,
   ProfilePlantCard,
 } from "../../Components/profile/plantCardCarousel";
 import ProductCard from "../../Components/product/ProductCard";
@@ -83,7 +82,10 @@ const Profile = (props: props) => {
                   );
                 })}
                 {isAuthor(id) ? (
-                  <AddIcon onClick={onClickModal} height={"36px"} />
+                  <ColumnWrapper center={true}>
+                    <AddIcon onClick={onClickModal} height={"36px"} />
+                    <span className="sub">반려식물 추가</span>
+                  </ColumnWrapper>
                 ) : (
                   <></>
                 )}
@@ -112,7 +114,7 @@ const Profile = (props: props) => {
           <SectionWrapper title="판매 상품" width={100} pb={0}>
             {data.deals.length !== 0 ? (
               <ReverseWrap>
-                <Link to={"/setting/sales-history"}>
+                <Link to={"/setting/history/sales"}>
                   <button className="mt-8 ml-50 bold font-gray">더 보기</button>
                 </Link>
                 {/* {data.deals.map((e, i) => {

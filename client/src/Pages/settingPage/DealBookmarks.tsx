@@ -8,8 +8,12 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import {  InfiniteFetch } from "../../Hooks/useFetch";
-import { QueryClient, QueryClientProvider, useInfiniteQuery } from "react-query";
+import { InfiniteFetch } from "../../Hooks/useFetch";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useInfiniteQuery,
+} from "react-query";
 
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
@@ -22,41 +26,42 @@ import React from "react";
 const productBookmarksQueryClient = new QueryClient();
 
 export const ProductBookmarksMain = () => {
-    // 무한스크롤 감지 Ref
-    const { ref, inView } = useInView();
+  // 무한스크롤 감지 Ref
+  const { ref, inView } = useInView();
 
-    // useInfiniteQuery
-    const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-      "productBookmarksQuery",
-      ({ pageParam = 1 }) => InfiniteFetch("/deal/like",pageParam),
-      {
-        getNextPageParam: (lastPage) =>
-          !lastPage.isLast ? lastPage.nextPage : undefined,
-      }
-    );
-    // 스크롤감지
-    useEffect(() => {
-      if (inView) fetchNextPage();
-    }, [inView]);
-    
-    if (status==="loading") return <LoadingSkeleton />;
-    if (status==="error") return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
-  
-    return (
-      <>
+  // useInfiniteQuery
+  const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+    "productBookmarksQuery",
+    ({ pageParam = 1 }) => InfiniteFetch("/deal/like", pageParam),
+    {
+      getNextPageParam: (lastPage) =>
+        !lastPage.isLast ? lastPage.nextPage : undefined,
+    }
+  );
+  // 스크롤감지
+  useEffect(() => {
+    if (inView) fetchNextPage();
+  }, [inView]);
+
+  if (status === "loading") return <LoadingSkeleton />;
+  if (status === "error")
+    return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
+
+  return (
+    <>
       {data?.pages.map((page, index) => (
-            <React.Fragment key={index}>
-              {page.data.map((e:ProductLikeType) => (
+        <React.Fragment key={index}>
+          {page.data.map((e: ProductLikeType) => (
             <Link key={e.dealId} to={`/product/${e.dealId}`}>
-            <ProductCard data={e} />
-          </Link>
-              ))}
-            </React.Fragment>
+              <ProductCard data={e} />
+            </Link>
           ))}
-          {isFetchingNextPage?<LoadingSkeleton/>:<div ref={ref}></div>}
-      </>
-    )
-  }
+        </React.Fragment>
+      ))}
+      {isFetchingNextPage ? <LoadingSkeleton /> : <div ref={ref}></div>}
+    </>
+  );
+};
 
 // 전체 페이지
 const ProductBookmarks = () => {

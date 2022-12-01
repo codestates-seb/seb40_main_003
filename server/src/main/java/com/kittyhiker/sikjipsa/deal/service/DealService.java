@@ -1,5 +1,7 @@
 package com.kittyhiker.sikjipsa.deal.service;
 
+import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.kittyhiker.sikjipsa.deal.dto.*;
 import com.kittyhiker.sikjipsa.deal.entity.Deal;
 import com.kittyhiker.sikjipsa.deal.entity.MemberLikeDeal;
@@ -7,27 +9,33 @@ import com.kittyhiker.sikjipsa.deal.mapper.DealMapper;
 import com.kittyhiker.sikjipsa.deal.respository.DealRepository;
 import com.kittyhiker.sikjipsa.deal.respository.DealReviewRepository;
 import com.kittyhiker.sikjipsa.deal.respository.LikeDealRepository;
+import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
+import com.kittyhiker.sikjipsa.exception.ExceptionCode;
+import com.kittyhiker.sikjipsa.image.dto.SavedImageDto;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
+import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class DealService {
 
@@ -38,77 +46,135 @@ public class DealService {
     private final DealReviewRepository reviewRepository;
     private final LikeDealRepository likeDealRepository;
 
-    public DealResponseDto postDeal(DealPostDto dealPostDto, Long userId) throws IOException {
-
-        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-        UUID uuid = UUID.randomUUID();
-        MultipartFile file = dealPostDto.getImage();
-        String fileName = uuid + "_" + file.getOriginalFilename();
-        File saveFile = new File(projectPath, fileName); //빈껍데기 생성 (경로, 파일이름)
-        file.transferTo(saveFile);
+    public DealResponseDto postDeal(DealPostDto dealPostDto, List<MultipartFile> images, Long userId) throws IOException {
 
         Deal deal = mapper.dealPostDtoToDeal(dealPostDto);
-        Member findMember = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+        Member findMember = memberRepository.findById(userId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
         deal.setMember(findMember);
-        dealRepository.save(deal);
+        Deal savedDeal = dealRepository.save(deal);
 
-        //이미지저장
-        Image image = Image.builder().originalName(file.getOriginalFilename()).imgName(fileName).deal(deal).imgUrl(projectPath).build();
-        imageService.postImage(image);
-        return mapper.dealToDealResponseDto(deal);
+        List<String> responseImages=new ArrayList<>();
+        if (images!=null) {
+            images.stream().forEach(
+                    (image) -> {
+                        SavedImageDto savedImageDto = imageService.savedImageToS3(image);
+                        Image newImage = Image.builder().originalName(savedImageDto.getOriginalFileName())
+                                .imgName(savedImageDto.getFileName()).deal(savedDeal)
+                                .imgUrl(savedImageDto.getFilePath()).build();
+                        imageService.postImage(newImage);
+                        responseImages.add(savedImageDto.getFilePath());
+                    }
+            );
+        }
+        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(findMember.getMemberId())
+                .nickname(findMember.getNickname())
+                .image(imageService.findImage(findMember)).build();
+        return mapper.dealToDealResponseDto(savedDeal, responseImages, responseMember);
     }
 
-    public DealResponseDto patchDeal(Long dealId, DealPostDto dealPatchDto) throws IOException {
-
-        String projectPath = System.getProperty("user.dir") + "\\src\\main\\resources\\static\\files";
-        UUID uuid = UUID.randomUUID();
-        MultipartFile file = dealPatchDto.getImage();
-        String fileName = uuid + "_" + file.getOriginalFilename();
-        File saveFile = new File(projectPath, fileName); //빈껍데기 생성 (경로, 파일이름)
-        file.transferTo(saveFile);
+    public DealResponseDto patchDeal(Long dealId, List<MultipartFile> images, DealPostDto dealPatchDto) throws IOException {
 
         Deal findDeal = verifiedDeal(dealId);
+        List<Image> findImage = imageService.findImage(findDeal);
+        List<String> responseImages = new ArrayList<>();
+        if (images == null) {
+            List<String> deleteImage = findImage.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+            deleteImage.stream().forEach(
+                    img -> imageService.deleteImageFromS3(img)
+            );
+        } else {
+            images.stream().forEach(
+                    (image) -> {
+                        SavedImageDto savedImageDto = imageService.savedImageToS3(image);
+                        Image newImage = Image.builder().originalName(savedImageDto.getOriginalFileName())
+                                .imgName(savedImageDto.getFileName()).deal(findDeal)
+                                .imgUrl(savedImageDto.getFilePath()).build();
+                        imageService.postImage(newImage);
+                        responseImages.add(savedImageDto.getFilePath());
+                    }
+            );
+        }
+
         findDeal.updateDeal(dealPatchDto);
         dealRepository.save(findDeal);
-        return mapper.dealToDealResponseDto(findDeal);
+        Member findMember = findDeal.getMember();
+        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(findMember.getMemberId())
+                .nickname(findMember.getNickname())
+                .image(imageService.findImage(findMember)).build();
+        return mapper.dealToDealResponseDto(findDeal, responseImages, responseMember);
     }
 
-    public ResponseEntity getDealList(int page, int size) {
-        Page<Deal> dealList = dealRepository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
+    public DealPagingDto<List> getDealList(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<Deal> dealList = dealRepository.findAll(pageable);
+        List<DealResponseDto> response = new ArrayList<>();
+        dealList.stream().forEach(
+                deal -> {
+                    List<Image> images = imageService.findImage(deal);
+                    List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+                    Member dealMember = deal.getMember();
+                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
+                            .nickname(dealMember.getNickname())
+                            .image(imageService.findImage(dealMember)).build();
+                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(deal, responseImage, responseMember);
+                    response.add(dealResponseDto);
+                }
+        );
+
         PageInfo pageInfo = new PageInfo(page, size, (int) dealList.getTotalElements(), dealList.getTotalPages());
-        return new ResponseEntity(new DealPagingDto<>(dealList, pageInfo), HttpStatus.OK);
+        return new DealPagingDto<List>(response, pageInfo);
+    }
+
+    public DealPagingDto<List> getDealList(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        Page<Deal> dealList = dealRepository.findByTitleContaining(keyword, pageable);
+        List<DealResponseDto> response = new ArrayList<>();
+        dealList.stream().forEach(
+                deal -> {
+                    List<Image> images = imageService.findImage(deal);
+                    List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
+                    Member dealMember = deal.getMember();
+                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
+                            .nickname(dealMember.getNickname())
+                            .image(imageService.findImage(dealMember)).build();
+                    DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(deal, responseImage, responseMember);
+                    response.add(dealResponseDto);
+                }
+        );
+
+        PageInfo pageInfo = new PageInfo(page, size, (int) dealList.getTotalElements(), dealList.getTotalPages());
+        return new DealPagingDto<List>(response, pageInfo);
     }
 
     public DealResponseDto getDealDetail(Long dealId) {
         Deal findDeal = verifiedDeal(dealId);
         findDeal.updateView();
         dealRepository.save(findDeal);
-        return mapper.dealToDealResponseDto(findDeal);
+        List<Image> image = imageService.findImage(findDeal);
+        List<String> responseImage = image.stream().map(img -> img.getImgUrl()).collect(Collectors.toList());
+
+        Member dealMember = findDeal.getMember();
+        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
+                .nickname(dealMember.getNickname())
+                .image(imageService.findImage(dealMember)).build();
+
+        return mapper.dealToDealResponseDto(findDeal, responseImage, responseMember);
     }
 
-    public LikeDealResponseDto likeDeal(Long userId, Long dealId) {
-        Member findMember = memberRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
-        Deal findDeal = verifiedDeal(dealId);
-        MemberLikeDeal likeDeal = MemberLikeDeal.builder()
-                .member(findMember)
-                .deal(findDeal).build();
-        MemberLikeDeal savedLike = likeDealRepository.save(likeDeal);
-        findDeal.likeDeal(savedLike);
-        findMember.likeDeal(savedLike);
-        memberRepository.save(findMember);
-        return LikeDealResponseDto.builder().memberId(userId)
-                .dealId(dealId)
-                .likeNum(findDeal.getLikes())
-                .likeDealId(savedLike.getId()).build();
-    }
 
     public void removeDeal(Long dealId) {
         Deal findDeal = verifiedDeal(dealId);
+        List<Image> images = imageService.findImage(findDeal);
+        images.stream().forEach(
+                i -> imageService.deleteImageFromS3(i.getImgUrl())
+        );
         dealRepository.delete(findDeal);
     }
 
     public Deal verifiedDeal(Long dealId) {
-        return dealRepository.findById(dealId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND DEAL"));
+        return dealRepository.findById(dealId).orElseThrow(()
+                -> new BusinessLogicException(ExceptionCode.NOT_FOUND_DEAL));
     }
 
 }

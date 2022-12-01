@@ -8,6 +8,7 @@ import { ReactComponent as Community } from "../images/communityIcon.svg";
 import { ReactComponent as Chat } from "../images/chatIcon.svg";
 import { ReactComponent as Market } from "../images/marketIcon.svg";
 import { ReactComponent as Login } from "../images/loginIcon.svg";
+import { ReactComponent as Care } from "../images/careIcon.svg";
 import ProfileIcon from "../images/defaultProfileImage.png";
 
 import { useRecoilValue } from "recoil";
@@ -25,9 +26,9 @@ const NavContainer = styled.nav`
   position: fixed;
   bottom: 0;
   z-index: 9999;
-  @media screen and (min-width:1024px) {
+  @media screen and (min-width: 1024px) {
     display: none;
-}
+  }
 `;
 const NavElemWrapper = styled.ul`
   width: 100%;
@@ -62,6 +63,7 @@ const ProfilePhotoWrapper = styled.div`
   border-radius: 16px;
   background-image: url(${(props: ProfileProps) =>props.userImage ? props.userImage : ProfileIcon});
   background-size: cover;
+  border: 1px solid var(--line-gray);
 `;
 type NavElemProps = {
   title?: string;
@@ -78,54 +80,67 @@ const NavElem = ({ title = "Untitled", children }: NavElemProps) => {
 };
 export const NavContent = () => {
   const user = useRecoilValue(userState);
-  return (<>
-    <NavElemWrapper>
-      <NavLink
-        to="/"
-        className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
-      >
-        <NavElem title="홈">
-          <Home />
-        </NavElem>
-      </NavLink>
+  return (
+    <>
+      <NavElemWrapper>
+        <NavLink
+          to="/"
+          className={({ isActive }) =>
+            isActive ? "activeIcon" : "disableIcon"
+          }
+        >
+          <NavElem title="홈">
+            <Home />
+          </NavElem>
+        </NavLink>
+        <NavLink
+          to="/caring"
+          className={({ isActive }) =>
+            isActive ? "activeStroke" : "disableStroke"
+          }
+        >
+          <NavElem title="돌봄">
+            <Care />
+          </NavElem>
+        </NavLink>
+        <NavLink
+          to="/product"
+          className={({ isActive }) =>
+            isActive ? "activeIcon" : "disableIcon"
+          }
+        >
+          <NavElem title="거래">
+            <Market />
+          </NavElem>
+        </NavLink>
+        <NavLink
+          to="/community"
+          className={({ isActive }) =>
+            isActive ? "activeIcon" : "disableIcon"
+          }
+        >
+          <NavElem title="커뮤니티">
+            <Community />
+          </NavElem>
+        </NavLink>
 
-      <NavLink
-        to="/product"
-        className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
-      >
-        <NavElem title="거래">
-          <Market />
-        </NavElem>
-      </NavLink>
-      <NavLink
-        to="/community"
-        className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
-      >
-        <NavElem title="커뮤니티">
-          <Community />
-        </NavElem>
-      </NavLink>
-      <NavLink
-        to="/talk"
-        className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
-      >
-        <NavElem title="대화">
-          <Chat />
-        </NavElem>
-      </NavLink>
-      <NavLink
-        to={user?.memberId ? `/profile/${user.memberId}` : "/login"}
-        className={({ isActive }) => (isActive ? "activeIcon" : "disableIcon")}
-      >
-        <NavElem title={user?.memberId ? "프로필" : "로그인"}>
-          {user?.image ? (
-            <ProfilePhotoWrapper userImage={user.image} />
-          ) : (
-            user?.memberId?<ProfilePhotoWrapper userImage={ProfileIcon}/> :<Login />
-          )}
-        </NavElem>
-      </NavLink>
-    </NavElemWrapper>
+        <NavLink
+          to={user?.memberId ? `/profile/${user.memberId}` : "/login"}
+          className={({ isActive }) =>
+            isActive ? "activeIcon" : "disableIcon"
+          }
+        >
+          <NavElem title={user?.memberId ? "프로필" : "로그인"}>
+            {user?.image ? (
+              <ProfilePhotoWrapper userImage={user.image} />
+            ) : user?.memberId ? (
+              <ProfilePhotoWrapper userImage={ProfileIcon} />
+            ) : (
+              <Login />
+            )}
+          </NavElem>
+        </NavLink>
+      </NavElemWrapper>
     </>
   );
 };

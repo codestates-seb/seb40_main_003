@@ -10,6 +10,7 @@ import com.kittyhiker.sikjipsa.deal.entity.Deal;
 import com.kittyhiker.sikjipsa.deal.entity.MemberLikeDeal;
 import com.kittyhiker.sikjipsa.deal.entity.MemberReview;
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
+import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.plant.entity.Plant;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,7 +33,7 @@ public class Member extends AuditingEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_id")
-	private Long id;
+	private Long memberId;
 
 	private String email;
 
@@ -42,8 +43,11 @@ public class Member extends AuditingEntity {
 
 	private String roles;
 
-	@OneToOne(mappedBy = "member")
+	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
 	private MemberProfile memberProfile;
+
+	@OneToOne(mappedBy = "member")
+	private Image image;
 
 	@OneToOne(mappedBy = "member")
 	private ExpertProfile expertProfile;
@@ -75,7 +79,7 @@ public class Member extends AuditingEntity {
 	@OneToMany(mappedBy = "member")
 	private List<Comment> comments = new ArrayList<>();
 
-	@OneToOne(mappedBy = "member")
+	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
 	private MemberInformation memberInformation;
 
 	@OneToOne(mappedBy = "member")
@@ -96,4 +100,23 @@ public class Member extends AuditingEntity {
 	public void likeDeal(MemberLikeDeal likeDeal) {
 		this.memberLikeDeals.add(likeDeal);
 	}
+
+// MemberProfile
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public void setMemberProfile(MemberProfile memberProfile) {
+		this.memberProfile = memberProfile;
+	}
+
+	public void setImage(Image image) {
+		this.image = image;
+	}
+
+	public void setMemberInformation(MemberInformation memberInformation) {
+		this.memberInformation = memberInformation;
+	}
+
+
 }

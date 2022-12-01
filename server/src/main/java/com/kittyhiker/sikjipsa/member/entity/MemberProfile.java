@@ -1,18 +1,24 @@
 package com.kittyhiker.sikjipsa.member.entity;
 
-
-import com.kittyhiker.sikjipsa.image.entity.Image;
-import lombok.Getter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MemberProfile {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "member_profile_id")
 	private Long id;
+
+	public MemberProfile(String content, Member member) {
+		this.content = content;
+		this.member = member;
+	}
 
 	private String content;
 
@@ -20,6 +26,4 @@ public class MemberProfile {
 	@JoinColumn(name = "member_id")
 	private Member member;
 
-	@OneToOne(mappedBy = "memberProfile")
-	private Image image;
 }

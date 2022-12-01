@@ -9,6 +9,16 @@ jobs:
     steps:
       - name: Checkout source code.
         uses: actions/checkout@v2
+      - name: Generate Environment Variables File for Production baseURL
+        run: echo "REACT_APP_BASE_URL=$REACT_APP_BASE_URL" >> .env.production
+        working-directory: ./client
+        env:
+          REACT_APP_BASE_URL: ${{ secrets.REACT_APP_BASE_URL }}
+      - name: Generate Environment Variables File for Production hash-key
+        run: echo "REACT_APP_SECURE_LOCAL_STORAGE_HASH_KEY=$REACT_APP_SECURE_LOCAL_STORAGE_HASH_KEY" >> .env.production
+        working-directory: ./client
+        env:
+          REACT_APP_SECURE_LOCAL_STORAGE_HASH_KEY: ${{ secrets.REACT_APP_SECURE_LOCAL_STORAGE_HASH_KEY }}
       - name: Install dependencies
         run: yarn
         working-directory: ./client

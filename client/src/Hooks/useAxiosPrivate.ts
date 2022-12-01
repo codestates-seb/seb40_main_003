@@ -6,7 +6,6 @@ import useRefreshToken from "./useRefreshToken";
 
 // 
 const useAxiosPrivate = () => {
-    // 수정하기
     const refresh = useRefreshToken();
     const accessToken = getLS("accessToken")
 
@@ -14,7 +13,7 @@ const useAxiosPrivate = () => {
         // 요청을 가로채는 인터셉터 (필요할때만 토큰을 싣기 위해)
         const requestIntercept = axiosPrivate.interceptors.request.use(
             config => {
-                if (config.headers&&config.headers['Authorization']){
+                if (config.headers&&!config.headers['Authorization']){
                     config.headers['Authorization'] = `Bearer ${accessToken}`;
                 }
                 return config;

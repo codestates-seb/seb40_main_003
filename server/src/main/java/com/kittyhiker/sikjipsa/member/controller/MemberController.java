@@ -40,8 +40,8 @@ public class MemberController {
     }
 
     @PostMapping("/users/refresh")
-    public ResponseEntity requestRefresh(@RequestHeader("Authorization") String token) {
-        TokenDto tokenDto = memberService.reissueToken(token);
+    public ResponseEntity requestRefresh(@RequestBody RefreshTokenDto token) {
+        TokenDto tokenDto = memberService.reissueToken(token.getRefreshToken());
         return new ResponseEntity(tokenDto, HttpStatus.CREATED);
     }
 
@@ -53,10 +53,11 @@ public class MemberController {
     }
 
     @PostMapping("/users")
-    public ResponseEntity setProfile(@RequestHeader("Authorization") String token,
+    public ResponseEntity setMemberInfo(@RequestHeader("Authorization") String token,
                                      @RequestBody MemberInfoPostDto infoPostDto) {
         Long userId = jwtTokenizer.getUserIdFromToken(token);
         MemberInfoResponseDto infoResponseDto = memberService.postMemberInfo(userId, infoPostDto);
         return new ResponseEntity(infoResponseDto, HttpStatus.CREATED);
     }
+
 }

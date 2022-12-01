@@ -1,7 +1,7 @@
 import { Routes } from "react-router";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import { AuthProvider, HeaderLayout, LogOutOnly } from "./Route";
+import { HeaderLayout, LogOutOnly } from "./Route";
 import Product from "./Pages/Product/Product";
 import Navbar from "./Components/Navbar";
 
@@ -17,12 +17,11 @@ import PurchaseHistory from "./Pages/settingPage/PurchaseHistory";
 import CaringHistory from "./Pages/settingPage/CaringHistory";
 import MyHistory from "./Pages/settingPage/MyHistory";
 import EditAccount from "./Pages/settingPage/EditAccount";
-import Resign from "./Pages/settingPage/Resign";
 
 import Missing from "./Pages/Missing";
 
-import Care from "./Pages/Main/Care";
-import CareDetail from "./Pages/Main/CareDetail";
+import Care from "./Pages/Care/Care";
+import CareDetail from "./Pages/Care/CareDetail";
 import CareReviewEditor from "./Pages/Talk/CareReviewEditor";
 
 import ProductDetail from "./Pages/Product/ProductDetail";
@@ -37,33 +36,34 @@ import CommunityModify from "./Pages/Community/CommunityModify";
 import Talk from "./Pages/Talk/Talk";
 import { DefaultLayout } from "./Route";
 import { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { isExpert, userState } from "./Recoil/atoms/user";
 import { getLS } from "./Hooks/useSecureLS";
 import ProductModify from "./Pages/Product/ProductModify";
+import Main from "./Pages/Main/Main";
+import { cleanLS } from "./Hooks/useLogout";
 
 
-
-// import DevTools from "./Components/DevTools";
-
-const App=()=>{
-  const setUser = useSetRecoilState(userState)
-  const setIsExpert = useSetRecoilState(isExpert)
-  
+const App = () => {
+  const [user,setUser] = useRecoilState(userState);
+  const setIsExpertNow = useSetRecoilState(isExpert);  
   useEffect(() => {
-    setIsExpert(false)
-    const accessToken = getLS("accessToken")
-    const refreshToken = getLS("refreshToken")
-    const userInfo:any = getLS("userInfo")
+    const expertInfo = getLS("expertInfo");
+    const accessToken = getLS("accessToken");
+    const refreshToken = getLS("refreshToken");
+    const userInfo = getLS("userInfo");
 
     //로컬스토리지에 유저정보가 있고, 액세스토큰, 리프레시토큰 모두 있을때 (토큰 유효성검사는 안함)
-    if(accessToken&&refreshToken&&userInfo){
+    if (accessToken && refreshToken && userInfo) {
       setUser(userInfo);
-    }else {
-      
+      expertInfo&&setIsExpertNow(true);
+    } else {
+      cleanLS();
+      setUser(null);
+      setIsExpertNow(false);
     }
-  }, [setUser])
-  
+  }, [setUser]);
+
   return (
     <BrowserRouter>
       {/* 모바일용 navbar*/}
@@ -80,10 +80,13 @@ const App=()=>{
         {/* 오픈된 라우팅 */}
         {/* 헤더가 있는 컴포넌트들 */}
         <Route element={<HeaderLayout />}>
-          {/* 케어 */}
           <Route path="/" element={<DefaultLayout />}>
+            <Route index element={<Main />} />
+          </Route>
+          {/* 케어 */}
+          <Route path="/caring" element={<DefaultLayout />}>
             <Route index element={<Care />} />
-            <Route path="/caring/:id" element={<CareDetail />} />
+            <Route path=":id" element={<CareDetail />} />
           </Route>
           {/* 장터 */}
           <Route path="/product" element={<DefaultLayout />}>
@@ -114,24 +117,25 @@ const App=()=>{
           <Route>
             <Route path="/setting" element={<DefaultLayout />}>
               <Route index element={<Setting />} />
-              <Route path="carebookmarks" element={<CareBookmarks />} />
-              <Route path="dealbookmarks" element={<DealBookmarks />} />
-              <Route path="sales-history" element={<SalesHistory />} />
-              <Route path="purchase-history" element={<PurchaseHistory />} />
-              <Route path="experts-history" element={<CaringHistory />} />
-              <Route path="my-history" element={<MyHistory />} />
+              <Route path="bookmarks" element={<DefaultLayout />}>
+                <Route path="care" element={<CareBookmarks />} />
+                <Route path="deal" element={<DealBookmarks />} />
+              </Route>
+              <Route path="history" element={<DefaultLayout />}>
+                <Route path="sales" element={<SalesHistory />} />
+                <Route path="purchase" element={<PurchaseHistory />} />
+                <Route path="experts" element={<CaringHistory />} />
+                <Route path="my" element={<MyHistory />} />
+              </Route>
               <Route path="edit" element={<EditAccount />} />
-              <Route path="resign" element={<Resign />} />
             </Route>
           </Route>
         </Route>
-
-        {/* 수정 필요 */}
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />
       </Routes>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
