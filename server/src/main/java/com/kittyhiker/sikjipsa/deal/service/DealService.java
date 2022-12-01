@@ -177,4 +177,8 @@ public class DealService {
                 -> new BusinessLogicException(ExceptionCode.NOT_FOUND_DEAL));
     }
 
+    public List<Deal> findMyDeal(Member member) {
+        return dealRepository.findByMember(member);
+    }
+
 }

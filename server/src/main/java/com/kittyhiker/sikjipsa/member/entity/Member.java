@@ -7,8 +7,8 @@ import com.kittyhiker.sikjipsa.community.enitity.Comment;
 import com.kittyhiker.sikjipsa.community.enitity.Community;
 import com.kittyhiker.sikjipsa.community.enitity.CommunityLike;
 import com.kittyhiker.sikjipsa.deal.entity.Deal;
+import com.kittyhiker.sikjipsa.deal.entity.DealReview;
 import com.kittyhiker.sikjipsa.deal.entity.MemberLikeDeal;
-import com.kittyhiker.sikjipsa.deal.entity.MemberReview;
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.plant.entity.Plant;
@@ -64,8 +64,8 @@ public class Member extends AuditingEntity {
 	@OneToMany(mappedBy = "member")
 	private List<MemberLikeDeal> memberLikeDeals = new ArrayList<>();
 
-	@OneToMany(mappedBy = "member")
-	private List<MemberReview> memberReviews = new ArrayList<>();
+	@OneToMany(mappedBy = "seller")
+	private List<DealReview> dealReviews = new ArrayList<>();
 
 	@OneToMany(mappedBy = "member")
 	private List<Plant> plants = new ArrayList<>();
