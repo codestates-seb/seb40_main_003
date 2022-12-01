@@ -144,6 +144,12 @@ public class ExpertService {
 		return findExpertProfile;
 	}
 
+	public ExpertProfile getIsExpert(Long memberId) {
+		Optional<ExpertProfile> optionalExpertProfile = expertRepository.findByMember_MemberId(memberId);
+		return optionalExpertProfile.orElseThrow(() ->
+				new BusinessLogicException(ExceptionCode.EXPERT_PROFILE_NOT_FOUND));
+	}
+
 	public ExpertProfile getExpert(Long expertId) {
 		ExpertProfile expertProfile = findVerifiedExpert(expertId);
 		expertProfile.setView(expertProfile.getView() + 1L);
@@ -250,7 +256,7 @@ public class ExpertService {
 		}
 	}
 
-	private ExpertProfile findVerifiedExpert(Long expertId) {
+	public ExpertProfile findVerifiedExpert(Long expertId) {
 		Optional<ExpertProfile> optionalExpertProfile = expertRepository.findById(expertId);
 		ExpertProfile expertProfile = optionalExpertProfile.orElseThrow(() ->
 				new BusinessLogicException(ExceptionCode.EXPERT_PROFILE_NOT_FOUND));
