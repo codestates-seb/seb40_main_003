@@ -14,7 +14,7 @@ const Main = () => {
   return (
     <MainContentContainer>
       <MainCenterWrapper className="pd-0">
-        <Carousel showStatus={false} autoPlay={true} infiniteLoop={true}>
+        <Carousel showStatus={false} autoPlay={true} infiniteLoop={true} showThumbs={false}>
           <BannerWrapper image={MainBanner1}/>
           <BannerWrapper image={MainBanner2}/>
           <BannerWrapper image={MainBanner3}/>

@@ -36,32 +36,32 @@ import CommunityModify from "./Pages/Community/CommunityModify";
 import Talk from "./Pages/Talk/Talk";
 import { DefaultLayout } from "./Route";
 import { useEffect } from "react";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { isExpert, userState } from "./Recoil/atoms/user";
 import { getLS } from "./Hooks/useSecureLS";
 import ProductModify from "./Pages/Product/ProductModify";
-import useAxiosPrivate from "./Hooks/useAxiosPrivate";
 import Main from "./Pages/Main/Main";
-
-// import DevTools from "./Components/DevTools";
+import { cleanLS } from "./Hooks/useLogout";
 
 const App = () => {
-  const setUser = useSetRecoilState(userState);
-  const setIsExpert = useSetRecoilState(isExpert);
-  const axiosPrivate = useAxiosPrivate();
+  const [user,setUser] = useRecoilState(userState);
+  const setIsExpertNow = useSetRecoilState(isExpert);
   useEffect(() => {
-    setIsExpert(false);
+    const expertInfo = getLS("expertInfo");
     const accessToken = getLS("accessToken");
     const refreshToken = getLS("refreshToken");
-    const userInfo: any = getLS("userInfo");
+    const userInfo = getLS("userInfo");
 
     //로컬스토리지에 유저정보가 있고, 액세스토큰, 리프레시토큰 모두 있을때 (토큰 유효성검사는 안함)
     if (accessToken && refreshToken && userInfo) {
-      // axiosPrivate.
       setUser(userInfo);
+      expertInfo&&setIsExpertNow(true);
     } else {
+      cleanLS();
+      setUser(null);
+      setIsExpertNow(false);
     }
-  }, [setUser]);
+  }, [user]);
 
   return (
     <BrowserRouter>
@@ -116,19 +116,20 @@ const App = () => {
           <Route>
             <Route path="/setting" element={<DefaultLayout />}>
               <Route index element={<Setting />} />
-              <Route path="carebookmarks" element={<CareBookmarks />} />
-              <Route path="dealbookmarks" element={<DealBookmarks />} />
-              <Route path="sales-history" element={<SalesHistory />} />
-              <Route path="purchase-history" element={<PurchaseHistory />} />
-              <Route path="experts-history" element={<CaringHistory />} />
-              <Route path="my-history" element={<MyHistory />} />
+              <Route path="bookmarks" element={<DefaultLayout />}>
+                <Route path="care" element={<CareBookmarks />} />
+                <Route path="deal" element={<DealBookmarks />} />
+              </Route>
+              <Route path="history" element={<DefaultLayout />}>
+                <Route path="sales" element={<SalesHistory />} />
+                <Route path="purchase" element={<PurchaseHistory />} />
+                <Route path="experts" element={<CaringHistory />} />
+                <Route path="my" element={<MyHistory />} />
+              </Route>
               <Route path="edit" element={<EditAccount />} />
-
             </Route>
           </Route>
         </Route>
-
-        {/* 수정 필요 */}
         {/* 잘못된 경로일때 보내는 곳*/}
         <Route path="*" element={<Missing />} />
       </Routes>

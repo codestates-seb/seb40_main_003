@@ -26,8 +26,8 @@ type LoadingSpinnerProps = {
 };
 const LoadingElem = styled.div`
   display: block;
-  width: ${(props: LoadingSpinnerProps) => (props.size ? props.size : "70")}px;
-  height: ${(props: LoadingSpinnerProps) => (props.size ? props.size : "70")}px;
+  width: ${(props: LoadingSpinnerProps) => (props.size ? props.size : "56")}px;
+  height: ${(props: LoadingSpinnerProps) => (props.size ? props.size : "56")}px;
   border: 7px solid var(--line-gray);
   border-radius: 100%;
   border-top-color: var(--main);
@@ -49,7 +49,6 @@ export const LoadingSpinner = ({fullscreen=true}:spinnerProps) => {
 export const ProductWrapper = styled.div`
   width: 100%;
   min-width: 312px;
-  max-width: 730px;
   padding: 16px 0;
   display: flex;
   flex-direction: column;

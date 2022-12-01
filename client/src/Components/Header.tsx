@@ -24,7 +24,7 @@ export const HeaderWrapper = styled.header`
 `;
 const HeaderContent = styled.div`
   width: 100%;
-  max-width: 1000px;
+  max-width: 1330px;
   height: 52px;
   padding: 0 24px;
   display: flex;

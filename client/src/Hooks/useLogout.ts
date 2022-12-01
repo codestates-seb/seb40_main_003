@@ -10,9 +10,7 @@ export const useLogout = () => {
 	const logout = () => {	
 		if (window.confirm(confirmLogout)) {
 		/**로컬 스토리지 비우기 */
-		localStorage.removeItem("accessToken")
-		localStorage.removeItem("refreshToken")
-		localStorage.removeItem("userInfo")
+		cleanLS()
 		/**아톰 초기화 */
 		resetUserState()
 		/**로그인 페이지로 이동 */
@@ -20,3 +18,10 @@ export const useLogout = () => {
 		}}
 	return(logout)
 	}
+
+export const cleanLS = ()=>{
+	localStorage.removeItem("expertInfo")
+	localStorage.removeItem("accessToken")
+	localStorage.removeItem("refreshToken")
+	localStorage.removeItem("userInfo")
+}

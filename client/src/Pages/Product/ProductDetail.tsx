@@ -68,7 +68,7 @@ const ProductBookmarksDetail = () => {
           {isAuthor(data.member.memberId) && (
             // 수정삭제 버튼팝업
             <EditAndDeleteButton
-            // 삭제함수
+              // 삭제함수
               deleteFunction={() => {
                 if (window.confirm(confirmRemove("게시물을"))) {
                   axiosPrivate.delete(`/deal/${data.dealId}`).then((res) => {
@@ -92,7 +92,7 @@ const ProductBookmarksDetail = () => {
           </span>
           <ViewCounter like={data.likeNum} view={data.view} />
         </SpaceBetween>
-        <p className="mt-16">{data.content}</p>
+          <p className="mt-16">{data.content}</p>
       </MainCenterWrapper>
 
       <MainRightWrapper>

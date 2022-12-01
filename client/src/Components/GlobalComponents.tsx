@@ -143,6 +143,7 @@ export const ImageWrapper = styled.img`
   margin-right: 16px;
   &.communityImage {
     width: 100%;
+    min-height:40vh;
     height: 25vw;
     margin-right: 0;
   }
@@ -245,7 +246,6 @@ export const ProfileCard = (props: ProfileCardTypes) => {
     circle = false,
     tag,
   } = props;
-  console.log(tag)
   return (
     <CenteringWrapper className="space-between" borderNone={true}>
       <RowWrapper className="align-center">
