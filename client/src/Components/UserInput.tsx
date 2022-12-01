@@ -21,7 +21,7 @@ const Textarea = styled.textarea`
 const CommentInput = (props: props) => {
   const [value, setValue] = useState("");
   const axiosPrivate = useAxiosPrivate();
-  
+
   const handleSubmit = async () => {
     axiosPrivate.post(
       `/community/${props.url}/comment`,

@@ -11,3 +11,4 @@ export const productEditDataAtom = atom<ProductDetailDataType | null>({
   key: "productEditData",
   default: null
 });
+

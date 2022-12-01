@@ -1,7 +1,7 @@
 import { Routes } from "react-router";
 import { BrowserRouter, Route } from "react-router-dom";
 
-import { AuthProvider, HeaderLayout, LogOutOnly } from "./Route";
+import { HeaderLayout, LogOutOnly } from "./Route";
 import Product from "./Pages/Product/Product";
 import Navbar from "./Components/Navbar";
 
@@ -42,6 +42,7 @@ import { getLS } from "./Hooks/useSecureLS";
 import ProductModify from "./Pages/Product/ProductModify";
 import Main from "./Pages/Main/Main";
 import { cleanLS } from "./Hooks/useLogout";
+import SetUserModal from "./Pages/Profile/SetUserModal";
 
 const App = () => {
   const [user,setUser] = useRecoilState(userState);
@@ -73,6 +74,7 @@ const App = () => {
         {/* <Route element={<AuthProvider />}> */}
         <Route path="/profile" element={<HeaderLayout />}>
           <Route path=":id" element={<Profile />} />
+          <Route path="modify" element={<SetUserModal />} />
         </Route>
         {/* </Route> */}
 

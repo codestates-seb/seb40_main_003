@@ -24,7 +24,11 @@ import PlantCardCarousel, {
 import ProductCard from "../../Components/product/ProductCard";
 import { useIsAuthor } from "../../Hooks/useAuth";
 
-const Profile = () => {
+type props = {
+  url?: string | undefined;
+};
+
+const Profile = (props: props) => {
   // 페이지주소
   const { id } = useParams();
   // 작성자와 로그인유저 확인
@@ -44,6 +48,7 @@ const Profile = () => {
       <MainContentContainer>
         <MainCenterWrapper>
           <ProfileCard
+            url={id}
             src={data.image?.imgUrl}
             alt={`${data.nickname}의 대표사진`}
             name={data.nickname}
@@ -51,7 +56,7 @@ const Profile = () => {
             circle={true}
             size={"66"}
           />
-          <SectionWrapper content={data.memberProfile.content} pt={0} pb={8} />
+          <SectionWrapper content={data.memberProfile?.content} pt={0} pb={8} />
           <SectionWrapper title="반려 식물">
             {/* 모달창 */}
             <>
@@ -64,7 +69,6 @@ const Profile = () => {
             <PlantCardCarousel key={"reactCarousel"}>
               <>
                 {data.plants.map((e, i) => {
-                  console.log(e.plantId);
                   return (
                     <ProfilePlantCard
                       src={e.image.imgUrl}
@@ -113,7 +117,7 @@ const Profile = () => {
                 <Link to={"/setting/history/sales"}>
                   <button className="mt-8 ml-50 bold font-gray">더 보기</button>
                 </Link>
-                {data.deals.map((e, i) => {
+                {/* {data.deals.map((e, i) => {
                   if (data.deals.length - i < 4) {
                     return (
                       <Link
@@ -124,7 +128,7 @@ const Profile = () => {
                       </Link>
                     );
                   }
-                })}
+                })} */}
               </ReverseWrap>
             ) : (
               <span className="mt-8">판매중인 상품이 없습니다</span>
