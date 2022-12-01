@@ -68,7 +68,7 @@ const Profile = (props: props) => {
               {isOpenModal && (
                 <Modal onClickModal={onClickModal}>
                   {isEditing?
-                  <AddPlantModal closeModal={onClickModal} />:<EditPlantModal />}
+                  <AddPlantModal closeModal={onClickModal} />:<EditPlantModal url={data.plants[0].plantId} />}
                 </Modal>
               )}
             </>

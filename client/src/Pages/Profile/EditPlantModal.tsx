@@ -13,7 +13,7 @@ type FormData = {
 };
 type addplantModal = {
   closeModal?: Function;
-  url?: string | undefined;
+  url?: number | undefined;
 };
 const EditPlantModal: React.FC<addplantModal> = ({ closeModal, url }) => {
   const axiosPrivate = useAxiosPrivate();
