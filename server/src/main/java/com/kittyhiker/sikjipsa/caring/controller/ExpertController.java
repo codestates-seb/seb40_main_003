@@ -59,6 +59,12 @@ public class ExpertController {
 		return new ResponseEntity(expertMapper.toExpertResponseDto(response), HttpStatus.OK);
 	}
 
+	@GetMapping("/is-expert/{user-id}")
+	public ResponseEntity getIsExpert(@PathVariable("user-id") @Positive Long memberId) {
+		ExpertProfile response = expertService.getIsExpert(memberId);
+		return new ResponseEntity(expertMapper.toIsExpertDto(response), HttpStatus.OK);
+	}
+
 	@GetMapping
 	public ResponseEntity getExperts(@RequestParam(required = false) String keyword,
 									 @RequestParam(required = false) String area,

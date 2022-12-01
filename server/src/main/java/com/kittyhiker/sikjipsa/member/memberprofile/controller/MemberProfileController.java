@@ -56,5 +56,4 @@ public class MemberProfileController {
 		ProfileResponseDto response = memberProfileService.patchProfile(member, multipartFile, memberId, jwtTokenizer.getUserIdFromToken(token));
 		return new ResponseEntity(response, HttpStatus.OK);
 	}
-
 }
