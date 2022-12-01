@@ -33,8 +33,6 @@ public class PlantService {
 	private final PlantRepository plantRepository;
 	private final MemberRepository memberRepository;
 	private final ImageRepository imageRepository;
-//	@Value("${com.sikjipsa.upload.path}")// import 시에 springframework로 시작하는 value, 설정 정보를 읽어 변수의 값으로 사용
-//	private String uploadPath;// 나중에 파일을 업로드하는 경로로 사용
 
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
@@ -42,24 +40,18 @@ public class PlantService {
 
 
 	public Plant postPlant(Plant plant, MultipartFile multipartFile, Long memberId) {
-		Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("NOT FOUND MEMBER"));
+		Member member = findVerifiedMember(memberId);
 		plant.setMember(member);
 
 		if (multipartFile != null) {
 			String originalName = multipartFile.getOriginalFilename();
 			String uuid = UUID.randomUUID().toString();
-//			Path path = Paths.get(uploadPath, uuid + "_" + originalName);
 			String fileName = uuid + "_" + originalName;
 			try {
-//				multipartFile.transferTo(path);
-//				if (Files.probeContentType(path).startsWith("image")) {
-//					File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
-//					Thumbnailator.createThumbnail(path.toFile(), thumbFile, 200, 200);
-//				}
 				ObjectMetadata objectMetadata = new ObjectMetadata();
 				objectMetadata.setContentLength(multipartFile.getSize());
 				amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), objectMetadata);
-				String filePath = amazonS3.getUrl(bucket, originalName).toString();
+				String filePath = amazonS3.getUrl(bucket, fileName).toString();
 
 				Image image = new Image(fileName, originalName, filePath, "empty", plant);
 				plant.setImage(image);
@@ -72,8 +64,13 @@ public class PlantService {
 		return plantRepository.save(plant);
 	}
 
-	public Plant patchPlant(Plant plant, MultipartFile multipartFile) {
-		Plant findPlant = findVerifiedPlant(plant.getPlantId());
+	public Plant patchPlant(Plant plant, MultipartFile multipartFile, Long plantId, Long memberId) {
+		Member member = findVerifiedMember(memberId);
+		Plant findPlant = findVerifiedPlant(plantId);
+
+		if (findPlant.getMember() != member) {
+			throw new BusinessLogicException(ExceptionCode.MEMBER_FORBIDDEN);
+		}
 
 		Optional.ofNullable(plant.getName())
 				.ifPresent(findPlant::setName);
@@ -81,8 +78,8 @@ public class PlantService {
 		Optional.ofNullable(plant.getType())
 				.ifPresent(findPlant::setType);
 
-		Optional.of(plant.getDays())
-				.ifPresent(findPlant::setDays);
+		Optional.of(plant.getYears())
+				.ifPresent(findPlant::setYears);
 
 		if (multipartFile != null) {
 			if (findPlant.getImage() != null) {
@@ -91,18 +88,12 @@ public class PlantService {
 
 			String originalName = multipartFile.getOriginalFilename();
 			String uuid = UUID.randomUUID().toString();
-//			Path path = Paths.get(uploadPath, uuid + "_" + originalName);
 			String fileName = uuid + "_" + originalName;
 			try {
-//				multipartFile.transferTo(path);
-//				if (Files.probeContentType(path).startsWith("image")) {
-//					File thumbFile = new File(uploadPath, "s_" + uuid + "_" + originalName);
-//					Thumbnailator.createThumbnail(path.toFile(), thumbFile, 200, 200);
-//				}
 				ObjectMetadata objectMetadata = new ObjectMetadata();
 				objectMetadata.setContentLength(multipartFile.getSize());
 				amazonS3.putObject(bucket, fileName, multipartFile.getInputStream(), objectMetadata);
-				String filePath = amazonS3.getUrl(bucket, originalName).toString();
+				String filePath = amazonS3.getUrl(bucket, fileName).toString();
 
 				Image image = new Image(fileName, originalName, filePath, "empty", findPlant);
 				findPlant.setImage(image);
@@ -114,20 +105,33 @@ public class PlantService {
 		return findPlant;
 	}
 
-	private Plant findVerifiedPlant(Long id) {
-		Optional<Plant> optionalPlant = plantRepository.findById(id);
+	public List<Plant> getPlants(Long memberId) {
+		return plantRepository.findAllByMember_MemberIdOrderByPlantIdDesc(memberId);
+	}
+
+	public void deletePlant(Long plantId, Long memberId) {
+		Member member = findVerifiedMember(memberId);
+		Plant findPlant = findVerifiedPlant(plantId);
+
+		if (findPlant.getMember() != member) {
+			throw new BusinessLogicException(ExceptionCode.MEMBER_FORBIDDEN);
+		}
+
+		imageRepository.delete(findPlant.getImage());
+		plantRepository.delete(findPlant);
+	}
+
+	private Member findVerifiedMember(Long memberId) {
+		Optional<Member> optionalMember = memberRepository.findById(memberId);
+		Member member = optionalMember.orElseThrow(() ->
+				new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
+		return member;
+	}
+
+	private Plant findVerifiedPlant(Long plantId) {
+		Optional<Plant> optionalPlant = plantRepository.findById(plantId);
 		Plant plant = optionalPlant.orElseThrow(() ->
 				new BusinessLogicException(ExceptionCode.PLANT_NOT_FOUND));
 		return plant;
-	}
-
-	public List<Plant> getPlants() {
-		return plantRepository.findAllByOrderByPlantIdDesc();
-	}
-
-	public void deletePlant(Long plantId) {
-		Plant plant = findVerifiedPlant(plantId);
-		imageRepository.delete(plant.getImage());
-		plantRepository.delete(plant);
 	}
 }

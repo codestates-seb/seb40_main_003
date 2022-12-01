@@ -6,11 +6,11 @@ import com.kittyhiker.sikjipsa.member.entity.MemberInformation;
 import com.kittyhiker.sikjipsa.member.mapper.MemberMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.dto.MemberInfoDto;
 import com.kittyhiker.sikjipsa.member.memberprofile.dto.MemberPatchDto;
+import com.kittyhiker.sikjipsa.member.memberprofile.dto.ProfileResponseDto;
 import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberInfoMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberProfileMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.service.MemberInfoService;
 import com.kittyhiker.sikjipsa.member.memberprofile.service.MemberProfileService;
-import com.kittyhiker.sikjipsa.member.repository.MemberInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +34,7 @@ public class MemberProfileController {
 
 	// 테스트용
 	@PostMapping
-	public ResponseEntity postProfile(@RequestBody MemberInfoDto memberInfoDto,
+	public ResponseEntity postProfile(@Valid @RequestBody MemberInfoDto memberInfoDto,
 									  @RequestHeader("Authorization") String token) {
 		MemberInformation memberInformation = memberInfoMapper.toMemberInfo(memberInfoDto);
 		MemberInformation response = memberInfoService.postMemberInfo(memberInformation, jwtTokenizer.getUserIdFromToken(token));
@@ -43,19 +43,20 @@ public class MemberProfileController {
 
 	@GetMapping("{user-id}")
 	public ResponseEntity getProfile(@PathVariable("user-id") @Positive Long memberId) {
-		Member response = memberProfileService.getProfile(memberId);
-		return new ResponseEntity(memberProfileMapper.toProfileResponseDto(response), HttpStatus.OK);
+		//Member response = memberProfileService.getProfile(memberId);
+
+		ProfileResponseDto response = memberProfileService.getProfile(memberId);
+		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
 	@PatchMapping("{user-id}")
 	public ResponseEntity patchProfile(@PathVariable("user-id") @Positive Long memberId,
 									   @Valid @RequestPart MemberPatchDto memberPatchDto,
-									   @RequestPart MultipartFile multipartFile) {
-		memberPatchDto.setId(memberId);
+									   @RequestPart MultipartFile multipartFile,
+									   @RequestHeader("Authorization") String token) {
 		Member member = memberMapper.toProfile(memberPatchDto);
-		Member response = memberProfileService.patchProfile(member, multipartFile);
-
-		return new ResponseEntity(memberProfileMapper.toProfileResponseDto(response), HttpStatus.OK);
+		ProfileResponseDto response = memberProfileService.patchProfile(member, multipartFile, memberId, jwtTokenizer.getUserIdFromToken(token));
+		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
 }

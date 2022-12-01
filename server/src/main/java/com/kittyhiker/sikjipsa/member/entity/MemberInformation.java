@@ -1,10 +1,7 @@
 package com.kittyhiker.sikjipsa.member.entity;
 
 import com.kittyhiker.sikjipsa.entity.AuditingEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -25,13 +22,31 @@ public class MemberInformation extends AuditingEntity {
 	private Member member;
 
 	private String name;
+
 	private String phone;
 	private String birth;
 	private Integer gender;
 	private String address;
 
+	public MemberInformation(Member member, String name, String phone, String birth, Integer gender, String address) {
+		this.member = member;
+		this.name = name;
+		this.phone = phone;
+		this.birth = birth;
+		this.gender = gender;
+		this.address = address;
+	}
+
 	public void setMember(Member member) {
 		this.member = member;
+//		if (!member.getMemberInformation().equals(this)) {
+//			member.setMemberInformation(this);
+//		}
 	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 
 }

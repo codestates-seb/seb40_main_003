@@ -27,7 +27,7 @@ public class PlantController {
 
 
 	@PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
-	public ResponseEntity postPlant(@RequestPart PlantDto plantDto,
+	public ResponseEntity postPlant(@Valid @RequestPart PlantDto plantDto,
 									@RequestPart MultipartFile multipartFile,
 									@RequestHeader("Authorization") String token) {
 		Plant plant = plantMapper.toPlant(plantDto);
@@ -38,24 +38,24 @@ public class PlantController {
 	@PatchMapping(value = "/{plant-id}", consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
 	public ResponseEntity patchPlant(@PathVariable("plant-id") @Positive Long plantId,
 									 @Valid @RequestPart PlantDto plantDto,
-									 @RequestPart(required = false) MultipartFile multipartFile) {
-		plantDto.setPlantId(plantId);
+									 @RequestPart(required = false) MultipartFile multipartFile,
+									 @RequestHeader("Authorization") String token) {
 		Plant plant = plantMapper.toPlant(plantDto);
-		Plant response = plantService.patchPlant(plant, multipartFile);
+		Plant response = plantService.patchPlant(plant, multipartFile, plantId, jwtTokenizer.getUserIdFromToken(token));
 
 		return new ResponseEntity(plantMapper.toPlantResponseDto(response), HttpStatus.OK);
 	}
 
-	@GetMapping
-	public ResponseEntity getPlants() {
-		List<Plant> plants = plantService.getPlants();
+	@GetMapping("/profile/{user-id}")
+	public ResponseEntity getPlants(@PathVariable("user-id") @Positive Long memberId) {
+		List<Plant> plants = plantService.getPlants(memberId);
 		return new ResponseEntity(new MultiListResponseDto<>(plantMapper.toPlantResponseDtos(plants)), HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{plant-id}")
-	public ResponseEntity deletePlant(@PathVariable("plant-id") @Positive Long plantId) {
-
-		plantService.deletePlant(plantId);
+	public ResponseEntity deletePlant(@PathVariable("plant-id") @Positive Long plantId,
+									  @RequestHeader("Authorization") String token) {
+		plantService.deletePlant(plantId, jwtTokenizer.getUserIdFromToken(token));
 		return new ResponseEntity(HttpStatus.NO_CONTENT);
 	}
 }

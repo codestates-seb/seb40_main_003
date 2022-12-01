@@ -19,7 +19,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -43,8 +45,13 @@ public class MemberService {
         Member savedUser = memberRepository.save(member);
 //        MemberInformation newMemberInfo = MemberInformation.builder().member(savedUser).build();
 //        memberInfoRepository.save(newMemberInfo);
-        MemberProfile memberProfile = MemberProfile.builder().member(savedUser).content("content").build();
+
+//        MemberInformation memberInformation = new MemberInformation(savedUser, "name", "010-1234-5678", "20000101", 1, "address");
+//        memberInfoRepository.save(memberInformation);
+
+        MemberProfile memberProfile = new MemberProfile("content", savedUser);
         memberProfileRepository.save(memberProfile);
+
         return savedUser.getMemberId();
     }
 
@@ -88,6 +95,23 @@ public class MemberService {
                 , registerMember.getNickname());
     }
 
+    public MemberInfoResponseDto getMemberInfo(Long infoId, Long token) {
+        Member findMember = verifyMember(token);
+        MemberInformation findInfo = findVerifiedMemberInfo(infoId);
+
+        if (findInfo.getMember() != findMember) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_FORBIDDEN);
+        }
+        return memberMapper.memberInfoToResponseDto(findInfo, findMember.getMemberId(), findMember.getNickname());
+    }
+
+    private MemberInformation findVerifiedMemberInfo(Long infoId) {
+        Optional<MemberInformation> optionalMemberInfo = memberInfoRepository.findById(infoId);
+        MemberInformation memberInfo = optionalMemberInfo.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.MEMBER_INFO_NOT_FOUND));
+        return memberInfo;
+    }
+
     public TokenDto reissueToken(String refreshToken) {
 //        String[] tokenArr = refreshToken.split(",");
 //        refreshToken = tokenArr[1];
@@ -127,4 +151,28 @@ public class MemberService {
         return memberRepository.findUserByEmail(email).isEmpty();
     }
 
+    //    public MemberInfoResponseDto patchMemberInfo(Long infoId, MemberInfoPostDto memberInfoPostDto, Long token) {
+//        MemberInformation findMemberInfo = findVerifiedMemberInfo(infoId);
+////        Member findMemberByToken = verifyMember(token);
+//        MemberInformation findMemberInfoByToken = findVerifiedMemberInfo(token);
+//
+//        if (findMemberInfoByToken != findMemberInfo) {
+//            throw new BusinessLogicException(ExceptionCode.MEMBER_FORBIDDEN);
+//        }
+//
+//        MemberInformation info = memberMapper.memberInfoPostDtoToMemberInfo(memberInfoPostDto);
+//        //name, phone, birth, gender, address
+//        Optional.ofNullable(info.getName())
+//                .ifPresent(findMemberInfo::setName);
+//        Optional.ofNullable(info.getPhone())
+//                .ifPresent(findMemberInfo::setPhone);
+//        Optional.ofNullable(info.getBirth())
+//                .ifPresent(findMemberInfo::setBirth);
+//        Optional.ofNullable(info.getGender())
+//                .ifPresent(findMemberInfo::setGender);
+//        Optional.ofNullable(info.getAddress())
+//                .ifPresent(findMemberInfo::setAddress);
+//
+//        return memberMapper.memberInfoToResponseDto(findMemberInfo, findMemberInfo.getMember().getMemberId(), findMemberInfo.getMember().getNickname());
+//    }
 }

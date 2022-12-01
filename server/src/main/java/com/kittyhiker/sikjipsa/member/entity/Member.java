@@ -43,7 +43,7 @@ public class Member extends AuditingEntity {
 
 	private String roles;
 
-	@OneToOne(mappedBy = "member")
+	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
 	private MemberProfile memberProfile;
 
 	@OneToOne(mappedBy = "member")
@@ -79,7 +79,7 @@ public class Member extends AuditingEntity {
 	@OneToMany(mappedBy = "member")
 	private List<Comment> comments = new ArrayList<>();
 
-	@OneToOne(mappedBy = "member")
+	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
 	private MemberInformation memberInformation;
 
 	@OneToOne(mappedBy = "member")
@@ -108,6 +108,9 @@ public class Member extends AuditingEntity {
 
 	public void setMemberProfile(MemberProfile memberProfile) {
 		this.memberProfile = memberProfile;
+		if (memberProfile != null) {
+			memberProfile.setMember(this);
+		}
 	}
 
 	public void setImage(Image image) {
@@ -116,7 +119,16 @@ public class Member extends AuditingEntity {
 
 	public void setMemberInformation(MemberInformation memberInformation) {
 		this.memberInformation = memberInformation;
+		if (memberInformation != null) {
+			memberInformation.setMember(this);
+		}
 	}
 
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
+	public void setPassword(String password) {
+		this.password = password;
+	}
 }

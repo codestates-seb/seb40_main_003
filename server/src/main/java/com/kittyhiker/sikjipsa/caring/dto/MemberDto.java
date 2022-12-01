@@ -1,6 +1,5 @@
 package com.kittyhiker.sikjipsa.caring.dto;
 
-import com.kittyhiker.sikjipsa.plant.dto.PlantDto;
 import com.kittyhiker.sikjipsa.plant.dto.PlantResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
