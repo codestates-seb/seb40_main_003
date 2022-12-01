@@ -19,10 +19,12 @@ import Modal from "../../Components/Modal";
 import { useCallback, useState } from "react";
 import { CommentCard } from "../../Components/CommentCard";
 import PlantCardCarousel, {
+  EditAndDeleteButton,
   ProfilePlantCard,
 } from "../../Components/profile/plantCardCarousel";
 import { useIsAuthor } from "../../Hooks/useAuth";
 import ProductCard from "../../Components/product/ProductCard";
+import EditPlantModal from "./EditPlantModal";
 
 type props = {
   url?: string | undefined;
@@ -39,9 +41,12 @@ const Profile = (props: props) => {
   usePageTitle("프로필");
   // 모달
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState();
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
+  console.log(data);
+  
   return data ? (
     <>
       <MainContentContainer>
@@ -61,7 +66,8 @@ const Profile = (props: props) => {
             <>
               {isOpenModal && (
                 <Modal onClickModal={onClickModal}>
-                  <AddPlantModal closeModal={onClickModal} />
+                  {isEditing?
+                  <AddPlantModal closeModal={onClickModal} />:<EditPlantModal />}
                 </Modal>
               )}
             </>
@@ -70,6 +76,7 @@ const Profile = (props: props) => {
                 {data.plants.map((e, i) => {
                   return (
                     <ProfilePlantCard
+                    onClickModal={onClickModal}
                       src={e.image.imgUrl}
                       alt={`${data.nickname}의 반려식물 ${e.name}의 사진`}
                       name={e.name}
