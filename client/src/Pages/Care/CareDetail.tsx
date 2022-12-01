@@ -40,7 +40,7 @@ const CareDetail = () => {
     <MainContentContainer>
       <MainCenterWrapper>
         <ProfileCard
-          src={data.member.plants[0].image.imgUrl}
+          src={data.photo}
           alt={`${data.name}의 대표사진`}
           name={data.name}
           location={data.address}
@@ -108,6 +108,7 @@ const CareDetail = () => {
         <SectionWrapper title="돌봄 리뷰" borderNone={true}>
           <>
             {data?.expertReviews.map((e) => {
+              console.log(data)
               return (
                 <CommentCard
                   name={e.member.nickname}
