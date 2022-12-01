@@ -39,7 +39,7 @@ const Profile = () => {
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-
+  console.log(data)
   return data ? (
     <>
       <MainContentContainer>
