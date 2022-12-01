@@ -31,8 +31,12 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal }) => {
     const formData = new FormData();
     const memberPatchDto = JSON.stringify({
       nickname: data.nickname,
-      content: data.memberProfile.content,
-      address: data.memberInformation.address,
+      memberProfile: {
+        content: data.memberProfile.content,
+      },
+      memberInformation: {
+        address: data.memberInformation.address,
+      },
     });
     formData.append("multipartFile", data.image[0]);
     formData.append(
@@ -86,7 +90,7 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal }) => {
 
       {/* 자기소개 */}
       <label className="bold h4 mb-4">자기소개</label>
-      <input
+      <textarea
         {...register("memberProfile.content", {
           required: true,
           minLength: {
@@ -98,7 +102,6 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal }) => {
             value: 20,
           },
         })}
-        type="text"
       />
       <p className="font-alert-red">{errors.memberProfile?.content?.message}</p>
 
