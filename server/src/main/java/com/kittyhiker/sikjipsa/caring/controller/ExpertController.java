@@ -47,7 +47,6 @@ public class ExpertController {
 									  @Valid @RequestPart ExpertProfileDto expertProfileDto,
 									  @RequestPart(required = false) MultipartFile multipartFile,
 									  @RequestHeader("Authorization") String token) {
-		//expertProfileDto.setExpertId(expertId); // 수정 필
 		ExpertProfile expertProfile = expertMapper.toExpert(expertProfileDto);
 		ExpertProfile response = expertService.patchExpert(expertProfile, multipartFile, expertId, jwtTokenizer.getUserIdFromToken(token));
 		return new ResponseEntity(expertMapper.toExpertResponseDto(response), HttpStatus.OK);
@@ -124,24 +123,21 @@ public class ExpertController {
 
 	// 전문가(돌봄) 리뷰
 	@PostMapping("/{expert-id}/reviews")
-	public ResponseEntity postExpertSuccess(@PathVariable("expert-id") @Positive Long expertId,
-											//@PathVariable("expert-success-id") @Positive Long expertSuccessId,
+	public ResponseEntity postExpertReviews(@PathVariable("expert-id") @Positive Long expertId,
 											@RequestBody ExpertReviewDto expertReviewDto,
 											@RequestHeader("Authorization") String token) {
 		ExpertReview expertReview = expertReviewMapper.toReview(expertReviewDto);
-		ExpertReview response = expertService.postExpertSuccess(expertReview, expertId, jwtTokenizer.getUserIdFromToken(token));
+		ExpertReview response = expertService.postExpertReview(expertReview, expertId, jwtTokenizer.getUserIdFromToken(token));
 		return new ResponseEntity(expertReviewMapper.toExpertReviewResponseDto(response), HttpStatus.CREATED);
 	}
 
-	// 돌봄 기록 /experts/success?page={page}&size={size}
-	// TODO
+	// 돌봄 기록
 	@GetMapping("/success")
 	public ResponseEntity getExpertSuccess(@Positive @RequestParam int page,
 										   @Positive @RequestParam int size,
 										   @RequestHeader("Authorization") String token) {
-		Page<ExpertProfile> pageExpertProfile = expertService.getExpertSuccess(page - 1, size);
+		Page<ExpertProfile> pageExpertProfile = expertService.getExpertSuccess(page - 1, size, jwtTokenizer.getUserIdFromToken(token));
 		List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
-
 		return new ResponseEntity<>(new MultiResponseDto<>(expertMapper.toExpertSuccessResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
 	}
 }

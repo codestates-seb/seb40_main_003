@@ -229,7 +229,7 @@ public class ExpertService {
 		}
 	}
 
-	public ExpertReview postExpertSuccess(ExpertReview expertReview, Long expertId, Long memberId) {
+	public ExpertReview postExpertReview(ExpertReview expertReview, Long expertId, Long memberId) {
 		Member member = findVerifiedMember(memberId);
 		expertReview.setMember(member);
 
@@ -238,8 +238,9 @@ public class ExpertService {
 		return expertReviewRepository.save(expertReview);
 	}
 
-	public Page<ExpertProfile> getExpertSuccess(int page, int size) {
-		return expertRepository.findAll(PageRequest.of(page, size, Sort.by("expertId").descending()));
+	public Page<ExpertProfile> getExpertSuccess(int page, int size, Long memberId) {
+		Pageable pageable = PageRequest.of(page, size, Sort.by("expertReviews_expertReviewId").descending());
+		return expertRepository.findAllByExpertReviews_Member_MemberId(memberId, pageable);
 	}
 
 	private void verifyExpert(Long memberId) {
