@@ -20,7 +20,7 @@ const Main = () => {
       <MainCenterWrapper className="pd-0">
         <Carousel
           showStatus={false}
-          // autoPlay={true}
+          autoPlay={true}
           infiniteLoop={true}
           showThumbs={false}
         >
@@ -62,11 +62,6 @@ const Main = () => {
   );
 };
 
-// const BannerWrapper = styled.div`
-//   width: 100%;
-//   margin: 10px auto;
-//   position: relative;
-// `;
 const BannerImgWrapper = styled.div`
   background-image: ${(props: { image: string }) => `url(${props.image})`};
   width: 100%;
@@ -77,28 +72,6 @@ const BannerImgWrapper = styled.div`
   background-position: center;
   background-size: cover;
 `;
-// const BannerTextLeft = styled.div`
-//   background-color: aqua;
-//   position: absolute;
-//   top: 40%;
-//   left: 40%;
-//   width: 50%;
-//   transform: translate(-50%, -50%);
-//   font-family: "GmarketSansMedium";
-//   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
-//     format("woff");
-// `;
-// const BannerTextRight = styled.div`
-//   background-color: aqua;
-//   position: absolute;
-//   top: 40%;
-//   left: 50%;
-//   width: 50%;
-//   transform: translate(-50%, -50%);
-//   font-family: "GmarketSansMedium";
-//   src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
-//     format("woff");
-// `;
 
 const BannerText = ({
   main,
