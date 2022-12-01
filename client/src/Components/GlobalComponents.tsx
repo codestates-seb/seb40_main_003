@@ -7,7 +7,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { ReactComponent as Exchange } from "../images/exchangeIcon.svg";
 import { useIsAuthor } from "../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../Hooks/api";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -289,13 +289,23 @@ export const ProfileCard = (props: ProfileCardTypes) => {
               }
               onClick={() => {
                 if (isExpertNow) {
+                  setIsExpertNow((prev) => !prev);
                   memberId
                     ? navigate(`/profile/${memberId.memberId}`)
                     : navigate("/login");
-                }else{
-                  // axios.get()
+                } else {
+                  axios
+                    .get(`/experts/is-expert/${memberId?.memberId}`)
+                    .then((res) => {
+                      setIsExpertNow((prev) => !prev);
+                      navigate(`/caring/${res.data.expertId}`);
+                    })
+                    .catch((err) => {
+                      if(window.confirm("전문가가 아닙니다 전문가등록을 하시겠습니까?")){
+                        alert("등록으로 보내3")
+                      }
+                    });
                 }
-                setIsExpertNow((prev) => !prev);
               }}
             >
               <Exchange height={"16px"} width={"16px"} className="mb-2 mr-4" />
