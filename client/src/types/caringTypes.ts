@@ -48,10 +48,9 @@ export type CareDetailTypes = {
   price: string;
   extra: string;
   address: string;
-  plant: [ProfilePlantType];
   member:{
     memberId:string
-    plants:[ProfilePlantType]
+    plants:[ProfilePlantType]|[]
   }
   techTags: [
     {

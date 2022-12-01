@@ -321,7 +321,12 @@ input.checkbox-20 {
 .text-align-end {
   text-align: end;
 }
-
+.align-center{
+  align-items: center;
+}
+.justify-center{
+  justify-content: center;
+}
 .display-none {
   display: none;
 }
