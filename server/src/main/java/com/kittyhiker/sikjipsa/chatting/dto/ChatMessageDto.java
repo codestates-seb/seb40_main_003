@@ -8,8 +8,7 @@ import lombok.Setter;
 @Builder
 public class ChatMessageDto {
     public enum MessageType {
-        // 입장필요 or 참여중
-        ENTER, TALK
+        DEAL_CHAT, EXPERT_CHAT
     }
 
     private MessageType type;

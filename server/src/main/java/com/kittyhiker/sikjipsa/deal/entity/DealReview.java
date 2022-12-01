@@ -13,21 +13,29 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class DealChatRoom {
+public class DealReview {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "deal_chat_id")
-	private Long id;
+	@Column(name = "deal_review_id")
+	private Long dealReviewid;
+
+	@Column(name = "content")
+	private String reviewContent;
+
+	@OneToOne
+	@JoinColumn(name = "deal_id")
+	private Deal deal;
 
 	@ManyToOne
 	@JoinColumn(name = "buyer_id")
-	private Member buyer;
+	private Member buyer; // 구매자
 
 	@ManyToOne
 	@JoinColumn(name = "seller_id")
 	private Member seller;
 
-	@ManyToOne
-	@JoinColumn(name = "deal_id")
-	private Deal deal;
+
+	public void patchDealReview(String content) {
+		this.reviewContent = content;
+	}
 }

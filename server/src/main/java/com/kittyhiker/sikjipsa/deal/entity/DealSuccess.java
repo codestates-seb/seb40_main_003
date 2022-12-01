@@ -1,7 +1,5 @@
-package com.kittyhiker.sikjipsa.chatting.entity;
+package com.kittyhiker.sikjipsa.deal.entity;
 
-import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
-import com.kittyhiker.sikjipsa.deal.entity.Deal;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,18 +8,19 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
+@Entity @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Getter
-public class ChatRoom {
+public class DealSuccess {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chat_room_id")
-    private Long roomId;
+    @Column(name = "deal_success_id")
+    private Long dealSuccessId;
 
-    private String roomName;
+    @OneToOne
+    @JoinColumn(name = "deal_id")
+    private Deal deal;
 
     @OneToOne
     @JoinColumn(name = "buyer_id")
@@ -31,11 +30,4 @@ public class ChatRoom {
     @JoinColumn(name = "seller_id")
     private Member seller;
 
-    @ManyToOne
-    @JoinColumn(name = "deal_id")
-    private Deal deal;
-
-    @ManyToOne
-    @JoinColumn(name = "expert_profile_id")
-    private ExpertProfile expertProfile;
 }

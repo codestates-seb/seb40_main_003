@@ -5,9 +5,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-public class ChatRoomResponseDto {
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class ChatLoginDto {
 
-    private Long roomId;
-    private String chatRoomName;
+    private String type;
+    private Long memberId;
 
 }

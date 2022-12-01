@@ -1,6 +1,7 @@
 package com.kittyhiker.sikjipsa.chatting.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kittyhiker.sikjipsa.chatting.dto.ChatLoginDto;
 import com.kittyhiker.sikjipsa.chatting.dto.ChatMessageDto;
 import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto;
 import com.kittyhiker.sikjipsa.chatting.service.ChatService;
@@ -29,8 +30,6 @@ public class WebSocketHandler extends TextWebSocketHandler {
     private List<WebSocketSession> sessions =  new ArrayList<>();
     //userId의 세션 저장
     private Map<Long, WebSocketSession> userSessions = new HashMap<>();
-    //채팅방에 연결중인 세션
-    private Map<String, List<WebSocketSession>> chatRoomSessions = new HashMap<>();
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -51,22 +50,36 @@ public class WebSocketHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         String payload = message.getPayload();
-        log.info("{}", payload);
 
-        //입력값 chatMessageDto로 변경
-        ChatMessageDto chatMessage = objectMapper.readValue(payload, ChatMessageDto.class);
-        if (!userSessions.containsKey(chatMessage.getSenderId())) {
-            userSessions.put(chatMessage.getSenderId(), session);
+        if (payload.contains("JOIN_WEB_SOCKET")) {
+            ChatLoginDto chatLoginDto = objectMapper.readValue(payload, ChatLoginDto.class);
+            sessions.add(session);
+            userSessions.put(chatLoginDto.getMemberId(), session);
+            log.info("접속한 유저 >> "+chatLoginDto.getMemberId()+ "  세션 >>" +session);
+            log.info("접속 중인 유저 >> " +userSessions);
+        } else {
+            //입력값 chatMessageDto로 변경
+            ChatMessageDto chatMessage = objectMapper.readValue(payload, ChatMessageDto.class);
+            if (!userSessions.containsKey(chatMessage.getSenderId())) {
+                userSessions.put(chatMessage.getSenderId(), session);
+            }
+            if (chatMessage.getType().equals(ChatMessageDto.MessageType.DEAL_CHAT)) {
+                sendDealMessage(chatMessage);
+            } else if (chatMessage.getType().equals(ChatMessageDto.MessageType.EXPERT_CHAT)) {
+                sendExpertMessage(chatMessage);
+            }
         }
-        ChatRoomDto chatRoom = chatService.findRoomByName(chatMessage.getRoomName());
-        addSessionToChatRoom(chatRoom.getRoomName(), session);
-        sendMessage(chatMessage);
     }
 
-    public void sendMessage(ChatMessageDto message) {
-        String roomName = message.getRoomName();
-        List<WebSocketSession> webSocketSessions = chatRoomSessions.get(roomName);
+    public void sendDealMessage(ChatMessageDto message) {
+        ChatRoomDto chatRoom = chatService.findDealRoomByName(message.getRoomName());
+        List<WebSocketSession> webSocketSessions= getMessageMember(chatRoom);
         log.info("send session >> "+ webSocketSessions);
+        if (webSocketSessions.size()==1) {
+            chatService.saveMessage(message, 0L);
+        } else {
+            chatService.saveMessage(message, 1L);
+        }
         webSocketSessions.parallelStream()
                 .forEach(s -> {
                     if (sessions.contains(s)) {
@@ -75,17 +88,48 @@ public class WebSocketHandler extends TextWebSocketHandler {
                 });
     }
 
-    public void addSessionToChatRoom(String chatRoomName, WebSocketSession session) {
-        if (chatRoomSessions.get(chatRoomName)!=null) {
-            List<WebSocketSession> socketSession = chatRoomSessions.get(chatRoomName);
-            if (!socketSession.contains(session)){
-                socketSession.add(session);
-                chatRoomSessions.put(chatRoomName, socketSession);
-            }
+    public void sendExpertMessage(ChatMessageDto message) {
+        ChatRoomDto chatRoom = chatService.findExpertRoomByName(message.getRoomName());
+        List<WebSocketSession> webSocketSessions= getMessageMember(chatRoom);
+        log.info("send session >> "+ webSocketSessions);
+        if (webSocketSessions.size()==1) {
+            chatService.saveMessage(message, 0L);
         } else {
-            List<WebSocketSession> sessionList = new ArrayList<>();
-            sessionList.add(session);
-            chatRoomSessions.put(chatRoomName, sessionList);
+            chatService.saveMessage(message, 1L);
         }
+        webSocketSessions.parallelStream()
+                .forEach(s -> {
+                    if (sessions.contains(s)) {
+                        chatService.sendMessage(s, message);
+                    }
+                });
     }
+
+    public List<WebSocketSession> getMessageMember(ChatRoomDto chatRoomDto) {
+        List<WebSocketSession> socketSessions = new ArrayList<>();
+        if (userSessions.containsKey(chatRoomDto.getSellerId())) {
+            socketSessions.add(userSessions.get(chatRoomDto.getSellerId()));
+            log.info("전송자 아이디 :"+chatRoomDto.getSellerId()+" 세션 :"+userSessions.get(chatRoomDto.getSellerId()));
+        }
+        if (userSessions.containsKey(chatRoomDto.getBuyerId())) {
+            socketSessions.add(userSessions.get(chatRoomDto.getBuyerId()));
+            log.info("전송자 아이디 :"+chatRoomDto.getBuyerId()+" 세션 :"+userSessions.get(chatRoomDto.getBuyerId()));
+        }
+        return socketSessions;
+
+    }
+
+//    public void addSessionToChatRoom(String chatRoomName, WebSocketSession session) {
+//        if (chatRoomSessions.get(chatRoomName)!=null) {
+//            List<WebSocketSession> socketSession = chatRoomSessions.get(chatRoomName);
+//            if (!socketSession.contains(session)){
+//                socketSession.add(session);
+//                chatRoomSessions.put(chatRoomName, socketSession);
+//            }
+//        } else {
+//            List<WebSocketSession> sessionList = new ArrayList<>();
+//            sessionList.add(session);
+//            chatRoomSessions.put(chatRoomName, sessionList);
+//        }
+//    }
 }

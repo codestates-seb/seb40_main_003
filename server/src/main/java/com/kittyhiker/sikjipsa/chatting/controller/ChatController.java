@@ -1,6 +1,7 @@
 package com.kittyhiker.sikjipsa.chatting.controller;
 
 import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto;
+import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomMessageDto;
 import com.kittyhiker.sikjipsa.chatting.service.ChatService;
 import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
 import lombok.RequiredArgsConstructor;
@@ -34,9 +35,18 @@ public class ChatController {
         return new ResponseEntity(expertRoom, HttpStatus.CREATED);
     }
 
-    @GetMapping
-    public List<ChatRoomDto> findAllRoom() {
-        return chatService.findAllRoom();
+    @GetMapping("/deal")
+    public ResponseEntity getDealChatRoom(@RequestHeader("Authorization") String token) {
+        Long userId = jwtTokenizer.getUserIdFromToken(token);
+        List<ChatRoomDto> myDealChatRoom = chatService.getMyDealChatRoom(userId);
+
+        return new ResponseEntity(myDealChatRoom, HttpStatus.OK);
+    }
+
+    @GetMapping("/deal/{room-name}")
+    public ResponseEntity getDealChatDetail(@PathVariable("room-name") String roomName) {
+        List<ChatRoomMessageDto> messageFromRoom = chatService.getMessageFromRoom(roomName);
+        return new ResponseEntity(messageFromRoom, HttpStatus.OK);
     }
 
     @DeleteMapping("/chat/{chat-id}")
