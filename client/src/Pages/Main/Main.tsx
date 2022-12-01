@@ -26,22 +26,35 @@ const Main = () => {
         >
           <BannerImgWrapper image={MainBanner1}>
             <BannerText
-              title="먹이고~ 볕쬐고~ 애지중지 키운"
-              content="반려식물 자랑하기!"
+              sub="먹이고~ 볕쬐고~ 애지중지 키운"
+              main="반려식물 자랑하기!"
+              type="left"
             />
           </BannerImgWrapper>
 
-          <BannerImgWrapper image={MainBanner2}>
+          <BannerImgWrapper  image={MainBanner2}>
           <BannerText
-              title="샬라샬라"
-              content="반려식물 자랑하기!"
+              sub="식물은 내가 살릴게, 의뢰는 누가 할래?"
+              main="전문가에게 맡겨봐!"
               type="right"
             />
           </BannerImgWrapper>
 
-          <BannerImgWrapper image={MainBanner3}></BannerImgWrapper>
+          <BannerImgWrapper image={MainBanner3}>
+          <BannerText
+              sub="플랜트하이커가 처음이신가요?"
+              main="첫 돌봄 비용 20% 지원!"
+              type="left"
+            />
+          </BannerImgWrapper>
 
-          <BannerImgWrapper image={MainBanner4}></BannerImgWrapper>
+          <BannerImgWrapper image={MainBanner4}>
+          <BannerText
+              sub="무한 증식하는 우리집 다육이, 선인장"
+              main="이웃에게 분양해요!"
+              type="right"
+            />
+          </BannerImgWrapper>
         </Carousel>
       </MainCenterWrapper>
       <MainRightWrapper></MainRightWrapper>
@@ -88,19 +101,19 @@ const BannerImgWrapper = styled.div`
 // `;
 
 const BannerText = ({
-  title,
-  content,
+  main,
+  sub,
   type = "left",
 }: {
-  title: string;
-  content: string;
+  main?: string;
+  sub?: string;
   type?: "right" | "left";
 }) => {
   return (
     <CenterWrapper type={type}>
-      <div className={type==="left"?"text-align-left":"text-align-end"}>
-        <h2 className="h3 text-align-start bold">{title}</h2>
-        <p className=" h4 text-align-start">{content}</p>
+      <div className={type==="left"?"text-align-start":"text-align-end"}>
+        <p className=" h4">{sub}</p>
+        <h2 className="h1 bold">{main}</h2>
       </div>
     </CenterWrapper>
   );

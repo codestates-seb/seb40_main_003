@@ -142,7 +142,6 @@ input.checkbox-20 {
 .B-font {
   font-family: 'GmarketSansMedium';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff') format('woff');
-
 }
 /* 폰트 두께 설정 */
 .light {
@@ -320,8 +319,8 @@ input.checkbox-20 {
 .sig-border4 {
   border-radius: 4px 0px 4px 0px;
 }
-.text-align-left {
-  text-align: left;
+.text-align-start {
+  text-align: start;
 }
 .text-align-center {
   text-align: center;
@@ -329,12 +328,7 @@ input.checkbox-20 {
 .text-align-end {
   text-align: end;
 }
-.align-center{
-  align-items: center;
-}
-.justify-center{
-  justify-content: center;
-}
+
 .display-none {
   display: none;
 }
