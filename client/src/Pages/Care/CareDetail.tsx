@@ -47,6 +47,7 @@ const CareDetail = () => {
           circle={true}
           size={"66"}
           tag={data.useNum}
+          pk={data.member.memberId}
         />
         {
           // isLogin?.userId===id?

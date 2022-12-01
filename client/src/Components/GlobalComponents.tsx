@@ -1,9 +1,13 @@
 import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
-import { ColumnWrapper, RowWrapper, SpaceBetween } from "./Wrapper";
-import { isExpert, UserStateType } from "../Recoil/atoms/user";
+import { ColumnWrapper, SpaceBetween } from "./Wrapper";
+import { isExpert, userState, UserStateType } from "../Recoil/atoms/user";
 import defaultProfile from "../images/defaultProfileImage.png";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { ReactComponent as Exchange } from "../images/exchangeIcon.svg";
+import { useIsAuthor } from "../Hooks/useAuth";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -107,11 +111,13 @@ export const SigTag = styled.div`
   background-color: var(--main);
   color: var(--pure-white);
   font-size: var(--sub-font-size);
+  display: flex;
+  align-items: center;
   text-align: center;
   border-radius: var(--sig-border-4);
   padding: 2px 4px;
   margin-right: 4px;
-  &.p{
+  &.p {
     font-size: var(--p-font-size);
   }
   &.ghost {
@@ -146,7 +152,7 @@ export const ImageWrapper = styled.img`
   margin-right: 16px;
   &.communityImage {
     width: 100%;
-    min-height:40vh;
+    min-height: 40vh;
     height: 25vw;
     margin-right: 0;
   }
@@ -236,7 +242,7 @@ type ProfileCardTypes = {
   circle?: boolean;
   tag?: number;
   border?: boolean;
-  url?: string | undefined;
+  pk?: number | string | undefined;
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
@@ -249,8 +255,14 @@ export const ProfileCard = (props: ProfileCardTypes) => {
     area,
     circle = false,
     tag,
+    pk,
   } = props;
-  const isExpertNow = useRecoilValue(isExpert)
+  const [isExpertNow, setIsExpertNow] = useRecoilState(isExpert);
+  const navigate = useNavigate();
+  const memberId = useRecoilValue(userState);
+  // 작성자와 로그인유저 확인
+  const isAuthor = useIsAuthor();
+
   return (
     <CenteringWrapper className="space-between" borderNone={true}>
       <SpaceBetween>
@@ -265,12 +277,31 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         <ColumnWrapper>
           <span className="medium h4">{name}</span>
           {location && <span className="sub font-gray">{location}</span>}
+          {area && <span className="font-gray">{area}</span>}
 
-          {isExpertNow??
-          <span className="font-gray">
-            {area ? area : "지역이 등록되지 않았습니다"}
-          </span>}
-            <SigTag className="ghost mt-8 p">전문가로 전환</SigTag>
+          {isAuthor(pk) && (
+            <SigTag
+              as={"button"}
+              className={
+                isExpertNow
+                  ? "ghostgray mt-8 p disableIcon"
+                  : "ghost mt-8 p activeIcon"
+              }
+              onClick={() => {
+                if (isExpertNow) {
+                  memberId
+                    ? navigate(`/profile/${memberId.memberId}`)
+                    : navigate("/login");
+                }else{
+                  // axios.get()
+                }
+                setIsExpertNow((prev) => !prev);
+              }}
+            >
+              <Exchange height={"16px"} width={"16px"} className="mb-2 mr-4" />
+              {isExpertNow ? "식집사로 전환" : "전문가로 전환"}
+            </SigTag>
+          )}
         </ColumnWrapper>
       </SpaceBetween>
 

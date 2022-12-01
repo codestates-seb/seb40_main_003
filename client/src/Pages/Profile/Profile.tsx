@@ -21,8 +21,8 @@ import { CommentCard } from "../../Components/CommentCard";
 import PlantCardCarousel, {
   ProfilePlantCard,
 } from "../../Components/profile/plantCardCarousel";
-import ProductCard from "../../Components/product/ProductCard";
 import { useIsAuthor } from "../../Hooks/useAuth";
+import ProductCard from "../../Components/product/ProductCard";
 
 type props = {
   url?: string | undefined;
@@ -42,13 +42,12 @@ const Profile = (props: props) => {
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-
   return data ? (
     <>
       <MainContentContainer>
         <MainCenterWrapper>
           <ProfileCard
-            url={id}
+            pk={id}
             src={data.image?.imgUrl}
             alt={`${data.nickname}의 대표사진`}
             name={data.nickname}
@@ -93,7 +92,7 @@ const Profile = (props: props) => {
             </PlantCardCarousel>
           </SectionWrapper>
           <SectionWrapper width={100} title="거래 리뷰">
-            {data.memberReviews.length !== 0 ? (
+            {data.memberReviews&&data.memberReviews.length !== 0 ? (
               <>
                 {data.memberReviews.map((e) => {
                   return (
@@ -117,7 +116,7 @@ const Profile = (props: props) => {
                 <Link to={"/setting/history/sales"}>
                   <button className="mt-8 ml-50 bold font-gray">더 보기</button>
                 </Link>
-                {/* {data.deals.map((e, i) => {
+                {data.deals.map((e, i) => {
                   if (data.deals.length - i < 4) {
                     return (
                       <Link
@@ -128,7 +127,7 @@ const Profile = (props: props) => {
                       </Link>
                     );
                   }
-                })} */}
+                })}
               </ReverseWrap>
             ) : (
               <span className="mt-8">판매중인 상품이 없습니다</span>
