@@ -1,6 +1,8 @@
 package com.kittyhiker.sikjipsa.chatting.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
+import com.kittyhiker.sikjipsa.caring.service.ExpertService;
 import com.kittyhiker.sikjipsa.chatting.dto.ChatMessageDto;
 import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto;
 import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomMessageDto;
@@ -43,6 +45,7 @@ public class ChatService {
     private final DealChatRepository dealChatRepository;
     private final ExpertChatRepository expertChatRepository;
     private final MessageRepository messageRepository;
+    private final ExpertService expertService;
 
 
     public ChatRoomDto findDealRoomByName(String roomName) {
@@ -58,8 +61,10 @@ public class ChatService {
     public ChatRoomDto findExpertRoomByName(String roomName) {
         ExpertChatRoom expertChatRoom = expertChatRepository.findByRoomName(roomName).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.NOT_FOUND_CHATROOM));
-        //mapper 수정 필요
-        ChatRoomDto chatRoomDto = chatRoomMapper.expertChatToChatRoomDto(expertChatRoom);
+        ChatRoomDto chatRoomDto = chatRoomMapper.expertChatToChatRoomDto(expertChatRoom,
+                expertChatRoom.getBuyer().getMemberId(),
+                expertChatRoom.getSeller().getMemberId(),
+                messageRepository.countByRoomNameAndIsRead(roomName, 0L));
         return chatRoomDto;
     }
 
@@ -93,9 +98,28 @@ public class ChatService {
 
     public ChatRoomDto createExpertRoom(Long userId, Long expertId) {
         String randomId = UUID.randomUUID().toString();
-        ChatRoomDto chatRoom = ChatRoomDto.builder().build();
-//        chatRooms.put(randomId, chatRoom);
-        return chatRoom;
+        ExpertProfile expertProfile = expertService.findVerifiedExpert(expertId);
+        Long sellerId = expertProfile.getMember().getMemberId();
+        Member member = memberService.verifyMember(userId);
+        if (expertChatRepository.existsByExpertProfileAndBuyer(expertProfile, member)) {
+            ExpertChatRoom expertChatRoom = expertChatRepository.findByExpertProfileAndBuyer(expertProfile, member)
+                    .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_CHATROOM));
+            ChatRoomDto response = chatRoomMapper.expertChatToChatRoomDto(expertChatRoom,
+                    expertChatRoom.getBuyer().getMemberId(),
+                    expertChatRoom.getSeller().getMemberId(),
+                    messageRepository.countByRoomNameAndIsRead(expertChatRoom.getRoomName(), 0L));
+            return response;
+        } else {
+            ExpertChatRoom newExpertChat = ExpertChatRoom.builder()
+                    .roomName(randomId)
+                    .expertProfile(expertProfile)
+                    .buyer(member)
+                    .seller(expertProfile.getMember()).build();
+            ExpertChatRoom savedExpertChat = expertChatRepository.save(newExpertChat);
+            ChatRoomDto chatRoomDto = chatRoomMapper.expertChatToChatRoomDto(
+                    savedExpertChat, savedExpertChat.getBuyer().getMemberId(), sellerId, 0L);
+            return chatRoomDto;
+        }
     }
 
 
@@ -108,6 +132,16 @@ public class ChatService {
                                 c.getSeller().getMemberId(),
                                 messageRepository.countByRoomNameAndIsRead(c.getRoomName(), 0L))
                 ).collect(Collectors.toList());
+        return response;
+    }
+
+    public List<ChatRoomDto> getMyExpertChatRoom(Long userId) {
+        Member member = memberService.verifyMember(userId);
+        List<ExpertChatRoom> expertChatRoomList = expertChatRepository.findBySellerOrBuyer(member, member);
+        List<ChatRoomDto> response = expertChatRoomList.stream().map(
+                c -> chatRoomMapper.expertChatToChatRoomDto(c, c.getBuyer().getMemberId(), c.getSeller().getMemberId(),
+                        messageRepository.countByRoomNameAndIsRead(c.getRoomName(), 0L))
+        ).collect(Collectors.toList());
         return response;
     }
 
