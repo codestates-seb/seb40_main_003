@@ -115,7 +115,7 @@ const Care = () => {
       </MainCenterWrapper>
       <MainRightWrapper>
         <p className="h5 bold font-main mr-16">
-          우리 동네 식물 전문가를 만나보세요.🌿
+          우리 동네 식물 전문가에게 맡겨보세요.🌳
         </p>
       </MainRightWrapper>
     </MainContentContainer>
