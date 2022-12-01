@@ -62,7 +62,7 @@ const App = () => {
       setUser(null);
       setIsExpertNow(false);
     }
-  }, [user]);
+  }, [setUser]);
 
   return (
     <BrowserRouter>
