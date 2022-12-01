@@ -17,24 +17,14 @@ import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberProfileMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.repository.MemberProfileRepository;
 import com.kittyhiker.sikjipsa.member.repository.MemberInfoRepository;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
-import com.kittyhiker.sikjipsa.plant.entity.Plant;
 import lombok.RequiredArgsConstructor;
-import net.coobird.thumbnailator.Thumbnailator;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -65,7 +55,9 @@ public class MemberProfileService {
 							.nickname(dealMember.getNickname())
 							.image(imageService.findImage(dealMember)).build();
 					DealResponseDto dealResponseDto = dealMapper.dealToDealResponseDto(deal, responseImage, responseMember);
-					response.add(dealResponseDto);
+					if (Objects.equals(dealResponseDto.getMember().getMemberId(), dealMember.getMemberId())) {
+						response.add(dealResponseDto);
+					}
 				}
 		);
 		ProfileResponseDto profileResponseDto = memberProfileMapper.toProfileResponseDto(verifiedMember);
@@ -96,7 +88,7 @@ public class MemberProfileService {
 					findMember.setMemberProfile(memberProfile);
 				});
 
-		if(findMember.getMemberInformation() != null) {
+		if (findMember.getMemberInformation() != null) {
 			Optional.ofNullable(member.getMemberInformation())
 					.ifPresent(memberInformation -> {
 						MemberInformation memberInfo = findVerifiedMemberInfo(findMember);
@@ -137,7 +129,9 @@ public class MemberProfileService {
 							.nickname(dealMember.getNickname())
 							.image(imageService.findImage(dealMember)).build();
 					DealResponseDto dealResponseDto = dealMapper.dealToDealResponseDto(deal, responseImage, responseMember);
-					response.add(dealResponseDto);
+					if (Objects.equals(dealResponseDto.getMember().getMemberId(), dealMember.getMemberId())) {
+						response.add(dealResponseDto);
+					}
 				}
 		);
 		ProfileResponseDto profileResponseDto = memberProfileMapper.toProfileResponseDto(findMember);

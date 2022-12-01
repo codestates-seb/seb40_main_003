@@ -8,7 +8,6 @@ import com.kittyhiker.sikjipsa.member.memberprofile.dto.MemberInfoDto;
 import com.kittyhiker.sikjipsa.member.memberprofile.dto.MemberPatchDto;
 import com.kittyhiker.sikjipsa.member.memberprofile.dto.ProfileResponseDto;
 import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberInfoMapper;
-import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberProfileMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.service.MemberInfoService;
 import com.kittyhiker.sikjipsa.member.memberprofile.service.MemberProfileService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +25,6 @@ import javax.validation.constraints.Positive;
 public class MemberProfileController {
 	private final JwtTokenizer jwtTokenizer;
 	private final MemberProfileService memberProfileService;
-	private final MemberProfileMapper memberProfileMapper;
 	private final MemberInfoMapper memberInfoMapper;
 	private final MemberInfoService memberInfoService;
 	private final MemberMapper memberMapper;
