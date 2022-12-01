@@ -14,7 +14,7 @@ import {
 import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
 import { Link } from "react-router-dom";
 import { profileType } from "../../types/profileType";
-import AddPlantModal from "../Main/AddPlantModal";
+import AddPlantModal from "../Care/AddPlantModal";
 import Modal from "../../Components/Modal";
 import { useCallback, useState } from "react";
 import { CommentCard } from "../../Components/CommentCard";
@@ -39,7 +39,7 @@ const Profile = () => {
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-  console.log(data)
+
   return data ? (
     <>
       <MainContentContainer>
@@ -79,7 +79,10 @@ const Profile = () => {
                   );
                 })}
                 {isAuthor(id) ? (
-                  <AddIcon onClick={onClickModal} height={"36px"} />
+                  <ColumnWrapper center={true}>
+                    <AddIcon onClick={onClickModal} height={"36px"} />
+                    <span className="sub">반려식물 추가</span>
+                  </ColumnWrapper>
                 ) : (
                   <></>
                 )}

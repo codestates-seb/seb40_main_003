@@ -15,8 +15,8 @@ export const ProductCategoryList = [
     {number:4, name: "화분/화병"},
     {number:5, name: "가구/장식"},
     {number:6, name: "도구/용품"},
-    {number:7, name: "기계"},
-    {number:8, name: "서적"}
+    {number:7, name: "서적"},
+    {number:8, name: "기타"}
 ]
 
 export const CareCategoryList = [
