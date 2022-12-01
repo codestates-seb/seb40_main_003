@@ -1,8 +1,9 @@
 import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
-import { ColumnWrapper, RowWrapper } from "./Wrapper";
-import { UserStateType } from "../Recoil/atoms/user";
+import { ColumnWrapper, RowWrapper, SpaceBetween } from "./Wrapper";
+import { isExpert, UserStateType } from "../Recoil/atoms/user";
 import defaultProfile from "../images/defaultProfileImage.png";
+import { useRecoilValue } from "recoil";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -110,6 +111,9 @@ export const SigTag = styled.div`
   border-radius: var(--sig-border-4);
   padding: 2px 4px;
   margin-right: 4px;
+  &.p{
+    font-size: var(--p-font-size);
+  }
   &.ghost {
     color: var(--main);
     background-color: var(--pure-white);
@@ -246,10 +250,10 @@ export const ProfileCard = (props: ProfileCardTypes) => {
     circle = false,
     tag,
   } = props;
-  
+  const isExpertNow = useRecoilValue(isExpert)
   return (
     <CenteringWrapper className="space-between" borderNone={true}>
-      <RowWrapper className="align-center">
+      <SpaceBetween>
         <ImageWrapper
           src={src ? src : defaultProfile}
           alt={alt ? alt : "기본프로필사진"}
@@ -259,15 +263,18 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         />
 
         <ColumnWrapper>
-          <span className="medium">{name}</span>
+          <span className="medium h4">{name}</span>
           {location && <span className="sub font-gray">{location}</span>}
-          <span className="sub font-gray">
-            {area ? area : "지역이 등록되지 않았습니다"}
-          </span>
-        </ColumnWrapper>
-      </RowWrapper>
 
-      {tag !== undefined && <SigTag className="ghost sub">{tag}번 고용</SigTag>}
+          {isExpertNow??
+          <span className="font-gray">
+            {area ? area : "지역이 등록되지 않았습니다"}
+          </span>}
+            <SigTag className="ghost mt-8 p">전문가로 전환</SigTag>
+        </ColumnWrapper>
+      </SpaceBetween>
+
+      {tag !== undefined && <SigTag className="ghost p">{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
