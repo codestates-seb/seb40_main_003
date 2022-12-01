@@ -41,19 +41,20 @@ const Profile = (props: props) => {
   usePageTitle("프로필");
   // 모달
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
-  const [isEditing, setIsEditing] = useState();
+
+  const [isEditing, setIsEditing] = useState()
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-  console.log(data);
-  
+  console.log(data)
+
   return data ? (
     <>
       <MainContentContainer>
         <MainCenterWrapper>
           <ProfileCard
             pk={id}
-            src={data.image?.imgUrl}
+            src={data.image!==null?data.image.imgUrl:""}
             alt={`${data.nickname}의 대표사진`}
             name={data.nickname}
             location={data.memberInformation?.address}

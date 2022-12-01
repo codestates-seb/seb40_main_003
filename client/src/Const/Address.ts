@@ -466,6 +466,30 @@ export const address = `종로구 '청운동 ' .58711 126.969069
 4강동구 '천호동 ' .54367 127.131748
 4강동구 '강일동 ' .56920 127.17162`;
 
-export const area = [
-    { numer: 0, name: "중구" },
-];
+export const Area = [
+    {number: 0, name: "강남구"},
+    {number: 1, name: "강동구"},
+    {number: 2, name: "강북구"},
+    {number: 3, name: "강서구"},
+    {number: 4, name: "관악구"},
+    {number: 5, name: "광진구"},
+    {number: 6, name: "구로구"},
+    {number: 7, name: "금천구"},
+    {number: 8, name: "노원구"},
+    {number: 9, name: "도봉구"},
+    {number: 10, name: "동대문구"},
+    {number: 11, name: "동작구"},
+    {number: 12, name: "마포구"},
+    {number: 13, name: "서대문구"},
+    {number: 14, name: "서초구"},
+    {number: 15, name: "성동구"},
+    {number: 16, name: "성북구"},
+    {number: 17, name: "송파구"},
+    {number: 18, name: "양천구"},
+    {number: 19, name: "영등포구"},
+    {number: 20, name: "용산구"},
+    {number: 21, name: "은평구"},
+    {number: 22, name: "종로구"},
+    {number: 23, name: "중구"},
+    {number: 24, name: "중랑구"}
+]

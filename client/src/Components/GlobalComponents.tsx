@@ -274,7 +274,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
           circle={circle}
         />
 
-        <ColumnWrapper>
+        <ColumnWrapper className="justify-center">
           <span className="medium h4">{name}</span>
           {location && <span className="sub font-gray">{location}</span>}
           {area && <span className="font-gray">{area}</span>}
