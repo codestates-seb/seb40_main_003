@@ -41,6 +41,7 @@ import { useSetRecoilState } from "recoil";
 import { isExpert, userState } from "./Recoil/atoms/user";
 import { getLS } from "./Hooks/useSecureLS";
 import ProductModify from "./Pages/Product/ProductModify";
+import SetUserModal from "./Pages/Profile/SetUserModal";
 
 
 
@@ -74,6 +75,7 @@ const App=()=>{
         {/* <Route element={<AuthProvider />}> */}
         <Route path="/profile" element={<HeaderLayout />}>
           <Route path=":id" element={<Profile />} />
+          <Route path="modify" element={<SetUserModal />} />
         </Route>
         {/* </Route> */}
 

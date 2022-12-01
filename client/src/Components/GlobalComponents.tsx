@@ -4,7 +4,6 @@ import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import { UserStateType } from "../Recoil/atoms/user";
 import defaultProfile from "../images/defaultProfileImage.png";
 
-
 // 버튼앨리먼트
 export const SigButton = styled.button`
   padding: 16px 0;
@@ -232,6 +231,7 @@ type ProfileCardTypes = {
   circle?: boolean;
   tag?: number;
   border?: boolean;
+  url?: string | undefined;
 };
 export const ProfileCard = (props: ProfileCardTypes) => {
   // 비구조화할당
@@ -245,7 +245,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
     circle = false,
     tag,
   } = props;
-  console.log(tag)
+  console.log(tag);
   return (
     <CenteringWrapper className="space-between" borderNone={true}>
       <RowWrapper className="align-center">
@@ -266,12 +266,10 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         </ColumnWrapper>
       </RowWrapper>
 
-      {tag!==undefined && <SigTag className="ghost sub">{tag}번 고용</SigTag>}
+      {tag !== undefined && <SigTag className="ghost sub">{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
-
-
 
 // Comment 컴포넌트, 돌봄리뷰
 export const CommentCardWrapper = styled.div`
