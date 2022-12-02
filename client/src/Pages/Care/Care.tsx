@@ -22,8 +22,8 @@ import { useCallback, useEffect, useState } from "react";
 import React from "react";
 import { cannotLoad, } from "../../Const/message";
 import Modal from "../../Components/Modal";
-import CategoryModal from "../../Components/product/CategoryModal";
 import { ReactComponent as Hamburger } from "../../images/hamburgerIcon.svg";
+import CategoryModal from "../../Components/care/CategoryModal";
 
 export const careQueryClient = new QueryClient();
 

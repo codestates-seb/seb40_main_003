@@ -11,6 +11,7 @@ import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { InfiniteFetch } from "../../Hooks/useFetch";
 import {
+  InfiniteData,
   QueryClient,
   QueryClientProvider,
   useInfiniteQuery,
@@ -19,26 +20,28 @@ import {
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import React from "react";
 import { ProfileDealType } from "../../types/profileType";
 import { cannotLoad, searchbarComment } from "../../Const/message";
+import ProductCategory from "../../Components/product/ProductCategory";
 
 // 쿼리클라이언트
 export const productQueryClient = new QueryClient();
 type productMain = {
   searchKeyword?: string;
   size?: number;
+  category?: number | undefined;
 };
 
-export const ProductMain = ({ searchKeyword, size }: productMain) => {
+export const ProductMain = ({ searchKeyword, size, category }: productMain) => {
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
 
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["productQuery", searchKeyword, size],
+    ["productQuery", searchKeyword, size,category],
     ({ pageParam = 1 }) =>
       InfiniteFetch("/deal", pageParam, searchKeyword, size),
     {
@@ -47,10 +50,10 @@ export const ProductMain = ({ searchKeyword, size }: productMain) => {
     }
   );
   // 스크롤감지
-  
+
   useEffect(() => {
-    if (size!==3&&inView) fetchNextPage();
-  }, [inView,size])
+    if (size !== 3 && inView) fetchNextPage();
+  }, [inView, size]);
 
   if (status === "loading") return <LoadingSkeleton />;
   if (status === "error") return <ErrorMessage content={cannotLoad} />;
@@ -76,6 +79,8 @@ const Product = () => {
   const [searchKeyWord, setSearchKeyWord] = useState<string | undefined>(
     undefined
   );
+  const [isSearching, setIsSearching] = useState(false);
+  const [category, setCategory] = useState<undefined | number>(undefined);
 
   usePageTitle("거래");
   return (
@@ -89,6 +94,16 @@ const Product = () => {
             onChange={(e) => {
               setSearchKeyWord(e.target.value);
             }}
+            onFocus={(e) => {
+              setIsSearching(true);
+            }}
+            onBlur={(e) => {
+              setIsSearching(false);
+            }}
+          />
+          <ProductCategory
+            isSearching={isSearching}
+            setCategory={setCategory}
           />
           <SpaceBetween>
             <div className="justify-center mt-8">
@@ -107,7 +122,11 @@ const Product = () => {
 
           <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
             <QueryClientProvider client={productQueryClient}>
-              <ProductMain searchKeyword={searchKeyWord} size={15}/>
+              <ProductMain
+                searchKeyword={searchKeyWord}
+                size={15}
+                category={category}
+              />
             </QueryClientProvider>
           </ErrorBoundary>
 

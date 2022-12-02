@@ -7,16 +7,25 @@ import CareCategoryIcon6 from "../images/cat6Icon.svg";
 import CareCategoryIcon7 from "../images/cat7Icon.svg";
 import CareCategoryIcon8 from "../images/cat8Icon.svg";
 
+import ProductCategoryIcon1 from "../images/dealIcon1.svg";
+import ProductCategoryIcon2 from "../images/dealIcon2.svg";
+import ProductCategoryIcon3 from "../images/dealIcon3.svg";
+import ProductCategoryIcon4 from "../images/dealIcon4.svg";
+import ProductCategoryIcon5 from "../images/dealIcon5.svg";
+import ProductCategoryIcon6 from "../images/dealIcon6.svg";
+import ProductCategoryIcon7 from "../images/dealIcon7.svg";
+import ProductCategoryIcon8 from "../images/dealIcon8.svg";
+
 export const ProductCategoryList = [
-  { number: 0, name: "대형 식물(100cm 내외)" },
-  { number: 1, name: "중형 식물(50cm 내외)" },
-  { number: 2, name: "소형 식물(30cm 이하)" },
-  { number: 3, name: "씨앗/모종" },
-  { number: 4, name: "화분/화병" },
-  { number: 5, name: "가구/장식" },
-  { number: 6, name: "도구/용품" },
-  { number: 7, name: "서적" },
-  { number: 8, name: "기타" },
+  { number: 0, name: "대형 식물", img: ProductCategoryIcon1 },
+  { number: 1, name: "중형 식물", img: ProductCategoryIcon2 },
+  { number: 2, name: "소형 식물", img: ProductCategoryIcon3 },
+  { number: 3, name: "씨앗/모종", img: ProductCategoryIcon4 },
+  { number: 4, name: "화분/화병", img: ProductCategoryIcon5 },
+  { number: 5, name: "가구/장식", img: ProductCategoryIcon6 },
+  { number: 6, name: "도구/용품", img: ProductCategoryIcon7 },
+  { number: 7, name: "서적", img: ProductCategoryIcon8 },
+  { number: 8, name: "기타", img: ""},
 ] as const;
 
 export const CareCategoryList = [
