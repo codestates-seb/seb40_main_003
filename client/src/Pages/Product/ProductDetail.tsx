@@ -32,7 +32,7 @@ const CarouselImage = styled.img`
   background-color: var(--bg-gray);
 `;
 
-const ProductBookmarksDetail = () => {
+const Product = () => {
   const { id } = useParams();
   const user = useRecoilValue(userState);
   const isAuthor = useIsAuthor();
@@ -49,7 +49,7 @@ const ProductBookmarksDetail = () => {
         <TopCarousel>
           {data.images.map((e, i) => {
             return (
-              <CarouselImage src={e} alt={`${data.title}의 ${i}번째사진`} />
+              <CarouselImage key={i} src={e} alt={`${data.title}의 ${i}번째사진`} />
             );
           })}
         </TopCarousel>
@@ -107,4 +107,4 @@ const ProductBookmarksDetail = () => {
   );
 };
 
-export default ProductBookmarksDetail;
+export default Product;

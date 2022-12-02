@@ -1,13 +1,13 @@
 package com.kittyhiker.sikjipsa.caring.controller;
 
-import com.kittyhiker.sikjipsa.caring.dto.ExpertProfileDto;
-import com.kittyhiker.sikjipsa.caring.dto.ExpertReviewDto;
-import com.kittyhiker.sikjipsa.caring.dto.MultiResponseDto;
+import com.kittyhiker.sikjipsa.caring.dto.*;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertReview;
+import com.kittyhiker.sikjipsa.caring.entity.ExpertSuccess;
 import com.kittyhiker.sikjipsa.caring.entity.MemberLikeExpert;
 import com.kittyhiker.sikjipsa.caring.mapper.ExpertMapper;
 import com.kittyhiker.sikjipsa.caring.mapper.ExpertReviewMapper;
+import com.kittyhiker.sikjipsa.caring.mapper.ExpertSuccessMapper;
 import com.kittyhiker.sikjipsa.caring.mapper.MemberLikeExpertMapper;
 import com.kittyhiker.sikjipsa.caring.service.ExpertService;
 import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.io.IOException;
+import java.security.PublicKey;
 import java.util.List;
 
 @RestController
@@ -32,6 +34,7 @@ public class ExpertController {
 	private final ExpertMapper expertMapper;
 	private final MemberLikeExpertMapper memberLikeExpertMapper;
 	private final ExpertReviewMapper expertReviewMapper;
+	private final ExpertSuccessMapper expertSuccessMapper;
 
 	@PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
 	public ResponseEntity postExpert(@Valid @RequestPart ExpertProfileDto expertProfileDto,
@@ -47,7 +50,6 @@ public class ExpertController {
 									  @Valid @RequestPart ExpertProfileDto expertProfileDto,
 									  @RequestPart(required = false) MultipartFile multipartFile,
 									  @RequestHeader("Authorization") String token) {
-		//expertProfileDto.setExpertId(expertId); // 수정 필
 		ExpertProfile expertProfile = expertMapper.toExpert(expertProfileDto);
 		ExpertProfile response = expertService.patchExpert(expertProfile, multipartFile, expertId, jwtTokenizer.getUserIdFromToken(token));
 		return new ResponseEntity(expertMapper.toExpertResponseDto(response), HttpStatus.OK);
@@ -57,6 +59,12 @@ public class ExpertController {
 	public ResponseEntity getExpert(@PathVariable("expert-id") @Positive Long expertId) {
 		ExpertProfile response = expertService.getExpert(expertId);
 		return new ResponseEntity(expertMapper.toExpertResponseDto(response), HttpStatus.OK);
+	}
+
+	@GetMapping("/is-expert/{user-id}")
+	public ResponseEntity getIsExpert(@PathVariable("user-id") @Positive Long memberId) {
+		ExpertProfile response = expertService.getIsExpert(memberId);
+		return new ResponseEntity(expertMapper.toIsExpertDto(response), HttpStatus.OK);
 	}
 
 	@GetMapping
@@ -118,24 +126,28 @@ public class ExpertController {
 
 	// 전문가(돌봄) 리뷰
 	@PostMapping("/{expert-id}/reviews")
-	public ResponseEntity postExpertSuccess(@PathVariable("expert-id") @Positive Long expertId,
-											//@PathVariable("expert-success-id") @Positive Long expertSuccessId,
+	public ResponseEntity postExpertReviews(@PathVariable("expert-id") @Positive Long expertId,
 											@RequestBody ExpertReviewDto expertReviewDto,
 											@RequestHeader("Authorization") String token) {
 		ExpertReview expertReview = expertReviewMapper.toReview(expertReviewDto);
-		ExpertReview response = expertService.postExpertSuccess(expertReview, expertId, jwtTokenizer.getUserIdFromToken(token));
+		ExpertReview response = expertService.postExpertReview(expertReview, expertId, jwtTokenizer.getUserIdFromToken(token));
 		return new ResponseEntity(expertReviewMapper.toExpertReviewResponseDto(response), HttpStatus.CREATED);
 	}
 
-	// 돌봄 기록 /experts/success?page={page}&size={size}
-	// TODO
+	// 고용 성공
+	@PostMapping("/success")
+	public ResponseEntity postExpertSuccess(@RequestBody ExpertSuccessDto expertSuccessDto) throws IOException {
+		ExpertSuccessResponseDto expertSuccessResponseDto = expertService.postExpertSuccess(expertSuccessDto);
+		return new ResponseEntity(expertSuccessResponseDto, HttpStatus.CREATED);
+	}
+
+	// 돌봄 기록
 	@GetMapping("/success")
 	public ResponseEntity getExpertSuccess(@Positive @RequestParam int page,
 										   @Positive @RequestParam int size,
 										   @RequestHeader("Authorization") String token) {
-		Page<ExpertProfile> pageExpertProfile = expertService.getExpertSuccess(page - 1, size);
+		Page<ExpertProfile> pageExpertProfile = expertService.getExpertSuccess(page - 1, size, jwtTokenizer.getUserIdFromToken(token));
 		List<ExpertProfile> expertProfiles = pageExpertProfile.getContent();
-
 		return new ResponseEntity<>(new MultiResponseDto<>(expertMapper.toExpertSuccessResponseDtos(expertProfiles), pageExpertProfile), HttpStatus.OK);
 	}
 }

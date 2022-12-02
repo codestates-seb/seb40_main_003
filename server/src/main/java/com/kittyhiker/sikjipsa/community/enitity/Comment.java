@@ -20,6 +20,7 @@ public class Comment extends AuditingEntity {
 	@Column(name = "comment_id")
 	private Long commentId;
 
+	@Column(length = 1500)
 	private String content;
 
 	private int isModified=0;

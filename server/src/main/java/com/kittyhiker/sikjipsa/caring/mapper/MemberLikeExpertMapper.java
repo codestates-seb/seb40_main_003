@@ -10,7 +10,6 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 
 public interface MemberLikeExpertMapper {
-	//@Mapping(target = "expertProfileId", source = "expertProfile.expertId")
 	MemberLikeExpertResponseDto toMemberLikeExpertResponseDto(MemberLikeExpert response);
 
 	List<MemberLikeExpertResponseDto> toMemberLikeExpertResponseDtos(List<MemberLikeExpert> memberLikeExperts);

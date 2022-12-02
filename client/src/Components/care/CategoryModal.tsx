@@ -18,7 +18,7 @@ const CategoryModal = ({ onClickFunction, closeModal }: Props) => {
               key={e.number}
               center={true}
               onClick={() => {
-                onClickFunction(e.number);
+                onClickFunction(e.name);
                 closeModal();
               }}
               className={"cursor"}

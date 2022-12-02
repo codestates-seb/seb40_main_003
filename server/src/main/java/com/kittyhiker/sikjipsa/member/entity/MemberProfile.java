@@ -22,6 +22,13 @@ public class MemberProfile {
 
 	private String content;
 
+	public void setMember(Member member) {
+		this.member = member;
+		if (!member.getMemberProfile().equals(this)) {
+			member.setMemberProfile(this);
+		}
+	}
+
 	@OneToOne
 	@JoinColumn(name = "member_id")
 	private Member member;

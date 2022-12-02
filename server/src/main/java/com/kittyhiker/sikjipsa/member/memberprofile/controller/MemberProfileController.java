@@ -6,8 +6,8 @@ import com.kittyhiker.sikjipsa.member.entity.MemberInformation;
 import com.kittyhiker.sikjipsa.member.mapper.MemberMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.dto.MemberInfoDto;
 import com.kittyhiker.sikjipsa.member.memberprofile.dto.MemberPatchDto;
+import com.kittyhiker.sikjipsa.member.memberprofile.dto.ProfileResponseDto;
 import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberInfoMapper;
-import com.kittyhiker.sikjipsa.member.memberprofile.mapper.MemberProfileMapper;
 import com.kittyhiker.sikjipsa.member.memberprofile.service.MemberInfoService;
 import com.kittyhiker.sikjipsa.member.memberprofile.service.MemberProfileService;
 import lombok.RequiredArgsConstructor;
@@ -25,25 +25,26 @@ import javax.validation.constraints.Positive;
 public class MemberProfileController {
 	private final JwtTokenizer jwtTokenizer;
 	private final MemberProfileService memberProfileService;
-	private final MemberProfileMapper memberProfileMapper;
 	private final MemberInfoMapper memberInfoMapper;
 	private final MemberInfoService memberInfoService;
 	private final MemberMapper memberMapper;
 
 
 	// 테스트용
-	@PostMapping
-	public ResponseEntity postProfile(@Valid @RequestBody MemberInfoDto memberInfoDto,
-									  @RequestHeader("Authorization") String token) {
-		MemberInformation memberInformation = memberInfoMapper.toMemberInfo(memberInfoDto);
-		MemberInformation response = memberInfoService.postMemberInfo(memberInformation, jwtTokenizer.getUserIdFromToken(token));
-		return new ResponseEntity(memberInfoMapper.toMemberInfoResponseDto(response), HttpStatus.CREATED);
-	}
+//	@PostMapping
+//	public ResponseEntity postProfile(@Valid @RequestBody MemberInfoDto memberInfoDto,
+//									  @RequestHeader("Authorization") String token) {
+//		MemberInformation memberInformation = memberInfoMapper.toMemberInfo(memberInfoDto);
+//		MemberInformation response = memberInfoService.postMemberInfo(memberInformation, jwtTokenizer.getUserIdFromToken(token));
+//		return new ResponseEntity(memberInfoMapper.toMemberInfoResponseDto(response), HttpStatus.CREATED);
+//	}
 
 	@GetMapping("{user-id}")
 	public ResponseEntity getProfile(@PathVariable("user-id") @Positive Long memberId) {
-		Member response = memberProfileService.getProfile(memberId);
-		return new ResponseEntity(memberProfileMapper.toProfileResponseDto(response), HttpStatus.OK);
+		//Member response = memberProfileService.getProfile(memberId);
+
+		ProfileResponseDto response = memberProfileService.getProfile(memberId);
+		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
 	@PatchMapping("{user-id}")
@@ -52,8 +53,7 @@ public class MemberProfileController {
 									   @RequestPart MultipartFile multipartFile,
 									   @RequestHeader("Authorization") String token) {
 		Member member = memberMapper.toProfile(memberPatchDto);
-		Member response = memberProfileService.patchProfile(member, multipartFile, memberId, jwtTokenizer.getUserIdFromToken(token));
-		return new ResponseEntity(memberProfileMapper.toProfileResponseDto(response), HttpStatus.OK);
+		ProfileResponseDto response = memberProfileService.patchProfile(member, multipartFile, memberId, jwtTokenizer.getUserIdFromToken(token));
+		return new ResponseEntity(response, HttpStatus.OK);
 	}
-
 }

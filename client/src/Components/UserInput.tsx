@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { RowWrapper, SectionWrapper } from "./Wrapper";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { SigTag } from "./GlobalComponents";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 import { useResetRecoilState } from "recoil";
@@ -21,22 +21,26 @@ const Textarea = styled.textarea`
 const CommentInput = (props: props) => {
   const [value, setValue] = useState("");
   const axiosPrivate = useAxiosPrivate();
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
   const handleSubmit = async () => {
-    axiosPrivate.post(
-      `/community/${props.url}/comment`,
-      JSON.stringify({
-        content: String(value),
-      })
-    );
-    // eslint-disable-next-line no-restricted-globals
-    location.reload();
+    axiosPrivate
+      .post(
+        `/community/${props.url}/comment`,
+        JSON.stringify({
+          content: String(value),
+        })
+      ).then(() => {
+        window.location.reload();
+      });
   };
 
   return (
     <SectionWrapper width={100}>
       <RowWrapper className="align-center">
         <Textarea
+        className="width-100 min-height-70"
+          ref={textAreaRef}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="댓글을 입력해주세요."
@@ -45,7 +49,14 @@ const CommentInput = (props: props) => {
           as={"button"}
           width={30}
           height={20}
-          onClick={handleSubmit}
+          onClick={()=>{
+            if(value.length<2 || value.length>300){
+              alert("2글자 이상, 300자 이하로 작성해주세요.")
+            }else{
+              handleSubmit()
+            }
+            
+          }}
           className="ml--45 z-index-9999 cursor"
         >
           작성

@@ -1,5 +1,6 @@
 package com.kittyhiker.sikjipsa.community.dto;
 
+import com.kittyhiker.sikjipsa.member.dto.CommunityMemberResponse;
 import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,6 +24,6 @@ public class CommentResponseDto {
     private int isDeleted;
     private int depth;
     private Long parent;
-    private MemberResponseDto writer;
+    private CommunityMemberResponse writer;
 
 }
