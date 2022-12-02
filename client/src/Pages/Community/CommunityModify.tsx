@@ -109,8 +109,8 @@ const CommunityModify = (props: Props) => {
               // defaultValue={editData.images[0]}
               className="image cursor"
               {...register(
-                "image"
-                // {required: true}
+                "image",
+                {required: true}
               )}
               id="image"
               type="file"

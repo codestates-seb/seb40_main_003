@@ -110,7 +110,9 @@ const ProductModify = () => {
           <>
             <input
               className="image cursor"
-              {...register("image")}
+              {...register("image", {
+                required: true})       
+              }
               id="image"
               type="file"
               accept="image/*"
