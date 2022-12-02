@@ -7,7 +7,6 @@ import {
   SectionWrapper,
   RowWrapper,
   SpaceBetween,
-  FlexWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
@@ -100,7 +99,7 @@ const ExpertProfileTransfer = () => {
       onSubmit={handleSubmit(onValid, onInValid)}
     >
       <MainCenterWrapper>
-        <FlexWrapper>
+        <SpaceBetween>
           <></>
           {avatarPreview ? (
             <img
@@ -126,7 +125,7 @@ const ExpertProfileTransfer = () => {
           <label className="input-file-button" htmlFor="input-file">
             프로필 사진 선택
           </label>
-        </FlexWrapper>
+        </SpaceBetween>
 
         <SectionWrapper width={100} borderNone={true}>
           <>
