@@ -31,13 +31,13 @@ public class MemberProfileController {
 
 
 	// 테스트용
-	@PostMapping
-	public ResponseEntity postProfile(@Valid @RequestBody MemberInfoDto memberInfoDto,
-									  @RequestHeader("Authorization") String token) {
-		MemberInformation memberInformation = memberInfoMapper.toMemberInfo(memberInfoDto);
-		MemberInformation response = memberInfoService.postMemberInfo(memberInformation, jwtTokenizer.getUserIdFromToken(token));
-		return new ResponseEntity(memberInfoMapper.toMemberInfoResponseDto(response), HttpStatus.CREATED);
-	}
+//	@PostMapping
+//	public ResponseEntity postProfile(@Valid @RequestBody MemberInfoDto memberInfoDto,
+//									  @RequestHeader("Authorization") String token) {
+//		MemberInformation memberInformation = memberInfoMapper.toMemberInfo(memberInfoDto);
+//		MemberInformation response = memberInfoService.postMemberInfo(memberInformation, jwtTokenizer.getUserIdFromToken(token));
+//		return new ResponseEntity(memberInfoMapper.toMemberInfoResponseDto(response), HttpStatus.CREATED);
+//	}
 
 	@GetMapping("{user-id}")
 	public ResponseEntity getProfile(@PathVariable("user-id") @Positive Long memberId) {
