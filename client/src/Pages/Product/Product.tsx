@@ -4,6 +4,7 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
+  RowWrapper,
   SectionWrapper,
   SpaceBetween,
 } from "../../Components/Wrapper";
@@ -19,14 +20,11 @@ import {
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import React from "react";
 import { ProfileDealType } from "../../types/profileType";
 import { cannotLoad, searchbarComment } from "../../Const/message";
-import { ReactComponent as Hamburger } from "../../images/hamburgerIcon.svg";
-import Modal from "../../Components/Modal";
-import CategoryModal from "../../Components/product/CategoryModal";
 
 // 쿼리클라이언트
 const productQueryClient = new QueryClient();
@@ -76,35 +74,32 @@ const Product = () => {
   const [searchKeyWord, setSearchKeyWord] = useState<string | undefined>(
     undefined
   );
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
-  const onClickModal = useCallback(() => {
-    setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
 
   usePageTitle("거래");
   return (
     <>
-      <>
-        {isOpenModal && (
-          <Modal onClickModal={onClickModal} confirm={false}>
-            <CategoryModal onClickFunction={() => { } } closeModal={onClickModal} />
-          </Modal>
-        )}
-      </>
       <MainContentContainer>
         <MainCenterWrapper>
+          <input
+            type="text"
+            className="mb-4 width-100"
+            placeholder={searchbarComment}
+            onChange={(e) => {
+              setSearchKeyWord(e.target.value);
+            }}
+          />
           <SpaceBetween>
-            <input
-              type="text"
-              className="mb-4 width-100"
-              placeholder={searchbarComment}
-              onChange={(e) => {
-                setSearchKeyWord(e.target.value);
-              }}
-            />
-            <button className="ml-16" onClick={onClickModal}>
-              <Hamburger />
-            </button>
+            <div className="justify-center mt-8">
+              <input
+                type={"checkbox"}
+                id="autoLogin"
+                className="border-none checkbox mr-8"
+                checked
+              />
+              <label className="medium " htmlFor={"autoLogin"}>
+                판매중만 보기
+              </label>
+            </div>
           </SpaceBetween>
           {/* 쿼리클라이언트로 감쌈 */}
 

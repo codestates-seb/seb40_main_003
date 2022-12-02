@@ -19,7 +19,7 @@ import {
 import { ErrorBoundary } from "react-error-boundary";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { useInView } from "react-intersection-observer";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import React from "react";
 import { cannotLoad, noContent, searchbarComment } from "../../Const/message";
 import Modal from "../../Components/Modal";
@@ -77,6 +77,7 @@ const Care = () => {
   const [searchKeyWord, setSearchKeyWord] = useState<string | undefined>(
     undefined
   );
+
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
