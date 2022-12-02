@@ -36,7 +36,7 @@ interface ExpertProfileTransferForm {
 
 const ExpertProfileTransfer = () => {
   const axiosPrivate = useAxiosPrivate();
-  const [gugun, setGugun] = useState([]);
+  const [gugun, setGugun] = useState<[]|[{dong:string}]>([]);
 
   const {
     register,
@@ -172,9 +172,9 @@ console.log(gugun);
               })}
             </Select>
             <Select>
-              {/* {gugun.map((e, i) => {
+              {gugun.map((e, i) => {
                 return <option key={`dong${i}`} value={e.dong}>{e.dong}</option>;
-              })} */}
+              })}
               
             </Select>
           </>
