@@ -32,6 +32,7 @@ const Main = () => {
             showThumbs={false}
           >
             {/* 배너1 */}
+            <Link to={"/community"}>
             <BannerImgWrapper image={MainBanner1}>
               <BannerText
                 sub="먹이고~ 볕쬐고~ 애지중지 키운"
@@ -40,7 +41,9 @@ const Main = () => {
                 font="font-banner-main"
               />
             </BannerImgWrapper>
+            </Link>
             {/* 배너2 */}
+            <Link to={"/caring"}>
             <BannerImgWrapper image={MainBanner2}>
               <BannerText
                 sub="식물은 내가 살릴게, 의뢰는 누가 할래?"
@@ -49,6 +52,7 @@ const Main = () => {
                 font="font-main"
               />
             </BannerImgWrapper>
+            </Link>
             {/* 배너3 */}
             <BannerImgWrapper image={MainBanner3}>
               <BannerText
@@ -59,6 +63,7 @@ const Main = () => {
               />
             </BannerImgWrapper>
             {/* 배너4 */}
+            <Link to={"/product"}>
             <BannerImgWrapper image={MainBanner4}>
               <BannerText
                 sub="무한 증식하는 우리집 다육이, 선인장"
@@ -66,6 +71,7 @@ const Main = () => {
                 type="right"
               />
             </BannerImgWrapper>
+          </Link>
           </Carousel>
           </article>
         {/* 거래 */}
@@ -104,6 +110,7 @@ const BannerImgWrapper = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
+  cursor: pointer;
 `;
 
 const BannerText = ({
