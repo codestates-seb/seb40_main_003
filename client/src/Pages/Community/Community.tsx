@@ -23,18 +23,19 @@ import { useInView } from "react-intersection-observer";
 import React, { useEffect, useState } from "react";
 import { cannotLoad, searchbarComment } from "../../Const/message";
 
-const communityQueryClient = new QueryClient();
+export const communityQueryClient = new QueryClient();
 
 type communityMain ={
   searchKeyword?:string
+  size?: number;
 }
-export const CommunityMain = ({searchKeyword}:communityMain) => {
+export const CommunityMain = ({searchKeyword, size}:communityMain) => {
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["communityQuery",searchKeyword],
-    ({ pageParam = 1 }) => InfiniteFetch("/community", pageParam,searchKeyword),
+    ["communityQuery",searchKeyword, size],
+    ({ pageParam = 1 }) => InfiniteFetch("/community", pageParam,searchKeyword, size),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextPage : undefined,
