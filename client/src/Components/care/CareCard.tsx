@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper, RowWrapper, SpaceBetween } from "../Wrapper";
-import { DescriptionColumnWrapper } from "../../Components/product/ProductCard";
+import { DescriptionColumnWrapper } from "../product/ProductCard";
 import { SigTag, TagWrapper } from "../GlobalComponents";
 
 const CardWrapper = styled.div`
