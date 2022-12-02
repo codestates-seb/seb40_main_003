@@ -6,7 +6,7 @@ import { ColumnWrapper, RowWrapper, SectionWrapper, SpaceBetween } from "../Wrap
 
 
 const CommunityCard = ({ data }: any) => {
-  // console.log(data)
+  console.log(data)
   return (
     <ColumnWrapper>
       <SectionWrapper title={data.title} content={data.content} width={100}>
