@@ -26,18 +26,19 @@ import Modal from "../../Components/Modal";
 import CategoryModal from "../../Components/product/CategoryModal";
 import { ReactComponent as Hamburger } from "../../images/hamburgerIcon.svg";
 
-const careQueryClient = new QueryClient();
+export const careQueryClient = new QueryClient();
 
 type CareMain = {
   searchKeyword?: string;
+  size?: number;
 };
-export const CareMain = ({ searchKeyword }: CareMain) => {
+export const CareMain = ({ searchKeyword, size }: CareMain) => {
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["careQueryClient", searchKeyword],
-    ({ pageParam = 1 }) => InfiniteFetch("/experts", pageParam, searchKeyword),
+    ["careQueryClient", searchKeyword, size],
+    ({ pageParam = 1 }) => InfiniteFetch("/experts", pageParam, searchKeyword, size),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextPage : undefined,

@@ -4,6 +4,7 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
+  SectionWrapper
 } from "../../Components/Wrapper";
 import MainBanner1 from "../../images/banner/mainBanner1.png";
 import MainBanner2 from "../../images/banner/mainBanner2.png";
@@ -13,8 +14,11 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import { QueryClientProvider } from "react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "../../Components/ErrorHandle";
+import { CareMain, careQueryClient } from "../Care/Care"
 import { ProductMain, productQueryClient } from "../Product/Product";
+import { CommunityMain, communityQueryClient } from "../Community/Community";
 import { cannotLoad } from "../../Const/message";
+import { Link } from "react-router-dom";
 
 const Main = () => {
   usePageTitle("홈");
@@ -61,31 +65,33 @@ const Main = () => {
           </BannerImgWrapper>
         </Carousel>
         </article>
-        {/* 에러 바운더리 감기 */}
         <article className="pd-24" title="거래하기">
+            <Link to={"/product"} className="text-align-start">
+              <SectionWrapper title="거래하기" width={100} borderNone={false} />
+            </Link>
           <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
-            {/* 꽈리 클라이언트 프로바이더 */}
             <QueryClientProvider client={productQueryClient}>
-              {/* ===윤정가이드북 ==== size 프롭 추가 */}
               <ProductMain size={3} />
             </QueryClientProvider>
           </ErrorBoundary>
 
+            <Link to={"/caring"} className="text-align-start">
+              <SectionWrapper title="돌봄 요청하기" width={100} borderNone={false} />
+            </Link>
           <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
-            {/* 이 안에 불러오3 */}
+            <QueryClientProvider client={careQueryClient}>
+              <CareMain size={3} />
+            </QueryClientProvider>
           </ErrorBoundary>
 
+            <Link to={"/community"} className="text-align-start">
+              <SectionWrapper title="커뮤니티" width={100} borderNone={false} />
+            </Link>
           <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
-            {/* 이 안에 불러오3 */}
+            <QueryClientProvider client={communityQueryClient}>
+              <CommunityMain size={3} />
+            </QueryClientProvider>
           </ErrorBoundary>
-
-
-
-
-
-
-
-
         </article>
 
       </MainCenterWrapper>
