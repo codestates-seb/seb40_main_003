@@ -27,19 +27,24 @@ import { ProfileDealType } from "../../types/profileType";
 import { cannotLoad, searchbarComment } from "../../Const/message";
 
 // 쿼리클라이언트
-const productQueryClient = new QueryClient();
-
+// ===윤정가이드북 ==== export 로 변경
+export const productQueryClient = new QueryClient();
+// ===윤정가이드북 ==== size 타입에 추가
 type productMain = {
   searchKeyword?: string;
+  size?:number;
 };
-export const ProductMain = ({ searchKeyword }: productMain) => {
+// ===윤정가이드북 ==== size 프롭 추가
+export const ProductMain = ({ searchKeyword,size }: productMain) => {
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
 
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["productQuery", searchKeyword],
-    ({ pageParam = 1 }) => InfiniteFetch("/deal", pageParam, searchKeyword),
+    // ===윤정가이드북 ==== size 프롭 추가
+    ["productQuery", searchKeyword, size],
+    // ===윤정가이드북 ==== size 프롭 추가
+    ({ pageParam = 1 }) => InfiniteFetch("/deal", pageParam, searchKeyword, size),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextPage : undefined,
