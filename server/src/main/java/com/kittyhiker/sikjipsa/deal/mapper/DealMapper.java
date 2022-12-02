@@ -1,9 +1,12 @@
 package com.kittyhiker.sikjipsa.deal.mapper;
 
-import com.kittyhiker.sikjipsa.deal.dto.DealPostDto;
-import com.kittyhiker.sikjipsa.deal.dto.DealResponseDto;
+import com.kittyhiker.sikjipsa.deal.dto.*;
 import com.kittyhiker.sikjipsa.deal.entity.Deal;
+import com.kittyhiker.sikjipsa.deal.entity.DealReview;
+import com.kittyhiker.sikjipsa.deal.entity.DealSuccess;
+import com.kittyhiker.sikjipsa.member.dto.CommunityMemberResponse;
 import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
+import com.kittyhiker.sikjipsa.member.entity.Member;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -13,7 +16,24 @@ import java.util.List;
 public interface DealMapper {
     Deal dealPostDtoToDeal(DealPostDto dealPostDto);
 
-    @Mapping(source = "memberResponse", target = "member")
-    DealResponseDto dealToDealResponseDto(Deal deal, List<String> images, MemberResponseDto memberResponse);
+//    @Mapping(source = "memberResponse", target = "member")
+//    DealResponseDto dealToDealResponseDto(Deal deal, List<String> images, MemberResponseDto memberResponse);
 //    List<DealResponseDto> dealListToResponseList(List<Deal> dealList);
+    @Mapping(source = "memberResponse", target = "member")
+    DealResponseDto dealToDealResponseDto(Deal deal, List<String> images, CommunityMemberResponse memberResponse);
+
+    ReviewDealResponse dealToReviewDealDto(Deal deal, List<String> images);
+
+    DealSuccess successRequestToDealSuccess(Deal deal, Member buyer, Member seller);
+    DealSuccessResponseDto dealSuccessToResponseDto(DealSuccess dealSuccess, Long dealId, Long buyerId);
+
+//    DealReviewResponseDto dealReviewToReviewResponseDto(DealReview dealReview,
+//                                                        ReviewDealResponse deal,
+//                                                        MemberResponseDto buyerMember);
+
+    DealReviewResponseDto dealReviewToReviewResponseDto(DealReview dealReview,
+                                                        ReviewDealResponse deal,
+                                                        CommunityMemberResponse buyerMember);
+
+    DealReview postReviewToDealReview(DealReviewRequestDto requestDto, Deal deal, Member buyer, Member seller);
 }

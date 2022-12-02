@@ -19,6 +19,7 @@ import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.image.dto.SavedImageDto;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
+import com.kittyhiker.sikjipsa.member.dto.CommunityMemberResponse;
 import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.mapper.MemberMapper;
@@ -77,8 +78,8 @@ public class CommunityService {
             );
         }
 
-        MemberResponseDto responseMember = memberMapper
-                .memberToMemberResponseDto(findMember, imageService.findImage(findMember));
+        CommunityMemberResponse responseMember = memberMapper
+                .memberToCommunityMemberDto(findMember, imageService.findImageByMember(findMember));
 
         return mapper.communityToResponseDto(savedCommunity, responseImages, responseMember, 0L);
     }
@@ -110,8 +111,8 @@ public class CommunityService {
         Community saved = communityRepository.save(findCommunity);
         Member findMember = saved.getMember();
 
-        MemberResponseDto responseMember = memberMapper
-                .memberToMemberResponseDto(findMember, imageService.findImage(findMember));
+        CommunityMemberResponse responseMember = memberMapper
+                .memberToCommunityMemberDto(findMember, imageService.findImageByMember(findMember));
 
         return mapper.communityToResponseDto(saved, responseImages,
                 responseMember, commentService.getCommentNum(saved));
@@ -127,8 +128,8 @@ public class CommunityService {
                     List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
 
                     Member findMember = c.getMember();
-                    MemberResponseDto responseMember = memberMapper
-                            .memberToMemberResponseDto(findMember, imageService.findImage(findMember));
+                    CommunityMemberResponse responseMember = memberMapper
+                            .memberToCommunityMemberDto(findMember, imageService.findImageByMember(findMember));
                     CommunityResponseDto communityResponseDto =
                             mapper.communityToResponseDto(c, responseImage,
                                     responseMember, commentService.getCommentNum(c));
@@ -151,8 +152,8 @@ public class CommunityService {
                     List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
 
                     Member findMember = c.getMember();
-                    MemberResponseDto responseMember = memberMapper
-                            .memberToMemberResponseDto(findMember, imageService.findImage(findMember));
+                    CommunityMemberResponse responseMember = memberMapper
+                            .memberToCommunityMemberDto(findMember, imageService.findImageByMember(findMember));
 
                     CommunityResponseDto communityResponse = mapper
                             .communityToResponseDto(c, responseImage,
@@ -177,8 +178,8 @@ public class CommunityService {
                     List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
 
                     Member findMember = c.getMember();
-                    MemberResponseDto responseMember = memberMapper
-                            .memberToMemberResponseDto(findMember, imageService.findImage(findMember));
+                    CommunityMemberResponse responseMember = memberMapper
+                            .memberToCommunityMemberDto(findMember, imageService.findImageByMember(findMember));
 
                     CommunityResponseDto communityResponse = mapper
                             .communityToResponseDto(c, responseImage,
@@ -203,8 +204,8 @@ public class CommunityService {
         List<String> responseImage = image.stream().map(img -> img.getImgUrl()).collect(Collectors.toList());
 
         Member findMember = savedCommunity.getMember();
-        MemberResponseDto responseMember = memberMapper
-                .memberToMemberResponseDto(findMember, imageService.findImage(findMember));
+        CommunityMemberResponse responseMember = memberMapper
+                .memberToCommunityMemberDto(findMember, imageService.findImageByMember(findMember));
 
         return mapper.communityToResponseDto(findCommunity, responseImage, responseMember,
                 comments, commentService.getCommentNum(findCommunity));
@@ -235,6 +236,10 @@ public class CommunityService {
 
     public void removeCommunityPost(Long communityId) {
         Community findCommunity = verifiedCommunity(communityId);
+        List<Image> image = imageService.findImage(findCommunity);
+        image.stream().forEach(
+                i -> imageService.deleteImageFromS3(i.getImgUrl())
+        );
         communityRepository.delete(findCommunity);
     }
 

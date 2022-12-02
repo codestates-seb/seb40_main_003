@@ -39,7 +39,7 @@ public class CommentService {
         Comment savedComment = commentRepository.save(newComment);
 
         return mapper.commentToResponseDto(savedComment,
-                memberMapper.memberToMemberResponseDto(member, imageService.findImage(member)));
+                memberMapper.memberToCommunityMemberDto(member, imageService.findImageByMember(member)));
     }
 
     public CommentResponseDto postComment(Long communityId, Long memberId, Long commentId, String content) {
@@ -51,7 +51,7 @@ public class CommentService {
         Comment savedComment = commentRepository.save(newComment);
 
         return mapper.commentToResponseDto(savedComment,
-                memberMapper.memberToMemberResponseDto(member, imageService.findImage(member)));
+                memberMapper.memberToCommunityMemberDto(member, imageService.findImageByMember(member)));
     }
 
     public CommentResponseDto patchComment(Long commentId, String content) {
@@ -60,8 +60,8 @@ public class CommentService {
         Comment savedComment = commentRepository.save(comment);
 
         return mapper.commentToResponseDto(savedComment,
-                memberMapper.memberToMemberResponseDto(savedComment.getMember(),
-                        imageService.findImage(savedComment.getMember())));
+                memberMapper.memberToCommunityMemberDto(savedComment.getMember(),
+                        imageService.findImageByMember(savedComment.getMember())));
     }
 
     public void deleteComment(Long commentId) {
@@ -78,8 +78,8 @@ public class CommentService {
         List<CommentResponseDto> comments = commentList.stream().map(
                 c -> {
                     return mapper.commentToResponseDto(c,
-                            memberMapper.memberToMemberResponseDto(c.getMember(),
-                                    imageService.findImage(c.getMember())));
+                            memberMapper.memberToCommunityMemberDto(c.getMember(),
+                                    imageService.findImageByMember(c.getMember())));
                 }
         ).collect(Collectors.toList());
         return comments;

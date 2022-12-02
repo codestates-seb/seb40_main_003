@@ -36,7 +36,7 @@ public class Deal extends AuditingEntity {
 
 	private int category;
 
-	private int state;
+	private int state=0;
 
 	@ManyToOne
 	@JoinColumn(name = "member_id")
@@ -76,5 +76,9 @@ public class Deal extends AuditingEntity {
 		this.content = dealPostDto.getContent();
 		this.price = dealPostDto.getPrice();
 		this.category = dealPostDto.getCategory();
+	}
+
+	public void updateState() {
+		this.state = 1;
 	}
 }
