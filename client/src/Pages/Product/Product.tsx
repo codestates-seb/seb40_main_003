@@ -4,7 +4,6 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
-  RowWrapper,
   SectionWrapper,
   SpaceBetween,
 } from "../../Components/Wrapper";
@@ -27,24 +26,21 @@ import { ProfileDealType } from "../../types/profileType";
 import { cannotLoad, searchbarComment } from "../../Const/message";
 
 // 쿼리클라이언트
-// ===윤정가이드북 ==== export 로 변경
 export const productQueryClient = new QueryClient();
-// ===윤정가이드북 ==== size 타입에 추가
 type productMain = {
   searchKeyword?: string;
-  size?:number;
+  size?: number;
 };
-// ===윤정가이드북 ==== size 프롭 추가
-export const ProductMain = ({ searchKeyword,size }: productMain) => {
+
+export const ProductMain = ({ searchKeyword, size }: productMain) => {
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
 
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    // ===윤정가이드북 ==== size 프롭 추가
     ["productQuery", searchKeyword, size],
-    // ===윤정가이드북 ==== size 프롭 추가
-    ({ pageParam = 1 }) => InfiniteFetch("/deal", pageParam, searchKeyword, size),
+    ({ pageParam = 1 }) =>
+      InfiniteFetch("/deal", pageParam, searchKeyword, size),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextPage : undefined,
@@ -99,7 +95,7 @@ const Product = () => {
                 type={"checkbox"}
                 id="autoLogin"
                 className="border-none checkbox mr-8"
-                checked
+                defaultChecked
               />
               <label className="medium " htmlFor={"autoLogin"}>
                 판매중만 보기
@@ -110,10 +106,10 @@ const Product = () => {
 
           <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
             <QueryClientProvider client={productQueryClient}>
-              <ProductMain searchKeyword={searchKeyWord} />
+              <ProductMain searchKeyword={searchKeyWord} size={15}/>
             </QueryClientProvider>
           </ErrorBoundary>
-          
+
           {/* 쿼리클라이언트로 감쌈 */}
         </MainCenterWrapper>
         <MainRightWrapper>

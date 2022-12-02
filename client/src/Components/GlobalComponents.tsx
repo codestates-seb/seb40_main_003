@@ -150,11 +150,16 @@ export const ImageWrapper = styled.img`
   display: block;
   object-fit: cover;
   margin-right: 16px;
-  &.communityImage {
+  &.communityPreview {
     width: 100%;
+    margin-right: 0;
+    height: 25vw;
+  }
+  &.communityImage{
+    width: 100%;
+    margin-right: 0;
     min-height: 40vh;
     height: 25vw;
-    margin-right: 0;
   }
 `;
 

@@ -25,7 +25,6 @@ type props={
   data: ProfileDealType
 }
 const ProductCard:React.FC<props> = ({data}) => {
-  console.log({data})
   return (
     <ProductWrapper as={"section"} className={data.state === 2 ? "soldOut" : ""}>
       <RowWrapper>

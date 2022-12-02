@@ -45,11 +45,7 @@ export const InfiniteFetch = async (
   );
   const { data } = res.data;
   const { page, totalPages } = res.data.pageInfo;
-  const isLast = () => {
-    if (totalPages !== 0 && page === totalPages) {
-      return true
-    }
-  };
+  const isLast = (totalPages !== 0 && page === totalPages)
   return { data, nextPage: pageParam + 1, isLast };
 };
 /** url,pageParam,keyword를 받아서 data, nextpage, isLast를 반환하는 함수 */

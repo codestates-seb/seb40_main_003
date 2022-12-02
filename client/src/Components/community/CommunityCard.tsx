@@ -13,7 +13,7 @@ const CommunityCard = ({ data }: any) => {
         <>
           {data.images[0] ? (
             <ImageWrapper
-              className='communityImage mt-8'
+              className='communityPreview mt-8'
               size={"112"}
               src={data.images[0]}
               alt={`상품명 ${data.title}의 대표이미지`}
