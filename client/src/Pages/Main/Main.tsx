@@ -4,7 +4,7 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
-  SectionWrapper
+  SectionWrapper,
 } from "../../Components/Wrapper";
 import MainBanner1 from "../../images/banner/mainBanner1.png";
 import MainBanner2 from "../../images/banner/mainBanner2.png";
@@ -14,7 +14,7 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import { QueryClientProvider } from "react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "../../Components/ErrorHandle";
-import { CareMain, careQueryClient } from "../Care/Care"
+import { CareMain, careQueryClient } from "../Care/Care";
 import { ProductMain, productQueryClient } from "../Product/Product";
 import { cannotLoad } from "../../Const/message";
 import { Link } from "react-router-dom";
@@ -24,6 +24,46 @@ const Main = () => {
   return (
     <MainContentContainer>
       <MainCenterWrapper className="pd-0">
+        <article title="배너">
+          <Carousel
+            showStatus={false}
+            autoPlay={true}
+            infiniteLoop={true}
+            showThumbs={false}
+          >
+            {/* 배너1 */}
+            <BannerImgWrapper image={MainBanner1}>
+              <BannerText
+                sub="먹이고~ 볕쬐고~ 애지중지 키운"
+                main="반려식물 자랑하기!"
+                type="left"
+              />
+            </BannerImgWrapper>
+            {/* 배너2 */}
+            <BannerImgWrapper image={MainBanner2}>
+              <BannerText
+                sub="식물은 내가 살릴게, 의뢰는 누가 할래?"
+                main="전문가에게 맡겨봐!"
+                type="right"
+              />
+            </BannerImgWrapper>
+            {/* 배너3 */}
+            <BannerImgWrapper image={MainBanner3}>
+              <BannerText
+                sub="플랜트하이커가 처음이신가요?"
+                main="첫 돌봄 비용 20% 지원!"
+                type="left"
+              />
+            </BannerImgWrapper>
+            {/* 배너4 */}
+            <BannerImgWrapper image={MainBanner4}>
+              <BannerText
+                sub="무한 증식하는 우리집 다육이, 선인장"
+                main="이웃에게 분양해요!"
+                type="right"
+              />
+            </BannerImgWrapper>
+          </Carousel>
         <article title="배너" className="closedrag">
         <Carousel
           showStatus={false}
@@ -67,6 +107,7 @@ const Main = () => {
           </BannerImgWrapper>
         </Carousel>
         </article>
+        {/* 거래 */}
         <article className="pd-24" title="거래하기">
             <Link to={"/product"} className="text-align-start">
               <SectionWrapper title="거래하기" width={100} borderNone={false} font="h4"/>
@@ -87,7 +128,6 @@ const Main = () => {
             </QueryClientProvider>
           </ErrorBoundary>
         </article>
-
       </MainCenterWrapper>
       <MainRightWrapper></MainRightWrapper>
     </MainContentContainer>
