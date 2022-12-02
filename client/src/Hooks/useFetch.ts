@@ -8,6 +8,7 @@ export type FetchByParamsType = {
   keyword?: null | string;
   page: number;
   size?: number;
+  gugun?:string;
 };
 // /** params로 페치하는 훅으로, url, Params{page:불러올페이지, size:한번에 불러올 사이즈(기본값 15, const폴더에 정의 되어있음)}를 인자로 가짐 -준구짱-*/
 // export const FetchByParams = async(url:string,params:FetchByParamsType={keyword:null,page:1,size:fetchingImageLimit})=>{
@@ -21,6 +22,7 @@ export const FetchByParams = async (
     keyword: null,
     page: 1,
     size: fetchingImageLimit,
+
   }
 ) => {
   const data = await axios.get(url, { params });
@@ -45,7 +47,8 @@ export const InfiniteFetch = async (
   );
   const { data } = res.data;
   const { page, totalPages } = res.data.pageInfo;
-  const isLast = (totalPages !== 0 && page === totalPages)
+  const isLast=  page === totalPages||totalPages === 0
+
   return { data, nextPage: pageParam + 1, isLast };
 };
 /** url,pageParam,keyword를 받아서 data, nextpage, isLast를 반환하는 함수 */
@@ -61,11 +64,7 @@ export const InfiniteFetchPrivate = async (
   );
   const { data } = res.data;
   const { page, totalPages } = res.data.pageInfo;
-  const isLast = () => {
-    if (totalPages !== 0 && page === totalPages) {
-      return true
-    }
-  };
+  const isLast=  page === totalPages||totalPages === 0
   return { data, nextPage: pageParam + 1, isLast };
 };
 // =============리액트 쿼리 사용으로 당분간 안쓸예정===============

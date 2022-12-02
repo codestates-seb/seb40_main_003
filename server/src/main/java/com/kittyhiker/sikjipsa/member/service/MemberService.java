@@ -1,5 +1,6 @@
 package com.kittyhiker.sikjipsa.member.service;
 
+import com.kittyhiker.sikjipsa.chatting.repository.MessageRepository;
 import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
 import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.jwt.dto.TokenDto;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -28,6 +30,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final MemberInfoRepository memberInfoRepository;
     private final TokenRepository tokenRepository;
+    private final MessageRepository messageRepository;
     private final JwtTokenizer jwtTokenizer;
     private final PasswordEncoder passwordEncoder;
     private final MemberMapper memberMapper;
@@ -45,8 +48,8 @@ public class MemberService {
 //        MemberInformation newMemberInfo = MemberInformation.builder().member(savedUser).build();
 //        memberInfoRepository.save(newMemberInfo);
 
-        MemberInformation memberInformation = new MemberInformation(savedUser, "name", "01012345678", "20000101", 1, "address");
-        memberInfoRepository.save(memberInformation);
+//        MemberInformation memberInformation = new MemberInformation(savedUser, "name", "010-1234-5678", "20000101", 1, "address");
+//        memberInfoRepository.save(memberInformation);
 
         MemberProfile memberProfile = new MemberProfile("content", savedUser);
         memberProfileRepository.save(memberProfile);
@@ -73,6 +76,7 @@ public class MemberService {
                 .refreshToken(refreshToken)
                 .memberId(findMember.getMemberId())
                 .image(image)
+                .notReadNum(messageRepository.countByReceiverIdAndIsRead(findMember.getMemberId(), 0L))
                 .nickname(findMember.getNickname()).build();
     }
 
@@ -92,6 +96,23 @@ public class MemberService {
         MemberInformation savedInfo = memberInfoRepository.save(info);
         return memberMapper.memberInfoToResponseDto(savedInfo, registerMember.getMemberId()
                 , registerMember.getNickname());
+    }
+
+    public MemberInfoResponseDto getMemberInfo(Long infoId, Long token) {
+        Member findMember = verifyMember(token);
+        MemberInformation findInfo = findVerifiedMemberInfo(infoId);
+
+        if (findInfo.getMember() != findMember) {
+            throw new BusinessLogicException(ExceptionCode.MEMBER_FORBIDDEN);
+        }
+        return memberMapper.memberInfoToResponseDto(findInfo, findMember.getMemberId(), findMember.getNickname());
+    }
+
+    private MemberInformation findVerifiedMemberInfo(Long infoId) {
+        Optional<MemberInformation> optionalMemberInfo = memberInfoRepository.findById(infoId);
+        MemberInformation memberInfo = optionalMemberInfo.orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.MEMBER_INFO_NOT_FOUND));
+        return memberInfo;
     }
 
     public TokenDto reissueToken(String refreshToken) {
@@ -133,4 +154,28 @@ public class MemberService {
         return memberRepository.findUserByEmail(email).isEmpty();
     }
 
+    //    public MemberInfoResponseDto patchMemberInfo(Long infoId, MemberInfoPostDto memberInfoPostDto, Long token) {
+//        MemberInformation findMemberInfo = findVerifiedMemberInfo(infoId);
+////        Member findMemberByToken = verifyMember(token);
+//        MemberInformation findMemberInfoByToken = findVerifiedMemberInfo(token);
+//
+//        if (findMemberInfoByToken != findMemberInfo) {
+//            throw new BusinessLogicException(ExceptionCode.MEMBER_FORBIDDEN);
+//        }
+//
+//        MemberInformation info = memberMapper.memberInfoPostDtoToMemberInfo(memberInfoPostDto);
+//        //name, phone, birth, gender, address
+//        Optional.ofNullable(info.getName())
+//                .ifPresent(findMemberInfo::setName);
+//        Optional.ofNullable(info.getPhone())
+//                .ifPresent(findMemberInfo::setPhone);
+//        Optional.ofNullable(info.getBirth())
+//                .ifPresent(findMemberInfo::setBirth);
+//        Optional.ofNullable(info.getGender())
+//                .ifPresent(findMemberInfo::setGender);
+//        Optional.ofNullable(info.getAddress())
+//                .ifPresent(findMemberInfo::setAddress);
+//
+//        return memberMapper.memberInfoToResponseDto(findMemberInfo, findMemberInfo.getMember().getMemberId(), findMemberInfo.getMember().getNickname());
+//    }
 }

@@ -12,6 +12,7 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { ProductCategoryList } from "../../Const/Category";
+import { compressImage } from "../../utils/imageCompress";
 
 interface ProductEditorForm {
   title: string;
@@ -48,10 +49,13 @@ const ProductEditor = () => {
       category: data.category,
       area: data.area,
     });
+// 압축 후 파일 append
     for(let i = 0; i<data.image.length; i++){
-      formData.append("images", data.image[i]);
+      await compressImage(data.image[i]).then((res: any) =>
+        formData.append("images", res)
+      )
     }
-    
+// JSON append
     formData.append(
       "dealPostDto",
       new Blob([dealPostDto], { type: "application/json" })

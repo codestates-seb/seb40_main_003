@@ -309,7 +309,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
                     })
                     .catch((err) => {
                       if(window.confirm("전문가가 아닙니다 전문가등록을 하시겠습니까?")){
-                        alert("등록으로 보내3")
+                        navigate("/profile/expert-form")
                       }
                     });
                 }
@@ -362,6 +362,14 @@ export type CommentCardTypes = {
 
 export const Select = styled.select`
   height: 35px;
+  outline-style: solid;
+  outline-width: 1px;
+  outline-color: var(--line-light-gray);
+  border-radius: 6px;
+`;
+
+export const Textarea = styled.textarea`
+  height: 100px;
   outline-style: solid;
   outline-width: 1px;
   outline-color: var(--line-light-gray);

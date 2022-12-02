@@ -405,3 +405,23 @@ code {
 .cursor {
   cursor: pointer;
 }
+
+.profile-img {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  background-color: rgb(148 163 184);
+}
+
+.input-file-button {
+    padding: 6px 25px;
+    background-color:transparent;
+    border-radius: 4px;
+    color: black;
+    cursor: pointer;
+    height: 34px;
+    border: solid var(--font-gray);
+    margin-left: 2%;
+    margin-top: 15px;
+  
+}

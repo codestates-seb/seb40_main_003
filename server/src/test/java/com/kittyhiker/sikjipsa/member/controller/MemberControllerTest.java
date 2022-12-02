@@ -86,7 +86,6 @@ class MemberControllerTest {
                                 PayloadDocumentation.fieldWithPath("email").type(JsonFieldType.STRING).description("회원 이메일"),
                                 PayloadDocumentation.fieldWithPath("password").type(JsonFieldType.STRING).description("회원 비밀번호"),
                                 PayloadDocumentation.fieldWithPath("nickname").type(JsonFieldType.STRING).description("회원 닉네임")
-
                         ),
                         PayloadDocumentation.responseBody()
                         ))
@@ -106,6 +105,7 @@ class MemberControllerTest {
                 .accessToken("Bearer testToken")
                 .refreshToken("Bearer testToken")
                 .image("")
+                .notReadNum(3L)
                 .nickname("감자").build();
 
         BDDMockito.given(memberService.login(Mockito.any(MemberLoginDto.class))).willReturn(response);
@@ -126,6 +126,7 @@ class MemberControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.memberId").value(response.getMemberId()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.nickname").value(response.getNickname()))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.image").value(response.getImage()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.notReadNum").value(response.getNotReadNum()))
                 .andDo(
                         MockMvcRestDocumentation.document("login-member",
                                 Preprocessors.preprocessRequest(Preprocessors.prettyPrint()),
@@ -139,7 +140,8 @@ class MemberControllerTest {
                                         PayloadDocumentation.fieldWithPath("refreshToken").type(JsonFieldType.STRING).description("리프레시토큰"),
                                         PayloadDocumentation.fieldWithPath("memberId").type(JsonFieldType.NUMBER).description("회원 PK"),
                                         PayloadDocumentation.fieldWithPath("nickname").type(JsonFieldType.STRING).description("회원 닉네임"),
-                                        PayloadDocumentation.fieldWithPath("image").type(JsonFieldType.STRING).description("프로필 사진")
+                                        PayloadDocumentation.fieldWithPath("image").type(JsonFieldType.STRING).description("프로필 사진"),
+                                        PayloadDocumentation.fieldWithPath("notReadNum").type(JsonFieldType.NUMBER).description("안읽은메시지")
                                 )
                         )
                 )
