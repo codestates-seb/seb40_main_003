@@ -1,6 +1,7 @@
 package com.kittyhiker.sikjipsa.chatting.dto;
 
 import com.kittyhiker.sikjipsa.chatting.service.ChatService;
+import com.kittyhiker.sikjipsa.deal.dto.DealResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,4 +23,6 @@ public class ChatRoomDto {
     private Long buyerId;
 
     private Long notReadNum;
+
+    private ChatDealInfo dealInfo;
 }

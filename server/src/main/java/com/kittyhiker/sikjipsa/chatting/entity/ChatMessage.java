@@ -28,7 +28,10 @@ public class ChatMessage extends AuditingEntity {
     @JoinColumn(name = "sender_id")
     private Member sender;
 
-    private Long isRead=0L;
+    @JoinColumn(name = "receiver_id")
+    private Long receiverId;
+
+    private Long isRead;
 
     public void readMessage() {
         this.isRead=1L;

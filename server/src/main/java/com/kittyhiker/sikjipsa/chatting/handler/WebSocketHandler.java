@@ -7,7 +7,6 @@ import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto;
 import com.kittyhiker.sikjipsa.chatting.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -76,9 +75,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
         List<WebSocketSession> webSocketSessions= getMessageMember(chatRoom);
         log.info("send session >> "+ webSocketSessions);
         if (webSocketSessions.size()==1) {
-            chatService.saveMessage(message, 0L);
+            chatService.saveDealMessage(message, 0L);
         } else {
-            chatService.saveMessage(message, 1L);
+            chatService.saveDealMessage(message, 1L);
         }
         webSocketSessions.parallelStream()
                 .forEach(s -> {
@@ -93,9 +92,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
         List<WebSocketSession> webSocketSessions= getMessageMember(chatRoom);
         log.info("send session >> "+ webSocketSessions);
         if (webSocketSessions.size()==1) {
-            chatService.saveMessage(message, 0L);
+            chatService.saveExpertMessage(message, 0L);
         } else {
-            chatService.saveMessage(message, 1L);
+            chatService.saveExpertMessage(message, 1L);
         }
         webSocketSessions.parallelStream()
                 .forEach(s -> {

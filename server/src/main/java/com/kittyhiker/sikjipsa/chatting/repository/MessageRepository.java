@@ -8,5 +8,6 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<ChatMessage, Long> {
 
     List<ChatMessage> findByRoomName(String roomName);
-    Long countByRoomNameAndIsRead(String roomName, Long isRead);
+    Long countByRoomNameAndReceiverIdAndIsRead(String roomName, Long receiverId, Long isRead);
+    Long countByReceiverIdAndIsRead(Long receiverId, Long isRead);
 }
