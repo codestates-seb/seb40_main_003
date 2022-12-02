@@ -17,7 +17,7 @@ export const ProductCategoryList = [
     {number:6, name: "도구/용품"},
     {number:7, name: "서적"},
     {number:8, name: "기타"}
-]
+] as const
 
 export const CareCategoryList = [
     {number:0, name: "물 주기", img:CareCategoryIcon1},
@@ -28,10 +28,11 @@ export const CareCategoryList = [
     {number:5, name: "잎 닦기", img:CareCategoryIcon6 },
     {number:6, name: "가지치기", img:CareCategoryIcon7 },
     {number:7, name: "병/해충", img:CareCategoryIcon8 },
-]
+] as const
+
 type categoryNumberToStringType = {
     number:number
-    arr:{number:number,name:string,img?:string}[]
+    arr:readonly{number:number,name:string,img?:string}[]
 }
 export const categoryNumberToString = ({number,arr}:categoryNumberToStringType)=>{
     const resultArr = arr.filter((e)=>{if(e.number===number)return true})

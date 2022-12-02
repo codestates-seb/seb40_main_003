@@ -133,7 +133,7 @@ const Login = () => {
             {error && <Errormsg>{error}</Errormsg>}
           </InputContainer>
           <OptionWrapper className={"mb-16 mt-16"}>
-            <RowWrapper>
+            <div className="justify-center">
               <input
                 type={"checkbox"}
                 id="autoLogin"
@@ -142,13 +142,13 @@ const Login = () => {
                   required: false,
                 })}
               />
-              <label className="mb-4 medium font-main" htmlFor={"autoLogin"}>
+              <label className="medium font-main" htmlFor={"autoLogin"}>
                 자동 로그인
               </label>
-            </RowWrapper>
+            </div>
             <Link to={`/signup`}>
-              <span className="font-main bold">회원 가입</span>하고 식물전문가가
-              되어보세요!
+              <span className="font-main bold">회원 가입</span>
+              <span className="display-none-mobile">하고 알아보기</span>
             </Link>
           </OptionWrapper>
           <SigButton
@@ -202,5 +202,7 @@ const OptionWrapper = styled.div`
   align-items: center;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  flex-wrap:wrap;
 `;
 export default Login;

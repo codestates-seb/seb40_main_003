@@ -13,8 +13,10 @@ import MainBanner4 from "../../images/banner/mainBanner4.png";
 
 import { axiosPrivate } from "../../Hooks/api";
 import { type } from "os";
+import usePageTitle from "../../Hooks/usePageTitle";
 
 const Main = () => {
+  usePageTitle("홈")
   return (
     <MainContentContainer>
       <MainCenterWrapper className="pd-0">
