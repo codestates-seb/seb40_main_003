@@ -10,7 +10,10 @@ import {
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import { CareCategoryList, ProductCategoryList } from "../../Const/Category";
+import {
+  CareCategoryList,
+  categoryNumberToString,
+} from "../../Const/Category";
 import { areaArray } from "../../Const/Address";
 import { genderArray } from "../../Const/gender";
 import { useState } from "react";
@@ -36,7 +39,9 @@ interface ExpertProfileTransferForm {
 
 const ExpertProfileTransfer = () => {
   const axiosPrivate = useAxiosPrivate();
-  const [gugune, setgugune] = useState();
+  const [gugun,setGugun] = useState([])
+
+
   const {
     register,
     handleSubmit,
@@ -110,7 +115,7 @@ const ExpertProfileTransfer = () => {
 
         <SectionWrapper width={100} borderNone={false}>
           <>
-          <span className="mb-4">프로필 사진</span>
+            <span className="mb-4">프로필 사진</span>
             <input
               className="image cursor"
               {...register("image", { required: true })}
@@ -146,13 +151,32 @@ const ExpertProfileTransfer = () => {
           <>
             <span className="mb-4">주소</span>
             <Select
-              // onChange={(e) => {console.log(e)}}
               className="address"
-              {...register("address", { required: true })}
+              {...register("address", {
+                required: true,
+                onChange: (e) => {
+                  const parsedArea= categoryNumberToString({
+                      number: Number(e.target.value),
+                      arr: areaArray,
+                    }
+                    // axios(`/adress/`,{"gugun":parsedArea}).then((res)=>{ setGugun(res)})
+                  );
+
+                },
+              })}
             >
               {areaArray.map((e) => {
-                return <option key={`${e.number}address`} value={e.number}>{e.name}</option>;
+                return (
+                  <option key={`${e.number}address`} value={e.number}>
+                    {e.name}
+                  </option>
+                );
               })}
+            </Select>
+            <Select>
+              {gugun.map((e)=>{return(
+                <option></option>
+              )})}
             </Select>
           </>
         </SectionWrapper>
@@ -165,7 +189,11 @@ const ExpertProfileTransfer = () => {
               {...register("gender", { required: true })}
             >
               {genderArray.map((e) => {
-                return <option key={`${e.number}gender`} value={e.number}>{e.gender}</option>;
+                return (
+                  <option key={`${e.number}gender`} value={e.number}>
+                    {e.gender}
+                  </option>
+                );
               })}
             </Select>
           </>
@@ -203,21 +231,18 @@ const ExpertProfileTransfer = () => {
             {CareCategoryList.map((e) => {
               return (
                 <RowWrapper key={`${e.number}tachtag`}>
-                <input
-                  type="checkbox"
-                  value={e.number}
-                  className="techTagName"
-                  {...register("techTagName")}
-                />
-                {e.name}
-                  </RowWrapper>
-      
+                  <input
+                    type="checkbox"
+                    value={e.number}
+                    className="techTagName"
+                    {...register("techTagName")}
+                  />
+                  {e.name}
+                </RowWrapper>
               );
             })}
           </>
         </SectionWrapper>
-
-        
 
         <SectionWrapper width={100} borderNone={true}>
           <>
@@ -230,7 +255,9 @@ const ExpertProfileTransfer = () => {
               })}
               placeholder="글쓰기"
             />
-            <p className="font-alert-red sub">{errors.simpleContent?.message}</p>
+            <p className="font-alert-red sub">
+              {errors.simpleContent?.message}
+            </p>
           </>
         </SectionWrapper>
 
@@ -245,10 +272,11 @@ const ExpertProfileTransfer = () => {
               })}
               placeholder="글쓰기"
             />
-            <p className="font-alert-red sub">{errors.detailContent?.message}</p>
+            <p className="font-alert-red sub">
+              {errors.detailContent?.message}
+            </p>
           </>
         </SectionWrapper>
-
       </MainCenterWrapper>
       <MainRightWrapper center={true}>
         <SigButton type="submit" value={"ProductEditor"}>
