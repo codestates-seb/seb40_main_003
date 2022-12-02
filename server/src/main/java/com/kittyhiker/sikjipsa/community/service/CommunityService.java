@@ -96,9 +96,7 @@ public class CommunityService {
             responseImages=alreadySavedImage;
         } else {
             responseImages=new ArrayList<>();
-            alreadySavedImage.stream().forEach(
-                    i -> imageService.deleteImageFromS3(i)
-            );
+            imageService.deleteImageFromCommunity(findCommunity);
             images.stream().forEach(
                     (image) -> {
                         SavedImageDto savedImageDto = imageService.savedImageToS3(image);
@@ -237,13 +235,9 @@ public class CommunityService {
         communityRepository.save(community);
     }
 
-
     public void removeCommunityPost(Long communityId) {
         Community findCommunity = verifiedCommunity(communityId);
-        List<Image> image = imageService.findImage(findCommunity);
-        image.stream().forEach(
-                i -> imageService.deleteImageFromS3(i.getImgUrl())
-        );
+        imageService.deleteImageFromCommunity(findCommunity);
         List<CommentResponseDto> comments = commentService.getComments(findCommunity);
         comments.stream()
                 .forEach(
