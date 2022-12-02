@@ -15,7 +15,7 @@ import org.mapstruct.Mapper;
 public interface ChatRoomMapper {
 
     ChatRoomDto dealChatToChatRoomDto(DealChatRoom dealChatRoom, Long buyerId, Long sellerId, Long notReadNum);
-    ChatRoomDto expertChatToChatRoomDto(ExpertChatRoom expertChatRoom);
+    ChatRoomDto expertChatToChatRoomDto(ExpertChatRoom expertChatRoom, Long buyerId, Long sellerId, Long notReadNum);
     ChatMessage messageDtoToChatMessage(ChatMessageDto messageDto, Member sender, Long isRead);
     ChatRoomMessageDto messageToMessageResponse(ChatMessage message, CommunityMemberResponse messageSender);
 }

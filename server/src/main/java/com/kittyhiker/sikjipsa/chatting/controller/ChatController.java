@@ -27,7 +27,7 @@ public class ChatController {
         return new ResponseEntity(dealRoom, HttpStatus.CREATED);
     }
 
-    @PostMapping("/expert/{expert-id}")
+    @PostMapping("/experts/{expert-id}")
     public ResponseEntity createExpertRoom(@PathVariable("expert-id") Long expertId,
                                   @RequestHeader("Authorization") String token) {
         Long userId = jwtTokenizer.getUserIdFromToken(token);
@@ -43,8 +43,21 @@ public class ChatController {
         return new ResponseEntity(myDealChatRoom, HttpStatus.OK);
     }
 
+    @GetMapping("/experts")
+    public ResponseEntity getExpertChatRoom(@RequestHeader("Authorization") String token) {
+        Long userId = jwtTokenizer.getUserIdFromToken(token);
+        List<ChatRoomDto> myExpertChatRoom = chatService.getMyExpertChatRoom(userId);
+        return new ResponseEntity(myExpertChatRoom, HttpStatus.OK);
+    }
+
     @GetMapping("/deal/{room-name}")
     public ResponseEntity getDealChatDetail(@PathVariable("room-name") String roomName) {
+        List<ChatRoomMessageDto> messageFromRoom = chatService.getMessageFromRoom(roomName);
+        return new ResponseEntity(messageFromRoom, HttpStatus.OK);
+    }
+
+    @GetMapping("/experts/{room-name}")
+    public ResponseEntity getExpertChatDetail(@PathVariable("room-name") String roomName) {
         List<ChatRoomMessageDto> messageFromRoom = chatService.getMessageFromRoom(roomName);
         return new ResponseEntity(messageFromRoom, HttpStatus.OK);
     }
