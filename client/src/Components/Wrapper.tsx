@@ -164,4 +164,9 @@ export const SpaceBetween = styled.div`
     align-items: center;
   }
 `;
+
+export const FlexWrapper = styled.div`
+  display: flex;
+`;
+
 export default MainLeftWrapper;
