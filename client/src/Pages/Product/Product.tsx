@@ -99,7 +99,7 @@ const Product = () => {
                 defaultChecked
               />
               <label className="medium " htmlFor={"autoLogin"}>
-                판매중만 보기
+                판매중인 글만 보기
               </label>
             </div>
           </SpaceBetween>
