@@ -30,7 +30,6 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
       years: String(data.years).replaceAll("-",""),
       type: data.type,
     });
-    console.log(plantDto)
     compressImage(data.image[0],100).then((res)=>{
       res!==undefined&&formData.append("multipartFile",res)
     })
