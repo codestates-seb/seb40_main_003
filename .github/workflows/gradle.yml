@@ -28,9 +28,9 @@ jobs:
       
      # application.yml 설정
     - uses: actions/checkout@v3
-    - name: make resources directory
-      run: mkdir ./src/main/resources
-      working-directory: ./server
+ #   - name: make resources directory
+ #     run: mkdir ./src/main/resources
+ #     working-directory: ./server
       
     - name: Set application.yml
       run: touch ./src/main/resources/application.yml
