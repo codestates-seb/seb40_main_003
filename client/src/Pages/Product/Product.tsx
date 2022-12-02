@@ -11,6 +11,7 @@ import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { InfiniteFetch } from "../../Hooks/useFetch";
 import {
+  InfiniteData,
   QueryClient,
   QueryClientProvider,
   useInfiniteQuery,
@@ -24,33 +25,35 @@ import { useInView } from "react-intersection-observer";
 import React from "react";
 import { ProfileDealType } from "../../types/profileType";
 import { cannotLoad, searchbarComment } from "../../Const/message";
-import { ReactComponent as Hamburger } from "../../images/hamburgerIcon.svg";
-import Modal from "../../Components/Modal";
-import CategoryModal from "../../Components/product/CategoryModal";
+import ProductCategory from "../../Components/product/ProductCategory";
 
 // 쿼리클라이언트
-const productQueryClient = new QueryClient();
-
+export const productQueryClient = new QueryClient();
 type productMain = {
   searchKeyword?: string;
+  size?: number;
+  category?: number | undefined;
 };
-export const ProductMain = ({ searchKeyword }: productMain) => {
+
+export const ProductMain = ({ searchKeyword, size, category }: productMain) => {
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
 
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["productQuery", searchKeyword],
-    ({ pageParam = 1 }) => InfiniteFetch("/deal", pageParam, searchKeyword),
+    ["productQuery", searchKeyword, size,category],
+    ({ pageParam = 1 }) =>
+      InfiniteFetch("/deal", pageParam, searchKeyword, size),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextPage : undefined,
     }
   );
   // 스크롤감지
+
   useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView]);
+    if (size !== 3 && inView) fetchNextPage();
+  }, [inView, size]);
 
   if (status === "loading") return <LoadingSkeleton />;
   if (status === "error") return <ErrorMessage content={cannotLoad} />;
@@ -76,49 +79,63 @@ const Product = () => {
   const [searchKeyWord, setSearchKeyWord] = useState<string | undefined>(
     undefined
   );
-  const [isOpenModal, setOpenModal] = useState<boolean>(false);
-  const onClickModal = useCallback(() => {
-    setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
+  const [isSearching, setIsSearching] = useState(false);
+  const [category, setCategory] = useState<undefined | number>(undefined);
 
   usePageTitle("거래");
   return (
     <>
-      <>
-        {isOpenModal && (
-          <Modal onClickModal={onClickModal} confirm={false}>
-            <CategoryModal onClickFunction={() => { } } closeModal={onClickModal} />
-          </Modal>
-        )}
-      </>
       <MainContentContainer>
         <MainCenterWrapper>
+          <input
+            type="text"
+            className="mb-4 width-100"
+            placeholder={searchbarComment}
+            onChange={(e) => {
+              setSearchKeyWord(e.target.value);
+            }}
+            onFocus={(e) => {
+              setIsSearching(true);
+            }}
+            onBlur={(e) => {
+              setIsSearching(false);
+            }}
+          />
+          <ProductCategory
+            isSearching={isSearching}
+            setCategory={setCategory}
+          />
           <SpaceBetween>
-            <input
-              type="text"
-              className="mb-4 width-100"
-              placeholder={searchbarComment}
-              onChange={(e) => {
-                setSearchKeyWord(e.target.value);
-              }}
-            />
-            <button className="ml-16" onClick={onClickModal}>
-              <Hamburger />
-            </button>
+            <div className="justify-center mt-8">
+              <input
+                type={"checkbox"}
+                id="autoLogin"
+                className="border-none checkbox mr-8"
+                defaultChecked
+              />
+              <label className="medium " htmlFor={"autoLogin"}>
+                판매중인 글만 보기
+              </label>
+            </div>
           </SpaceBetween>
           {/* 쿼리클라이언트로 감쌈 */}
 
           <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
             <QueryClientProvider client={productQueryClient}>
-              <ProductMain searchKeyword={searchKeyWord} />
+              <ProductMain
+                searchKeyword={searchKeyWord}
+                size={15}
+                category={category}
+              />
             </QueryClientProvider>
           </ErrorBoundary>
+
           {/* 쿼리클라이언트로 감쌈 */}
         </MainCenterWrapper>
         <MainRightWrapper>
           <SectionWrapper borderNone={true}>
             <p className="h5 bold font-main mr-16">
-              반려식물을 분양하고 원예 용품을 판매해보세요.🌿
+              반려식물을 분양하고 원예 용품을 판매해보세요.🌵
             </p>
           </SectionWrapper>
           <span className="h4 bold"></span>

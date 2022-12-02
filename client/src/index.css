@@ -53,7 +53,7 @@ textarea {
   border: none;
   background-color: var(--pure-white);
 }
-button{
+button {
   cursor: pointer;
 }
 
@@ -65,6 +65,7 @@ textarea {
   outline-color: var(--line-light-gray);
   border-radius: 6px;
   resize: none;
+  accent-color: var(--main);
 }
 
 input:focus,
@@ -85,17 +86,16 @@ input.checkbox-20 {
   width: 20px;
   height: 20px;
   margin-right: 8px;
-  accent-color: var(--main);
-  cursor: pointer;
 }
-.width-100{
+
+.width-100 {
   width: 100%;
 }
 
-.popup-arrow{
+.popup-arrow {
   display: none;
 }
-.popup-content{
+.popup-content {
   margin-top: -26px;
   border: 1px solid var(--line-gray);
   /* padding: 4px; */
@@ -103,25 +103,26 @@ input.checkbox-20 {
 }
 
 /* 아이콘 active */
-.activeIcon span,.activeStroke span {
+.activeIcon span,
+.activeStroke span {
   color: var(--main);
   font-weight: var(--bold);
 }
 
-.activeIcon svg{
+.activeIcon svg {
   fill: var(--main);
 }
 
-.disableIcon svg{
+.disableIcon svg {
   fill: var(--font-gray);
 }
 
-.activeStroke svg{
+.activeStroke svg {
   stroke: var(--main);
   color: var(--main);
 }
 
-.disableStroke svg{
+.disableStroke svg {
   stroke: var(--font-gray);
 }
 
@@ -137,7 +138,12 @@ input.checkbox-20 {
 .font-alert-red {
   color: var(--alert-red);
 }
-
+.font-banner-main {
+  color: var(--main);
+}
+.font-banner-forest {
+  color: #568A35;
+}
 /* 폰트 두께 설정 */
 .light {
   font-weight: 200;
@@ -157,7 +163,7 @@ input.checkbox-20 {
 }
 
 .h5 {
-  font-size: 1.0rem;
+  font-size: 1rem;
 }
 
 .h4 {
@@ -176,13 +182,18 @@ input.checkbox-20 {
   font-size: 1.8rem;
 }
 
+/* 텍스트 드래그 방지 */
+.closedrag{
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
 /* 마진 설정 */
-
 
 .mt-4 {
   margin-top: 4px;
 }
-
 
 .mt-8 {
   margin-top: 8px;
@@ -196,14 +207,13 @@ input.checkbox-20 {
   margin-top: 16px;
 }
 
-.mb-2{
+.mb-2 {
   margin-bottom: 2px;
 }
 
 .mb-4 {
   margin-bottom: 4px;
 }
-
 
 .mb-6 {
   margin-bottom: 6px;
@@ -285,11 +295,17 @@ input.checkbox-20 {
   margin-left: 50%;
 }
 
-.pd-4{
+.pd-4 {
   padding: 4px;
 }
-.pd-8{
+.pd-8 {
   padding: 8px;
+}
+.pd-16 {
+  padding: 16px;
+}
+.pd-24 {
+  padding: 24px;
 }
 .pb-16 {
   padding-bottom: 16px;
@@ -314,24 +330,25 @@ input.checkbox-20 {
 .sig-border4 {
   border-radius: 4px 0px 4px 0px;
 }
-
+.text-align-start {
+  text-align: start;
+}
 .text-align-center {
   text-align: center;
 }
 .text-align-end {
   text-align: end;
 }
-.align-center{
-  align-items: center;
-}
-.justify-center{
-  justify-content: center;
-}
+
 .display-none {
   display: none;
 }
-
-.space-between{
+.justify-center {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.space-between {
   align-content: space-between;
 }
 
@@ -365,7 +382,7 @@ code {
   }
 }
 
-@media screen and (min-width:1024px) {
+@media screen and (min-width: 1024px) {
   .display-none-pc {
     display: none;
   }

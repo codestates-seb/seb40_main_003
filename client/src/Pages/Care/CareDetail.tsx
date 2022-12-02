@@ -49,9 +49,7 @@ const CareDetail = () => {
           pk={data.member.memberId}
         />
         {
-          // isLogin?.userId===id?
           <SectionWrapper content={data.simpleContent} pt={0} pb={8} />
-          // :<></>
         }
         {/* 모달창 */}
         <>
@@ -66,7 +64,7 @@ const CareDetail = () => {
           <PlantCardCarousel key={"reactCarousel"}>
             <>
               {data.member.plants.length===0?<>반려식물이 없습니다</>:
-              data.member.plants.map((e) => {
+              data.member.plants.map((e,i) => {
                 return (
                   <ProfilePlantCard
                     src={data.member.plants[0]!==undefined?data.member.plants[0].image.imgUrl:""}

@@ -10,6 +10,7 @@ import {
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import { compressImage } from "../../utils/imageCompress";
 
 const ConfirmWrapper = styled.span`
   display: flex;
@@ -29,7 +30,6 @@ interface CommunityEditorForm {
 
 const CommunityEditor = (props: Props) => {
   const axiosPrivate = useAxiosPrivate();
-  // const [user, setUser] = useRecoilState(userState);
 
   const {
     register,
@@ -43,31 +43,41 @@ const CommunityEditor = (props: Props) => {
   const navigate = useNavigate();
 
   const onValid = async (data: CommunityEditorForm) => {
-    
     const formData = new FormData();
-    const postDto = JSON.stringify({ 
+    
+    const postDto = JSON.stringify({
       title: data.title,
-      content: data.content });
+      content: data.content,
+    });
+    formData.append(
+      "postDto",
+      new Blob([postDto], { type: "application/json" })
+    );
 
-    formData.append("images", data.image[0]);
-    formData.append("postDto", new Blob([postDto],{type:"application/json"}));
-
-      axiosPrivate
+    if (data.image !== undefined) {
+      await compressImage(data.image[0]).then((res: any) =>
+        formData.append("images", res)
+      )
+    }
+    axiosPrivate
       .post("/community", formData, {
         headers: {
-          "Content-Type": "multipart/form-data"
-        }
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((res) => {
         navigate(`/community/${res.data.communityId}`);
-      }).catch ((err)=>{});
-    }
-  
+      })
+      .catch((err) => {});
+  };
+
   usePageTitle("커뮤니티 글 쓰기");
 
-
   return (
-    <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid, onInValid)}>
+    <MainContentContainer
+      as={"form"}
+      onSubmit={handleSubmit(onValid, onInValid)}
+    >
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>
           <>
@@ -91,13 +101,14 @@ const CommunityEditor = (props: Props) => {
           </>
         </SectionWrapper>
 
-        <SectionWrapper width={100} >
+        <SectionWrapper width={100}>
           <>
             <input
               className="image cursor"
-              {...register("image", 
-              // {required: true}
-                )}
+              {...register(
+                "image"
+                // {required: true}
+              )}
               id="image"
               type="file"
               accept="image/*"
@@ -112,6 +123,8 @@ const CommunityEditor = (props: Props) => {
           <>
             <textarea
               className="content"
+              minLength={10}
+              maxLength={1000}
               {...register("content", {
                 required: true,
               })}
@@ -122,9 +135,11 @@ const CommunityEditor = (props: Props) => {
         </SectionWrapper>
         <ConfirmWrapper>
           <input
-          {...register("checked", { required: true })}
-          type="checkbox" className="border-none checkbox-20"/>
-          <label className={errors.checked?"sub font-gray":"sub alert-red"}>
+            {...register("checked", { required: true })}
+            type="checkbox"
+            className="border-none checkbox-20"
+          />
+          <label className={errors.checked ? "sub font-gray" : "sub alert-red"}>
             식물처럼 싱그럽고 예쁜 말을 써주세요.
             <br />
             욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
