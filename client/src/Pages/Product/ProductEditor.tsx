@@ -158,6 +158,8 @@ const ProductEditor = () => {
           <>
             <textarea
               className="content"
+              minLength={10}
+              maxLength={1000}
               {...register("content", {
                 required: true,
               })}

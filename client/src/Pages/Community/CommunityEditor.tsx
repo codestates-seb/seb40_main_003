@@ -112,9 +112,12 @@ const CommunityEditor = (props: Props) => {
           <>
             <textarea
               className="content"
+              minLength={10}
+              maxLength={1000}
               {...register("content", {
                 required: true,
-              })}
+                }
+              )}
               placeholder="글쓰기"
             />
             <p className="font-alert-red sub">{errors.content?.message}</p>

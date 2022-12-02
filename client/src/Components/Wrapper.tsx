@@ -74,6 +74,7 @@ type SectionWrapperType = {
   children?: JSX.Element|JSX.Element[]|string;
   width?: number;
   borderNone?: boolean;
+  font?: string;
   pb?: number;
   pt?: number;
 };
@@ -84,6 +85,7 @@ export const SectionWrapper:React.FC<SectionWrapperType> = ({
   children,
   width,
   borderNone,
+  font,
   pb = 16,
   pt = 16,
 }) => {
@@ -94,7 +96,7 @@ export const SectionWrapper:React.FC<SectionWrapperType> = ({
       borderNone={borderNone ? borderNone : false}
     >
       <ColumnWrapper width={width}>
-        {title && <h2 className="bold font-main">{title}</h2> }
+        {title && <h2 className={`bold font-main ${font}`}>{title}</h2> }
         {content && <p className="mt-8 text-overflow3">{content}</p>}
         {tag && (
           <TagWrapper>

@@ -22,8 +22,8 @@ import { useCallback, useEffect, useState } from "react";
 import React from "react";
 import { cannotLoad, } from "../../Const/message";
 import Modal from "../../Components/Modal";
-import CategoryModal from "../../Components/product/CategoryModal";
 import { ReactComponent as Hamburger } from "../../images/hamburgerIcon.svg";
+import CategoryModal from "../../Components/care/CategoryModal";
 
 export const careQueryClient = new QueryClient();
 
@@ -45,8 +45,8 @@ export const CareMain = ({ searchKeyword, size }: CareMain) => {
   );
   // 스크롤감지
   useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView]);
+    if (size!==3&&inView) fetchNextPage();
+  }, [inView,size])
 
   if (status === "loading") return <LoadingSkeleton />;
   if (status === "error") return <ErrorMessage content={cannotLoad} />;
@@ -86,7 +86,7 @@ const Care = () => {
         <SpaceBetween>
           <select name="sorting" className="medium font-gray" id="option">
             <option value="정렬">최신순</option>
-            <option value="정렬">찜순</option>
+            <option value="정렬">찜 많은 순</option>
             <option value="정렬">찜순</option>
           </select>
           <button className="ml-16" onClick={onClickModal}>
