@@ -42,6 +42,7 @@ import { getLS } from "./Hooks/useSecureLS";
 import ProductModify from "./Pages/Product/ProductModify";
 import Main from "./Pages/Main/Main";
 import { cleanLS } from "./Hooks/useLogout";
+import ExpertProfileTransfer from "./Pages/Profile/ExpertProfileTransfer";
 
 
 const App = () => {
@@ -101,6 +102,7 @@ const App = () => {
             <Route path=":id" element={<CommunityDetail />} />
             <Route path="modify" element={<CommunityModify />} />
             <Route path="write" element={<CommunityEditor />} />
+            <Route path="transfer" element={<ExpertProfileTransfer />} />
           </Route>
           {/* 로그인 */}
           <Route path="/login" element={<Login />} />
