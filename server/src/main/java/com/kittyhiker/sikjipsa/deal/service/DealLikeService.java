@@ -13,6 +13,7 @@ import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
 import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
+import com.kittyhiker.sikjipsa.member.dto.CommunityMemberResponse;
 import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
@@ -51,9 +52,10 @@ public class DealLikeService {
                     List<Image> image = imageService.findImage(like.getDeal());
                     List<String> imageUrlList = image.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
 
-                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(member.getMemberId())
+                    CommunityMemberResponse responseMember = CommunityMemberResponse.builder()
+                            .memberId(member.getMemberId())
                             .nickname(member.getNickname())
-                            .image(imageService.findImage(member)).build();
+                            .image(imageService.findImageByMember(member)).build();
 
                     DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(like.getDeal(), imageUrlList, responseMember);
                     dealList.add(dealResponseDto);

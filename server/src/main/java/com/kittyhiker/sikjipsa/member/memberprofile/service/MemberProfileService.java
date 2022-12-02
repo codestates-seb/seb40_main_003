@@ -9,6 +9,7 @@ import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.repository.ImageRepository;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
+import com.kittyhiker.sikjipsa.member.dto.CommunityMemberResponse;
 import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.entity.MemberInformation;
@@ -61,9 +62,10 @@ public class MemberProfileService {
 					List<Image> images = imageService.findImage(deal);
 					List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
 					Member dealMember = deal.getMember();
-					MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
+					CommunityMemberResponse responseMember = CommunityMemberResponse.builder()
+							.memberId(dealMember.getMemberId())
 							.nickname(dealMember.getNickname())
-							.image(imageService.findImage(dealMember)).build();
+							.image(imageService.findImageByMember(dealMember)).build();
 					DealResponseDto dealResponseDto = dealMapper.dealToDealResponseDto(deal, responseImage, responseMember);
 					response.add(dealResponseDto);
 				}
@@ -133,9 +135,10 @@ public class MemberProfileService {
 					List<Image> images = imageService.findImage(deal);
 					List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
 					Member dealMember = deal.getMember();
-					MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
+					CommunityMemberResponse responseMember = CommunityMemberResponse.builder()
+							.memberId(dealMember.getMemberId())
 							.nickname(dealMember.getNickname())
-							.image(imageService.findImage(dealMember)).build();
+							.image(imageService.findImageByMember(dealMember)).build();
 					DealResponseDto dealResponseDto = dealMapper.dealToDealResponseDto(deal, responseImage, responseMember);
 					response.add(dealResponseDto);
 				}

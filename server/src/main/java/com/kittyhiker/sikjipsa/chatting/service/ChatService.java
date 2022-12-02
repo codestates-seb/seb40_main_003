@@ -120,7 +120,8 @@ public class ChatService {
                     m.readMessage();
                     Member member = m.getSender();
                     ChatRoomMessageDto mDto = chatRoomMapper.messageToMessageResponse(m,
-                            memberMapper.memberToMemberResponseDto(member, imageService.findImage(member)));
+                            memberMapper.memberToCommunityMemberDto(member,
+                                    imageService.findImageByMember(member)));
                     response.add(mDto);
                 });
         return response;

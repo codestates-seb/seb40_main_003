@@ -21,6 +21,9 @@ public interface MemberMapper {
     MemberInfoResponseDto memberInfoToResponseDto(MemberInformation memberInfo, Long memberId, String nickname);
     MemberResponseDto memberToMemberResponseDto(Member member, ImageDto2 imageDto);
 
+    @Mapping(source = "imageUrl", target = "image")
+    CommunityMemberResponse memberToCommunityMemberDto(Member member, String imageUrl);
+
 //    default MemberResponseDto memberToMemberResponseDto(Member member, String imageUrl){
 //        if ( member == null ) {
 //            return null;

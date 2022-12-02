@@ -14,6 +14,7 @@ import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.image.dto.SavedImageDto;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
+import com.kittyhiker.sikjipsa.member.dto.CommunityMemberResponse;
 import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.repository.MemberRepository;
@@ -67,9 +68,10 @@ public class DealService {
                     }
             );
         }
-        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(findMember.getMemberId())
+        CommunityMemberResponse responseMember = CommunityMemberResponse
+                .builder().memberId(findMember.getMemberId())
                 .nickname(findMember.getNickname())
-                .image(imageService.findImage(findMember)).build();
+                .image(imageService.findImageByMember(findMember)).build();
         return mapper.dealToDealResponseDto(savedDeal, responseImages, responseMember);
     }
 
@@ -99,9 +101,10 @@ public class DealService {
         findDeal.updateDeal(dealPatchDto);
         dealRepository.save(findDeal);
         Member findMember = findDeal.getMember();
-        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(findMember.getMemberId())
+        CommunityMemberResponse responseMember = CommunityMemberResponse.builder()
+                .memberId(findMember.getMemberId())
                 .nickname(findMember.getNickname())
-                .image(imageService.findImage(findMember)).build();
+                .image(imageService.findImageByMember(findMember)).build();
         return mapper.dealToDealResponseDto(findDeal, responseImages, responseMember);
     }
 
@@ -114,9 +117,11 @@ public class DealService {
                     List<Image> images = imageService.findImage(deal);
                     List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
                     Member dealMember = deal.getMember();
-                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
+                    CommunityMemberResponse responseMember = CommunityMemberResponse.builder()
+                            .memberId(dealMember.getMemberId())
                             .nickname(dealMember.getNickname())
-                            .image(imageService.findImage(dealMember)).build();
+                            .image(imageService.findImageByMember(dealMember)).build();
+
                     DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(deal, responseImage, responseMember);
                     response.add(dealResponseDto);
                 }
@@ -135,9 +140,10 @@ public class DealService {
                     List<Image> images = imageService.findImage(deal);
                     List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
                     Member dealMember = deal.getMember();
-                    MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
+                    CommunityMemberResponse responseMember = CommunityMemberResponse.builder()
+                            .memberId(dealMember.getMemberId())
                             .nickname(dealMember.getNickname())
-                            .image(imageService.findImage(dealMember)).build();
+                            .image(imageService.findImageByMember(dealMember)).build();
                     DealResponseDto dealResponseDto = mapper.dealToDealResponseDto(deal, responseImage, responseMember);
                     response.add(dealResponseDto);
                 }
@@ -155,9 +161,10 @@ public class DealService {
         List<String> responseImage = image.stream().map(img -> img.getImgUrl()).collect(Collectors.toList());
 
         Member dealMember = findDeal.getMember();
-        MemberResponseDto responseMember = MemberResponseDto.builder().memberId(dealMember.getMemberId())
+        CommunityMemberResponse responseMember = CommunityMemberResponse.builder()
+                .memberId(dealMember.getMemberId())
                 .nickname(dealMember.getNickname())
-                .image(imageService.findImage(dealMember)).build();
+                .image(imageService.findImageByMember(dealMember)).build();
 
         return mapper.dealToDealResponseDto(findDeal, responseImage, responseMember);
     }

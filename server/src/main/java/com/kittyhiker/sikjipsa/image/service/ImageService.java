@@ -71,11 +71,11 @@ public class ImageService {
 //        return image;
 //    }
 
-//    public String findImage(Member member) {
-//        Optional<Image> image = imageRepository.findByMember(member);
-//        if (image.isPresent()) return image.get().getImgUrl();
-//        else return "";
-//    }
+    public String findImageByMember(Member member) {
+        Optional<Image> image = imageRepository.findByMember(member);
+        if (image.isPresent()) return image.get().getImgUrl();
+        else return "";
+    }
 
 	public ImageDto2 findImage(Member member) {
 		Optional<Image> optionalImage = imageRepository.findByMember(member);
