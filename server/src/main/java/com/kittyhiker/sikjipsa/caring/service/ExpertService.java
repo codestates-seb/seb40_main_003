@@ -2,9 +2,13 @@ package com.kittyhiker.sikjipsa.caring.service;
 
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.ObjectMetadata;
+import com.kittyhiker.sikjipsa.caring.dto.ExpertSuccessDto;
+import com.kittyhiker.sikjipsa.caring.dto.ExpertSuccessResponseDto;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertReview;
+import com.kittyhiker.sikjipsa.caring.entity.ExpertSuccess;
 import com.kittyhiker.sikjipsa.caring.entity.MemberLikeExpert;
+import com.kittyhiker.sikjipsa.caring.mapper.ExpertSuccessMapper;
 import com.kittyhiker.sikjipsa.caring.repository.*;
 import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
 import com.kittyhiker.sikjipsa.exception.ExceptionCode;
@@ -37,6 +41,8 @@ public class ExpertService {
 	private final TechTagRepository techTagRepository;
 	private final AreaTagRepository areaTagRepository;
 	private final ExpertReviewRepository expertReviewRepository;
+	private final ExpertSuccessRepository expertSuccessRepository;
+	private final ExpertSuccessMapper expertSuccessMapper;
 
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
@@ -241,6 +247,19 @@ public class ExpertService {
 	public Page<ExpertProfile> getExpertSuccess(int page, int size, Long memberId) {
 		Pageable pageable = PageRequest.of(page, size, Sort.by("expertReviews_expertReviewId").descending());
 		return expertRepository.findAllByExpertReviews_Member_MemberId(memberId, pageable);
+	}
+
+	public ExpertSuccessResponseDto postExpertSuccess(ExpertSuccessDto expertSuccessDto) {
+		ExpertProfile expertProfile = findVerifiedExpert(expertSuccessDto.getExpertId());
+		Member member = findVerifiedMember(expertSuccessDto.getBuyerId());
+		if (expertSuccessRepository.findByExpertProfileAndBuyer(expertProfile, member).isPresent()) {
+			throw new BusinessLogicException(ExceptionCode.ALREADY_SUCCESS_STATE);
+		}
+		expertProfile.setUseNum(expertProfile.getUseNum() + 1);
+
+		ExpertSuccess expertSuccess = expertSuccessMapper.toExpertSuccess(expertProfile, member, expertProfile.getMember());
+		ExpertSuccess savedSuccess = expertSuccessRepository.save(expertSuccess);
+		return expertSuccessMapper.toExpertSuccessResponseDto(savedSuccess, expertSuccessDto.getExpertId(), expertSuccessDto.getBuyerId());
 	}
 
 	private void verifyExpert(Long memberId) {

@@ -1,13 +1,13 @@
 package com.kittyhiker.sikjipsa.caring.controller;
 
-import com.kittyhiker.sikjipsa.caring.dto.ExpertProfileDto;
-import com.kittyhiker.sikjipsa.caring.dto.ExpertReviewDto;
-import com.kittyhiker.sikjipsa.caring.dto.MultiResponseDto;
+import com.kittyhiker.sikjipsa.caring.dto.*;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertReview;
+import com.kittyhiker.sikjipsa.caring.entity.ExpertSuccess;
 import com.kittyhiker.sikjipsa.caring.entity.MemberLikeExpert;
 import com.kittyhiker.sikjipsa.caring.mapper.ExpertMapper;
 import com.kittyhiker.sikjipsa.caring.mapper.ExpertReviewMapper;
+import com.kittyhiker.sikjipsa.caring.mapper.ExpertSuccessMapper;
 import com.kittyhiker.sikjipsa.caring.mapper.MemberLikeExpertMapper;
 import com.kittyhiker.sikjipsa.caring.service.ExpertService;
 import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
@@ -21,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import java.io.IOException;
+import java.security.PublicKey;
 import java.util.List;
 
 @RestController
@@ -32,6 +34,7 @@ public class ExpertController {
 	private final ExpertMapper expertMapper;
 	private final MemberLikeExpertMapper memberLikeExpertMapper;
 	private final ExpertReviewMapper expertReviewMapper;
+	private final ExpertSuccessMapper expertSuccessMapper;
 
 	@PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
 	public ResponseEntity postExpert(@Valid @RequestPart ExpertProfileDto expertProfileDto,
@@ -129,6 +132,13 @@ public class ExpertController {
 		ExpertReview expertReview = expertReviewMapper.toReview(expertReviewDto);
 		ExpertReview response = expertService.postExpertReview(expertReview, expertId, jwtTokenizer.getUserIdFromToken(token));
 		return new ResponseEntity(expertReviewMapper.toExpertReviewResponseDto(response), HttpStatus.CREATED);
+	}
+
+	// 고용 성공
+	@PostMapping("/success")
+	public ResponseEntity postExpertSuccess(@RequestBody ExpertSuccessDto expertSuccessDto) throws IOException {
+		ExpertSuccessResponseDto expertSuccessResponseDto = expertService.postExpertSuccess(expertSuccessDto);
+		return new ResponseEntity(expertSuccessResponseDto, HttpStatus.CREATED);
 	}
 
 	// 돌봄 기록

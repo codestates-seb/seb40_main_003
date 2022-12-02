@@ -101,7 +101,7 @@ public class Member extends AuditingEntity {
 		this.memberLikeDeals.add(likeDeal);
 	}
 
-// MemberProfile
+	// MemberProfile
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
