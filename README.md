@@ -30,7 +30,6 @@ http://plant-hiker.s3-website.ap-northeast-2.amazonaws.com/community
 |               | github                             |
 | ------------- | ---------------------------------- |
 | **이준구** 🥇 | https://github.com/jobkaeHenry     |
-| 전윤정        | https://github.com/herong0515         |
 | 정우시        | https://github.com/wusi-hub |
 ### back-end
 |               | github                        |
