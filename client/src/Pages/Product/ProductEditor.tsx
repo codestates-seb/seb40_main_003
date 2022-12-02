@@ -178,7 +178,7 @@ const ProductEditor = () => {
           </p>
         </ConfirmWrapper>
       </MainCenterWrapper>
-      <MainRightWrapper center={true}>
+      <MainRightWrapper>
         <SigButton type="submit" value={"ProductEditor"}>
           작성 완료
         </SigButton>
