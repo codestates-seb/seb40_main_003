@@ -49,9 +49,7 @@ const CareDetail = () => {
           pk={data.member.memberId}
         />
         {
-          // isLogin?.userId===id?
           <SectionWrapper content={data.simpleContent} pt={0} pb={8} />
-          // :<></>
         }
         {/* 모달창 */}
         <>

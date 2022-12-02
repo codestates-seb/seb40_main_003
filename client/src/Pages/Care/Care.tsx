@@ -54,17 +54,14 @@ export const CareMain = ({ searchKeyword }: CareMain) => {
     <>
       {data?.pages.map((page, index) => (
         <React.Fragment key={index}>
-          {page.data.length === 0 ? (
-            <ErrorMessage className="pt-16 width-100" content={noContent} />
-          ) : (
-            page.data.map((e: caringPreviewDataTypes) => {
+          {page.data.map((e: caringPreviewDataTypes) => {
               return (
                 <Link key={e.expertId} to={`/caring/${e.expertId}`}>
                   <CareCard data={e} />
                 </Link>
               );
             })
-          )}
+          }
         </React.Fragment>
       ))}
       {isFetchingNextPage ? <LoadingSkeleton /> : <div ref={ref}></div>}

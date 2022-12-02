@@ -45,6 +45,7 @@ export const InfiniteFetch = async (
   );
   const { data } = res.data;
   const { page, totalPages } = res.data.pageInfo;
+  console.log(page)
   const isLast = (totalPages !== 0 && page === totalPages)
   return { data, nextPage: pageParam + 1, isLast };
 };
