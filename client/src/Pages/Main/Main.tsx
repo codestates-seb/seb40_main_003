@@ -20,7 +20,7 @@ import { cannotLoad } from "../../Const/message";
 import { Link } from "react-router-dom";
 
 const Main = () => {
-  usePageTitle("홈");
+  usePageTitle("플랜트하이커");
   return (
     <MainContentContainer>
       <MainCenterWrapper className="pd-0">
