@@ -1,4 +1,4 @@
-export const Area = [
+export const areaArray = [
     {number: 0, name: "강남구"},
     {number: 1, name: "강동구"},
     {number: 2, name: "강북구"},
@@ -24,4 +24,4 @@ export const Area = [
     {number: 22, name: "종로구"},
     {number: 23, name: "중구"},
     {number: 24, name: "중랑구"}
-]
+]as const
