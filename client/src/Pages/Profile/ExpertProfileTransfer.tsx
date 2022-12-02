@@ -13,6 +13,7 @@ import axios from "../../Hooks/api";
 import { useRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 import { setLS } from "../../Hooks/useSecureLS";
+import { areaArray } from "../../Const/Address";
 
 interface SignupForm {
   name: string;
@@ -56,47 +57,48 @@ const ExpertProfileTransfer = () => {
   const password = useRef({});
   // 버튼 클릭시 동작하는 함수
   const onValid = async (data: SignupForm) => {
-    axios
-      .post("/signup", {
-        email: data.email,
-        password: data.password,
-        nickname: data.name,
-      })
-      .then((res) => {
-        console.log("회원가입 성공, 로그인시도");
-      })
-      .catch((err) => {
-        if (!err?.response) {
-          setErrMsg("서버로부터 응답이 없습니다");
-        } else if (err.response?.status === 400) {
-          setErrMsg("이메일 또는 패스워드를 확인해주세요");
-        } else if (err.response?.status === 401) {
-          setErrMsg("허가되지않은 접근입니다");
-        } else {
-          setErrMsg("회원가입에 실패했습니다");
-        }
-      })
-      .then(() => {
-        axios
-          .post("/login", {})
-          .then((res) => {
-            const userInfo = {
-              memberId: res.data.memberId,
-              nickname: res.data.nickname,
-              image: res.data.image,
-            };
-            setUser(userInfo);
-            setLS("accessToken", res.data.accessToken);
-            setLS("refreshToken", res.data.refreshToken);
-          })
-          .then(() => {
-            window.alert("회원가입에 성공했습니다");
-            navigate("/");
-          })
-          .catch((err) => {
-            navigate("/login");
-          });
-      });
+    console.log(data);
+    // axios
+    //   .post("/signup", {
+    //     email: data.email,
+    //     password: data.password,
+    //     nickname: data.name,
+    //   })
+    //   .then((res) => {
+    //     console.log("회원가입 성공, 로그인시도");
+    //   })
+    //   .catch((err) => {
+    //     if (!err?.response) {
+    //       setErrMsg("서버로부터 응답이 없습니다");
+    //     } else if (err.response?.status === 400) {
+    //       setErrMsg("이메일 또는 패스워드를 확인해주세요");
+    //     } else if (err.response?.status === 401) {
+    //       setErrMsg("허가되지않은 접근입니다");
+    //     } else {
+    //       setErrMsg("회원가입에 실패했습니다");
+    //     }
+    //   })
+    //   .then(() => {
+    //     axios
+    //       .post("/login", {})
+    //       .then((res) => {
+    //         const userInfo = {
+    //           memberId: res.data.memberId,
+    //           nickname: res.data.nickname,
+    //           image: res.data.image,
+    //         };
+    //         setUser(userInfo);
+    //         setLS("accessToken", res.data.accessToken);
+    //         setLS("refreshToken", res.data.refreshToken);
+    //       })
+    //       .then(() => {
+    //         window.alert("회원가입에 성공했습니다");
+    //         navigate("/");
+    //       })
+    //       .catch((err) => {
+    //         navigate("/login");
+    //       });
+    //   });
   };
 
   return (
@@ -131,8 +133,7 @@ const ExpertProfileTransfer = () => {
               id="age"
               {...register("age", {
                 required: true,
-                pattern: /^[0-9]{3}$/,
-                maxLength: 3,
+                pattern: /^[0-9]{2}$/,
               })}
             />
             {errors.age && errors.age.type === "required" && (
@@ -141,14 +142,23 @@ const ExpertProfileTransfer = () => {
             {errors.age && errors.age.type === "pattern" && (
               <Errormsg> 숫자 형식이여야 합니다.</Errormsg>
             )}
-            {errors.age && errors.age.type === "maxLength" && (
-              <Errormsg> 최대 길이는 3자 이하여야 합니다</Errormsg>
-            )}
           </InputContainer>
-          <InputContainer>
+
+          <select
+            id="address"
+            {...register("address", {
+              required: true,
+            })}
+          >
+            {areaArray.map((e) => {
+              return <option value={(e.number)}>{e.name}</option>;
+            })}
+          </select>
+
+          {/* <InputContainer>
             <Label htmlFor={"address"}>주소</Label>
             <Input
-            placeholder="예시) 망원동"
+              placeholder="예시) 망원동"
               type={"text"}
               id="address"
               {...register("address", {
@@ -158,7 +168,7 @@ const ExpertProfileTransfer = () => {
             {errors.price && errors.price.type === "required" && (
               <Errormsg> 본인의 거주하고 있는 동을 입력해주세요.</Errormsg>
             )}
-          </InputContainer>
+          </InputContainer> */}
           <InputContainer>
             <Label htmlFor={"gender"}>성별</Label>
             <Select id="gender" {...register("gender", { required: true })}>
@@ -181,11 +191,11 @@ const ExpertProfileTransfer = () => {
             {errors.price && errors.price.type === "required" && (
               <Errormsg> 기본 비용을 입력해주세요.</Errormsg>
             )}
-            </InputContainer>
-            <InputContainer>
+          </InputContainer>
+          <InputContainer>
             <Label htmlFor={"extra"}>추가 비용</Label>
             <Input
-            placeholder="예시) 10분 1,000원"
+              placeholder="예시) 10분 1,000원"
               type={"text"}
               id="extra"
               {...register("extra", {
@@ -206,9 +216,10 @@ const ExpertProfileTransfer = () => {
               })}
             />
             {errors.simpleContent && <Errormsg>본인을 소개해주세요.</Errormsg>}
-            {errors.simpleContent && errors.simpleContent.type === "maxLength" && (
-              <Errormsg> 최대 길이는 100자 이하여야 합니다</Errormsg>
-            )}
+            {errors.simpleContent &&
+              errors.simpleContent.type === "maxLength" && (
+                <Errormsg> 최대 길이는 100자 이하여야 합니다</Errormsg>
+              )}
           </InputContainer>
           <InputContainer>
             <Label htmlFor={"detailContent"}>상세한 자기소개</Label>
@@ -219,7 +230,9 @@ const ExpertProfileTransfer = () => {
                 maxLength: 200,
               })}
             />
-            {errors.simpleContent && <Errormsg>본인에 대한 구제적인 소개해주세요.</Errormsg>}
+            {errors.simpleContent && (
+              <Errormsg>본인에 대한 구제적인 소개해주세요.</Errormsg>
+            )}
             {errors.age && errors.age.type === "maxLength" && (
               <Errormsg> 최대 길이는 200자 이하여야 합니다</Errormsg>
             )}
