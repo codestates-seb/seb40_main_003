@@ -91,7 +91,9 @@ input.checkbox-20 {
 .width-100 {
   width: 100%;
 }
-
+.min-height-70 {
+  min-height: 70px;
+}
 .popup-arrow {
   display: none;
 }

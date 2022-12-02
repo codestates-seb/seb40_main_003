@@ -56,14 +56,14 @@ export const CommentCard = (props: CommentCardTypes) => {
     communityId,
   } = props;
   const isAuthor = useIsAuthor();
-  const ref = useRef<HTMLInputElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [text, setText] = useState(content);
   const [editable, setEditable] = useState(false);
 
   const editOn = () => {
     setEditable(true);
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
   const handleKeyDown = () => {
@@ -91,16 +91,15 @@ export const CommentCard = (props: CommentCardTypes) => {
             </TagWrapper>
           ) : null}
               {editable ? (
-                <input
-                ref={ref}
-                className="width-100"
+                <textarea
+                className="width-100 min-height-70"
+                ref={textAreaRef}
                   autoFocus
-                  type="text"
                   value={text}
                   onChange={(e) => handleChange(e)}
                   onBlur={(e) => {
-                    if (e.target.value.length < 2) {
-                      alert("2글자이상 입력하세요");
+                    if (e.target.value.length < 2 || e.target.value.length > 300) {
+                      alert("2글자 이상, 300글자 이하로 입력해주세요.");
                     } else {
                       if (editable) {
                         axiosPrivate

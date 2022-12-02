@@ -39,6 +39,7 @@ const CommentInput = (props: props) => {
     <SectionWrapper width={100}>
       <RowWrapper className="align-center">
         <Textarea
+        className="width-100 min-height-70"
           ref={textAreaRef}
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -49,8 +50,8 @@ const CommentInput = (props: props) => {
           width={30}
           height={20}
           onClick={()=>{
-            if(value.length<2){
-              alert("2글자 이상 작성하세요")
+            if(value.length<2 || value.length>300){
+              alert("2글자 이상, 300자 이하로 작성해주세요.")
             }else{
               handleSubmit()
             }
