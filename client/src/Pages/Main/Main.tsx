@@ -16,7 +16,6 @@ import { ErrorBoundary } from "react-error-boundary";
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { CareMain, careQueryClient } from "../Care/Care"
 import { ProductMain, productQueryClient } from "../Product/Product";
-import { CommunityMain, communityQueryClient } from "../Community/Community";
 import { cannotLoad } from "../../Const/message";
 import { Link } from "react-router-dom";
 
@@ -25,10 +24,10 @@ const Main = () => {
   return (
     <MainContentContainer>
       <MainCenterWrapper className="pd-0">
-        <article title="배너">
+        <article title="배너" className="closedrag">
         <Carousel
           showStatus={false}
-          autoPlay={true}
+          // autoPlay={true}
           infiniteLoop={true}
           showThumbs={false}
         >
@@ -37,6 +36,7 @@ const Main = () => {
               sub="먹이고~ 볕쬐고~ 애지중지 키운"
               main="반려식물 자랑하기!"
               type="left"
+              font="font-banner-main"
             />
           </BannerImgWrapper>
 
@@ -45,6 +45,7 @@ const Main = () => {
               sub="식물은 내가 살릴게, 의뢰는 누가 할래?"
               main="전문가에게 맡겨봐!"
               type="right"
+              font="font-main"
             />
           </BannerImgWrapper>
 
@@ -53,6 +54,7 @@ const Main = () => {
               sub="플랜트하이커가 처음이신가요?"
               main="첫 돌봄 비용 20% 지원!"
               type="left"
+              font="font-banner-forest"
             />
           </BannerImgWrapper>
 
@@ -67,29 +69,21 @@ const Main = () => {
         </article>
         <article className="pd-24" title="거래하기">
             <Link to={"/product"} className="text-align-start">
-              <SectionWrapper title="거래하기" width={100} borderNone={false} />
+              <SectionWrapper title="거래하기" width={100} borderNone={false} font="h4"/>
             </Link>
           <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
             <QueryClientProvider client={productQueryClient}>
               <ProductMain size={3} />
             </QueryClientProvider>
           </ErrorBoundary>
-
+        </article>
+        <article className="pd-24">
             <Link to={"/caring"} className="text-align-start">
-              <SectionWrapper title="돌봄 요청하기" width={100} borderNone={false} />
+              <SectionWrapper title="돌봄 요청하기" width={100} borderNone={false} font="h4"/>
             </Link>
           <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
             <QueryClientProvider client={careQueryClient}>
               <CareMain size={3} />
-            </QueryClientProvider>
-          </ErrorBoundary>
-
-            <Link to={"/community"} className="text-align-start">
-              <SectionWrapper title="커뮤니티" width={100} borderNone={false} />
-            </Link>
-          <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
-            <QueryClientProvider client={communityQueryClient}>
-              <CommunityMain size={3} />
             </QueryClientProvider>
           </ErrorBoundary>
         </article>
@@ -115,16 +109,18 @@ const BannerText = ({
   main,
   sub,
   type = "left",
+  font
 }: {
   main?: string;
   sub?: string;
   type?: "right" | "left";
+  font?: string;
 }) => {
   return (
     <CenterWrapper type={type}>
       <div className={type === "left" ? "text-align-start" : "text-align-end"}>
-        <p className=" h4">{sub}</p>
-        <h2 className="h1 bold">{main}</h2>
+        <p className={`h4 ${font}`}>{sub}</p>
+        <h2 className={`h1 bold ${font}`}>{main}</h2>
       </div>
     </CenterWrapper>
   );
