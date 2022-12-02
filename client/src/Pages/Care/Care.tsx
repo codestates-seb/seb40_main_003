@@ -6,7 +6,6 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
   SpaceBetween,
-  SpaceEnd,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { InfiniteFetch } from "../../Hooks/useFetch";
@@ -19,9 +18,9 @@ import {
 import { ErrorBoundary } from "react-error-boundary";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { useInView } from "react-intersection-observer";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import React from "react";
-import { cannotLoad, noContent, searchbarComment } from "../../Const/message";
+import { cannotLoad, } from "../../Const/message";
 import Modal from "../../Components/Modal";
 import CategoryModal from "../../Components/product/CategoryModal";
 import { ReactComponent as Hamburger } from "../../images/hamburgerIcon.svg";
