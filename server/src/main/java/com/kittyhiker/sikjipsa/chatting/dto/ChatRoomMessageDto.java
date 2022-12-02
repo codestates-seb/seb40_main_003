@@ -1,5 +1,7 @@
 package com.kittyhiker.sikjipsa.chatting.dto;
 
+import com.kittyhiker.sikjipsa.community.dto.CommentResponseDto;
+import com.kittyhiker.sikjipsa.member.dto.CommunityMemberResponse;
 import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,5 +16,5 @@ public class ChatRoomMessageDto {
 
     private Long messageId;
     private String message;
-    private MemberResponseDto messageSender;
+    private CommunityMemberResponse messageSender;
 }
