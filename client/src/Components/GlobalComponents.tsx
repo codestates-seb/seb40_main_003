@@ -8,6 +8,8 @@ import { ReactComponent as Exchange } from "../images/exchangeIcon.svg";
 import { useIsAuthor } from "../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import axios from "../Hooks/api";
+import { categoryNumberToString } from "../Const/Category";
+import {areaArray} from "../Const/Address"
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -282,7 +284,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         <ColumnWrapper className="justify-center">
           <span className="medium h4">{name}</span>
           {location && <span className="sub font-gray">{location}</span>}
-          {area && <span className="font-gray">{area}</span>}
+          {area!==undefined && <span className="sub font-gray">{categoryNumberToString({number:area,arr:areaArray})}</span>}
 
           {isAuthor(pk) && (
             <SigTag
@@ -320,7 +322,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         </ColumnWrapper>
       </SpaceBetween>
 
-      {tag !== undefined && <SigTag className="ghost p">{tag}번 고용</SigTag>}
+      {(tag) !== undefined && <SigTag className="ghost p">{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
