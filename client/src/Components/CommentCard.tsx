@@ -67,7 +67,7 @@ export const CommentCard = (props: CommentCardTypes) => {
   const editOn = () => {
     setEditable(true);
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   };
   const handleKeyDown = () => {
@@ -97,12 +97,17 @@ export const CommentCard = (props: CommentCardTypes) => {
           <>
             <div ref={ref}>
               {editable ? (
-                <input
+                <textarea
                   autoFocus
-                  type="text"
+                  minLength={2}
+                  maxLength={300}
                   value={text}
+                  className="comment-height"
                   onChange={(e) => handleChange(e)}
                   onBlur={(e) => {
+                    if (e.target.value.length < 2 || e.target.value.length > 300) {
+                      alert("2글자 이상, 300글자 이하로 입력하세요.")
+                    } else {
                     if (editable) {
                       axiosPrivate
                         .patch(
@@ -112,7 +117,7 @@ export const CommentCard = (props: CommentCardTypes) => {
                           }
                         )
                         .then(() => setEditable(false));
-                    }
+                    }}
                   }}
                 />
               ) : (
