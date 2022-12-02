@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Getter
 public class Dong {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "idx", nullable = false)
 	private int idx;
 	@Column(nullable = false)
