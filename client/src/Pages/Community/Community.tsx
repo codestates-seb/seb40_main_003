@@ -43,8 +43,8 @@ export const CommunityMain = ({searchKeyword, size}:communityMain) => {
   );
   // 스크롤감지
   useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView]);
+    if (size!==3&&inView) fetchNextPage();
+  }, [inView,size])
 
   if (status === "loading") return <LoadingSkeleton />;
   if (status === "error")
