@@ -1,5 +1,6 @@
 package com.kittyhiker.sikjipsa.deal.dto;
 
+import com.kittyhiker.sikjipsa.member.dto.CommunityMemberResponse;
 import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,6 +18,6 @@ public class DealReviewResponseDto {
 
     private Long dealReviewid;
     private ReviewDealResponse deal;
-    private MemberResponseDto buyerMember;
+    private CommunityMemberResponse buyerMember;
     private String reviewContent;
 }

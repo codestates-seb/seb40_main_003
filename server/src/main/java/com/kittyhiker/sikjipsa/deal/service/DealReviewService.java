@@ -11,6 +11,7 @@ import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
 import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.image.entity.Image;
 import com.kittyhiker.sikjipsa.image.service.ImageService;
+import com.kittyhiker.sikjipsa.member.dto.CommunityMemberResponse;
 import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.mapper.MemberMapper;
@@ -60,8 +61,9 @@ public class DealReviewService {
                             List<Image> images = imageService.findImage(deal);
                             List<String> responseImage = images.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
                             ReviewDealResponse dealResponseDto = mapper.dealToReviewDealDto(deal, responseImage);
-                            MemberResponseDto memberResponse = memberMapper.memberToMemberResponseDto(member,
-                                    imageService.findImage(member));
+
+                            CommunityMemberResponse memberResponse = memberMapper.memberToCommunityMemberDto(member,
+                                    imageService.findImageByMember(member));
                             DealReviewResponseDto reviewResponse = mapper
                                     .dealReviewToReviewResponseDto(review, dealResponseDto, memberResponse);
                             response.add(reviewResponse);
@@ -89,7 +91,7 @@ public class DealReviewService {
         DealReview savedReview = dealReviewRepository.save(dealReview);
         return mapper.dealReviewToReviewResponseDto(savedReview,
                 dealResponseDto,
-                memberMapper.memberToMemberResponseDto(buyer, imageService.findImage(buyer)));
+                memberMapper.memberToCommunityMemberDto(buyer, imageService.findImageByMember(buyer)));
     }
 
     public DealReviewResponseDto patchReview(Long userId, Long reviewId, DealReviewRequestDto requestDto) {
@@ -106,7 +108,7 @@ public class DealReviewService {
 
         return mapper.dealReviewToReviewResponseDto(savedReview,
                 dealResponseDto,
-                memberMapper.memberToMemberResponseDto(buyer, imageService.findImage(buyer)));
+                memberMapper.memberToCommunityMemberDto(buyer, imageService.findImageByMember(buyer)));
     }
 
     public void deleteReview(Long reviewId) {
