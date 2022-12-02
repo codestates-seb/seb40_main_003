@@ -37,6 +37,7 @@ const Main = () => {
                 sub="먹이고~ 볕쬐고~ 애지중지 키운"
                 main="반려식물 자랑하기!"
                 type="left"
+                font="font-banner-main"
               />
             </BannerImgWrapper>
             {/* 배너2 */}
@@ -45,6 +46,7 @@ const Main = () => {
                 sub="식물은 내가 살릴게, 의뢰는 누가 할래?"
                 main="전문가에게 맡겨봐!"
                 type="right"
+                font="font-main"
               />
             </BannerImgWrapper>
             {/* 배너3 */}
@@ -53,6 +55,7 @@ const Main = () => {
                 sub="플랜트하이커가 처음이신가요?"
                 main="첫 돌봄 비용 20% 지원!"
                 type="left"
+                font="font-banner-forest"
               />
             </BannerImgWrapper>
             {/* 배너4 */}
@@ -64,49 +67,7 @@ const Main = () => {
               />
             </BannerImgWrapper>
           </Carousel>
-        <article title="배너" className="closedrag">
-        <Carousel
-          showStatus={false}
-          // autoPlay={true}
-          infiniteLoop={true}
-          showThumbs={false}
-        >
-          <BannerImgWrapper image={MainBanner1}>
-            <BannerText
-              sub="먹이고~ 볕쬐고~ 애지중지 키운"
-              main="반려식물 자랑하기!"
-              type="left"
-              font="font-banner-main"
-            />
-          </BannerImgWrapper>
-
-          <BannerImgWrapper image={MainBanner2}>
-            <BannerText
-              sub="식물은 내가 살릴게, 의뢰는 누가 할래?"
-              main="전문가에게 맡겨봐!"
-              type="right"
-              font="font-main"
-            />
-          </BannerImgWrapper>
-
-          <BannerImgWrapper image={MainBanner3}>
-            <BannerText
-              sub="플랜트하이커가 처음이신가요?"
-              main="첫 돌봄 비용 20% 지원!"
-              type="left"
-              font="font-banner-forest"
-            />
-          </BannerImgWrapper>
-
-          <BannerImgWrapper image={MainBanner4}>
-            <BannerText
-              sub="무한 증식하는 우리집 다육이, 선인장"
-              main="이웃에게 분양해요!"
-              type="right"
-            />
-          </BannerImgWrapper>
-        </Carousel>
-        </article>
+          </article>
         {/* 거래 */}
         <article className="pd-24" title="거래하기">
             <Link to={"/product"} className="text-align-start">
