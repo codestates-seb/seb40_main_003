@@ -31,6 +31,7 @@ import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { editDataAtom } from "../../Recoil/atoms/editData";
 import { useIsAuthor } from "../../Hooks/useAuth";
 import { EditAndDeleteButton } from "../../Components/profile/plantCardCarousel";
+import { ProfileCard } from "../../Components/GlobalComponents";
 
 const CommunityDetail = () => {
   const { id } = useParams();
@@ -47,8 +48,26 @@ const CommunityDetail = () => {
     <MainContentContainer>
       <MainCenterWrapper>
         <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
-          <SpaceBetween>
-            <span className="h4 bold font-main">{data.title}</span>
+
+          {data.images[0] ? (
+            <ImageWrapper
+              className="communityImage mt-16"
+              size={"240"}
+              src={data.images[0]}
+              alt={`상품명 ${data.title}의 대표이미지`}
+            />
+          ) : null}
+
+          <Link to={`/profile/${data.member.memberId}`}>
+          <ProfileCard
+            src={data.member.image!==null?data.member.image.imgUrl:""}
+            alt={`${data.member.nickname}의 대표사진`}
+            name={data.member.nickname}
+            circle={true}
+          />
+        </Link>
+        <SpaceBetween>
+            <span className="h4 bold font-main mt-16 mb-4">{data.title}</span>
             {/* 게시글 수정, 삭제 버튼 */}
             {isAuthor(data.member.memberId) && (
               <EditAndDeleteButton
@@ -69,16 +88,11 @@ const CommunityDetail = () => {
               />
             )}
           </SpaceBetween>
-          {data.images[0] ? (
-            <ImageWrapper
-              className="communityImage mt-16"
-              size={"240"}
-              src={data.images[0]}
-              alt={`상품명 ${data.title}의 대표이미지`}
-            />
-          ) : null}
+
           <p className="font-black mt-16 text-overflow">{data.content}</p>
+          
           <SpaceBetween className="mt-16">
+          
             <RowWrapper>
               <span className="sub font-gray">
                 {getDateAgo(data.createdAt)}
@@ -91,6 +105,7 @@ const CommunityDetail = () => {
               like={data.likeNum}
             />
           </SpaceBetween>
+          
           <CommentInput url={id} />
           {data.comments.length !== 0 ? (
             data.comments.map((e: communityCommentType) => {
