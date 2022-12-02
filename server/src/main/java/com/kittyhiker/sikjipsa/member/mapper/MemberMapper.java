@@ -1,5 +1,7 @@
 package com.kittyhiker.sikjipsa.member.mapper;
 
+import com.kittyhiker.sikjipsa.image.dto.ImageDto;
+import com.kittyhiker.sikjipsa.image.dto.ImageDto2;
 import com.kittyhiker.sikjipsa.member.dto.*;
 import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.entity.MemberInformation;
@@ -17,20 +19,24 @@ public interface MemberMapper {
     Member memberLoginDtoToMember(MemberLoginDto memberLoginDto);
     MemberInformation memberInfoPostDtoToMemberInfo(MemberInfoPostDto infoPostDto);
     MemberInfoResponseDto memberInfoToResponseDto(MemberInformation memberInfo, Long memberId, String nickname);
+    MemberResponseDto memberToMemberResponseDto(Member member, ImageDto2 imageDto);
 
-    default MemberResponseDto memberToMemberResponseDto(Member member, String imageUrl){
-        if ( member == null ) {
-            return null;
-        }
+    @Mapping(source = "imageUrl", target = "image")
+    CommunityMemberResponse memberToCommunityMemberDto(Member member, String imageUrl);
 
-        MemberResponseDto.MemberResponseDtoBuilder memberResponseDto = MemberResponseDto.builder();
-
-        memberResponseDto.memberId(member.getMemberId());
-        memberResponseDto.nickname( member.getNickname() );
-        memberResponseDto.image(imageUrl);
-
-        return memberResponseDto.build();
-    }
+//    default MemberResponseDto memberToMemberResponseDto(Member member, String imageUrl){
+//        if ( member == null ) {
+//            return null;
+//        }
+//
+//        MemberResponseDto.MemberResponseDtoBuilder memberResponseDto = MemberResponseDto.builder();
+//
+//        memberResponseDto.memberId(member.getMemberId());
+//        memberResponseDto.nickname( member.getNickname() );
+//        memberResponseDto.image(imageUrl);
+//
+//        return memberResponseDto.build();
+//    }
 
     // MemberProfile
 	Member toProfile(MemberPatchDto memberPatchDto);

@@ -46,9 +46,9 @@ public class PlantController {
 		return new ResponseEntity(plantMapper.toPlantResponseDto(response), HttpStatus.OK);
 	}
 
-	@GetMapping
-	public ResponseEntity getPlants(@RequestHeader("Authorization") String token) {
-		List<Plant> plants = plantService.getPlants(jwtTokenizer.getUserIdFromToken(token));
+	@GetMapping("/profile/{user-id}")
+	public ResponseEntity getPlants(@PathVariable("user-id") @Positive Long memberId) {
+		List<Plant> plants = plantService.getPlants(memberId);
 		return new ResponseEntity(new MultiListResponseDto<>(plantMapper.toPlantResponseDtos(plants)), HttpStatus.OK);
 	}
 

@@ -16,9 +16,9 @@ public interface ExpertRepository extends JpaRepository<ExpertProfile, Long> {
 
 	Page<ExpertProfile> findByTechTags_TechTagNameContainingAndAreaTags_AreaTagNameContaining(String keyword, String area, Pageable pageable);
 
-
-
 	Optional<ExpertProfile> findByMember_MemberId(Long memberId);
+
+	Page<ExpertProfile> findAllByExpertReviews_Member_MemberId(Long memberId, Pageable pageable);
 
 	//@Query("select b from ExpertProfile b where b.title like concat('%',:q,'%')")
 //	@Query("select distinct a from expert_profile a join a.tech_tags b where b.tech_tag_name like concat('%',:q,'%')")
