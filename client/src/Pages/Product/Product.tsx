@@ -108,6 +108,7 @@ const Product = () => {
               <ProductMain searchKeyword={searchKeyWord} />
             </QueryClientProvider>
           </ErrorBoundary>
+          
           {/* 쿼리클라이언트로 감쌈 */}
         </MainCenterWrapper>
         <MainRightWrapper>

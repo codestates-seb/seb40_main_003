@@ -35,12 +35,13 @@ export const FetchByBody = async <T>(url: string, body?: object) => {
 export const InfiniteFetch = async (
   url: string,
   pageParam: number,
-  keyword?: string
+  keyword?: string,
+  size:number=fetchingImageLimit
 ) => {
   const res = await axios.get(
     `${url}?${
       keyword !== undefined ? `keyword=${keyword}` : ""
-    }&page=${pageParam}&size=${fetchingImageLimit}`
+    }&page=${pageParam}&size=${size}`
   );
   const { data } = res.data;
   const { page, totalPages } = res.data.pageInfo;
