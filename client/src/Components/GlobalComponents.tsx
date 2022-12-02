@@ -309,7 +309,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
                     })
                     .catch((err) => {
                       if(window.confirm("전문가가 아닙니다 전문가등록을 하시겠습니까?")){
-                        alert("등록으로 보내3")
+                        navigate("/profile/expert-form")
                       }
                     });
                 }
