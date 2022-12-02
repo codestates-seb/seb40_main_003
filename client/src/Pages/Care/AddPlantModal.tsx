@@ -3,6 +3,7 @@ import { FieldErrors, useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import { ColumnWrapper } from "../../Components/Wrapper";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import { compressImage } from "../../utils/imageCompress";
 
 type FormData = {
   name: string;
@@ -30,7 +31,10 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
       type: data.type,
     });
     console.log(plantDto)
-    formData.append("multipartFile", data.image[0]);
+    compressImage(data.image[0],100).then((res)=>{
+      res!==undefined&&formData.append("multipartFile",res)
+    })
+    
     formData.append(
       "plantDto", new Blob([plantDto], { type: "application/json" })
       );
