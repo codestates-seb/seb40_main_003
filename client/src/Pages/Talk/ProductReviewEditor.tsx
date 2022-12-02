@@ -1,85 +1,80 @@
-import React from 'react';
+import { ProfileCard, SigButton, SigTag, TagWrapper } from "../../Components/GlobalComponents";
+import { ConfirmWrapper, MainCenterWrapper, MainContentContainer, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
+import usePageTitle from "../../Hooks/usePageTitle";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import useFetch from "../../Hooks/useFetch";
+import { useParams } from "react-router-dom";
 import { FieldErrors, useForm } from "react-hook-form";
-import { SigButton } from '../../Components/GlobalComponents';
-import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
-import { Link } from "react-router-dom";
-import styled from "@emotion/styled";
-import usePageTitle from '../../Hooks/usePageTitle'
+import { profileType } from "../../types/profileType";
 
-const ConfirmWrapper = styled.span`
-    display: flex;
-    justify-content: row;
-`
-
-type Props = {}
-
-interface ProductReviewEditorForm {
-    content: string;
-    errors?: string;
-    checked: boolean;
-
+interface DealReviewForm {
+  content: string;
+  checked: boolean;
+  errors?: string;
 }
 
-const ProductReviewEditor = (props: Props) => {
-    const { register, handleSubmit, formState: { errors },
-    } = useForm<ProductReviewEditorForm>();
+const CareReviewEditor = () => {
+  const axiosPrivate = useAxiosPrivate();
+  const {
+    register, handleSubmit, formState: {errors},} = useForm<DealReviewForm>({
+      mode: "onSubmit"
+    })
 
-    const onValid = (data: ProductReviewEditorForm) => {
-        console.log("나 발리드됨")
-    }
-    const onInValid = (errors: FieldErrors) => {
-    };
-    usePageTitle("거래 후기 글 쓰기")
+  // const { id } = useParams();
+  const data = useFetch<profileType>(`/profile/${1}`);
 
-    console.log(errors);
+  const onInValid = (errors: FieldErrors) => {};
+  const onValid = async (data: DealReviewForm) => {}
+    
+    usePageTitle("거래 리뷰 글쓰기");
+  console.log(data);
+  return data ? (
+    <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid, onInValid)}>
+      <MainCenterWrapper>
+        <SectionWrapper>
+        <ProfileCard
+            pk={1}
+            src={data.image!==null?data.image.imgUrl:""}
+            alt={`${data.nickname}의 대표사진`}
+            name={data.nickname}
+            location={data.memberInformation?.address}
+            circle={true}
+            size={"66"}
+          />
+        </SectionWrapper>
 
-    // console.log(register("name"));
-    // console.log(watch());
+        <SectionWrapper width={100} borderNone={true}>
+          <textarea 
+          className="review-height"
+          minLength={10}
+          maxLength={200}
+          placeholder="이번 거래는 어땠나요? 솔직한 리뷰를 작성해주세요."
+          {...register("content", {
+            required: true
+          })}>
+          </textarea>
+        </SectionWrapper>
 
-    return (
-        <MainContentContainer>
-            <MainCenterWrapper>
-                <section onSubmit={handleSubmit(onValid, onInValid)}>
+        <ConfirmWrapper className="mt-8">
+          <input
+          {...register("checked", { required: true })}
+          type="checkbox" className="border-none checkbox-20"/>
+          <label className={errors.checked?"sub font-gray":"sub alert-red"}>
+            식물처럼 싱그럽고 예쁜 말을 써주세요.
+            <br />
+            욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
+          </label>
+        </ConfirmWrapper>
+      </MainCenterWrapper>
+      <MainRightWrapper>
+        <SigButton type="submit" value={"CommunityEditor"}>
+          작성 완료
+        </SigButton>
+      </MainRightWrapper>
+    </MainContentContainer>
+  ): ( 
+    <></>
+  )
+  }
 
-                    <SectionWrapper>
-                        <>
-                            거래글
-                        </>
-                    </SectionWrapper>
-
-                    <SectionWrapper width={100} borderNone={true}>
-                        <>
-                            <textarea className='content' {...register("content", {
-                                required: "",
-                            })}
-                                placeholder="글쓰기"
-                            />
-                            <p className='font-alert-red sub'>{errors.content?.message}</p>
-                        </>
-                    </SectionWrapper>
-
-                    <ConfirmWrapper>
-                        <input 
-                        {...register("checked", { required: true })}
-                        type="checkbox" className='border-none checkbox-20'></input>
-                        <p className='sub font-gray'>식물처럼 싱그럽고 예쁜 말을 써주세요.
-                            <br />욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.</p>
-                    </ConfirmWrapper>
-                </section>
-            </MainCenterWrapper>
-            <MainRightWrapper>
-                <SectionWrapper borderNone={true}>
-                    <p className='h5 bold font-main mr-16'>
-                    </p></SectionWrapper>
-                <Link to={"/talk"}>
-                    <SigButton type='submit' className='disable'>후기 작성 완료</SigButton>
-                </Link>
-            </MainRightWrapper>
-
-
-        </MainContentContainer>
-    )
-
-}
-
-export default ProductReviewEditor;
+export default CareReviewEditor;
