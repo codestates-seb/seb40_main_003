@@ -10,13 +10,11 @@ import {
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import {
-  CareCategoryList,
-  categoryNumberToString,
-} from "../../Const/Category";
+import { CareCategoryList, categoryNumberToString } from "../../Const/Category";
 import { areaArray } from "../../Const/Address";
 import { genderArray } from "../../Const/gender";
 import { useState } from "react";
+import axios from "../../Hooks/api"
 
 interface ExpertProfileTransferForm {
   name: string;
@@ -30,7 +28,6 @@ interface ExpertProfileTransferForm {
   techTagName: string;
   image: FileList;
   category: number;
-  gudong: number;
   content: string;
   checked: boolean;
   area: number;
@@ -39,8 +36,7 @@ interface ExpertProfileTransferForm {
 
 const ExpertProfileTransfer = () => {
   const axiosPrivate = useAxiosPrivate();
-  const [gugun,setGugun] = useState([])
-
+  const [gugun, setGugun] = useState([]);
 
   const {
     register,
@@ -84,6 +80,7 @@ const ExpertProfileTransfer = () => {
   };
 
   usePageTitle("전문가 계정으로 전환");
+console.log(gugun);
 
   return (
     <MainContentContainer
@@ -155,15 +152,16 @@ const ExpertProfileTransfer = () => {
               {...register("address", {
                 required: true,
                 onChange: (e) => {
-                  const parsedArea= categoryNumberToString({
-                      number: Number(e.target.value),
-                      arr: areaArray,
-                    }
-                    // axios(`/adress/`,{"gugun":parsedArea}).then((res)=>{ setGugun(res)})
-                  );
-
+                  const parsedArea = categoryNumberToString({
+                    number: Number(e.target.value),
+                    arr: areaArray,
+                  });
+                  axios
+                    .get("/address", {params: {gugun: parsedArea}})
+                    .then((res) => {setGugun(res.data.dongs)});
                 },
               })}
+              
             >
               {areaArray.map((e) => {
                 return (
@@ -174,9 +172,10 @@ const ExpertProfileTransfer = () => {
               })}
             </Select>
             <Select>
-              {gugun.map((e)=>{return(
-                <option></option>
-              )})}
+              {/* {gugun.map((e, i) => {
+                return <option key={`dong${i}`} value={e.dong}>{e.dong}</option>;
+              })} */}
+              
             </Select>
           </>
         </SectionWrapper>
