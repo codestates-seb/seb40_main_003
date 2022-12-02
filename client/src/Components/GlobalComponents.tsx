@@ -359,3 +359,11 @@ export type CommentCardTypes = {
   user: UserStateType | null;
   author: number;
 };
+
+export const Select = styled.select`
+  height: 35px;
+  outline-style: solid;
+  outline-width: 1px;
+  outline-color: var(--line-light-gray);
+  border-radius: 6px;
+`;
