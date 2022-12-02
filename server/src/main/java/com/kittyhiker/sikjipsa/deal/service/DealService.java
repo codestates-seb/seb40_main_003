@@ -79,13 +79,16 @@ public class DealService {
 
         Deal findDeal = verifiedDeal(dealId);
         List<Image> findImage = imageService.findImage(findDeal);
-        List<String> responseImages = new ArrayList<>();
+        List<String> responseImages;
+        List<String> alreadySavedImage
+                = findImage.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
         if (images == null) {
-            List<String> deleteImage = findImage.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
-            deleteImage.stream().forEach(
-                    img -> imageService.deleteImageFromS3(img)
-            );
+            responseImages=alreadySavedImage;
         } else {
+            responseImages=new ArrayList<>();
+            alreadySavedImage.stream().forEach(
+                    i -> imageService.deleteImageFromS3(i)
+            );
             images.stream().forEach(
                     (image) -> {
                         SavedImageDto savedImageDto = imageService.savedImageToS3(image);

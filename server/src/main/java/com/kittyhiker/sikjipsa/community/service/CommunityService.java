@@ -11,6 +11,7 @@ import com.kittyhiker.sikjipsa.community.enitity.Community;
 import com.kittyhiker.sikjipsa.community.enitity.CommunityLike;
 import com.kittyhiker.sikjipsa.community.mapper.CommentMapper;
 import com.kittyhiker.sikjipsa.community.mapper.CommunityMapper;
+import com.kittyhiker.sikjipsa.community.repository.CommentRepository;
 import com.kittyhiker.sikjipsa.community.repository.CommunityLikeRepository;
 import com.kittyhiker.sikjipsa.community.repository.CommunityRepository;
 import com.kittyhiker.sikjipsa.deal.dto.PageInfo;
@@ -88,13 +89,14 @@ public class CommunityService {
 
         Community findCommunity = verifiedCommunity(communityId);
         List<Image> findImage = imageService.findImage(findCommunity);
-        List<String> responseImages=new ArrayList<>();
+        List<String> responseImages;
+        List<String> alreadySavedImage
+                = findImage.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
         if (images == null) {
-            List<String> deleteImage = findImage.stream().map(i -> i.getImgUrl()).collect(Collectors.toList());
-            deleteImage.stream().forEach(
-                    img -> imageService.deleteImageFromS3(img)
-            );
+            responseImages=alreadySavedImage;
         } else {
+            responseImages=new ArrayList<>();
+            imageService.deleteImageFromCommunity(findCommunity);
             images.stream().forEach(
                     (image) -> {
                         SavedImageDto savedImageDto = imageService.savedImageToS3(image);
@@ -233,13 +235,14 @@ public class CommunityService {
         communityRepository.save(community);
     }
 
-
     public void removeCommunityPost(Long communityId) {
         Community findCommunity = verifiedCommunity(communityId);
-        List<Image> image = imageService.findImage(findCommunity);
-        image.stream().forEach(
-                i -> imageService.deleteImageFromS3(i.getImgUrl())
-        );
+        imageService.deleteImageFromCommunity(findCommunity);
+        List<CommentResponseDto> comments = commentService.getComments(findCommunity);
+        comments.stream()
+                .forEach(
+                        comment -> commentService.sudoDeleteComment(comment.getCommentId())
+                );
         communityRepository.delete(findCommunity);
     }
 

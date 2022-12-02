@@ -26,6 +26,7 @@ public class Deal extends AuditingEntity {
 
 	private String title;
 
+	@Column(length = 15000)
 	private String content;
 
 	private int view=0;

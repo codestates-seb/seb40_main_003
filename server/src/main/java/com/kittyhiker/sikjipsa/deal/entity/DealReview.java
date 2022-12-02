@@ -19,7 +19,7 @@ public class DealReview {
 	@Column(name = "deal_review_id")
 	private Long dealReviewid;
 
-	@Column(name = "content")
+	@Column(name = "content", length = 10000)
 	private String reviewContent;
 
 	@OneToOne
