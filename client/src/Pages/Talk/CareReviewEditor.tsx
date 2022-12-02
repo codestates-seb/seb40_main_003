@@ -1,5 +1,5 @@
 import { ProfileCard, SigButton, SigTag, TagWrapper } from "../../Components/GlobalComponents";
-import { ConfirmWrapper, MainCenterWrapper, MainContentContainer, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
+import {  ConfirmWrapper, MainCenterWrapper, MainContentContainer, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import useFetch from "../../Hooks/useFetch";
