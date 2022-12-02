@@ -1,5 +1,6 @@
 package com.kittyhiker.sikjipsa.member.service;
 
+import com.kittyhiker.sikjipsa.chatting.repository.MessageRepository;
 import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
 import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.jwt.dto.TokenDto;
@@ -29,6 +30,7 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final MemberInfoRepository memberInfoRepository;
     private final TokenRepository tokenRepository;
+    private final MessageRepository messageRepository;
     private final JwtTokenizer jwtTokenizer;
     private final PasswordEncoder passwordEncoder;
     private final MemberMapper memberMapper;
@@ -74,6 +76,7 @@ public class MemberService {
                 .refreshToken(refreshToken)
                 .memberId(findMember.getMemberId())
                 .image(image)
+                .notReadNum(messageRepository.countByReceiverIdAndIsRead(findMember.getMemberId(), 0L))
                 .nickname(findMember.getNickname()).build();
     }
 
