@@ -55,6 +55,15 @@ public class ImageService {
 		amazonS3.deleteObject(new DeleteObjectRequest(bucket, imagePath));
 	}
 
+	public void deleteImageFromCommunity(Community community) {
+		List<Image> allByCommunity = imageRepository.findAllByCommunity(community);
+		allByCommunity.stream()
+				.forEach(i -> {
+					imageRepository.delete(i);
+					amazonS3.deleteObject(new DeleteObjectRequest(bucket, i.getImgUrl()));
+				});
+	}
+
 	public void postImage(Image image) {
 		imageRepository.save(image);
 	}
