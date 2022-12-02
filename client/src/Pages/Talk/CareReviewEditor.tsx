@@ -1,22 +1,35 @@
-import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
-import { MainCenterWrapper, MainContentContainer, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
+import { ProfileCard, SigButton, SigTag, TagWrapper } from "../../Components/GlobalComponents";
+import { ConfirmWrapper, MainCenterWrapper, MainContentContainer, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import useFetch from "../../Hooks/useFetch";
 import { CareDetailTypes } from "../../types/caringTypes";
 import { useParams } from "react-router-dom";
+import { FieldErrors, useForm } from "react-hook-form";
+
+interface CareReviewForm {
+  content: string;
+  checked: boolean;
+  errors?: string;
+}
 
 const CareReviewEditor = () => {
   const axiosPrivate = useAxiosPrivate();
-  // const { id } = useParams();
+  const {
+    register, handleSubmit, formState: {errors},} = useForm<CareReviewForm>({
+      mode: "onSubmit"
+    })
 
+  // const { id } = useParams();
   const data = useFetch<CareDetailTypes>(`/experts/${1}`);
 
-
-  usePageTitle("돌봄 리뷰 글쓰기");
+  const onInValid = (errors: FieldErrors) => {};
+  const onValid = async (data: CareReviewForm) => {}
+    
+    usePageTitle("돌봄 리뷰 글쓰기");
   console.log(data);
   return data ? (
-    <MainContentContainer as={"form"}>
+    <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid, onInValid)}>
       <MainCenterWrapper>
         <SectionWrapper>
         <ProfileCard
@@ -26,24 +39,45 @@ const CareReviewEditor = () => {
           location={data.address}
           circle={true}
           size={"66"}
-          tag={data.useNum}
           pk={data.member.memberId}
         />
         </SectionWrapper>
         <SectionWrapper width={100}>
-          태그
+        <TagWrapper className="mt-4">
+                {data.techTags.map((e: any) => {
+                  return (
+                    <SigTag className="ghost sub" key={e.techTagId}>
+                      {e.techTagName}
+                    </SigTag>
+                  );
+                })}
+              </TagWrapper>
+
         </SectionWrapper>
-        <SectionWrapper width={100}>
-          <textarea className="min-height" placeholder="전문가님의 돌봄은 어땠나요? 솔직한 리뷰를 작성해주세요.">
+        <SectionWrapper width={100} borderNone={true}>
+          <textarea 
+          className="review-height"
+          minLength={10}
+          maxLength={200}
+          placeholder="전문가님의 돌봄은 어땠나요? 솔직한 리뷰를 작성해주세요."
+          {...register("content", {
+            required: true
+          })}>
           </textarea>
         </SectionWrapper>
+
+        <ConfirmWrapper className="mt-8">
+          <input
+          {...register("checked", { required: true })}
+          type="checkbox" className="border-none checkbox-20"/>
+          <label className={errors.checked?"sub font-gray":"sub alert-red"}>
+            식물처럼 싱그럽고 예쁜 말을 써주세요.
+            <br />
+            욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
+          </label>
+        </ConfirmWrapper>
       </MainCenterWrapper>
       <MainRightWrapper>
-        <SectionWrapper borderNone={true}>
-          <p className="h5 bold font-main mr-16">
-            반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
-          </p>
-        </SectionWrapper>
         <SigButton type="submit" value={"CommunityEditor"}>
           작성 완료
         </SigButton>
@@ -55,7 +89,3 @@ const CareReviewEditor = () => {
   }
 
 export default CareReviewEditor;
-
-function handleSubmit(onValid: any, onInValid: any): import("react").FormEventHandler<HTMLDivElement> | undefined {
-  throw new Error("Function not implemented.");
-}
