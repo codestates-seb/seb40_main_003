@@ -6,15 +6,11 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
   SectionWrapper,
+  ConfirmWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-
-const ConfirmWrapper = styled.span`
-  display: flex;
-  justify-content: row;
-`;
 
 type Props = {};
 
@@ -60,7 +56,8 @@ const CommunityEditor = (props: Props) => {
       })
       .then((res) => {
         navigate(`/community/${res.data.communityId}`);
-      }).catch ((err)=>{});
+      })
+      .catch ((err)=>{});
     }
   
   usePageTitle("커뮤니티 글 쓰기");
