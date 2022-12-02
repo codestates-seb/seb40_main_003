@@ -241,7 +241,7 @@ public class CommunityService {
         List<CommentResponseDto> comments = commentService.getComments(findCommunity);
         comments.stream()
                 .forEach(
-                        comment -> commentService.deleteComment(comment.getCommentId())
+                        comment -> commentService.sudoDeleteComment(comment.getCommentId())
                 );
         communityRepository.delete(findCommunity);
     }

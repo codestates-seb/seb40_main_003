@@ -46,8 +46,8 @@ public class MemberController {
 
     @PostMapping("/users/refresh")
     public ResponseEntity requestRefresh(@RequestBody RefreshTokenDto token) {
-        TokenDto tokenDto = memberService.reissueToken(token.getRefreshToken());
-        return new ResponseEntity(tokenDto, HttpStatus.CREATED);
+        MemberLoginResponseDto memberLoginResponseDto = memberService.reissueToken(token.getRefreshToken());
+        return new ResponseEntity(memberLoginResponseDto, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/users")

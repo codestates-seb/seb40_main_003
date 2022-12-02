@@ -1,6 +1,5 @@
 package com.kittyhiker.sikjipsa.chatting.repository;
 
-import com.kittyhiker.sikjipsa.chatting.entity.ChatRoom;
 import com.kittyhiker.sikjipsa.chatting.entity.DealChatRoom;
 import com.kittyhiker.sikjipsa.deal.entity.Deal;
 import com.kittyhiker.sikjipsa.member.entity.Member;
