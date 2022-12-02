@@ -58,11 +58,11 @@ export type CareDetailTypes = {
       techTagName: string;
     }
   ];
-  expertReviews: [exportReviewType];
+  expertReviews: [expertReviewType];
   image: imageType;
 };
 // 돌봄리뷰타입
-export type exportReviewType = {
+export type expertReviewType = {
   expertReviewId: string
   content: string
   member: {
