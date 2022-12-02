@@ -1,86 +1,61 @@
-import React from 'react';
-import { FieldErrors, useForm } from "react-hook-form";
-import { SigButton } from '../../Components/GlobalComponents';
-import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
-import styled from "@emotion/styled";
-import usePageTitle from '../../Hooks/usePageTitle'
+import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
+import { MainCenterWrapper, MainContentContainer, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
+import usePageTitle from "../../Hooks/usePageTitle";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import useFetch from "../../Hooks/useFetch";
+import { CareDetailTypes } from "../../types/caringTypes";
+import { useParams } from "react-router-dom";
 
-const ConfirmWrapper = styled.span`
-    display: flex;
-    justify-content: row;
-`
+const CareReviewEditor = () => {
+  const axiosPrivate = useAxiosPrivate();
+  // const { id } = useParams();
 
-type Props = {}
-
-interface CareReviewEditorForm {
-    content: string;
-    errors?: string;
-    checked: boolean;
-}
-
-const CareReviewEditor = (props: Props) => {
-    const { register, handleSubmit, formState: { errors },
-    } = useForm<CareReviewEditorForm>();
-
-    const onValid = (data: CareReviewEditorForm) => {
-        console.log("나 발리드됨")
-    }
-    const onInValid = (errors: FieldErrors) => {
-    };
-    usePageTitle("돌봄 후기 글 쓰기")
-
-    console.log(errors);
-
-    // console.log(register("name"));
-    // console.log(watch());
-
-    return (
-        <MainContentContainer>
-            <MainCenterWrapper>
-                <section onSubmit={handleSubmit(onValid, onInValid)}>
-
-                    <SectionWrapper>
-                        <>
-                            돌봄프로필
-                        </>
-                    </SectionWrapper>
-
-                    <SectionWrapper>
-                        <>
-                            받은 서비스 태그
-                        </>
-                    </SectionWrapper>
-                    <SectionWrapper width={100} borderNone={true}>
-                        <>
-                            <textarea className='content' {...register("content", {
-                                required: "",
-                            })}
-                                placeholder="글쓰기"
-                            />
-                            <p className='font-alert-red sub'>{errors.content?.message}</p>
-                        </>
-                    </SectionWrapper>
-
-                    <ConfirmWrapper>
-                        <input 
-                        {...register("checked", { required: true })}
-                        type="checkbox" className='border-none checkbox-20'></input>
-                        <p className='sub font-gray'>식물처럼 싱그럽고 예쁜 말을 써주세요.
-                            <br />욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.</p>
-                    </ConfirmWrapper>
-                </section>
-            </MainCenterWrapper>
-            <MainRightWrapper>
-                <SectionWrapper borderNone={true}>
-                    <p className='h5 bold font-main mr-16'>
-                    </p></SectionWrapper>
-                    <SigButton type='submit' className='disable'>후기 작성 완료</SigButton>
-            </MainRightWrapper>
+  const data = useFetch<CareDetailTypes>(`/experts/${1}`);
 
 
-        </MainContentContainer>
-    )
-
-}
+  usePageTitle("돌봄 리뷰 글쓰기");
+  console.log(data);
+  return data ? (
+    <MainContentContainer as={"form"}>
+      <MainCenterWrapper>
+        <SectionWrapper>
+        <ProfileCard
+          src={data.photo}
+          alt={`${data.name}의 대표사진`}
+          name={data.name}
+          location={data.address}
+          circle={true}
+          size={"66"}
+          tag={data.useNum}
+          pk={data.member.memberId}
+        />
+        </SectionWrapper>
+        <SectionWrapper width={100}>
+          태그
+        </SectionWrapper>
+        <SectionWrapper width={100}>
+          <textarea className="min-height" placeholder="전문가님의 돌봄은 어땠나요? 솔직한 리뷰를 작성해주세요.">
+          </textarea>
+        </SectionWrapper>
+      </MainCenterWrapper>
+      <MainRightWrapper>
+        <SectionWrapper borderNone={true}>
+          <p className="h5 bold font-main mr-16">
+            반려식물을 자랑하고 궁금한 것을 물어보세요.🌱
+          </p>
+        </SectionWrapper>
+        <SigButton type="submit" value={"CommunityEditor"}>
+          작성 완료
+        </SigButton>
+      </MainRightWrapper>
+    </MainContentContainer>
+  ): ( 
+    <></>
+  )
+  }
 
 export default CareReviewEditor;
+
+function handleSubmit(onValid: any, onInValid: any): import("react").FormEventHandler<HTMLDivElement> | undefined {
+  throw new Error("Function not implemented.");
+}
