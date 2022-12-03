@@ -45,12 +45,13 @@ const ButtonWrapper = styled.div`
   align-items: center;
   flex-direction: column;
 `;
-const IconWrapper = styled.div`
+export const IconWrapper = styled.div`
   width: 24px;
   height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
 `;
 
 type ProfileProps = {
@@ -70,7 +71,7 @@ type NavElemProps = {
   children?: JSX.Element;
   className?: any;
 };
-const NavElem = ({ title = "Untitled", children }: NavElemProps) => {
+export const NavElem = ({ title = "Untitled", children }: NavElemProps) => {
   return (
     <ButtonWrapper>
       <IconWrapper>{children}</IconWrapper>

@@ -6,7 +6,7 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
   SectionWrapper,
-  ConfirmWrapper,
+  ConfirmWrapper
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";

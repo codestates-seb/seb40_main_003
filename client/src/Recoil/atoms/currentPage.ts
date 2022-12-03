@@ -6,5 +6,5 @@ export interface CurrentPageType {
 // nullable한 값에서 인터페이스 사용법
 export const currentPage = atom<CurrentPageType>({
   key: "currentPage",
-  default: { title: "홈" },
+  default: { title: "플랜트하이커" },
 });

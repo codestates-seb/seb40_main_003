@@ -15,7 +15,7 @@ const CarouselWrapper = styled.div`
   /* height: 90px; */
   padding: 8px 0;
   width: 90vw;
-  max-width: 680px;
+  max-width: 974px;
   display: flex;
   overflow-x: scroll;
   overflow-y: hidden;

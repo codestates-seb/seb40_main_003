@@ -28,8 +28,7 @@ const CareCard = ({ data }: any) => {
               <span className="medium font-main">
                 {data.name} / {data.age}세 / {data.gender===1?"남":"여"}
               </span>
-              <span className="font-gray sub">{data.simpleContent}</span>
-              <span>{data.techTagName}</span>
+              <p className="font-gray sub text-overflow3">{data.simpleContent}</p>
               <TagWrapper className="mt-4">
                 {data.techTags.map((e: any) => {
                   return (

@@ -11,7 +11,6 @@ import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { InfiniteFetch } from "../../Hooks/useFetch";
 import {
-  InfiniteData,
   QueryClient,
   QueryClientProvider,
   useInfiniteQuery,
@@ -20,7 +19,7 @@ import {
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
-import { useCallback, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import React from "react";
 import { ProfileDealType } from "../../types/profileType";
@@ -52,7 +51,7 @@ export const ProductMain = ({ searchKeyword, size, category }: productMain) => {
   // 스크롤감지
 
   useEffect(() => {
-    if (size !== 3 && inView) fetchNextPage();
+    if (size&&size>10 && inView) fetchNextPage();
   }, [inView, size]);
 
   if (status === "loading") return <LoadingSkeleton />;

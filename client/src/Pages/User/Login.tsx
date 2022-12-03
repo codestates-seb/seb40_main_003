@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 import { SigButton } from "../../Components/GlobalComponents";
 import { Link, useNavigate } from "react-router-dom";
@@ -15,6 +15,7 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import axios from "../../Hooks/api";
 import { ReactComponent as LogoMain } from "../../images/logoMain.svg";
 import { setLS } from "../../Hooks/useSecureLS";
+import { noReadNum } from "../../Recoil/atoms/socket";
 
 interface LoginForm {
   password: string;
@@ -26,6 +27,7 @@ interface LoginForm {
 const Login = () => {
   const [error, setErrMsg] = useState("");
   const [user, setUser] = useRecoilState(userState);
+  const setNoReadNum  =useSetRecoilState(noReadNum)
 
   const {
     register,
@@ -58,6 +60,8 @@ const Login = () => {
           image: res.data.image,
         };
         setUser(userInfo);
+        // 안읽은 메세지 갯수 전역상태로
+        setNoReadNum(res.data.noReadNum)
         setLS("accessToken", res.data.accessToken);
         setLS("refreshToken", res.data.refreshToken);
         if (data.autoLogin) {
@@ -65,6 +69,7 @@ const Login = () => {
         }
       })
       .then(() => {
+        
         navigate(-1);
       })
       .catch((err) => {

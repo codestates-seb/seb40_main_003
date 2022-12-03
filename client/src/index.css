@@ -1,5 +1,7 @@
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
-
+body{
+  background-color: var(--bg-gray);
+}
 * {
   margin: 0;
   padding: 0;
@@ -414,14 +416,15 @@ code {
 }
 
 .input-file-button {
-    padding: 6px 25px;
-    background-color:transparent;
+    padding: 6px 30px;;
     border-radius: 4px;
-    color: black;
     cursor: pointer;
     height: 34px;
-    border: solid var(--font-gray);
     margin-left: 2%;
     margin-top: 15px;
-  
+    color: var(--main);
+    background-color: var(--pure-white);
+    border: 2px solid var(--main);
+    min-width: 173px;
+    border-radius: var(--sig-border-16);
 }

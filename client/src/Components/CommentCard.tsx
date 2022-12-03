@@ -7,10 +7,12 @@ import {
   ImageWrapper,
   SigTag,
   TagWrapper,
+  Textarea,
 } from "../Components/GlobalComponents";
-import { ColumnWrapper, RowWrapper, SpaceBetween } from "./Wrapper";
+import { ColumnWrapper, SpaceBetween } from "./Wrapper";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 import { useIsAuthor } from "../Hooks/useAuth";
+
 export const CommentCardWrapper = styled.div`
   width: 100%;
   padding: 16px 16px;
@@ -35,7 +37,6 @@ export type CommentCardTypes = {
   createdAt: string;
   content?: string;
   tag?: [{ techId: number; name: string }];
-
   author: number;
   commentId?: number;
   communityId?: string;
@@ -91,9 +92,12 @@ export const CommentCard = (props: CommentCardTypes) => {
             </TagWrapper>
           ) : null}
               {editable ? (
-                <textarea
+                <Textarea
+                className="comment-height"
+                ref={textAreaRef}
+                  autoFocus
                   value={text}
-                  className="comment-height"
+                  
                   onChange={(e) => handleChange(e)}
                   onBlur={(e) => {
                     if (e.target.value.length < 2 || e.target.value.length > 300) {

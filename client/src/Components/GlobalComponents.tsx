@@ -119,6 +119,7 @@ export const SigTag = styled.div`
   font-size: var(--sub-font-size);
   display: flex;
   align-items: center;
+  justify-content: center;
   text-align: center;
   border-radius: var(--sig-border-4);
   padding: 2px 4px;

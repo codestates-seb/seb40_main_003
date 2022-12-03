@@ -7,17 +7,19 @@ export const MainContentContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   background-color: var(--bg-gray);
-  min-height: 95vh;
   padding-bottom: 36px;
   @media screen and (max-width: 1024px) {
     flex-direction: column;
     align-items: center;
-    padding-bottom: 156px;
+    margin-bottom: 156px;
   }
   &.fullscreen{
     height: 100vh;
     width: 100vw;
     align-items: center;
+  }
+  &.mg-0{
+    margin-bottom: 0;
   }
 `;
 // 내용 영역(모바일~테블릿 크기까지 커짐과 유사)
@@ -38,6 +40,9 @@ export const MainCenterWrapper = styled.main`
   } */
   &.pd-0{
     padding:0;
+  }
+  &.mg-0{
+    margin: 0;
   }
 `;
 export const MainRightWrapper = styled.aside`

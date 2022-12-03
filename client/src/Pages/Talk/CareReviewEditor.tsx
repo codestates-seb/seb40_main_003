@@ -6,17 +6,22 @@ import useFetch from "../../Hooks/useFetch";
 import { CareDetailTypes } from "../../types/caringTypes";
 import { useParams } from "react-router-dom";
 import { FieldErrors, useForm } from "react-hook-form";
+import { SigButton } from '../../Components/GlobalComponents';
+import styled from "@emotion/styled";
+import usePageTitle from '../../Hooks/usePageTitle'
 
-interface CareReviewForm {
-  content: string;
-  checked: boolean;
-  errors?: string;
+type Props = {}
+
+interface CareReviewEditorForm {
+    content: string;
+    errors?: string;
+    checked: boolean;
 }
 
 const CareReviewEditor = () => {
   const axiosPrivate = useAxiosPrivate();
   const {
-    register, handleSubmit, formState: {errors},} = useForm<CareReviewForm>({
+    register, handleSubmit, formState: {errors},} = useForm<CareReviewEditorForm>({
       mode: "onSubmit"
     })
 

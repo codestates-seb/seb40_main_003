@@ -1,11 +1,14 @@
 import styled from "@emotion/styled";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useRecoilState, useRecoilValue } from "recoil";
 import useWindowSize from "../Hooks/windowSize";
 import { currentPage } from "../Recoil/atoms/currentPage";
 import gobackIcon from "../images/gobackIcon.svg";
-import { NavContent } from "./Navbar";
-import { ReactComponent as Search } from "../images/searchIcon.svg";
+import { NavContent, NavElem } from "./Navbar";
+import { ReactComponent as Chat } from "../images/chatIcon.svg";
+import { RowWrapper } from "./Wrapper";
+import { noReadNum } from "../Recoil/atoms/socket";
+import { userState } from "../Recoil/atoms/user";
 
 export const HeaderWrapper = styled.header`
   width: 100%;
@@ -30,21 +33,22 @@ const HeaderContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  @media screen and (max-width: 1024px) {
-    max-width: 730px;
-  }
 `;
-
+const ButtonWrapper = styled.button`
+  width: 60px;
+  display: flex;
+  justify-content: center;
+`;
 const BackButton = () => {
   const navigate = useNavigate();
   return (
-    <button
+    <ButtonWrapper
       onClick={() => {
         navigate(-1);
       }}
     >
-      <img src={gobackIcon} alt="뒤로가기버튼"></img>
-    </button>
+      <img src={gobackIcon} alt="뒤로가기버튼" />
+    </ButtonWrapper>
   );
 };
 const PlaceHolder = styled.div`
@@ -53,18 +57,51 @@ const PlaceHolder = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+const UnReadIcon = styled.div`
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--alert-red);
+  margin-right: -22px;
+`;
 
 const Header = () => {
   const { title } = useRecoilValue(currentPage);
   const { width } = useWindowSize();
+  const noReadMessage = useRecoilValue(noReadNum);
+  const isLogin = useRecoilValue(userState);
 
   return (
     <HeaderWrapper className="bold h4">
       <HeaderContent>
         <PlaceHolder>
-          <BackButton />
+          {title !== "플랜트하이커" ? <BackButton /> : <NavElem title="" />}
           <span className="display-none-pc h4 bold">{title}</span>
-            <div />
+          {isLogin ? (
+            <NavLink
+              to="/talk"
+              className={({ isActive }) =>
+                isActive ? "activeIcon" : "disableIcon"
+              }
+            >
+              <RowWrapper>
+                {noReadMessage !== undefined && noReadMessage !== 0 && (
+                  <UnReadIcon />
+                )}
+                <NavElem
+                  title={
+                    noReadMessage !== undefined && noReadMessage !== 0
+                      ? `${noReadMessage}건`
+                      : "채팅"
+                  }
+                >
+                  <Chat />
+                </NavElem>
+              </RowWrapper>
+            </NavLink>
+          ) : (
+            <ButtonWrapper />
+          )}
         </PlaceHolder>
         {width !== undefined && width > 1024 ? <NavContent /> : null}
       </HeaderContent>

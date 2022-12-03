@@ -1,22 +1,27 @@
 import { ProfileCard, SigButton, SigTag, TagWrapper } from "../../Components/GlobalComponents";
-import { ConfirmWrapper, MainCenterWrapper, MainContentContainer, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
+import { MainCenterWrapper, MainContentContainer, MainRightWrapper, RowWrapper, SectionWrapper } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import useFetch from "../../Hooks/useFetch";
 import { useParams } from "react-router-dom";
 import { FieldErrors, useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import styled from "@emotion/styled";
 import { profileType } from "../../types/profileType";
 
-interface DealReviewForm {
-  content: string;
-  checked: boolean;
-  errors?: string;
+type Props = {}
+
+interface ProductReviewEditorForm {
+    content: string;
+    errors?: string;
+    checked: boolean;
+
 }
 
 const CareReviewEditor = () => {
   const axiosPrivate = useAxiosPrivate();
   const {
-    register, handleSubmit, formState: {errors},} = useForm<DealReviewForm>({
+    register, handleSubmit, formState: {errors},} = useForm<ProductReviewEditorForm>({
       mode: "onSubmit"
     })
 
@@ -24,7 +29,7 @@ const CareReviewEditor = () => {
   const data = useFetch<profileType>(`/profile/${1}`);
 
   const onInValid = (errors: FieldErrors) => {};
-  const onValid = async (data: DealReviewForm) => {}
+  const onValid = async (data: ProductReviewEditorForm) => {}
     
     usePageTitle("거래 리뷰 글쓰기");
   console.log(data);
@@ -55,7 +60,7 @@ const CareReviewEditor = () => {
           </textarea>
         </SectionWrapper>
 
-        <ConfirmWrapper className="mt-8">
+        <RowWrapper className="mt-8">
           <input
           {...register("checked", { required: true })}
           type="checkbox" className="border-none checkbox-20"/>
@@ -64,7 +69,7 @@ const CareReviewEditor = () => {
             <br />
             욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
           </label>
-        </ConfirmWrapper>
+        </RowWrapper>
       </MainCenterWrapper>
       <MainRightWrapper>
         <SigButton type="submit" value={"CommunityEditor"}>

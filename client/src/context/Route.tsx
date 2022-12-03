@@ -1,8 +1,8 @@
 import { Outlet, Navigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
-import { userState } from "./Recoil/atoms/user";
-import Header from "./Components/Header";
-import { getLS } from "./Hooks/useSecureLS";
+import { userState } from "../Recoil/atoms/user";
+import Header from "../Components/Header";
+import { getLS } from "../Hooks/useSecureLS";
 
 export const LogOutOnly = () => {
   const auth = useRecoilValue(userState);
@@ -15,7 +15,7 @@ export const AuthProvider = () => {
     const access = getLS("accessToken")
     const userInfo = getLS("userInfo")
     const refresh = getLS("refreshToken")
-    if (refresh&userInfo&access){
+    if (refresh&&userInfo&&access){
       return true
     }else return false
   };

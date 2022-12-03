@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
 import { ReactComponent as AddIcon } from "../../images/addIcon.svg";
 import PlantCardCarousel, {
@@ -25,6 +25,7 @@ import { CommentCard } from "../../Components/CommentCard";
 import { useIsAuthor } from "../../Hooks/useAuth";
 import { getDateAgo } from "../../utils/controller";
 import LikeButton from "../../Components/LikeButton";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 const CareDetail = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -33,11 +34,11 @@ const CareDetail = () => {
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-
-
+  const axiosprivate = useAxiosPrivate()
   const data = useFetch<CareDetailTypes>(`/experts/${id}`);
+  const navigate = useNavigate()
 
-  usePageTitle(data !== undefined ? `${data.name} 님의 프로필` : "프로필");
+  usePageTitle(data !== undefined ? `${data.name} 님의 서비스` : "서비스");
   console.log(data);
   return data !== undefined ? (
     <MainContentContainer>
@@ -125,7 +126,12 @@ const CareDetail = () => {
         </SectionWrapper>
       </MainCenterWrapper>
       <MainRightWrapper>
-        <SigButton>문의 하기</SigButton>
+        <SigButton onClick={()=>{
+          axiosprivate.post(`/chat/experts/${data.expertId}`).then((e)=>{
+            navigate(`/talk/${e.data.roomName}`)
+            console.log()
+          })
+        }}>문의 하기</SigButton>
       </MainRightWrapper>
     </MainContentContainer>
   ) : (

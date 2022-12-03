@@ -45,7 +45,7 @@ export const CareMain = ({ searchKeyword, size }: CareMain) => {
   );
   // 스크롤감지
   useEffect(() => {
-    if (size!==3&&inView) fetchNextPage();
+    if (size&&size>10&&inView) fetchNextPage();
   }, [inView,size])
 
   if (status === "loading") return <LoadingSkeleton />;

@@ -54,3 +54,20 @@ export const categoryNumberToString = ({
   });
   return resultArr[0].name;
 };
+
+
+type categoryStringToNumberType = {
+  string: string;
+  arr: readonly { number: number; name: string; img?: string }[];
+};
+export const categoryStringToNumber = ({
+  string,
+  arr,
+}: categoryStringToNumberType) => {
+  const resultArr = arr.filter((e) => {
+    if (e.name === string) {
+      return true;
+    } else return false;
+  });
+  return resultArr[0].number;
+};
