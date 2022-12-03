@@ -1,4 +1,4 @@
-import CareCard from "../../Components/main/CareCard";
+import CareCard from "../../Components/care/CareCard";
 import { caringPreviewDataTypes } from "../../types/caringTypes";
 import { Link } from "react-router-dom";
 import {

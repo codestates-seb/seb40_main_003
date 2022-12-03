@@ -6,12 +6,13 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
   SectionWrapper,
-  ConfirmWrapper,
+  RowWrapper
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { compressImage } from "../../utils/imageCompress";
+
 
 type Props = {};
 
@@ -129,7 +130,7 @@ const CommunityEditor = (props: Props) => {
             <p className="font-alert-red sub">{errors.content?.message}</p>
           </>
         </SectionWrapper>
-        <ConfirmWrapper>
+        <RowWrapper>
           <input
             {...register("checked", { required: true })}
             type="checkbox"
@@ -140,7 +141,7 @@ const CommunityEditor = (props: Props) => {
             <br />
             욕설이나 선동성 글과 같은 부적절한 내용은 삭제 처리될 수 있습니다.
           </label>
-        </ConfirmWrapper>
+        </RowWrapper>
       </MainCenterWrapper>
       <MainRightWrapper>
         <SectionWrapper borderNone={true}>

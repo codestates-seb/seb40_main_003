@@ -97,7 +97,7 @@ const Profile = (props: props) => {
                 )}
               </>
             </PlantCardCarousel>
-          </SectionWrapper>
+          </SectionWrapper>          
           <SectionWrapper width={100} title="거래 리뷰">
             {data.memberReviews&&data.memberReviews.length !== 0 ? (
               <>

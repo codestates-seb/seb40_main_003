@@ -93,26 +93,26 @@ export const CommentCard = (props: CommentCardTypes) => {
           ) : null}
               {editable ? (
                 <Textarea
-                className="min-height-70"
+                className="comment-height"
                 ref={textAreaRef}
                   autoFocus
                   value={text}
+                  
                   onChange={(e) => handleChange(e)}
                   onBlur={(e) => {
                     if (e.target.value.length < 2 || e.target.value.length > 300) {
-                      alert("2글자 이상, 300글자 이하로 입력해주세요.");
+                      alert("2글자 이상, 300글자 이하로 입력하세요.")
                     } else {
-                      if (editable) {
-                        axiosPrivate
-                          .patch(
-                            `/community/${communityId}/comment/${commentId}`,
-                            {
-                              content: text,
-                            }
-                          )
-                          .then(() => setEditable(false));
-                      }
-                    }
+                    if (editable) {
+                      axiosPrivate
+                        .patch(
+                          `/community/${communityId}/comment/${commentId}`,
+                          {
+                            content: text,
+                          }
+                        )
+                        .then(() => setEditable(false));
+                    }}
                   }}
                 />
               ) : (

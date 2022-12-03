@@ -11,6 +11,7 @@ import {
   MainContentContainer,
   MainRightWrapper,
   SpaceBetween,
+  SpaceEnd,
 } from "../../Components/Wrapper";
 import { userState } from "../../Recoil/atoms/user";
 import { ProductDetailDataType } from "../../types/productTypes";
@@ -23,6 +24,7 @@ import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { completeDelete, confirmRemove } from "../../Const/message";
 import { useIsAuthor } from "../../Hooks/useAuth";
 import { EditAndDeleteButton } from "../../Components/profile/plantCardCarousel";
+import LikeButton from "../../Components/LikeButton";
 
 const CarouselImage = styled.img`
   width: 100%;
@@ -43,11 +45,29 @@ const Product = () => {
   const [productEditData, setProductEditData] =
     useRecoilState(productEditDataAtom);
   const axiosPrivate = useAxiosPrivate();
+  const LikeOnClick = () => {
+    axiosPrivate
+    .post(`/deal/like/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res)=>{
+    console.log(res)}
+    )
+    .catch((err) => {});
+
+  }
+
   const navigate = useNavigate();
+
   return data !== undefined ? (
     // 메인 컨테이너 (반응형 제공!)
     <MainContentContainer>
       <MainCenterWrapper>
+        <SpaceEnd className="mb-8 cursor">
+        <LikeButton onClick={LikeOnClick} />
+        </SpaceEnd>
         {/* 실제 메인이 되는 내용! */}
         <TopCarousel>
           {data.images.map((e, i) => {
@@ -70,7 +90,7 @@ const Product = () => {
           />
         </Link>
         <SpaceBetween>
-          <h1 className="h3 bold mt-16 mb-4">{data.title}</h1>
+          <h1 className="h3 bold mt-16 mb-4">{data.title}</h1>                
           {/* 게시글 수정, 삭제 버튼 */}
           {isAuthor(data.member.memberId) && (
             // 수정삭제 버튼팝업

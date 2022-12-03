@@ -10,6 +10,8 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
   SectionWrapper,
+  SpaceBetween,
+  SpaceEnd,
 } from "../../Components/Wrapper";
 
 import { CareDetailTypes } from "../../types/caringTypes";
@@ -23,6 +25,8 @@ import { CommentCard } from "../../Components/CommentCard";
 import { useIsAuthor } from "../../Hooks/useAuth";
 import { getDateAgo } from "../../utils/controller";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import LikeButton from "../../Components/LikeButton";
+import { axiosPrivate } from "../../Hooks/api";
 
 const CareDetail = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -34,14 +38,30 @@ const CareDetail = () => {
   const axiosprivate = useAxiosPrivate()
   const data = useFetch<CareDetailTypes>(`/experts/${id}`);
   const navigate = useNavigate()
+  
+  const LikeOnClick = () => {
+    axiosPrivate
+    .post(`/experts/${id}/like`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res)=>{
+    console.log(res)}
+    )
+    .catch((err) => {});
+
+  }
 
   usePageTitle(data !== undefined ? `${data.name} 님의 서비스` : "서비스");
   console.log(data);
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
+        <SpaceEnd className="cursor"><LikeButton onClick={LikeOnClick} /></SpaceEnd>
+      <SpaceBetween>
         <ProfileCard
-          src={data.photo}
+          src={data.image.imgUrl}
           alt={`${data.name}의 대표사진`}
           name={data.name}
           location={data.address}
@@ -50,6 +70,7 @@ const CareDetail = () => {
           tag={data.useNum}
           pk={data.member.memberId}
         />
+        </SpaceBetween>
         {
           <SectionWrapper content={data.simpleContent} pt={0} pb={8} />
         }
@@ -65,7 +86,7 @@ const CareDetail = () => {
         <SectionWrapper title="반려 식물">
           <PlantCardCarousel key={"reactCarousel"}>
             <>
-              {data.member.plants.length===0?<>반려식물이 없습니다</>:
+              {data.member.plants.length===0&&!isAuthor(data.member.memberId) ?<>반려식물이 없습니다</>:
               data.member.plants.map((e,i) => {
                 return (
                   <ProfilePlantCard

@@ -89,12 +89,14 @@ input.checkbox-20 {
   height: 20px;
   margin-right: 8px;
 }
-
 .width-100 {
   width: 100%;
 }
-.min-height-70 {
+.comment-height {
   min-height: 70px;
+}
+.review-height {
+  min-height: 150px;
 }
 .popup-arrow {
   display: none;
