@@ -1,14 +1,24 @@
-package com.kittyhiker.sikjipsa.caring.dto;
+package com.kittyhiker.sikjipsa.chatting.dto;
 
+import com.kittyhiker.sikjipsa.caring.dto.AreaTagDto;
+import com.kittyhiker.sikjipsa.caring.dto.MemberDto2;
+import com.kittyhiker.sikjipsa.caring.dto.TechTagDto;
+import com.kittyhiker.sikjipsa.caring.entity.AreaTag;
 import com.kittyhiker.sikjipsa.image.dto.ImageDto;
+import com.kittyhiker.sikjipsa.image.dto.ImageDto2;
+import com.kittyhiker.sikjipsa.image.entity.Image;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 @AllArgsConstructor
-public class ExpertProfileResponseDtos {
+@Builder
+public class ChatExpertInfo {
 	private Long expertId;
 
 	private String name;

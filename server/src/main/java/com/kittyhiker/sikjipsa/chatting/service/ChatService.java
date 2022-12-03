@@ -69,7 +69,9 @@ public class ChatService {
     public ChatRoomDto2 findExpertRoomByName(String roomName) {
         ExpertChatRoom expertChatRoom = expertChatRepository.findByRoomName(roomName).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.NOT_FOUND_CHATROOM));
+        ExpertProfile expertProfile = expertChatRoom.getExpertProfile();
         ChatRoomDto2 chatRoomDto = chatRoomMapper.expertChatToChatRoomDto(expertChatRoom,
+                chatRoomMapper.expertToChatExpertInfo(expertProfile),
                 expertChatRoom.getBuyer().getMemberId(),
                 expertChatRoom.getSeller().getMemberId(),
                 messageRepository.countByRoomNameAndReceiverIdAndIsRead(roomName,
@@ -119,7 +121,9 @@ public class ChatService {
         if (expertChatRepository.existsByExpertProfileAndBuyer(expertProfile, member)) {
             ExpertChatRoom expertChatRoom = expertChatRepository.findByExpertProfileAndBuyer(expertProfile, member)
                     .orElseThrow(() -> new BusinessLogicException(ExceptionCode.NOT_FOUND_CHATROOM));
+            expertChatRoom.updateState(); // TODO
             ChatRoomDto2 response = chatRoomMapper.expertChatToChatRoomDto(expertChatRoom,
+                    chatRoomMapper.expertToChatExpertInfo(expertProfile),
                     expertChatRoom.getBuyer().getMemberId(),
                     expertChatRoom.getSeller().getMemberId(),
                     messageRepository.countByRoomNameAndReceiverIdAndIsRead(expertChatRoom.getRoomName(),
@@ -133,7 +137,8 @@ public class ChatService {
                     .seller(expertProfile.getMember()).build();
             ExpertChatRoom savedExpertChat = expertChatRepository.save(newExpertChat);
             ChatRoomDto2 chatRoomDto = chatRoomMapper.expertChatToChatRoomDto(
-                    savedExpertChat, savedExpertChat.getBuyer().getMemberId(), sellerId, 0L);
+                    savedExpertChat, chatRoomMapper.expertToChatExpertInfo(expertProfile),
+                    savedExpertChat.getBuyer().getMemberId(), sellerId, 0L);
             return chatRoomDto;
         }
     }
@@ -160,7 +165,10 @@ public class ChatService {
         Member member = memberService.verifyMember(userId);
         List<ExpertChatRoom> expertChatRoomList = expertChatRepository.findBySellerOrBuyer(member, member);
         List<ChatRoomDto2> response = expertChatRoomList.stream().map(
-                c -> chatRoomMapper.expertChatToChatRoomDto(c, c.getBuyer().getMemberId(), c.getSeller().getMemberId(),
+                c -> chatRoomMapper.expertChatToChatRoomDto(c,
+                        chatRoomMapper.expertToChatExpertInfo(c.getExpertProfile()),
+                        c.getBuyer().getMemberId(),
+                        c.getSeller().getMemberId(),
                         messageRepository.countByRoomNameAndReceiverIdAndIsRead(c.getRoomName(), userId,0L))
         ).collect(Collectors.toList());
         return response;
