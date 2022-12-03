@@ -45,7 +45,7 @@ const CareDetail = () => {
       <MainCenterWrapper>
       <SpaceBetween>
         <ProfileCard
-          src={data.photo}
+          src={data.image.imgUrl}
           alt={`${data.name}의 대표사진`}
           name={data.name}
           location={data.address}

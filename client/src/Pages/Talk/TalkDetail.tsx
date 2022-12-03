@@ -24,8 +24,9 @@ export const TalkDetail = () => {
   const [message, setMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
+  console.log(data)
 
-// 패칭함수
+  // 패칭함수
   const Fetching = () => {
     axios.get(`/chat/deal/${id}`).then((res) => {
       setIsLoading(true);
@@ -34,19 +35,19 @@ export const TalkDetail = () => {
     });
   };
 
-// 초기 패칭
+  // 초기 패칭
   useEffect(() => {
     Fetching();
   }, []);
 
   const socket = new WebSocket("ws://3.39.124.200:8080/ws/chat");
-  
-// 새로운 메시지가 생기면 자동으로 밑으로
+
+  // 새로운 메시지가 생기면 자동으로 밑으로
   useEffect(() => {
     divRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [data]);
-  
-// 소켓 연결 
+
+  // 소켓 연결
   useEffect(() => {
     socket.onopen = () => {
       console.log("소켓연결 성공");
@@ -66,10 +67,10 @@ export const TalkDetail = () => {
     socket.onmessage = (e: any) => {
       Fetching();
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user?.memberId]);
 
-// 메세지 보내는 함수
+  // 메세지 보내는 함수
   const sendMessage = (message: string) => {
     socket.send(
       JSON.stringify({
@@ -128,10 +129,8 @@ export const TalkDetail = () => {
                 return;
               } else if (inputRef.current !== null) {
                 inputRef.current.value = "";
-                sendMessage(message)
-                setMessage("");
+                sendMessage(message);
               }
-              
             }}
           >
             보내기
