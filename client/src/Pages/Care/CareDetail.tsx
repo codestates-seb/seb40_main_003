@@ -24,6 +24,7 @@ import useFetch from "../../Hooks/useFetch";
 import { CommentCard } from "../../Components/CommentCard";
 import { useIsAuthor } from "../../Hooks/useAuth";
 import { getDateAgo } from "../../utils/controller";
+import LikeButton from "../../Components/LikeButton";
 
 const CareDetail = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -53,9 +54,7 @@ const CareDetail = () => {
           pk={data.member.memberId}
         />
         {/* <LikeButton /> */}
-        <button>
-          찜
-        </button>
+        <LikeButton />
         </SpaceBetween>
         {
           <SectionWrapper content={data.simpleContent} pt={0} pb={8} />

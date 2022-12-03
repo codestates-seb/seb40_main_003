@@ -23,6 +23,7 @@ import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { confirmRemove } from "../../Const/message";
 import { useIsAuthor } from "../../Hooks/useAuth";
 import { EditAndDeleteButton } from "../../Components/profile/plantCardCarousel";
+import LikeButton from "../../Components/LikeButton";
 
 const CarouselImage = styled.img`
   width: 100%;
@@ -63,7 +64,8 @@ const Product = () => {
           />
         </Link>
         <SpaceBetween>
-          <h1 className="h3 bold mt-16 mb-4">{data.title}</h1>
+          <h1 className="h3 bold mt-16 mb-4">{data.title}</h1>                
+          <LikeButton />
           {/* 게시글 수정, 삭제 버튼 */}
           {isAuthor(data.member.memberId) && (
             // 수정삭제 버튼팝업

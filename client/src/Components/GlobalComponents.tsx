@@ -325,7 +325,6 @@ export const ProfileCard = (props: ProfileCardTypes) => {
       </SpaceBetween>
 
       {(tag) !== undefined && <SigTag className="ghost p">{tag}번 고용</SigTag>}
-      <LikeButton />
     </CenteringWrapper>
   );
 };
