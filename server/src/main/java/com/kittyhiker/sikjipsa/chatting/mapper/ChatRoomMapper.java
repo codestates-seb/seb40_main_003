@@ -1,9 +1,6 @@
 package com.kittyhiker.sikjipsa.chatting.mapper;
 
-import com.kittyhiker.sikjipsa.chatting.dto.ChatDealInfo;
-import com.kittyhiker.sikjipsa.chatting.dto.ChatMessageDto;
-import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto;
-import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomMessageDto;
+import com.kittyhiker.sikjipsa.chatting.dto.*;
 import com.kittyhiker.sikjipsa.chatting.entity.ChatMessage;
 import com.kittyhiker.sikjipsa.chatting.entity.DealChatRoom;
 import com.kittyhiker.sikjipsa.chatting.entity.ExpertChatRoom;
@@ -23,7 +20,8 @@ public interface ChatRoomMapper {
 
     ChatRoomDto dealChatToChatRoomDto(DealChatRoom dealChatRoom,
                                       ChatDealInfo dealInfo, Long buyerId, Long sellerId, Long notReadNum);
-    ChatRoomDto expertChatToChatRoomDto(ExpertChatRoom expertChatRoom, Long buyerId, Long sellerId, Long notReadNum);
+    ChatRoomDto2 expertChatToChatRoomDto(ExpertChatRoom expertChatRoom, Long buyerId, Long sellerId, Long notReadNum);
+
     ChatMessage messageDtoToChatMessage(ChatMessageDto messageDto, Member sender, Long receiverId, Long isRead);
     ChatRoomMessageDto messageToMessageResponse(ChatMessage message, CommunityMemberResponse messageSender);
 }

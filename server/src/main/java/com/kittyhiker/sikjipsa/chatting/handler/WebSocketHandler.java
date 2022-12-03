@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kittyhiker.sikjipsa.chatting.dto.ChatLoginDto;
 import com.kittyhiker.sikjipsa.chatting.dto.ChatMessageDto;
 import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto;
+import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto2;
 import com.kittyhiker.sikjipsa.chatting.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -88,7 +89,7 @@ public class WebSocketHandler extends TextWebSocketHandler {
     }
 
     public void sendExpertMessage(ChatMessageDto message) {
-        ChatRoomDto chatRoom = chatService.findExpertRoomByName(message.getRoomName());
+        ChatRoomDto2 chatRoom = chatService.findExpertRoomByName(message.getRoomName());
         List<WebSocketSession> webSocketSessions= getMessageMember(chatRoom);
         log.info("send session >> "+ webSocketSessions);
         if (webSocketSessions.size()==1) {
@@ -113,6 +114,20 @@ public class WebSocketHandler extends TextWebSocketHandler {
         if (userSessions.containsKey(chatRoomDto.getBuyerId())) {
             socketSessions.add(userSessions.get(chatRoomDto.getBuyerId()));
             log.info("전송자 아이디 :"+chatRoomDto.getBuyerId()+" 세션 :"+userSessions.get(chatRoomDto.getBuyerId()));
+        }
+        return socketSessions;
+
+    }
+
+    public List<WebSocketSession> getMessageMember(ChatRoomDto2 chatRoomDto2) {
+        List<WebSocketSession> socketSessions = new ArrayList<>();
+        if (userSessions.containsKey(chatRoomDto2.getSellerId())) {
+            socketSessions.add(userSessions.get(chatRoomDto2.getSellerId()));
+            log.info("전송자 아이디 :"+chatRoomDto2.getSellerId()+" 세션 :"+userSessions.get(chatRoomDto2.getSellerId()));
+        }
+        if (userSessions.containsKey(chatRoomDto2.getBuyerId())) {
+            socketSessions.add(userSessions.get(chatRoomDto2.getBuyerId()));
+            log.info("전송자 아이디 :"+chatRoomDto2.getBuyerId()+" 세션 :"+userSessions.get(chatRoomDto2.getBuyerId()));
         }
         return socketSessions;
 
