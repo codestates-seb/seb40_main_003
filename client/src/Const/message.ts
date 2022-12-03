@@ -16,3 +16,8 @@ export const confirmLogout = "로그아웃 하시겠습니까?" as const
 export const confirmSignout = "회원을 탈퇴하시겠습니까?" as const
 
 export const confirmDelete = "정말 삭제 하시겠습니까?" as const
+
+
+// 삭제완료
+
+export const completeDelete = "삭제가 완료되었습니다." as const

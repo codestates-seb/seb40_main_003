@@ -20,7 +20,7 @@ import { getDateAgo } from "../../utils/controller";
 import styled from "@emotion/styled";
 import { productEditDataAtom } from "../../Recoil/atoms/editData";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import { confirmRemove } from "../../Const/message";
+import { completeDelete, confirmRemove } from "../../Const/message";
 import { useIsAuthor } from "../../Hooks/useAuth";
 import { EditAndDeleteButton } from "../../Components/profile/plantCardCarousel";
 
@@ -34,8 +34,11 @@ const CarouselImage = styled.img`
 
 const Product = () => {
   const { id } = useParams();
+  const axiosprivate = useAxiosPrivate();
+
   const user = useRecoilValue(userState);
   const isAuthor = useIsAuthor();
+
   const data = useFetch<ProductDetailDataType>(id ? `/deal/${id}` : "");
   const [productEditData, setProductEditData] =
     useRecoilState(productEditDataAtom);
@@ -49,7 +52,11 @@ const Product = () => {
         <TopCarousel>
           {data.images.map((e, i) => {
             return (
-              <CarouselImage key={i} src={e} alt={`${data.title}의 ${i}번째사진`} />
+              <CarouselImage
+                key={i}
+                src={e}
+                alt={`${data.title}의 ${i}번째사진`}
+              />
             );
           })}
         </TopCarousel>
@@ -73,7 +80,7 @@ const Product = () => {
                 if (window.confirm(confirmRemove("게시물을"))) {
                   axiosPrivate.delete(`/deal/${data.dealId}`).then((res) => {
                     console.log(res);
-                    window.alert("삭제가 완료되었습니다.");
+                    window.alert(completeDelete);
                     navigate("/product");
                   });
                 }
@@ -92,14 +99,24 @@ const Product = () => {
           </span>
           <ViewCounter like={data.likeNum} view={data.view} />
         </SpaceBetween>
-          <p className="mt-16">{data.content}</p>
+        <p className="mt-16">{data.content}</p>
       </MainCenterWrapper>
 
       <MainRightWrapper>
         <span className="h4 bold">{data.price.toLocaleString()}원</span>
-        <Link to={"/talk"}>
-          <SigButton>채팅하기</SigButton>
-        </Link>
+
+        <SigButton
+          onClick={() => {
+            axiosprivate
+              .post(`/chat/experts/${data.member.memberId}`)
+              .then((e) => {
+                navigate(`/talk/${e.data.roomName}`);
+                console.log();
+              });
+          }}
+        >
+          채팅하기
+        </SigButton>
       </MainRightWrapper>
     </MainContentContainer>
   ) : (

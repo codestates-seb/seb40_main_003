@@ -18,9 +18,10 @@ import { CareMain, careQueryClient } from "../Care/Care";
 import { ProductMain, productQueryClient } from "../Product/Product";
 import { cannotLoad } from "../../Const/message";
 import { Link } from "react-router-dom";
+import { mainPageImageLimit } from "../../Const/fetchImage";
 
 const Main = () => {
-  usePageTitle("홈");
+  usePageTitle("플랜트하이커");
   return (
     <MainContentContainer>
       <MainCenterWrapper className="pd-0">
@@ -81,7 +82,7 @@ const Main = () => {
             </Link>
           <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
             <QueryClientProvider client={productQueryClient}>
-              <ProductMain size={3} />
+              <ProductMain size={mainPageImageLimit} />
             </QueryClientProvider>
           </ErrorBoundary>
         </article>
@@ -91,7 +92,7 @@ const Main = () => {
             </Link>
           <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
             <QueryClientProvider client={careQueryClient}>
-              <CareMain size={3} />
+              <CareMain size={mainPageImageLimit} />
             </QueryClientProvider>
           </ErrorBoundary>
         </article>

@@ -38,6 +38,7 @@ export type caringPreviewDataTypes = {
 
 // 돌봄 프로필 상세 조회
 export type CareDetailTypes = {
+  expertId:number
   name: string;
   age: number;
   photo:string;
