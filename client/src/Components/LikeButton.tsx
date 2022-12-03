@@ -5,40 +5,20 @@ import { SigTag } from "./GlobalComponents";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 import { useResetRecoilState } from "recoil";
 import { userState } from "../Recoil/atoms/user";
-import heartIcon from "../../images/like/heartIcon.png"
-import emptyHeartIcon from "../../images/like/emptyHeartIcon.png"
+import heartIcon from "../images/like/heartIcon.png"
+import emptyHeartIcon from "../images/like/emptyHeartIcon.png"
 
-export const LikeButton = styled.button`
+export const LikeButton = styled.img`
   width: 20px;
   height: 20px;
   resize: none;
-  padding: 8px;
-  background-color: pink;
 `;
 
-type LikeOn = {
-  like: boolean;
-}
-
-const LikeButtonClick = ({
-  // like, onClick
-}) => {
-  const [value, setValue] = useState("");
-  const axiosPrivate = useAxiosPrivate();
-  const buttonRef = useRef<HTMLButtonElement>(null)
-
-axiosPrivate
-  .post(`/experts/${1}/like`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-  .catch((err) => {});
-
+const LikeButtonClick = ({onClick}:any) => {
 
   return (
     <LikeButton 
-    // ref={buttonRef} src={like?heartIcon:emptyHeartIcon} onClick={onClick}
+    src={heartIcon} onClick={onClick}
     />
   )
 }

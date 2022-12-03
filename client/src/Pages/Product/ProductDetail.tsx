@@ -41,7 +41,22 @@ const Product = () => {
   const [productEditData, setProductEditData] =
     useRecoilState(productEditDataAtom);
   const axiosPrivate = useAxiosPrivate();
+  const LikeOnClick = () => {
+    axiosPrivate
+    .post(`/deal/like/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res)=>{
+    console.log(res)}
+    )
+    .catch((err) => {});
+
+  }
+
   const navigate = useNavigate();
+
   return data !== undefined ? (
     // 메인 컨테이너 (반응형 제공!)
     <MainContentContainer>
@@ -65,7 +80,7 @@ const Product = () => {
         </Link>
         <SpaceBetween>
           <h1 className="h3 bold mt-16 mb-4">{data.title}</h1>                
-          <LikeButton />
+          <LikeButton onClick={LikeOnClick} />
           {/* 게시글 수정, 삭제 버튼 */}
           {isAuthor(data.member.memberId) && (
             // 수정삭제 버튼팝업

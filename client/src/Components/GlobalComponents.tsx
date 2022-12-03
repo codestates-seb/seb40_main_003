@@ -112,6 +112,7 @@ export const SigTag = styled.div`
   width: ${(props: sigtagProps) => (props.width ? props.width + "px" : "auto")};
   height: ${(props: sigtagProps) =>
     props.height ? props.height + "px" : "auto"};
+  justify-content: center;
   padding: 2px 4px;
   background-color: var(--main);
   color: var(--pure-white);
