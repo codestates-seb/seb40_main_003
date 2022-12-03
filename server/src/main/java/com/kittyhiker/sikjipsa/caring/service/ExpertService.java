@@ -10,6 +10,8 @@ import com.kittyhiker.sikjipsa.caring.entity.ExpertSuccess;
 import com.kittyhiker.sikjipsa.caring.entity.MemberLikeExpert;
 import com.kittyhiker.sikjipsa.caring.mapper.ExpertSuccessMapper;
 import com.kittyhiker.sikjipsa.caring.repository.*;
+import com.kittyhiker.sikjipsa.chatting.entity.ExpertChatRoom;
+import com.kittyhiker.sikjipsa.chatting.repository.ExpertChatRepository;
 import com.kittyhiker.sikjipsa.exception.BusinessLogicException;
 import com.kittyhiker.sikjipsa.exception.ExceptionCode;
 import com.kittyhiker.sikjipsa.image.entity.Image;
@@ -43,6 +45,7 @@ public class ExpertService {
 	private final ExpertReviewRepository expertReviewRepository;
 	private final ExpertSuccessRepository expertSuccessRepository;
 	private final ExpertSuccessMapper expertSuccessMapper;
+	private final ExpertChatRepository expertChatRepository;
 
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
@@ -255,8 +258,9 @@ public class ExpertService {
 		if (expertSuccessRepository.findByExpertProfileAndBuyer(expertProfile, member).isPresent()) {
 			throw new BusinessLogicException(ExceptionCode.ALREADY_SUCCESS_STATE);
 		}
+		ExpertChatRoom expertChatRoom = findVerifiedExpertChatRoom(expertProfile, member);
+		expertChatRoom.updateState();
 		expertProfile.setUseNum(expertProfile.getUseNum() + 1);
-
 		ExpertSuccess expertSuccess = expertSuccessMapper.toExpertSuccess(expertProfile, member, expertProfile.getMember());
 		ExpertSuccess savedSuccess = expertSuccessRepository.save(expertSuccess);
 		return expertSuccessMapper.toExpertSuccessResponseDto(savedSuccess, expertSuccessDto.getExpertId(), expertSuccessDto.getBuyerId());
@@ -295,5 +299,12 @@ public class ExpertService {
 		MemberLikeExpert memberLikeExpert = optionalMemberLikeExpert.orElseThrow(() ->
 				new BusinessLogicException(ExceptionCode.MEMBER_LIKE_EXPERT_NOT_FOUND));
 		return memberLikeExpert;
+	}
+
+	private ExpertChatRoom findVerifiedExpertChatRoom(ExpertProfile expertProfile, Member member) {
+		Optional<ExpertChatRoom> optionalExpertChatRoom = expertChatRepository.findByExpertProfileAndBuyer(expertProfile, member);
+		ExpertChatRoom expertChatRoom = optionalExpertChatRoom.orElseThrow(() ->
+				new BusinessLogicException(ExceptionCode.EXPERT_CHAT_ROOM_NOT_FOUND));
+		return expertChatRoom;
 	}
 }
