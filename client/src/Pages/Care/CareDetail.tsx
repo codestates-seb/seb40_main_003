@@ -11,7 +11,7 @@ import {
   MainRightWrapper,
   SectionWrapper,
   SpaceBetween,
-  RowWrapper,
+  SpaceEnd,
 } from "../../Components/Wrapper";
 
 import { CareDetailTypes } from "../../types/caringTypes";
@@ -24,8 +24,9 @@ import useFetch from "../../Hooks/useFetch";
 import { CommentCard } from "../../Components/CommentCard";
 import { useIsAuthor } from "../../Hooks/useAuth";
 import { getDateAgo } from "../../utils/controller";
-import LikeButton from "../../Components/LikeButton";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import LikeButton from "../../Components/LikeButton";
+import { axiosPrivate } from "../../Hooks/api";
 
 const CareDetail = () => {
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
@@ -37,12 +38,27 @@ const CareDetail = () => {
   const axiosprivate = useAxiosPrivate()
   const data = useFetch<CareDetailTypes>(`/experts/${id}`);
   const navigate = useNavigate()
+  
+  const LikeOnClick = () => {
+    axiosPrivate
+    .post(`/experts/${id}/like`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+    .then((res)=>{
+    console.log(res)}
+    )
+    .catch((err) => {});
+
+  }
 
   usePageTitle(data !== undefined ? `${data.name} 님의 서비스` : "서비스");
   console.log(data);
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
+        <SpaceEnd className="cursor"><LikeButton onClick={LikeOnClick} /></SpaceEnd>
       <SpaceBetween>
         <ProfileCard
           src={data.photo}
@@ -54,8 +70,6 @@ const CareDetail = () => {
           tag={data.useNum}
           pk={data.member.memberId}
         />
-        {/* <LikeButton /> */}
-        <LikeButton />
         </SpaceBetween>
         {
           <SectionWrapper content={data.simpleContent} pt={0} pb={8} />

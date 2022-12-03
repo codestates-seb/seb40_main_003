@@ -11,6 +11,7 @@ import {
   MainContentContainer,
   MainRightWrapper,
   SpaceBetween,
+  SpaceEnd,
 } from "../../Components/Wrapper";
 import { userState } from "../../Recoil/atoms/user";
 import { ProductDetailDataType } from "../../types/productTypes";
@@ -64,6 +65,9 @@ const Product = () => {
     // 메인 컨테이너 (반응형 제공!)
     <MainContentContainer>
       <MainCenterWrapper>
+        <SpaceEnd className="mb-8 cursor">
+        <LikeButton onClick={LikeOnClick} />
+        </SpaceEnd>
         {/* 실제 메인이 되는 내용! */}
         <TopCarousel>
           {data.images.map((e, i) => {
@@ -87,7 +91,6 @@ const Product = () => {
         </Link>
         <SpaceBetween>
           <h1 className="h3 bold mt-16 mb-4">{data.title}</h1>                
-          <LikeButton onClick={LikeOnClick} />
           {/* 게시글 수정, 삭제 버튼 */}
           {isAuthor(data.member.memberId) && (
             // 수정삭제 버튼팝업
