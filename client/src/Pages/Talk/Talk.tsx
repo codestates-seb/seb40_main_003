@@ -49,6 +49,7 @@ const TalkCard: React.FC<any> = ({ data }) => {
 
   return (
     <Link to={`/talk/${roomName}`}>
+      
       <div>{`읽지않은 메세지${notReadNum}건`}</div>
     </Link>
   );
