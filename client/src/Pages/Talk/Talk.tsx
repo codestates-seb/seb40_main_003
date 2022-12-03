@@ -14,7 +14,6 @@ import { ErrorMessage } from "../../Components/ErrorHandle";
 import { cannotLoad } from "../../Const/message";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { useEffect } from "react";
-import { io } from "socket.io-client";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 import { axiosPrivate } from "../../Hooks/api";
