@@ -112,10 +112,10 @@ const Signup = () => {
               })}
             />
             {errors.nickname && errors.nickname.type === "required" && (
-              <Errormsg> 닉네임을 입력해주세요</Errormsg>
+              <Errormsg> 닉네임을 입력해주세요.</Errormsg>
             )}
             {errors.nickname && errors.nickname.type === "minLength" && (
-              <Errormsg> 최소 길이는 2자 이상이여야 합니다</Errormsg>
+              <Errormsg> 최소 길이는 2자 이상이여야 합니다.</Errormsg>
             )}
           </InputContainer>
           <InputContainer>
