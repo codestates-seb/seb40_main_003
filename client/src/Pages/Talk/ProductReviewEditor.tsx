@@ -1,15 +1,10 @@
 import React from 'react';
 import { FieldErrors, useForm } from "react-hook-form";
 import { SigButton } from '../../Components/GlobalComponents';
-import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper } from "../../Components/Wrapper";
+import { MainContentContainer, MainCenterWrapper, MainRightWrapper, SectionWrapper, ConfirmWrapper } from "../../Components/Wrapper";
 import { Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import usePageTitle from '../../Hooks/usePageTitle'
-
-const ConfirmWrapper = styled.span`
-    display: flex;
-    justify-content: row;
-`
 
 type Props = {}
 

@@ -169,4 +169,9 @@ export const FlexWrapper = styled.div`
   display: flex;
 `;
 
+export const ConfirmWrapper = styled.span`
+  display: flex;
+  justify-content: row;
+`;
+
 export default MainLeftWrapper;

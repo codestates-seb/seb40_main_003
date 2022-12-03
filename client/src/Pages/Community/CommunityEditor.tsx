@@ -6,16 +6,12 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
   SectionWrapper,
+  ConfirmWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { compressImage } from "../../utils/imageCompress";
-
-const ConfirmWrapper = styled.span`
-  display: flex;
-  justify-content: row;
-`;
 
 type Props = {};
 
