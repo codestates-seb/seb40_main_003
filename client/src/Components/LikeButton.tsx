@@ -13,28 +13,32 @@ export const LikeButton = styled.button`
   height: 20px;
   resize: none;
   padding: 8px;
-  background-color: aliceblue;
+  background-color: pink;
 `;
+
+type LikeOn = {
+  like: boolean;
+}
 
 const LikeButtonClick = ({
   // like, onClick
 }) => {
-//   const [value, setValue] = useState("");
-//   const axiosPrivate = useAxiosPrivate();
-//   const buttonRef = useRef<HTMLButtonElement>(null)
+  const [value, setValue] = useState("");
+  const axiosPrivate = useAxiosPrivate();
+  const buttonRef = useRef<HTMLButtonElement>(null)
 
-// axiosPrivate
-//   .post(`/experts/${1}/like`, {
-//     headers: {
-//       "Content-Type": "multipart/form-data",
-//     },
-//   })
-//   .catch((err) => {});
+axiosPrivate
+  .post(`/experts/${1}/like`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+  .catch((err) => {});
 
 
   return (
     <LikeButton 
-    // ref={buttonRef} src={like?heartIcon:emptyHeartIcon} onClick={()=>{onClick}}
+    // ref={buttonRef} src={like?heartIcon:emptyHeartIcon} onClick={onClick}
     />
   )
 }
