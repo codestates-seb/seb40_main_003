@@ -1,5 +1,4 @@
 export const areaArray = [
-    {number: -1, name: "선택"},
     {number: 0, name: "강남구"},
     {number: 1, name: "강동구"},
     {number: 2, name: "강북구"},
