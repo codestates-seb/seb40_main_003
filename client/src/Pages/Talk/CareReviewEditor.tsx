@@ -6,9 +6,7 @@ import useFetch from "../../Hooks/useFetch";
 import { CareDetailTypes } from "../../types/caringTypes";
 import { useParams } from "react-router-dom";
 import { FieldErrors, useForm } from "react-hook-form";
-import { SigButton } from '../../Components/GlobalComponents';
 import styled from "@emotion/styled";
-import usePageTitle from '../../Hooks/usePageTitle'
 
 type Props = {}
 
@@ -29,7 +27,7 @@ const CareReviewEditor = () => {
   const data = useFetch<CareDetailTypes>(`/experts/${1}`);
 
   const onInValid = (errors: FieldErrors) => {};
-  const onValid = async (data: CareReviewForm) => {}
+  const onValid = async (data: CareReviewEditorForm) => {}
     
     usePageTitle("돌봄 리뷰 글쓰기");
   console.log(data);
