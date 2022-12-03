@@ -72,7 +72,7 @@ const CareDetail = () => {
         <SectionWrapper title="반려 식물">
           <PlantCardCarousel key={"reactCarousel"}>
             <>
-              {data.member.plants.length===0?<>반려식물이 없습니다</>:
+              {data.member.plants.length===0&&!isAuthor(data.member.memberId) ?<>반려식물이 없습니다</>:
               data.member.plants.map((e,i) => {
                 return (
                   <ProfilePlantCard
