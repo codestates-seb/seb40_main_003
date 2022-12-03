@@ -214,7 +214,7 @@ const InputContainer = styled.div`
   align-self: center;
 `;
 
-const Errormsg = styled.p`
+export const Errormsg = styled.p`
   color: var(--alert-red);
   margin: 3px;
   font-size: 13px;

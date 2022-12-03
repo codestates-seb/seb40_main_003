@@ -6,6 +6,7 @@ import {
   MainRightWrapper,
   SectionWrapper,
   RowWrapper,
+  ColumnWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +18,7 @@ import { useEffect, useState } from "react";
 import axios from "../../Hooks/api";
 import { compressImage } from "../../utils/imageCompress";
 import defaultProfile from "../../images/defaultProfileImage.png";
+import { Errormsg } from "../User/Signup";
 
 interface ExpertProfileTransferForm {
   image: FileList;
@@ -30,6 +32,7 @@ interface ExpertProfileTransferForm {
   extra: string;
   techTags: any;
   areaTags: any;
+  errors?: string;
 }
 
 const ExpertProfileTransfer = () => {
@@ -139,14 +142,14 @@ const ExpertProfileTransfer = () => {
             accept="image/*"
             name="image"
           />
-
-          <p className="font-alert-red sub">{errors.image?.message}</p>
-
           <label className="input-file-button" htmlFor="input-file">
             프로필 사진 선택
           </label>
+          <p className="font-alert-red sub">{errors.image?.message}</p>
         </RowWrapper>
-
+        {errors.image && errors.image.type === "required" && (
+          <Errormsg>프로필 사진을 선택해주세요.</Errormsg>
+        )}
         <SectionWrapper width={100} borderNone={true}>
           <>
             <span className="mb-4 mt-4">이름</span>
@@ -159,13 +162,16 @@ const ExpertProfileTransfer = () => {
                   value: 2,
                 },
                 maxLength: {
-                  message: "이름을 5글자 이하로 작성해주세요",
-                  value: 5,
+                  message: "이름을 12글자 이하로 작성해주세요",
+                  value: 12,
                 },
               })}
               type="Text"
             />
             <p className="font-alert-red sub mt-4">{errors.name?.message}</p>
+            {errors.name && errors.name.type === "required" && (
+              <Errormsg>이름을 입력해주세요.</Errormsg>
+            )}
           </>
         </SectionWrapper>
 
@@ -184,6 +190,9 @@ const ExpertProfileTransfer = () => {
               type="string"
             />
             <p className="font-alert-red sub mt-4">{errors.age?.message}</p>
+            {errors.age && errors.age.type === "required" && (
+              <Errormsg>나이를 입력해주세요.</Errormsg>
+            )}
           </>
         </SectionWrapper>
 
@@ -208,7 +217,7 @@ const ExpertProfileTransfer = () => {
               })}
             >
               <option value="" hidden>
-                선택해주세요
+                선택해주세요.
               </option>
               {areaArray.map((e) => {
                 return (
@@ -218,6 +227,9 @@ const ExpertProfileTransfer = () => {
                 );
               })}
             </Select>
+            {errors.areaTags && errors.areaTags.type === "required" && (
+              <Errormsg>사는 곳 (구)을 입력해주세요.</Errormsg>
+            )}
           </>
         </SectionWrapper>
         <SectionWrapper width={100} borderNone={true}>
@@ -230,7 +242,7 @@ const ExpertProfileTransfer = () => {
               })}
             >
               <option value="" hidden>
-                선택해주세요
+                선택해주세요.
               </option>
               {gugun.map((e, i) => {
                 return (
@@ -240,6 +252,9 @@ const ExpertProfileTransfer = () => {
                 );
               })}
             </Select>
+            {errors.address && errors.address.type === "required" && (
+              <Errormsg>사는 곳 (동)을 입력해주세요.</Errormsg>
+            )}
           </>
         </SectionWrapper>
         <SectionWrapper width={100} borderNone={true}>
@@ -249,6 +264,9 @@ const ExpertProfileTransfer = () => {
               className="gender"
               {...register("gender", { required: true })}
             >
+              <option value="" hidden>
+                선택해주세요
+              </option>
               {genderArray.map((e) => {
                 return (
                   <option key={`${e.number}gender`} value={e.number}>
@@ -257,6 +275,9 @@ const ExpertProfileTransfer = () => {
                 );
               })}
             </Select>
+            {errors.gender && errors.gender.type === "required" && (
+              <Errormsg>성별을 입력해주세요.</Errormsg>
+            )}
           </>
         </SectionWrapper>
 
@@ -270,6 +291,9 @@ const ExpertProfileTransfer = () => {
               })}
               placeholder="자신의 제공하는 돌봄 비용을 자유롭게 작성해주세요."
             />
+            {errors.price && errors.price.type === "required" && (
+              <Errormsg>돌봄 비용을 입력해주세요.</Errormsg>
+            )}
           </>
         </SectionWrapper>
 
@@ -283,27 +307,32 @@ const ExpertProfileTransfer = () => {
               })}
               placeholder="서비스별 추가 비용 발생 시 관련 정보를 작성해주세요."
             />
+            {errors.extra && errors.extra.type === "required" && (
+              <Errormsg>추가 사항을 입력해주세요.</Errormsg>
+            )}
           </>
         </SectionWrapper>
 
-        <SectionWrapper width={100} borderNone={true}>
-          <>
-            <span className="mb-4">보유 기술</span>
+        <ColumnWrapper>
+          <RowWrapper>
+            <span className="mb-4">보유 기술 (중복 입력 가능합니다.)</span>
             {CareCategoryList.map((e) => {
               return (
-                <RowWrapper key={`${e.number}tachtag`}>
-                  <input
+                <RowWrapper key={`${e.number}tachtag`} className="align-center">
+                  <input 
                     type="checkbox"
                     value={e.name}
-                    className="techTagName mb-1"
-                    {...register("techTags.0.techTagName")}
+                    className="techTagName checkbox-20 mb-16"
+                    {...register("techTags.0.techTagName", {
+                      required: true,
+                    })}
                   />
-                  {e.name}
+                  <label className="ml-8 mb-16">{e.name}</label>
                 </RowWrapper>
               );
             })}
-          </>
-        </SectionWrapper>
+          </RowWrapper>
+        </ColumnWrapper>
 
         <SectionWrapper width={100} borderNone={true}>
           <>
@@ -320,6 +349,10 @@ const ExpertProfileTransfer = () => {
             <p className="font-alert-red sub">
               {errors.simpleContent?.message}
             </p>
+            {errors.simpleContent &&
+              errors.simpleContent.type === "required" && (
+                <Errormsg>자기 소개를 입력해주세요.</Errormsg>
+              )}
           </>
         </SectionWrapper>
 
@@ -338,6 +371,10 @@ const ExpertProfileTransfer = () => {
             <p className="font-alert-red sub">
               {errors.detailContent?.message}
             </p>
+            {errors.detailContent &&
+              errors.detailContent.type === "required" && (
+                <Errormsg>상세한 자기 소개를 입력해주세요.</Errormsg>
+              )}
           </>
         </SectionWrapper>
       </MainCenterWrapper>
