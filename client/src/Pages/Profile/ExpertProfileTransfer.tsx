@@ -290,7 +290,7 @@ const ExpertProfileTransfer = () => {
                 <RowWrapper key={`${e.number}tachtag`}>
                   <input
                     type="checkbox"
-                    value={e.number}
+                    value={e.name}
                     className="techTagName"
                     {...register("techTags.0.techTagName")}
                   />
