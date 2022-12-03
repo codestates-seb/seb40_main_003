@@ -169,4 +169,14 @@ export const SpaceBetween = styled.div`
     align-items: center;
   }
 `;
+
+export const FlexWrapper = styled.div`
+  display: flex;
+`;
+
+export const ConfirmWrapper = styled.span`
+  display: flex;
+  justify-content: row;
+`;
+
 export default MainLeftWrapper;

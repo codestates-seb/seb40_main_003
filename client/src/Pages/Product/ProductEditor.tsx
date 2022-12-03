@@ -6,17 +6,13 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
   SectionWrapper,
+  ConfirmWrapper
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { ProductCategoryList } from "../../Const/Category";
 import { compressImage } from "../../utils/imageCompress";
-
-const ConfirmWrapper = styled.span`
-  display: flex;
-  justify-content: row;
-`;
 
 interface ProductEditorForm {
   title: string;
@@ -186,7 +182,7 @@ const ProductEditor = () => {
           </p>
         </ConfirmWrapper>
       </MainCenterWrapper>
-      <MainRightWrapper center={true}>
+      <MainRightWrapper>
         <SigButton type="submit" value={"ProductEditor"}>
           작성 완료
         </SigButton>

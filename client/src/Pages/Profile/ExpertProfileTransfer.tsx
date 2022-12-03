@@ -1,11 +1,12 @@
 import { FieldErrors, useForm } from "react-hook-form";
-import { Select, SigButton } from "../../Components/GlobalComponents";
+import { Select, SigButton, Textarea } from "../../Components/GlobalComponents";
 import {
   MainContentContainer,
   MainCenterWrapper,
   MainRightWrapper,
   SectionWrapper,
   RowWrapper,
+  FlexWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
@@ -13,74 +14,106 @@ import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { CareCategoryList, categoryNumberToString } from "../../Const/Category";
 import { areaArray } from "../../Const/Address";
 import { genderArray } from "../../Const/gender";
-import { useState } from "react";
-import axios from "../../Hooks/api"
+import { useEffect, useState } from "react";
+import axios from "../../Hooks/api";
+import { compressImage } from "../../utils/imageCompress";
 
 interface ExpertProfileTransferForm {
+  image: FileList;
   name: string;
-  age: string;
-  gender: string;
+  age: number;
+  gender: number;
   simpleContent: string;
   detailContent: string;
   price: string;
-  extra: string;
   address: string;
-  techTagName: string;
-  image: FileList;
-  category: number;
-  content: string;
-  checked: boolean;
-  area: number;
-  errors?: string;
+  extra: string;
+  techTags: [
+    {
+      techTagName: string;
+    }
+  ];
+  areaTags: [
+    {
+      areaTagName: string;
+    }
+  ];
 }
 
 const ExpertProfileTransfer = () => {
   const axiosPrivate = useAxiosPrivate();
-  const [gugun, setGugun] = useState<[]|[{dong:string}]>([]);
+  const [gugun, setGugun] = useState<[] | [{ dong: string }]>([]);
+  const [avatarPreview, setAvatarPreview] = useState("");
 
   const {
     register,
+    watch,
     handleSubmit,
     formState: { errors },
   } = useForm<ExpertProfileTransferForm>({
     mode: "onChange",
   });
 
+  const avatar = watch("image");
+  useEffect(() => {
+    if (avatar && avatar.length > 0) {
+      const file = avatar[0];
+      setAvatarPreview(URL.createObjectURL(file));
+    }
+  }, [avatar]);
+
   const onInValid = (errors: FieldErrors) => {};
   const navigate = useNavigate();
 
   const onValid = async (data: ExpertProfileTransferForm) => {
+    console.log(data);
+
     const formData = new FormData();
-    // const dealPostDto = JSON.stringify({
-    //   title: data.title,
-    //   content: data.content,
-    //   price: data.price,
-    //   category: data.category,
-    //   area: data.area,
-    // });
-    // for(let i = 0; i<data.image.length; i++){
-    //   formData.append("images", data.image[i]);
-    // }
+    const expertProfileDto = JSON.stringify({
+      name: data.name,
+      age: data.age,
+      gender: data.gender,
+      simpleContent: data.simpleContent,
+      detailContent: data.detailContent,
+      price: data.price,
+      address: data.address,
+      extra: data.extra,
+      techTags: [
+        {
+          techTagName: data.techTags[0].techTagName,
+        },
+      ],
+      areaTags: [
+        {
+          areaTagName: data.areaTags[0].areaTagName,
+        },
+      ],
+    });
+    formData.append(
+      "expertProfileDto",
+      new Blob([expertProfileDto], { type: "application/json" })
+    );
 
-    // formData.append(
-    //   "dealPostDto",
-    //   new Blob([dealPostDto], { type: "application/json" })
-    // );
+    if (data.image !== undefined) {
+      await compressImage(data.image[0]).then((res: any) => {
+        formData.append("multipartFile", res);
+      });
+    }
 
-    // axiosPrivate
-    //   .post("/deal", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     navigate(`/product/${res.data.dealId}`);
-    //   })
-    //   .catch((err) => {});
+    axiosPrivate
+      .post("/experts", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        navigate(`/`);
+      })
+      .catch((err) => {});
   };
 
   usePageTitle("전문가 계정으로 전환");
-console.log(gugun);
 
   return (
     <MainContentContainer
@@ -88,9 +121,37 @@ console.log(gugun);
       onSubmit={handleSubmit(onValid, onInValid)}
     >
       <MainCenterWrapper>
+        <FlexWrapper>
+          <></>
+          {avatarPreview ? (
+            <img
+              src={avatarPreview}
+              className="profile-img"
+              alt="이미지 미리보기"
+            />
+          ) : (
+            <div className="profile-img" />
+          )}
+          <input
+            className="image cursor"
+            {...register("image", { required: true })}
+            id="input-file"
+            style={{ display: "none" }}
+            type="file"
+            accept="image/*"
+            name="image"
+          />
+
+          <p className="font-alert-red sub">{errors.image?.message}</p>
+
+          <label className="input-file-button" htmlFor="input-file">
+            프로필 사진 선택
+          </label>
+        </FlexWrapper>
+
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <span className="mb-4">이름</span>
+            <span className="mb-4 mt-4">이름</span>
             <input
               className="name"
               {...register("name", {
@@ -107,22 +168,6 @@ console.log(gugun);
               type="Text"
             />
             <p className="font-alert-red sub mt-4">{errors.name?.message}</p>
-          </>
-        </SectionWrapper>
-
-        <SectionWrapper width={100} borderNone={false}>
-          <>
-            <span className="mb-4">프로필 사진</span>
-            <input
-              className="image cursor"
-              {...register("image", { required: true })}
-              id="image"
-              type="file"
-              accept="image/*"
-              name="image"
-              multiple
-            />
-            <p className="font-alert-red sub">{errors.image?.message}</p>
           </>
         </SectionWrapper>
 
@@ -146,7 +191,7 @@ console.log(gugun);
 
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <span className="mb-4">주소</span>
+            <span className="mb-4">사는 곳 (구)</span>
             <Select
               className="address"
               {...register("address", {
@@ -157,11 +202,12 @@ console.log(gugun);
                     arr: areaArray,
                   });
                   axios
-                    .get("/address", {params: {gugun: parsedArea}})
-                    .then((res) => {setGugun(res.data.dongs)});
+                    .get("/address", { params: { gugun: parsedArea } })
+                    .then((res) => {
+                      setGugun(res.data.dongs);
+                    });
                 },
               })}
-              
             >
               {areaArray.map((e) => {
                 return (
@@ -171,15 +217,27 @@ console.log(gugun);
                 );
               })}
             </Select>
-            <Select>
-              {gugun.map((e, i) => {
-                return <option key={`dong${i}`} value={e.dong}>{e.dong}</option>;
+          </>
+        </SectionWrapper>
+        <SectionWrapper width={100} borderNone={true}>
+          <>
+            <span className="mb-4">사는 곳 (동)</span>
+            <Select
+              className="areaTagName"
+              {...register("areaTags.0.areaTagName", {
+                required: true,
               })}
-              
+            >
+              {gugun.map((e, i) => {
+                return (
+                  <option key={`dong${i}`} value={e.dong}>
+                    {e.dong}
+                  </option>
+                );
+              })}
             </Select>
           </>
         </SectionWrapper>
-
         <SectionWrapper width={100} borderNone={true}>
           <>
             <span className="mb-4">성별</span>
@@ -232,9 +290,9 @@ console.log(gugun);
                 <RowWrapper key={`${e.number}tachtag`}>
                   <input
                     type="checkbox"
-                    value={e.number}
+                    value={e.name}
                     className="techTagName"
-                    {...register("techTagName")}
+                    {...register("techTags.0.techTagName")}
                   />
                   {e.name}
                 </RowWrapper>
@@ -245,14 +303,15 @@ console.log(gugun);
 
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <textarea
+            <span className="mb-4">자기 소개</span>
+            <Textarea
               className="simpleContent"
               minLength={10}
               maxLength={1000}
               {...register("simpleContent", {
                 required: true,
               })}
-              placeholder="글쓰기"
+              placeholder="본인을 소개해주세요."
             />
             <p className="font-alert-red sub">
               {errors.simpleContent?.message}
@@ -262,14 +321,15 @@ console.log(gugun);
 
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <textarea
+            <span className="mb-4">상세한 자기 소개</span>
+            <Textarea
               className="detailContent"
               minLength={10}
               maxLength={1000}
               {...register("detailContent", {
                 required: true,
               })}
-              placeholder="글쓰기"
+              placeholder="전문가로서 본인의 능력을 알려주세요."
             />
             <p className="font-alert-red sub">
               {errors.detailContent?.message}
@@ -279,7 +339,7 @@ console.log(gugun);
       </MainCenterWrapper>
       <MainRightWrapper center={true}>
         <SigButton type="submit" value={"ProductEditor"}>
-          전환
+          전환하기
         </SigButton>
       </MainRightWrapper>
     </MainContentContainer>

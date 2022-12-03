@@ -367,3 +367,11 @@ export const Select = styled.select`
   outline-color: var(--line-light-gray);
   border-radius: 6px;
 `;
+
+export const Textarea = styled.textarea`
+  height: 100px;
+  outline-style: solid;
+  outline-width: 1px;
+  outline-color: var(--line-light-gray);
+  border-radius: 6px;
+`;
