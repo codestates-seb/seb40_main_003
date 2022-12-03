@@ -11,7 +11,7 @@ import {
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import { CareCategoryList, categoryNumberToString } from "../../Const/Category";
+import { CareCategoryList, categoryNumberToString, categoryStringToNumber } from "../../Const/Category";
 import { areaArray } from "../../Const/Address";
 import { genderArray } from "../../Const/gender";
 import { useEffect, useState } from "react";
@@ -28,17 +28,10 @@ interface ExpertProfileTransferForm {
   price: string;
   address: string;
   extra: string;
-  techTags: [
-    {
-      techTagName: string;
-    }
-  ];
-  areaTags: [
-    {
-      areaTagName: string;
-    }
-  ];
+  techTags: any
+  areaTags:any
 }
+
 
 const ExpertProfileTransfer = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -66,9 +59,18 @@ const ExpertProfileTransfer = () => {
   const navigate = useNavigate();
 
   const onValid = async (data: ExpertProfileTransferForm) => {
-    console.log(data);
 
     const formData = new FormData();
+    const techTagname = (techTag:[])=>{
+      let arr=[]
+      for(let i =0; i<techTag.length ;i++){
+        arr.push({techTagName:techTag[i]})
+      }
+      // console.log(arr)
+      return arr
+    }
+    // console.log(data.areaTags[0])
+    techTagname(data.techTags[0].techTagName)
     const expertProfileDto = JSON.stringify({
       name: data.name,
       age: data.age,
@@ -78,14 +80,12 @@ const ExpertProfileTransfer = () => {
       price: data.price,
       address: data.address,
       extra: data.extra,
-      techTags: [
-        {
-          techTagName: data.techTags[0].techTagName,
-        },
-      ],
+      techTags: 
+        techTagname(data.techTags[0].techTagName)
+      ,
       areaTags: [
         {
-          areaTagName: data.areaTags[0].areaTagName,
+          areaTagName: data.areaTags,
         },
       ],
     });
@@ -93,13 +93,13 @@ const ExpertProfileTransfer = () => {
       "expertProfileDto",
       new Blob([expertProfileDto], { type: "application/json" })
     );
-
+    console.log(expertProfileDto)
     if (data.image !== undefined) {
       await compressImage(data.image[0]).then((res: any) => {
         formData.append("multipartFile", res);
       });
     }
-
+    // console.log(expertProfileDto)
     axiosPrivate
       .post("/experts", formData, {
         headers: {
@@ -122,7 +122,6 @@ const ExpertProfileTransfer = () => {
     >
       <MainCenterWrapper>
         <FlexWrapper>
-          <></>
           {avatarPreview ? (
             <img
               src={avatarPreview}
@@ -193,8 +192,8 @@ const ExpertProfileTransfer = () => {
           <>
             <span className="mb-4">사는 곳 (구)</span>
             <Select
-              className="address"
-              {...register("address", {
+              className="areaTags"
+              {...register("areaTags", {
                 required: true,
                 onChange: (e) => {
                   const parsedArea = categoryNumberToString({
@@ -209,6 +208,7 @@ const ExpertProfileTransfer = () => {
                 },
               })}
             >
+              <option value="" hidden>선택해주세요</option>
               {areaArray.map((e) => {
                 return (
                   <option key={`${e.number}address`} value={e.number}>
@@ -223,11 +223,12 @@ const ExpertProfileTransfer = () => {
           <>
             <span className="mb-4">사는 곳 (동)</span>
             <Select
-              className="areaTagName"
-              {...register("areaTags.0.areaTagName", {
+              className="address"
+              {...register("address", {
                 required: true,
               })}
             >
+              <option value="" hidden>선택해주세요</option>
               {gugun.map((e, i) => {
                 return (
                   <option key={`dong${i}`} value={e.dong}>
@@ -291,7 +292,7 @@ const ExpertProfileTransfer = () => {
                   <input
                     type="checkbox"
                     value={e.name}
-                    className="techTagName"
+                    className="techTagName mb-1"
                     {...register("techTags.0.techTagName")}
                   />
                   {e.name}
