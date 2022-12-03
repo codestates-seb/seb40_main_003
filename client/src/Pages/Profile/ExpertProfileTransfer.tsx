@@ -6,7 +6,6 @@ import {
   MainRightWrapper,
   SectionWrapper,
   RowWrapper,
-  SpaceBetween,
   FlexWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
@@ -17,23 +16,28 @@ import { areaArray } from "../../Const/Address";
 import { genderArray } from "../../Const/gender";
 import { useEffect, useState } from "react";
 import axios from "../../Hooks/api";
+import { compressImage } from "../../utils/imageCompress";
 
 interface ExpertProfileTransferForm {
+  image: FileList;
   name: string;
-  age: string;
-  gender: string;
+  age: number;
+  gender: number;
   simpleContent: string;
   detailContent: string;
   price: string;
-  extra: string;
   address: string;
-  techTagName: string;
-  image: FileList;
-  category: number;
-  content: string;
-  checked: boolean;
-  area: number;
-  errors?: string;
+  extra: string;
+  techTags: [
+    {
+      techTagName: string;
+    }
+  ];
+  areaTags: [
+    {
+      areaTagName: string;
+    }
+  ];
 }
 
 const ExpertProfileTransfer = () => {
@@ -62,37 +66,55 @@ const ExpertProfileTransfer = () => {
   const navigate = useNavigate();
 
   const onValid = async (data: ExpertProfileTransferForm) => {
+    console.log(data);
+
     const formData = new FormData();
-    // const dealPostDto = JSON.stringify({
-    //   title: data.title,
-    //   content: data.content,
-    //   price: data.price,
-    //   category: data.category,
-    //   area: data.area,
-    // });
-    // for(let i = 0; i<data.image.length; i++){
-    //   formData.append("images", data.image[i]);
-    // }
+    const expertProfileDto = JSON.stringify({
+      name: data.name,
+      age: data.age,
+      gender: data.gender,
+      simpleContent: data.simpleContent,
+      detailContent: data.detailContent,
+      price: data.price,
+      address: data.address,
+      extra: data.extra,
+      techTags: [
+        {
+          techTagName: data.techTags[0].techTagName,
+        },
+      ],
+      areaTags: [
+        {
+          areaTagName: data.areaTags[0].areaTagName,
+        },
+      ],
+    });
+    formData.append(
+      "expertProfileDto",
+      new Blob([expertProfileDto], { type: "application/json" })
+    );
 
-    // formData.append(
-    //   "dealPostDto",
-    //   new Blob([dealPostDto], { type: "application/json" })
-    // );
+    if (data.image !== undefined) {
+      await compressImage(data.image[0]).then((res: any) => {
+        formData.append("multipartFile", res);
+      });
+    }
 
-    // axiosPrivate
-    //   .post("/deal", formData, {
-    //     headers: {
-    //       "Content-Type": "multipart/form-data",
-    //     },
-    //   })
-    //   .then((res) => {
-    //     navigate(`/product/${res.data.dealId}`);
-    //   })
-    //   .catch((err) => {});
+    axiosPrivate
+      .post("/experts", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+
+        navigate(`/`);
+      })
+      .catch((err) => {});
   };
 
   usePageTitle("전문가 계정으로 전환");
-  console.log(gugun);
 
   return (
     <MainContentContainer
@@ -201,7 +223,12 @@ const ExpertProfileTransfer = () => {
         <SectionWrapper width={100} borderNone={true}>
           <>
             <span className="mb-4">사는 곳 (동)</span>
-            <Select>
+            <Select
+              className="areaTagName"
+              {...register("areaTags.0.areaTagName", {
+                required: true,
+              })}
+            >
               {gugun.map((e, i) => {
                 return (
                   <option key={`dong${i}`} value={e.dong}>
@@ -266,7 +293,7 @@ const ExpertProfileTransfer = () => {
                     type="checkbox"
                     value={e.number}
                     className="techTagName"
-                    {...register("techTagName")}
+                    {...register("techTags.0.techTagName")}
                   />
                   {e.name}
                 </RowWrapper>
