@@ -39,7 +39,7 @@ const CommentInput = (props: props) => {
     <SectionWrapper width={100}>
       <RowWrapper className="align-center">
         <Textarea
-        className="width-100 comment-height"
+        className="comment-height"
           ref={textAreaRef}
           value={value}
           minLength={2}

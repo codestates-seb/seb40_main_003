@@ -10,6 +10,8 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
   SectionWrapper,
+  SpaceBetween,
+  RowWrapper,
 } from "../../Components/Wrapper";
 
 import { CareDetailTypes } from "../../types/caringTypes";
@@ -31,6 +33,7 @@ const CareDetail = () => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
 
+
   const data = useFetch<CareDetailTypes>(`/experts/${id}`);
 
   usePageTitle(data !== undefined ? `${data.name} 님의 프로필` : "프로필");
@@ -38,6 +41,7 @@ const CareDetail = () => {
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
+      <SpaceBetween>
         <ProfileCard
           src={data.photo}
           alt={`${data.name}의 대표사진`}
@@ -48,6 +52,11 @@ const CareDetail = () => {
           tag={data.useNum}
           pk={data.member.memberId}
         />
+        {/* <LikeButton /> */}
+        <button>
+          찜
+        </button>
+        </SpaceBetween>
         {
           <SectionWrapper content={data.simpleContent} pt={0} pb={8} />
         }

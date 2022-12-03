@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import axios from "../Hooks/api";
 import { categoryNumberToString } from "../Const/Category";
 import {areaArray} from "../Const/Address"
+import heartIcon from "../../images/like/heartIcon.png";
+import emptyHeartIcon from "../../images/like/emptyHeartIcon.png";
+import { LikeButton } from "./LikeButton";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -280,7 +283,6 @@ export const ProfileCard = (props: ProfileCardTypes) => {
           className="mr-16"
           circle={circle}
         />
-
         <ColumnWrapper className="justify-center">
           <span className="medium h4">{name}</span>
           {location && <span className="sub font-gray">{location}</span>}
@@ -323,6 +325,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
       </SpaceBetween>
 
       {(tag) !== undefined && <SigTag className="ghost p">{tag}번 고용</SigTag>}
+      <LikeButton />
     </CenteringWrapper>
   );
 };
@@ -375,3 +378,19 @@ export const Textarea = styled.textarea`
   outline-color: var(--line-light-gray);
   border-radius: 6px;
 `;
+
+// export type LikeButtonTypes = {
+//   size?: string;
+//   src?: string;
+//   alt?: string;
+// }
+// const LikeButton = styled.button`
+// width: 20px;
+// height: 20px;
+// `
+
+// export const likeButtonClick = ({like, onClick}) => {
+//   return (
+//     <LikeButton src={like?heartIcon:emptyHeartIcon} onClick={onClick} />
+//   )
+// }
