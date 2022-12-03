@@ -108,7 +108,6 @@ const ExpertProfileTransfer = () => {
       })
       .then((res) => {
         console.log(res);
-
         navigate(`/`);
       })
       .catch((err) => {});
