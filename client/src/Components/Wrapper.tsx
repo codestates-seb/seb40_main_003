@@ -170,10 +170,6 @@ export const SpaceBetween = styled.div`
   }
 `;
 
-export const FlexWrapper = styled.div`
-  display: flex;
-`;
-
 export const ConfirmWrapper = styled.span`
   display: flex;
   justify-content: row;

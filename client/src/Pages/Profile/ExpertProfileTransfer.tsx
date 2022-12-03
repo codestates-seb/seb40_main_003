@@ -6,17 +6,17 @@ import {
   MainRightWrapper,
   SectionWrapper,
   RowWrapper,
-  FlexWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import { CareCategoryList, categoryNumberToString, categoryStringToNumber } from "../../Const/Category";
+import { CareCategoryList, categoryNumberToString } from "../../Const/Category";
 import { areaArray } from "../../Const/Address";
 import { genderArray } from "../../Const/gender";
 import { useEffect, useState } from "react";
 import axios from "../../Hooks/api";
 import { compressImage } from "../../utils/imageCompress";
+import defaultProfile from "../../images/defaultProfileImage.png";
 
 interface ExpertProfileTransferForm {
   image: FileList;
@@ -28,10 +28,9 @@ interface ExpertProfileTransferForm {
   price: string;
   address: string;
   extra: string;
-  techTags: any
-  areaTags:any
+  techTags: any;
+  areaTags: any;
 }
-
 
 const ExpertProfileTransfer = () => {
   const axiosPrivate = useAxiosPrivate();
@@ -59,18 +58,16 @@ const ExpertProfileTransfer = () => {
   const navigate = useNavigate();
 
   const onValid = async (data: ExpertProfileTransferForm) => {
-
     const formData = new FormData();
-    const techTagname = (techTag:[])=>{
-      let arr=[]
-      for(let i =0; i<techTag.length ;i++){
-        arr.push({techTagName:techTag[i]})
+    const techTagname = (techTag: []) => {
+      let arr = [];
+      for (let i = 0; i < techTag.length; i++) {
+        arr.push({ techTagName: techTag[i] });
       }
-      // console.log(arr)
-      return arr
-    }
-    // console.log(data.areaTags[0])
-    techTagname(data.techTags[0].techTagName)
+      return arr;
+    };
+
+    techTagname(data.techTags[0].techTagName);
     const expertProfileDto = JSON.stringify({
       name: data.name,
       age: data.age,
@@ -80,9 +77,7 @@ const ExpertProfileTransfer = () => {
       price: data.price,
       address: data.address,
       extra: data.extra,
-      techTags: 
-        techTagname(data.techTags[0].techTagName)
-      ,
+      techTags: techTagname(data.techTags[0].techTagName),
       areaTags: [
         {
           areaTagName: data.areaTags,
@@ -93,13 +88,13 @@ const ExpertProfileTransfer = () => {
       "expertProfileDto",
       new Blob([expertProfileDto], { type: "application/json" })
     );
-    console.log(expertProfileDto)
+    console.log(expertProfileDto);
     if (data.image !== undefined) {
       await compressImage(data.image[0]).then((res: any) => {
         formData.append("multipartFile", res);
       });
     }
-    // console.log(expertProfileDto)
+
     axiosPrivate
       .post("/experts", formData, {
         headers: {
@@ -121,7 +116,7 @@ const ExpertProfileTransfer = () => {
       onSubmit={handleSubmit(onValid, onInValid)}
     >
       <MainCenterWrapper>
-        <FlexWrapper>
+        <RowWrapper>
           {avatarPreview ? (
             <img
               src={avatarPreview}
@@ -129,7 +124,11 @@ const ExpertProfileTransfer = () => {
               alt="이미지 미리보기"
             />
           ) : (
-            <div className="profile-img" />
+            <img
+              src={defaultProfile}
+              alt="기본이미지"
+              className="profile-img"
+            />
           )}
           <input
             className="image cursor"
@@ -146,7 +145,7 @@ const ExpertProfileTransfer = () => {
           <label className="input-file-button" htmlFor="input-file">
             프로필 사진 선택
           </label>
-        </FlexWrapper>
+        </RowWrapper>
 
         <SectionWrapper width={100} borderNone={true}>
           <>
@@ -208,7 +207,9 @@ const ExpertProfileTransfer = () => {
                 },
               })}
             >
-              <option value="" hidden>선택해주세요</option>
+              <option value="" hidden>
+                선택해주세요
+              </option>
               {areaArray.map((e) => {
                 return (
                   <option key={`${e.number}address`} value={e.number}>
@@ -228,7 +229,9 @@ const ExpertProfileTransfer = () => {
                 required: true,
               })}
             >
-              <option value="" hidden>선택해주세요</option>
+              <option value="" hidden>
+                선택해주세요
+              </option>
               {gugun.map((e, i) => {
                 return (
                   <option key={`dong${i}`} value={e.dong}>
