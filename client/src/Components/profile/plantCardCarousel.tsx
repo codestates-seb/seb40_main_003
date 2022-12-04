@@ -45,11 +45,12 @@ type ProfilePlantCardTypes = {
   type: string ;
   age: string;
   plantId: number;
+  onClickModal?: Function | null;
 };
 export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
   // 비구조화할당
   const { id } = useParams();
-  const { size, src, alt, name, type, age, plantId } = props;
+  const { size, src, alt, name, type, age, plantId, onClickModal } = props;
   const deleteItem = useDelete(`/plants/${plantId}`);
   const isAuthor = useIsAuthor();
   return (
@@ -66,7 +67,7 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
           <span className="medium">{name}</span>
           <SpaceEnd>
             {/* 팝업 사용법 */}
-            {isAuthor(id) && <EditAndDeleteButton deleteFunction={deleteItem} editFunction={()=>{}} />}
+            {isAuthor(id) && <EditAndDeleteButton deleteFunction={deleteItem} editFunction={()=>{onClickModal&&onClickModal()}} />}
           </SpaceEnd>
         </SpaceBetween>
         <span className="sub font-gray">{type}</span>

@@ -39,7 +39,7 @@ public class CommentService {
         Comment savedComment = commentRepository.save(newComment);
 
         return mapper.commentToResponseDto(savedComment,
-                memberMapper.memberToMemberResponseDto(member, imageService.findImage(member)));
+                memberMapper.memberToCommunityMemberDto(member, imageService.findImageByMember(member)));
     }
 
     public CommentResponseDto postComment(Long communityId, Long memberId, Long commentId, String content) {
@@ -51,7 +51,7 @@ public class CommentService {
         Comment savedComment = commentRepository.save(newComment);
 
         return mapper.commentToResponseDto(savedComment,
-                memberMapper.memberToMemberResponseDto(member, imageService.findImage(member)));
+                memberMapper.memberToCommunityMemberDto(member, imageService.findImageByMember(member)));
     }
 
     public CommentResponseDto patchComment(Long commentId, String content) {
@@ -60,27 +60,45 @@ public class CommentService {
         Comment savedComment = commentRepository.save(comment);
 
         return mapper.commentToResponseDto(savedComment,
-                memberMapper.memberToMemberResponseDto(savedComment.getMember(),
-                        imageService.findImage(savedComment.getMember())));
+                memberMapper.memberToCommunityMemberDto(savedComment.getMember(),
+                        imageService.findImageByMember(savedComment.getMember())));
     }
 
     public void deleteComment(Long commentId) {
         Comment comment = verifiedComment(commentId);
-        if (comment.getDepth()==0 && commentRepository.existsByParent(commentId)) {
-            comment.deleteComment();
+
+        if (comment.getDepth()==0) {
+            //최상위 댓글
+            if (commentRepository.existsByParent(commentId)) {
+                //대댓글 존재
+                comment.deleteComment();
+                commentRepository.save(comment);
+            } else {
+                commentRepository.delete(comment);
+            }
         } else {
+            //대댓글
             commentRepository.delete(comment);
+            Long parentId = comment.getParent();
+            Comment parentComment = verifiedComment(parentId);
+            if (parentComment.getIsDeleted()==1 && !commentRepository.existsByParent(parentId)) {
+                //대댓글 부모 지워진 상태
+                commentRepository.delete(parentComment);
+            }
         }
+    }
+
+    public void sudoDeleteComment(Long commentId) {
+        Comment comment = verifiedComment(commentId);
+        commentRepository.delete(comment);
     }
 
     public List<CommentResponseDto> getComments(Community community) {
         List<Comment> commentList = commentRepository.findAllByCommunity(community);
         List<CommentResponseDto> comments = commentList.stream().map(
-                c -> {
-                    return mapper.commentToResponseDto(c,
-                            memberMapper.memberToMemberResponseDto(c.getMember(),
-                                    imageService.findImage(c.getMember())));
-                }
+                c -> mapper.commentToResponseDto(c,
+                            memberMapper.memberToCommunityMemberDto(c.getMember(),
+                                    imageService.findImageByMember(c.getMember())))
         ).collect(Collectors.toList());
         return comments;
     }

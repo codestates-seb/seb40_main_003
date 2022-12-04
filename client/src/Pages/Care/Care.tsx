@@ -6,7 +6,6 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
   SpaceBetween,
-  SpaceEnd,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { InfiniteFetch } from "../../Hooks/useFetch";
@@ -21,23 +20,24 @@ import { LoadingSkeleton } from "../../Components/Loading";
 import { useInView } from "react-intersection-observer";
 import { useCallback, useEffect, useState } from "react";
 import React from "react";
-import { cannotLoad, noContent, searchbarComment } from "../../Const/message";
+import { cannotLoad, } from "../../Const/message";
 import Modal from "../../Components/Modal";
-import CategoryModal from "../../Components/product/CategoryModal";
 import { ReactComponent as Hamburger } from "../../images/hamburgerIcon.svg";
+import CategoryModal from "../../Components/care/CategoryModal";
 
-const careQueryClient = new QueryClient();
+export const careQueryClient = new QueryClient();
 
 type CareMain = {
   searchKeyword?: string;
+  size?: number;
 };
-export const CareMain = ({ searchKeyword }: CareMain) => {
+export const CareMain = ({ searchKeyword, size }: CareMain) => {
   // 무한스크롤 감지 Ref
   const { ref, inView } = useInView();
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["careQueryClient", searchKeyword],
-    ({ pageParam = 1 }) => InfiniteFetch("/experts", pageParam, searchKeyword),
+    ["careQueryClient", searchKeyword, size],
+    ({ pageParam = 1 }) => InfiniteFetch("/experts", pageParam, searchKeyword, size),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextPage : undefined,
@@ -45,8 +45,8 @@ export const CareMain = ({ searchKeyword }: CareMain) => {
   );
   // 스크롤감지
   useEffect(() => {
-    if (inView) fetchNextPage();
-  }, [inView]);
+    if (size!==3&&inView) fetchNextPage();
+  }, [inView,size])
 
   if (status === "loading") return <LoadingSkeleton />;
   if (status === "error") return <ErrorMessage content={cannotLoad} />;
@@ -54,17 +54,14 @@ export const CareMain = ({ searchKeyword }: CareMain) => {
     <>
       {data?.pages.map((page, index) => (
         <React.Fragment key={index}>
-          {page.data.length === 0 ? (
-            <ErrorMessage className="pt-16 width-100" content={noContent} />
-          ) : (
-            page.data.map((e: caringPreviewDataTypes) => {
+          {page.data.map((e: caringPreviewDataTypes) => {
               return (
                 <Link key={e.expertId} to={`/caring/${e.expertId}`}>
                   <CareCard data={e} />
                 </Link>
               );
             })
-          )}
+          }
         </React.Fragment>
       ))}
       {isFetchingNextPage ? <LoadingSkeleton /> : <div ref={ref}></div>}
@@ -77,6 +74,7 @@ const Care = () => {
   const [searchKeyWord, setSearchKeyWord] = useState<string | undefined>(
     undefined
   );
+
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
@@ -88,7 +86,7 @@ const Care = () => {
         <SpaceBetween>
           <select name="sorting" className="medium font-gray" id="option">
             <option value="정렬">최신순</option>
-            <option value="정렬">찜순</option>
+            <option value="정렬">찜 많은 순</option>
             <option value="정렬">찜순</option>
           </select>
           <button className="ml-16" onClick={onClickModal}>
@@ -115,7 +113,7 @@ const Care = () => {
       </MainCenterWrapper>
       <MainRightWrapper>
         <p className="h5 bold font-main mr-16">
-          우리 동네 식물 전문가를 만나보세요.🌿
+          우리 동네 식물 전문가에게 맡겨보세요.🌳
         </p>
       </MainRightWrapper>
     </MainContentContainer>

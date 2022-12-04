@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
+import { ReactComponent as AddIcon } from "../../images/addIcon.svg";
 import PlantCardCarousel, {
-  AddProfilePlantCard,
   ProfilePlantCard,
 } from "../../Components/profile/plantCardCarousel";
 import {
@@ -10,7 +10,6 @@ import {
   MainCenterWrapper,
   MainRightWrapper,
   SectionWrapper,
-  ColumnWrapper,
 } from "../../Components/Wrapper";
 
 import { CareDetailTypes } from "../../types/caringTypes";
@@ -40,7 +39,7 @@ const CareDetail = () => {
     <MainContentContainer>
       <MainCenterWrapper>
         <ProfileCard
-          src={data.member.plants[0].image.imgUrl}
+          src={data.photo}
           alt={`${data.name}의 대표사진`}
           name={data.name}
           location={data.address}
@@ -50,9 +49,7 @@ const CareDetail = () => {
           pk={data.member.memberId}
         />
         {
-          // isLogin?.userId===id?
           <SectionWrapper content={data.simpleContent} pt={0} pb={8} />
-          // :<></>
         }
         {/* 모달창 */}
         <>
@@ -66,10 +63,11 @@ const CareDetail = () => {
         <SectionWrapper title="반려 식물">
           <PlantCardCarousel key={"reactCarousel"}>
             <>
-              {data.member.plants.map((e) => {
+              {data.member.plants.length===0?<>반려식물이 없습니다</>:
+              data.member.plants.map((e,i) => {
                 return (
                   <ProfilePlantCard
-                    src={data.member.plants[0].image.imgUrl}
+                    src={data.member.plants[0]!==undefined?data.member.plants[0].image.imgUrl:""}
                     alt={`${data.name}의 반려식물`}
                     name={e.name}
                     type={e.type}
@@ -80,11 +78,7 @@ const CareDetail = () => {
                 );
               })}
               {isAuthor(data.member.memberId) && (
-                <ColumnWrapper center={true}>
-                  <AddProfilePlantCard onClick={onClickModal}>
-                    +
-                  </AddProfilePlantCard>
-                </ColumnWrapper>
+                <AddIcon onClick={onClickModal} height={"36px"} />
               )}
             </>
           </PlantCardCarousel>
@@ -108,6 +102,7 @@ const CareDetail = () => {
         <SectionWrapper title="돌봄 리뷰" borderNone={true}>
           <>
             {data?.expertReviews.map((e) => {
+              console.log(data)
               return (
                 <CommentCard
                   name={e.member.nickname}

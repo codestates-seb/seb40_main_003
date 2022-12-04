@@ -1,14 +1,10 @@
-import { ProfilePlantType } from "./profileType";
+import { pageInfo } from "./pageInfoType";
+import { imageType, ProfilePlantType } from "./profileType";
 
 // 돌봄 프로필 리스트 조회 / 검색
 export type caringPreviewTypes = {
   data: [caringPreviewDataTypes];
-  pageInfo: {
-    page: number;
-    size: number;
-    totalElements: number;
-    totalPages: number;
-  };
+  pageInfo: pageInfo
 };
 export type caringPreviewDataTypes = {
   expertId: number;
@@ -22,17 +18,7 @@ export type caringPreviewDataTypes = {
   member: {
     memberId: number;
     plants: [
-      {
-        plantId: number;
-        name: string;
-        years: number;
-        type: string;
-        image: {
-          imageId: number;
-          imgUrl: string;
-          isRepImg: string;
-        };
-      }
+      ProfilePlantType
     ];
   };
   techTags: [
@@ -47,52 +33,44 @@ export type caringPreviewDataTypes = {
       areaTagName: string;
     }
   ];
-  image: {
-    imageId: number;
-    imgUrl: string;
-    isRepImg: string;
-  };
+  image: imageType
 };
 
 // 돌봄 프로필 상세 조회
 export type CareDetailTypes = {
-  expertId: number;
   name: string;
   age: number;
+  photo:string;
   gender: number;
   simpleContent: string;
   detailContent: string;
   useNum: number;
   price: string;
-  address: string;
   extra: string;
-  member: {
-    memberId: number;
-    plants: [ProfilePlantType];
-  };
+  address: string;
+  member:{
+    memberId:string
+    plants:[ProfilePlantType]|[]
+  }
   techTags: [
     {
       techTagId: number;
       techTagName: string;
     }
   ];
-  expertReviews: [
-    {
-      expertReviewId: number;
-      content: string;
-      member: {
-        memberId: number;
-        nickname: string;
-      };
-      createdAt: string;
-      modifiedAt: string;
-    }
-  ];
-  image: {
-    imageId: number;
-    imgUrl: string;
-    isRepImg: string;
-  };
+  expertReviews: [exportReviewType];
+  image: imageType;
+};
+// 돌봄리뷰타입
+export type exportReviewType = {
+  expertReviewId: string
+  content: string
+  member: {
+      memberId: number
+      nickname: string
+  }
+  createdAt: string
+  modifiedAt: string
 };
 
 // 돌봄 프로필 찜 하기
@@ -108,12 +86,7 @@ export type CareLikeAddType = {
 // 돌봄 찜 목록 조회
 export type CareLikeListType = {
   data: [CareLikeType];
-  pageInfo: {
-    page: number;
-    size: number;
-    totalElements: number;
-    totalPages: number;
-  };
+  pageInfo: pageInfo
 };
 
 export type CareLikeType = {

@@ -9,10 +9,4 @@ public interface TechTagMapper {
 	TechTag toTechTag(TechTagDto techTagDto);
 
 	TechTagDto toTechTagDto(TechTag techTag);
-
-//	List<TechTagDto> toTechTagDtos(List<TechTag> techTags);
-//
-//	List<TechTag> toTechTags(List<TechTagDto> techTagDtos);
-
-
 }

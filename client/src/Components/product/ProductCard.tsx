@@ -25,13 +25,12 @@ type props={
   data: ProfileDealType
 }
 const ProductCard:React.FC<props> = ({data}) => {
-
   return (
     <ProductWrapper as={"section"} className={data.state === 2 ? "soldOut" : ""}>
       <RowWrapper>
 {data.images!==null?<ImageWrapper
           size={"100"}
-          src={data.images[0]}
+          src={data?.images[0]}
           alt={`상품명 ${data.title}의 대표이미지`}
           loading="lazy"
           onError={defaultImage}

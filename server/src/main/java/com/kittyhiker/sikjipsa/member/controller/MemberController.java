@@ -3,15 +3,20 @@ package com.kittyhiker.sikjipsa.member.controller;
 import com.kittyhiker.sikjipsa.jwt.dto.TokenDto;
 import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
 import com.kittyhiker.sikjipsa.member.dto.*;
+import com.kittyhiker.sikjipsa.member.entity.Member;
 import com.kittyhiker.sikjipsa.member.mapper.MemberMapper;
+import com.kittyhiker.sikjipsa.member.memberprofile.dto.MemberPatchDto;
+import com.kittyhiker.sikjipsa.member.memberprofile.dto.ProfileResponseDto;
 import com.kittyhiker.sikjipsa.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
 
 @RestController
 @RequiredArgsConstructor
@@ -41,8 +46,8 @@ public class MemberController {
 
     @PostMapping("/users/refresh")
     public ResponseEntity requestRefresh(@RequestBody RefreshTokenDto token) {
-        TokenDto tokenDto = memberService.reissueToken(token.getRefreshToken());
-        return new ResponseEntity(tokenDto, HttpStatus.CREATED);
+        MemberLoginResponseDto memberLoginResponseDto = memberService.reissueToken(token.getRefreshToken());
+        return new ResponseEntity(memberLoginResponseDto, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/users")
@@ -60,4 +65,19 @@ public class MemberController {
         return new ResponseEntity(infoResponseDto, HttpStatus.CREATED);
     }
 
+    @GetMapping("/users/{info-id}")
+    public ResponseEntity getMemberInfo(@PathVariable("info-id") Long infoId,
+                                        @RequestHeader("Authorization") String token) {
+        MemberInfoResponseDto infoResponseDto = memberService.getMemberInfo(infoId, jwtTokenizer.getUserIdFromToken(token));
+        return new ResponseEntity(infoResponseDto, HttpStatus.OK);
+    }
+
+//    @PatchMapping("/users/{info-id}")
+//    public ResponseEntity patchMemberInfo(@PathVariable("info-id") @Positive Long infoId,
+//                                       @Valid @RequestBody MemberInfoPostDto memberInfoPostDto,
+//                                       @RequestHeader("Authorization") String token) {
+////        Member member = memberMapper.toProfile(memberPatchDto);
+//        MemberInfoResponseDto response = memberService.patchMemberInfo(infoId, memberInfoPostDto, jwtTokenizer.getUserIdFromToken(token));
+//        return new ResponseEntity(response, HttpStatus.OK);
+//    }
 }

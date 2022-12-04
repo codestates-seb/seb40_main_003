@@ -32,7 +32,7 @@ public class ExpertProfileResponseDtos {
 	private Long view;
 
 	//private String extra;
-	private MemberDto2 member;
+	//private MemberDto2 member;
 	private List<TechTagDto> techTags;
 	private List<AreaTagDto> areaTags;
 	private ImageDto image;

@@ -35,20 +35,18 @@ export const FetchByBody = async <T>(url: string, body?: object) => {
 export const InfiniteFetch = async (
   url: string,
   pageParam: number,
-  keyword?: string
+  keyword?: string,
+  size:number=fetchingImageLimit
 ) => {
   const res = await axios.get(
     `${url}?${
       keyword !== undefined ? `keyword=${keyword}` : ""
-    }&page=${pageParam}&size=${fetchingImageLimit}`
+    }&page=${pageParam}&size=${size}`
   );
   const { data } = res.data;
   const { page, totalPages } = res.data.pageInfo;
-  const isLast = () => {
-    if (totalPages !== 0 && page === totalPages) {
-      return true
-    }
-  };
+  const isLast=  page === totalPages||totalPages === 0
+
   return { data, nextPage: pageParam + 1, isLast };
 };
 /** url,pageParam,keyword를 받아서 data, nextpage, isLast를 반환하는 함수 */
@@ -64,11 +62,7 @@ export const InfiniteFetchPrivate = async (
   );
   const { data } = res.data;
   const { page, totalPages } = res.data.pageInfo;
-  const isLast = () => {
-    if (totalPages !== 0 && page === totalPages) {
-      return true
-    }
-  };
+  const isLast=  page === totalPages||totalPages === 0
   return { data, nextPage: pageParam + 1, isLast };
 };
 // =============리액트 쿼리 사용으로 당분간 안쓸예정===============

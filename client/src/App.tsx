@@ -42,11 +42,11 @@ import { getLS } from "./Hooks/useSecureLS";
 import ProductModify from "./Pages/Product/ProductModify";
 import Main from "./Pages/Main/Main";
 import { cleanLS } from "./Hooks/useLogout";
-
+import ExpertProfileTransfer from "./Pages/Profile/ExpertProfileTransfer";
 
 const App = () => {
-  const [user,setUser] = useRecoilState(userState);
-  const setIsExpertNow = useSetRecoilState(isExpert);  
+  const [user, setUser] = useRecoilState(userState);
+  const setIsExpertNow = useSetRecoilState(isExpert);
   useEffect(() => {
     const expertInfo = getLS("expertInfo");
     const accessToken = getLS("accessToken");
@@ -56,7 +56,7 @@ const App = () => {
     //로컬스토리지에 유저정보가 있고, 액세스토큰, 리프레시토큰 모두 있을때 (토큰 유효성검사는 안함)
     if (accessToken && refreshToken && userInfo) {
       setUser(userInfo);
-      expertInfo&&setIsExpertNow(true);
+      expertInfo && setIsExpertNow(true);
     } else {
       cleanLS();
       setUser(null);
@@ -74,6 +74,7 @@ const App = () => {
         {/* <Route element={<AuthProvider />}> */}
         <Route path="/profile" element={<HeaderLayout />}>
           <Route path=":id" element={<Profile />} />
+          <Route path="expert-form" element={<ExpertProfileTransfer />} />
         </Route>
         {/* </Route> */}
 

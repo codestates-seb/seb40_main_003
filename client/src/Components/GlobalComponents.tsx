@@ -7,7 +7,9 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { ReactComponent as Exchange } from "../images/exchangeIcon.svg";
 import { useIsAuthor } from "../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import axios from "../Hooks/api";
+import { categoryNumberToString } from "../Const/Category";
+import {areaArray} from "../Const/Address"
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -150,11 +152,16 @@ export const ImageWrapper = styled.img`
   display: block;
   object-fit: cover;
   margin-right: 16px;
-  &.communityImage {
+  &.communityPreview {
     width: 100%;
+    margin-right: 0;
+    height: 25vw;
+  }
+  &.communityImage{
+    width: 100%;
+    margin-right: 0;
     min-height: 40vh;
     height: 25vw;
-    margin-right: 0;
   }
 `;
 
@@ -274,10 +281,10 @@ export const ProfileCard = (props: ProfileCardTypes) => {
           circle={circle}
         />
 
-        <ColumnWrapper>
+        <ColumnWrapper className="justify-center">
           <span className="medium h4">{name}</span>
           {location && <span className="sub font-gray">{location}</span>}
-          {area && <span className="font-gray">{area}</span>}
+          {area!==undefined && <span className="sub font-gray">{categoryNumberToString({number:area,arr:areaArray})}</span>}
 
           {isAuthor(pk) && (
             <SigTag
@@ -289,13 +296,23 @@ export const ProfileCard = (props: ProfileCardTypes) => {
               }
               onClick={() => {
                 if (isExpertNow) {
+                  setIsExpertNow((prev) => !prev);
                   memberId
                     ? navigate(`/profile/${memberId.memberId}`)
                     : navigate("/login");
-                }else{
-                  // axios.get()
+                } else {
+                  axios
+                    .get(`/experts/is-expert/${memberId?.memberId}`)
+                    .then((res) => {
+                      setIsExpertNow((prev) => !prev);
+                      navigate(`/caring/${res.data.expertId}`);
+                    })
+                    .catch((err) => {
+                      if(window.confirm("전문가가 아닙니다 전문가등록을 하시겠습니까?")){
+                        navigate("/profile/expert-form")
+                      }
+                    });
                 }
-                setIsExpertNow((prev) => !prev);
               }}
             >
               <Exchange height={"16px"} width={"16px"} className="mb-2 mr-4" />
@@ -305,7 +322,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         </ColumnWrapper>
       </SpaceBetween>
 
-      {tag !== undefined && <SigTag className="ghost p">{tag}번 고용</SigTag>}
+      {(tag) !== undefined && <SigTag className="ghost p">{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };
@@ -342,3 +359,11 @@ export type CommentCardTypes = {
   user: UserStateType | null;
   author: number;
 };
+
+export const Select = styled.select`
+  height: 35px;
+  outline-style: solid;
+  outline-width: 1px;
+  outline-color: var(--line-light-gray);
+  border-radius: 6px;
+`;

@@ -8,7 +8,7 @@ import {
   SigTag,
   TagWrapper,
 } from "../Components/GlobalComponents";
-import { ColumnWrapper, RowWrapper } from "./Wrapper";
+import { ColumnWrapper, RowWrapper, SpaceBetween } from "./Wrapper";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 import { useIsAuthor } from "../Hooks/useAuth";
 export const CommentCardWrapper = styled.div`
@@ -26,10 +26,6 @@ export const CommentButtonWrapper = styled.div`
   justify-content: space-between;
 `;
 
-export const GridWrapper = styled.div`
-  display: grid;
-  align-content: space-between;
-`;
 
 export type CommentCardTypes = {
   size?: string;
@@ -59,8 +55,8 @@ export const CommentCard = (props: CommentCardTypes) => {
     commentId,
     communityId,
   } = props;
-  const isAuthor = useIsAuthor()
-  const ref = useRef<HTMLDivElement>(null);
+  const isAuthor = useIsAuthor();
+  const ref = useRef<HTMLInputElement>(null);
   const [text, setText] = useState(content);
   const [editable, setEditable] = useState(false);
 
@@ -76,7 +72,7 @@ export const CommentCard = (props: CommentCardTypes) => {
 
   return (
     <CommentCardWrapper>
-      <RowWrapper className="align-center">
+      <SpaceBetween className="align-center">
         {src && alt !== undefined ? (
           <ImageWrapper
             src={src}
@@ -85,7 +81,7 @@ export const CommentCard = (props: CommentCardTypes) => {
             loading="lazy"
           />
         ) : null}
-        <GridWrapper>
+        <ColumnWrapper>
           <span className="sub bold font-gray mb-4">{name}</span>
           {tag ? (
             <TagWrapper>
@@ -94,37 +90,41 @@ export const CommentCard = (props: CommentCardTypes) => {
               })}
             </TagWrapper>
           ) : null}
-          <>
-            <div ref={ref}>
               {editable ? (
                 <input
+                ref={ref}
+                className="width-100"
                   autoFocus
                   type="text"
                   value={text}
                   onChange={(e) => handleChange(e)}
                   onBlur={(e) => {
-                    if (editable) {
-                      axiosPrivate
-                        .patch(
-                          `/community/${communityId}/comment/${commentId}`,
-                          {
-                            content: text,
-                          }
-                        )
-                        .then(() => setEditable(false));
+                    if (e.target.value.length < 2) {
+                      alert("2글자이상 입력하세요");
+                    } else {
+                      if (editable) {
+                        axiosPrivate
+                          .patch(
+                            `/community/${communityId}/comment/${commentId}`,
+                            {
+                              content: text,
+                            }
+                          )
+                          .then(() => setEditable(false));
+                      }
                     }
                   }}
                 />
               ) : (
                 <p className="font-black medium">{text}</p>
               )}
-            </div>
-          </>
-        </GridWrapper>
-      </RowWrapper>
-      <GridWrapper>
+        </ColumnWrapper>
+      </SpaceBetween>
+      <SpaceBetween>
         <ColumnWrapper>
-          <div className="sub font-gray mb-6 ml-4 text-align-end">{getDateAgo(createdAt)}</div>
+          <div className="sub font-gray mb-6 ml-4 text-align-end">
+            {getDateAgo(createdAt)}
+          </div>
           {/* 유저와 작성자가 같다면 */}
           {isAuthor(author) ? (
             <CommentButtonWrapper>
@@ -192,7 +192,7 @@ export const CommentCard = (props: CommentCardTypes) => {
             </CommentButtonWrapper>
           ) : null}
         </ColumnWrapper>
-      </GridWrapper>
+      </SpaceBetween>
     </CommentCardWrapper>
   );
 };

@@ -1,11 +1,7 @@
 
 export type profileType = {
   nickname: string;
-  image: {
-    imageId: number;
-    imgUrl: string;
-    isRepImg: boolean;
-  };
+  image: imageType|null
   memberProfile: {
     content: string;
   };
@@ -16,17 +12,13 @@ export type profileType = {
   deals: ProfileDealType[];
   memberReviews: ProfileMemberReviewType[];
 };
-
+// 식물모달 타입
 export type ProfilePlantType = {
   plantId: number;
   name: string;
   years: string;
   type: string;
-  image: {
-    imageId: number;
-    imgUrl: string;
-    isRepImg?: boolean;
-  };
+  image: imageType
 };
 
 export type ProfileMemberReviewType = {
@@ -35,7 +27,9 @@ export type ProfileMemberReviewType = {
   member: {
     memberId: number;
     nickname: string;
-  };
+  }
+  createdAt: string
+  modifiedAt: string
 };
 
 export type ProfileDealType = {
@@ -49,3 +43,9 @@ export type ProfileDealType = {
   createdAt: string;
   category:number
 };
+
+export type imageType = {
+    imageId: number;
+    imgUrl: string;
+    isRepImg: boolean;
+}

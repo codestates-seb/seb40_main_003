@@ -65,8 +65,6 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal }) => {
 
   return (
     <ColumnWrapper
-      className="ml-54 mt-16"
-      width={20}
       as={"form"}
       onSubmit={handleSubmit(onValid, onInValid)}
     >
