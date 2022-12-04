@@ -9,7 +9,7 @@ import { useIsAuthor } from "../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import axios from "../Hooks/api";
 import { categoryNumberToString } from "../Const/Category";
-import {areaArray} from "../Const/Address"
+import { areaArray } from "../Const/Address";
 import heartIcon from "../../images/like/heartIcon.png";
 import emptyHeartIcon from "../../images/like/emptyHeartIcon.png";
 import { LikeButton } from "./LikeButton";
@@ -162,10 +162,10 @@ export const ImageWrapper = styled.img`
     margin-right: 0;
     height: 25vw;
   }
-  &.communityImage{
+  &.communityImage {
     width: 100%;
     margin-right: 0;
-    min-height: 40vh;
+    min-height: 60vh;
     height: 25vw;
   }
 `;
@@ -236,6 +236,8 @@ export const CenteringWrapper = styled.section`
   padding-bottom: ${(props: centeringWrapper) => (props.pb ? props.pb : 8)}px;
   border-bottom: ${(props: centeringWrapper) =>
     props.borderNone ? "none" : "1px solid var(--line-light-gray)"};
+  border-top: ${(props: centeringWrapper) =>
+    props.borderNone ? "none" : "1px solid var(--line-light-gray)"};
   display: flex;
   align-items: center;
   &.space-between {
@@ -268,6 +270,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
     circle = false,
     tag,
     pk,
+    border,
   } = props;
   const [isExpertNow, setIsExpertNow] = useRecoilState(isExpert);
   const navigate = useNavigate();
@@ -276,7 +279,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
   const isAuthor = useIsAuthor();
 
   return (
-    <CenteringWrapper className="space-between" borderNone={true}>
+    <CenteringWrapper className="space-between" borderNone={!border}>
       <SpaceBetween>
         <ImageWrapper
           src={src ? src : defaultProfile}
@@ -286,17 +289,21 @@ export const ProfileCard = (props: ProfileCardTypes) => {
           circle={circle}
         />
         <ColumnWrapper className="justify-center">
-          <span className="medium h4">{name}</span>
+          <span className="medium ">{name}</span>
           {location && <span className="sub font-gray">{location}</span>}
-          {area!==undefined && <span className="sub font-gray">{categoryNumberToString({number:area,arr:areaArray})}</span>}
+          {area !== undefined && (
+            <span className="sub font-gray">
+              {categoryNumberToString({ number: area, arr: areaArray })}
+            </span>
+          )}
 
           {isAuthor(pk) && (
             <SigTag
               as={"button"}
               className={
                 isExpertNow
-                  ? "ghostgray mt-8 p disableIcon"
-                  : "ghost mt-8 p activeIcon"
+                  ? "ghostgray mt-8 sub disableIcon"
+                  : "ghost mt-8 sub activeIcon"
               }
               onClick={() => {
                 if (isExpertNow) {
@@ -312,8 +319,12 @@ export const ProfileCard = (props: ProfileCardTypes) => {
                       navigate(`/caring/${res.data.expertId}`);
                     })
                     .catch((err) => {
-                      if(window.confirm("전문가가 아닙니다 전문가등록을 하시겠습니까?")){
-                        navigate("/profile/expert-form")
+                      if (
+                        window.confirm(
+                          "전문가가 아닙니다 전문가등록을 하시겠습니까?"
+                        )
+                      ) {
+                        navigate("/profile/expert-form");
                       }
                     });
                 }
@@ -326,7 +337,7 @@ export const ProfileCard = (props: ProfileCardTypes) => {
         </ColumnWrapper>
       </SpaceBetween>
 
-      {(tag) !== undefined && <SigTag className="ghost p">{tag}번 고용</SigTag>}
+      {tag !== undefined && <SigTag className="ghost p">{tag}번 고용</SigTag>}
     </CenteringWrapper>
   );
 };

@@ -45,6 +45,7 @@ import { cleanLS } from "./Hooks/useLogout";
 import ExpertProfileTransfer from "./Pages/Profile/ExpertProfileTransfer";
 import { DefaultLayout } from "./context/Route";
 import { TalkDetail } from "./Pages/Talk/TalkDetail";
+import { GlobalModal } from "./Components/Modal";
 
 const App = () => {
   const [user, setUser] = useRecoilState(userState);
@@ -82,8 +83,10 @@ const App = () => {
   }, [setUser]);
 
   return (
+    
     <BrowserRouter>
       {/* 모바일용 navbar*/}
+      <GlobalModal />
       <Navbar />
       {/* <DevTools/> */}
       <Routes>

@@ -54,6 +54,7 @@ export const MainRightWrapper = styled.aside`
   background-color: var(--pure-white);
   padding: 16px 24px;
   position: sticky;
+  z-index: 9999;
   top: 70px;
   border-top: 1px solid var(--line-light-gray);
   display: ${(props) => !props.children && "none"};

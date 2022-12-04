@@ -15,6 +15,7 @@ import ProductCategoryIcon5 from "../images/dealIcon5.svg";
 import ProductCategoryIcon6 from "../images/dealIcon6.svg";
 import ProductCategoryIcon7 from "../images/dealIcon7.svg";
 import ProductCategoryIcon8 from "../images/dealIcon8.svg";
+import ProductCategoryIcon9 from "../images/seeAllIcon.svg";
 
 export const ProductCategoryList = [
   { number: 0, name: "대형 식물", img: ProductCategoryIcon1 },
@@ -25,7 +26,7 @@ export const ProductCategoryList = [
   { number: 5, name: "가구/장식", img: ProductCategoryIcon6 },
   { number: 6, name: "도구/용품", img: ProductCategoryIcon7 },
   { number: 7, name: "서적", img: ProductCategoryIcon8 },
-  { number: 8, name: "기타", img: ""},
+  { number: 8, name: "기타", img: ProductCategoryIcon9},
 ] as const;
 
 export const CareCategoryList = [
@@ -37,6 +38,7 @@ export const CareCategoryList = [
   { number: 5, name: "잎 닦기", img: CareCategoryIcon6 },
   { number: 6, name: "가지치기", img: CareCategoryIcon7 },
   { number: 7, name: "병/해충", img: CareCategoryIcon8 },
+  { number: 8, name: "모두보기", img: ProductCategoryIcon9},
 ] as const;
 
 type categoryNumberToStringType = {

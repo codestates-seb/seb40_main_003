@@ -64,7 +64,7 @@ const CommentInput = (props: props) => {
             }
             
           }}
-          className="ml--45 z-index-9999 cursor"
+          className="ml--45 z-index cursor"
         >
           작성
         </SigTag>

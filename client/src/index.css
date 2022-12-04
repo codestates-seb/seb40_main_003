@@ -399,9 +399,11 @@ code {
     display: none !important;
   }
 }
-
-.z-index-9999 {
+.z-index {
   z-index: 1000;
+}
+.z-index-9999 {
+  z-index: 9999;
 }
 
 .cursor {

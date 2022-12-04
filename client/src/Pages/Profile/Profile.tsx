@@ -9,6 +9,7 @@ import {
   MainContentContainer,
   MainRightWrapper,
   ReverseWrap,
+  RowWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
 import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
@@ -61,7 +62,7 @@ const Profile = (props: props) => {
             circle={true}
             size={"66"}
           />
-          <SectionWrapper content={data.memberProfile?.content} pt={0} pb={8} />
+          <RowWrapper className="pb-16 mt-8">{data.memberProfile?.content}</RowWrapper>
           <SectionWrapper title="반려 식물">
             {/* 모달창 */}
             <>
@@ -88,7 +89,7 @@ const Profile = (props: props) => {
                   );
                 })}
                 {isAuthor(id) ? (
-                  <ColumnWrapper center={true}>
+                  <ColumnWrapper center={true} className="cursor">
                     <AddIcon onClick={onClickModal} height={"36px"} />
                     <span className="sub">반려식물 추가</span>
                   </ColumnWrapper>
@@ -117,7 +118,7 @@ const Profile = (props: props) => {
               <span className="mt-8">거래후기가 없습니다</span>
             )}
           </SectionWrapper>
-          <SectionWrapper title="판매 상품" width={100} pb={0}>
+          <SectionWrapper title="판매 상품" width={100}>
             {data.deals.length !== 0 ? (
               <ReverseWrap>
                 <Link to={"/setting/history/sales"}>

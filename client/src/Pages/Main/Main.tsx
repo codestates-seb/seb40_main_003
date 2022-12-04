@@ -4,6 +4,7 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
+  RowWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
 import MainBanner1 from "../../images/banner/mainBanner1.png";
@@ -75,24 +76,25 @@ const Main = () => {
           </Link>
           </Carousel>
           </article>
-        {/* 거래 */}
-        <article className="pd-24" title="거래하기">
-            <Link to={"/product"} className="text-align-start">
-              <SectionWrapper title="거래하기" width={100} borderNone={false} font="h4"/>
-            </Link>
-          <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
-            <QueryClientProvider client={productQueryClient}>
-              <ProductMain size={mainPageImageLimit} />
-            </QueryClientProvider>
-          </ErrorBoundary>
-        </article>
+          {/* 돌봄 */}
         <article className="pd-24">
             <Link to={"/caring"} className="text-align-start">
-              <SectionWrapper title="돌봄 요청하기" width={100} borderNone={false} font="h4"/>
+            <RowWrapper className="h4 font-main bold mt-16">돌봄 요청하기</RowWrapper>
             </Link>
           <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
             <QueryClientProvider client={careQueryClient}>
               <CareMain size={mainPageImageLimit} />
+            </QueryClientProvider>
+          </ErrorBoundary>
+        </article>
+        {/* 거래 */}
+        <article className="pd-24" title="거래하기">
+            <Link to={"/product"} className="text-align-start">
+              <RowWrapper className="h4 font-main bold">거래하기</RowWrapper>
+            </Link>
+          <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
+            <QueryClientProvider client={productQueryClient}>
+              <ProductMain size={mainPageImageLimit} />
             </QueryClientProvider>
           </ErrorBoundary>
         </article>

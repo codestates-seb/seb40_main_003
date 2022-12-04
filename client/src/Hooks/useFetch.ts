@@ -2,7 +2,7 @@ import { fetchingImageLimit } from "../Const/fetchImage";
 import axios, { axiosPrivate } from "./api";
 import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
-import { loading } from "../Recoil/atoms/loadingStatus";
+
 
 export type FetchByParamsType = {
   keyword?: null | string;
@@ -72,7 +72,7 @@ export const InfiniteFetchPrivate = async (
 // URL을 받아서 DATA 를 리턴하는 Hooks
 const useFetch = <T>(url: string, params?: object) => {
   const [data, setData] = useState<T>();
-  const [isLoading, setIsLoadng] = useRecoilState(loading);
+  const [isLoading, setIsLoadng] = useState(true);
 
   useEffect(() => {
     setIsLoadng(true);

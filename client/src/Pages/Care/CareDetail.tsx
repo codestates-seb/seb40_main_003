@@ -12,6 +12,8 @@ import {
   SectionWrapper,
   SpaceBetween,
   SpaceEnd,
+  RowWrapper,
+  ColumnWrapper,
 } from "../../Components/Wrapper";
 
 import { CareDetailTypes } from "../../types/caringTypes";
@@ -35,45 +37,44 @@ const CareDetail = () => {
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-  const axiosprivate = useAxiosPrivate()
+  const axiosprivate = useAxiosPrivate();
   const data = useFetch<CareDetailTypes>(`/experts/${id}`);
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
+
   const LikeOnClick = () => {
     axiosPrivate
-    .post(`/experts/${id}/like`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res)=>{
-    console.log(res)}
-    )
-    .catch((err) => {});
-
-  }
+      .post(`/experts/${id}/like`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {});
+  };
 
   usePageTitle(data !== undefined ? `${data.name} 님의 서비스` : "서비스");
   console.log(data);
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
-        <SpaceEnd className="cursor"><LikeButton onClick={LikeOnClick} /></SpaceEnd>
-      <SpaceBetween>
-        <ProfileCard
-          src={data.image.imgUrl}
-          alt={`${data.name}의 대표사진`}
-          name={data.name}
-          location={data.address}
-          circle={true}
-          size={"66"}
-          tag={data.useNum}
-          pk={data.member.memberId}
-        />
+        <SpaceEnd className="cursor">
+          <LikeButton onClick={LikeOnClick} />
+        </SpaceEnd>
+        <SpaceBetween>
+          <ProfileCard
+            src={data.image.imgUrl}
+            alt={`${data.name}의 대표사진`}
+            name={data.name}
+            location={data.address}
+            circle={true}
+            size={"66"}
+            tag={data.useNum}
+            pk={data.member.memberId}
+          />
         </SpaceBetween>
-        {
-          <SectionWrapper content={data.simpleContent} pt={0} pb={8} />
-        }
+        {<RowWrapper className="pb-16 mt-8">{data.simpleContent}</RowWrapper>}
         {/* 모달창 */}
         <>
           {isOpenModal && (
@@ -86,22 +87,29 @@ const CareDetail = () => {
         <SectionWrapper title="반려 식물">
           <PlantCardCarousel key={"reactCarousel"}>
             <>
-              {data.member.plants.length===0&&!isAuthor(data.member.memberId) ?<>반려식물이 없습니다</>:
-              data.member.plants.map((e,i) => {
-                return (
-                  <ProfilePlantCard
-                    src={data.member.plants[0]!==undefined?data.member.plants[0].image.imgUrl:""}
-                    alt={`${data.name}의 반려식물`}
-                    name={e.name}
-                    type={e.type}
-                    key={`profilePlantCard ${e.plantId}`}
-                    age={e.years}
-                    plantId={e.plantId}
-                  />
-                );
-              })}
+              {data.member.plants.length === 0 &&
+              !isAuthor(data.member.memberId) ? (
+                <>반려식물이 없습니다</>
+              ) : (
+                data.member.plants.map((e, i) => {
+                  return (
+                    <ProfilePlantCard
+                      src={e.image.imgUrl}
+                      alt={`${data.name}의 반려식물`}
+                      name={e.name}
+                      type={e.type}
+                      key={`profilePlantCard ${e.plantId}`}
+                      age={e.years}
+                      plantId={e.plantId}
+                    />
+                  );
+                })
+              )}
               {isAuthor(data.member.memberId) && (
-                <AddIcon onClick={onClickModal} height={"36px"} />
+                <ColumnWrapper center={true} className="cursor">
+                  <AddIcon onClick={onClickModal} height={"36px"} />
+                  <span className="sub">반려식물 추가</span>
+                </ColumnWrapper>
               )}
             </>
           </PlantCardCarousel>
@@ -125,7 +133,7 @@ const CareDetail = () => {
         <SectionWrapper title="돌봄 리뷰" borderNone={true}>
           <>
             {data?.expertReviews.map((e) => {
-              console.log(data)
+              console.log(data);
               return (
                 <CommentCard
                   name={e.member.nickname}
@@ -135,17 +143,21 @@ const CareDetail = () => {
                   key={`돌봄 ${e.expertReviewId}`}
                 />
               );
-            })&& <span className="mt-8">리뷰가 없습니다.</span>}
+            }) && <span className="mt-8">리뷰가 없습니다.</span>}
           </>
         </SectionWrapper>
       </MainCenterWrapper>
       <MainRightWrapper>
-        <SigButton onClick={()=>{
-          axiosprivate.post(`/chat/experts/${data.expertId}`).then((e)=>{
-            navigate(`/talk/${e.data.roomName}`)
-            console.log()
-          })
-        }}>문의 하기</SigButton>
+        <SigButton
+          onClick={() => {
+            axiosprivate.post(`/chat/experts/${data.expertId}`).then((e) => {
+              navigate(`/talk/${e.data.roomName}`);
+              console.log();
+            });
+          }}
+        >
+          문의 하기
+        </SigButton>
       </MainRightWrapper>
     </MainContentContainer>
   ) : (

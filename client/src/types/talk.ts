@@ -15,9 +15,37 @@ export type talkDetailImage = {
 };
 
 export type talkPreview = {
-  buyerId:string,
-  notReadNum:string,
-  roomId:string,
-  roomName:string,
-  sellerId:string
+  roomId: string,
+  roomName: string,
+  sellerId: string,
+  buyerId: string,
+  notReadNum: string,
+  state: string,
+  expertInfo: {
+      expertId: string,
+      name: string,
+      age: string,
+      gender: string,
+      simpleContent: string,
+      address: string,
+      likes: string,
+      view: string,
+      techTags: [
+          {
+              techTagId: string,
+              techTagName: string
+          }
+      ],
+      areaTags: [
+          {
+              areaTagId: string,
+              areaTagName: string,
+          }
+      ],
+      image: {
+          imageId: string,
+          imgUrl: string,
+          isRepImg: string
+      }
+  }
 }

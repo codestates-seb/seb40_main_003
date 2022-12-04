@@ -14,7 +14,7 @@ const useAxiosPrivate = () => {
         const requestIntercept = axiosPrivate.interceptors.request.use(
             config => {
                 if (config.headers&&!config.headers['Authorization']){
-                    config.headers['Authorization'] = `Bearer ${accessToken}`;
+                    config.headers.Authorization = `Bearer ${accessToken}`;
                 }
                 return config;
             }, (error) => Promise.reject(error)
@@ -30,7 +30,7 @@ const useAxiosPrivate = () => {
                     const newAccessToken = await refresh();
                     console.log(`리프레시 토큰 성공함${newAccessToken}`);
                     setLS("accessToken",newAccessToken)
-                    prevRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
+                    prevRequest.headers.Authorization = `Bearer ${newAccessToken}`;
                     return axiosPrivate(prevRequest);
                 }
                 return Promise.reject(error);

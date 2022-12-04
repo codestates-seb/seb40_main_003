@@ -40,7 +40,7 @@ export const ProductMain = ({ searchKeyword, size, category }: productMain) => {
 
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    ["productQuery", searchKeyword, size,category],
+    ["productQuery", searchKeyword, size, category],
     ({ pageParam = 1 }) =>
       InfiniteFetch("/deal", pageParam, searchKeyword, size),
     {

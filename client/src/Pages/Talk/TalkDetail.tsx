@@ -125,11 +125,10 @@ export const TalkDetail = () => {
           <SubmitButton
             onClick={() => {
               if (message.length === 0) {
-                alert("메세지 입력하3");
                 return;
               } else if (inputRef.current !== null) {
-                inputRef.current.value = "";
                 sendMessage(message);
+                inputRef.current.value = "";
               }
             }}
           >
