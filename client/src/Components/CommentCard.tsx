@@ -28,7 +28,6 @@ export const CommentButtonWrapper = styled.div`
   justify-content: space-between;
 `;
 
-
 export type CommentCardTypes = {
   size?: string;
   src?: string;
@@ -73,36 +72,62 @@ export const CommentCard = (props: CommentCardTypes) => {
 
   return (
     <CommentCardWrapper>
-      <SpaceBetween className="align-center">
-        {src && alt !== undefined ? (
-          <ImageWrapper
-            src={src}
-            alt={alt}
-            size={size === "sm" ? "16" : "36"}
-            loading="lazy"
-          />
+      {src && alt !== undefined ? (
+        <ImageWrapper
+          src={src}
+          alt={alt}
+          size={size === "sm" ? "16" : "36"}
+          loading="lazy"
+        />
+      ) : null}
+      <ColumnWrapper width={75}>
+        <div className="sub bold font-gray mb-4 width-100">{name}</div>
+        {tag ? (
+          <TagWrapper>
+            {tag.map((e) => {
+              return <SigTag key={e.techId}>{e.name}</SigTag>;
+            })}
+          </TagWrapper>
         ) : null}
-        <ColumnWrapper>
-          <span className="sub bold font-gray mb-4">{name}</span>
-          {tag ? (
-            <TagWrapper>
-              {tag.map((e) => {
-                return <SigTag key={e.techId}>{e.name}</SigTag>;
-              })}
-            </TagWrapper>
-          ) : null}
-              {editable ? (
-                <Textarea
-                className="comment-height"
-                ref={textAreaRef}
-                  autoFocus
-                  value={text}
-                  
-                  onChange={(e) => handleChange(e)}
-                  onBlur={(e) => {
-                    if (e.target.value.length < 2 || e.target.value.length > 300) {
-                      alert("2글자 이상, 300글자 이하로 입력하세요.")
-                    } else {
+        {editable ? (
+          <Textarea
+            className="comment-height width-100"
+            ref={textAreaRef}
+            autoFocus
+            value={text}
+            onChange={(e) => handleChange(e)}
+            onBlur={(e) => {
+              if (e.target.value.length < 2 || e.target.value.length > 300) {
+                alert("2글자 이상, 300글자 이하로 입력하세요.");
+              } else {
+                if (editable) {
+                  axiosPrivate
+                    .patch(`/community/${communityId}/comment/${commentId}`, {
+                      content: text,
+                    })
+                    .then(() => setEditable(false));
+                }
+              }
+            }}
+          />
+        ) : (
+          <p className="font-black medium">{text}</p>
+        )}
+      </ColumnWrapper>
+
+      <ColumnWrapper>
+        <div className="sub font-gray mb-6 ml-4 text-align-end">
+          {getDateAgo(createdAt)}
+        </div>
+        {/* 유저와 작성자가 같다면 */}
+        {isAuthor(author) ? (
+          <CommentButtonWrapper>
+            {editable ? (
+              <>
+                <button
+                  className="sub font-gray cursor mr-8"
+                  // 수정버튼
+                  onClick={() => {
                     if (editable) {
                       axiosPrivate
                         .patch(
@@ -112,87 +137,55 @@ export const CommentCard = (props: CommentCardTypes) => {
                           }
                         )
                         .then(() => setEditable(false));
-                    }}
+                    }
                   }}
-                />
-              ) : (
-                <p className="font-black medium">{text}</p>
-              )}
-        </ColumnWrapper>
-      </SpaceBetween>
-      <SpaceBetween>
-        <ColumnWrapper>
-          <div className="sub font-gray mb-6 ml-4 text-align-end">
-            {getDateAgo(createdAt)}
-          </div>
-          {/* 유저와 작성자가 같다면 */}
-          {isAuthor(author) ? (
-            <CommentButtonWrapper>
-              {editable ? (
-                <>
-                  <button
-                    className="sub font-gray cursor mr-8"
-                    // 수정버튼
-                    onClick={() => {
-                      if (editable) {
-                        axiosPrivate
-                          .patch(
-                            `/community/${communityId}/comment/${commentId}`,
-                            {
-                              content: text,
-                            }
-                          )
-                          .then(() => setEditable(false));
-                      }
-                    }}
-                  >
-                    완료
-                  </button>
-                  <button
-                    className="sub font-gray cursor"
-                    onClick={() => {
-                      // 댓글 삭제버튼
-                      if (window.confirm("댓글을 삭제 하시겠습니까?")) {
-                        axiosPrivate.delete(
-                          `/community/${communityId}/comment/${commentId}`
-                        );
-                      }
-                      // eslint-disable-next-line no-restricted-globals
-                      location.reload();
-                    }}
-                  >
-                    삭제
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    onClick={() => editOn()}
-                    onKeyDown={handleKeyDown}
-                    className="sub font-gray cursor mr-8"
-                  >
-                    수정
-                  </button>
-                  <button
-                    className="sub font-gray cursor"
-                    onClick={() => {
-                      if (window.confirm("댓글을 삭제 하시겠습니까?")) {
-                        axiosPrivate.delete(
-                          `/community/${communityId}/comment/${commentId}`
-                        );
-                      }
-                      // eslint-disable-next-line no-restricted-globals
-                      location.reload();
-                    }}
-                  >
-                    삭제
-                  </button>
-                </>
-              )}
-            </CommentButtonWrapper>
-          ) : null}
-        </ColumnWrapper>
-      </SpaceBetween>
+                >
+                  완료
+                </button>
+                <button
+                  className="sub font-gray cursor"
+                  onClick={() => {
+                    // 댓글 삭제버튼
+                    if (window.confirm("댓글을 삭제 하시겠습니까?")) {
+                      axiosPrivate.delete(
+                        `/community/${communityId}/comment/${commentId}`
+                      );
+                    }
+                    // eslint-disable-next-line no-restricted-globals
+                    location.reload();
+                  }}
+                >
+                  삭제
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  onClick={() => editOn()}
+                  onKeyDown={handleKeyDown}
+                  className="sub font-gray cursor mr-8"
+                >
+                  수정
+                </button>
+                <button
+                  className="sub font-gray cursor"
+                  onClick={() => {
+                    if (window.confirm("댓글을 삭제 하시겠습니까?")) {
+                      axiosPrivate.delete(
+                        `/community/${communityId}/comment/${commentId}`
+                      );
+                    }
+                    // eslint-disable-next-line no-restricted-globals
+                    location.reload();
+                  }}
+                >
+                  삭제
+                </button>
+              </>
+            )}
+          </CommentButtonWrapper>
+        ) : null}
+      </ColumnWrapper>
     </CommentCardWrapper>
   );
 };

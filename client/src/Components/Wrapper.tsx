@@ -55,16 +55,16 @@ export const MainRightWrapper = styled.aside`
   background-color: var(--pure-white);
   padding: 16px 24px;
   position: sticky;
-  z-index: 9999;
   top: 70px;
   border-top: 1px solid var(--line-light-gray);
   display: ${(props) => !props.children && "none"};
-
+  
   @media screen and (max-width: 1024px) {
     margin: 0;
     flex-direction: row;
     justify-content:${(props:{center?:boolean})=>(props.center?"center":"space-between")};
     position: fixed;
+    z-index: 9999;
     width: 100%;
     top: auto;
     bottom: 52px;
