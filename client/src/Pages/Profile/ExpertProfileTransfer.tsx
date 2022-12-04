@@ -7,6 +7,7 @@ import {
   SectionWrapper,
   RowWrapper,
   ColumnWrapper,
+  SpaceBetween,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +20,7 @@ import axios from "../../Hooks/api";
 import { compressImage } from "../../utils/imageCompress";
 import defaultProfile from "../../images/defaultProfileImage.png";
 import { Errormsg } from "../User/Signup";
+import styled from "@emotion/styled";
 
 interface ExpertProfileTransferForm {
   image: FileList;
@@ -152,7 +154,7 @@ const ExpertProfileTransfer = () => {
         )}
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <span className="mb-4 mt-4">이름</span>
+            <span className="mb-10 mt-16 bold font-main">이름</span>
             <input
               className="name"
               {...register("name", {
@@ -177,7 +179,7 @@ const ExpertProfileTransfer = () => {
 
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <span className="mb-4">나이</span>
+            <span className="mb-10 bold font-main">나이</span>
             <input
               className="age"
               {...register("age", {
@@ -198,7 +200,7 @@ const ExpertProfileTransfer = () => {
 
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <span className="mb-4">사는 곳 (구)</span>
+            <span className="mb-10 bold font-main">사는 곳 (구)</span>
             <Select
               className="areaTags"
               {...register("areaTags", {
@@ -234,7 +236,7 @@ const ExpertProfileTransfer = () => {
         </SectionWrapper>
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <span className="mb-4">사는 곳 (동)</span>
+            <span className="mb-10 bold font-main">사는 곳 (동)</span>
             <Select
               className="address"
               {...register("address", {
@@ -259,7 +261,7 @@ const ExpertProfileTransfer = () => {
         </SectionWrapper>
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <span className="mb-4">성별</span>
+            <span className="mb-10 bold font-main">성별</span>
             <Select
               className="gender"
               {...register("gender", { required: true })}
@@ -283,13 +285,13 @@ const ExpertProfileTransfer = () => {
 
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <span className="mb-4">돌봄 비용</span>
+            <span className="mb-10 bold font-main">돌봄 비용</span>
             <textarea
               className="price"
               {...register("price", {
                 required: true,
               })}
-              placeholder="자신의 제공하는 돌봄 비용을 자유롭게 작성해주세요."
+              placeholder="돌봄 비용을 책정해주세요. 예) 30분 9,000원 / 1시간 15,000원"
             />
             {errors.price && errors.price.type === "required" && (
               <Errormsg>돌봄 비용을 입력해주세요.</Errormsg>
@@ -299,13 +301,13 @@ const ExpertProfileTransfer = () => {
 
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <span className="mb-4">추가 사항</span>
+            <span className="mb-10 bold font-main">추가 사항</span>
             <textarea
               className="extra"
               {...register("extra", {
                 required: true,
               })}
-              placeholder="서비스별 추가 비용 발생 시 관련 정보를 작성해주세요."
+              placeholder="서비스별 추가 비용 발생 시 관련 정보를 작성해주세요. 예) 해충 약제비용 별도"
             />
             {errors.extra && errors.extra.type === "required" && (
               <Errormsg>추가 사항을 입력해주세요.</Errormsg>
@@ -314,8 +316,10 @@ const ExpertProfileTransfer = () => {
         </SectionWrapper>
 
         <ColumnWrapper>
-          <RowWrapper>
-            <span className="mb-4">보유 기술 (중복 입력 가능합니다.)</span>
+        <SectionWrapper>
+          
+            <span className="mb-10 bold font-main">보유 기술 (중복 가능)</span>
+          <FlexWrapper>
             {CareCategoryList.map((e) => {
               return (
                 <RowWrapper key={`${e.number}tachtag`} className="align-center">
@@ -331,20 +335,22 @@ const ExpertProfileTransfer = () => {
                 </RowWrapper>
               );
             })}
-          </RowWrapper>
+          </FlexWrapper>
+        </SectionWrapper>
+
         </ColumnWrapper>
 
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <span className="mb-4">자기 소개</span>
-            <Textarea
+            <span className="mb-10 bold font-main"> 한 줄 자기 소개</span>
+            <textarea
               className="simpleContent"
               minLength={10}
-              maxLength={1000}
+              maxLength={30}
               {...register("simpleContent", {
                 required: true,
               })}
-              placeholder="본인을 소개해주세요."
+              placeholder="30자 이내로 본인을 소개해주세요."
             />
             <p className="font-alert-red sub">
               {errors.simpleContent?.message}
@@ -358,15 +364,15 @@ const ExpertProfileTransfer = () => {
 
         <SectionWrapper width={100} borderNone={true}>
           <>
-            <span className="mb-4">상세한 자기 소개</span>
+            <span className="mb-10 bold font-main">상세한 자기 소개</span>
             <Textarea
               className="detailContent"
               minLength={10}
-              maxLength={1000}
+              maxLength={500}
               {...register("detailContent", {
                 required: true,
               })}
-              placeholder="전문가로서 본인의 능력을 알려주세요."
+              placeholder="500자 이내로 전문가로서 본인의 능력을 알려주세요."
             />
             <p className="font-alert-red sub">
               {errors.detailContent?.message}
@@ -378,7 +384,7 @@ const ExpertProfileTransfer = () => {
           </>
         </SectionWrapper>
       </MainCenterWrapper>
-      <MainRightWrapper center={true}>
+      <MainRightWrapper>
         <SigButton type="submit" value={"ProductEditor"}>
           전환하기
         </SigButton>
@@ -386,5 +392,11 @@ const ExpertProfileTransfer = () => {
     </MainContentContainer>
   );
 };
+
+const FlexWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+` 
 
 export default ExpertProfileTransfer;

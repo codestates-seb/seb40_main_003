@@ -31,6 +31,14 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
       type: data.type,
     });
 
+
+    if (data.image !== undefined) {
+      await compressImage(data.image[0]).then((res: any) =>
+        formData.append("multipartFile", res)
+      )
+    }
+    
+
     formData.append(
       "plantDto",
       new Blob([plantDto], { type: "application/json" })

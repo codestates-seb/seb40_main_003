@@ -43,7 +43,7 @@ const ProductCard: React.FC<props> = ({ data }) => {
         <DescriptionColumnWrapper>
           <h2 className="medium font-main">{data.title}</h2>
           <span className="sub mb-8">
-            {data.category &&
+            {String(data.category) &&
               categoryNumberToString({
                 number: data.category,
                 arr: ProductCategoryList,
