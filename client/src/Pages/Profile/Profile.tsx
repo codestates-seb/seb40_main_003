@@ -75,7 +75,7 @@ const Profile = (props: props) => {
             </>
             {isOpenModalProfile && (
               <Modal onClickModal={onClickModalProfile}>
-                <SetUserModal closeModal={onClickModalProfile}/>
+                <SetUserModal closeModal={onClickModalProfile} url={id}/>
               </Modal>
             )}
           </>
