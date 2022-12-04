@@ -8,7 +8,7 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { InfiniteFetch } from "../../Hooks/useFetch";
+import { InfiniteFetchPrivate } from "../../Hooks/useFetch";
 import {
   QueryClient,
   QueryClientProvider,
@@ -31,8 +31,8 @@ export const ProductBookmarksMain = () => {
 
   // useInfiniteQuery
   const { data, status, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
-    "productBookmarksQuery",
-    ({ pageParam = 1 }) => InfiniteFetch("/deal/like", pageParam),
+    ["productBookmarksQuery"],
+    ({ pageParam = 1 }) => InfiniteFetchPrivate("/deal/like", pageParam),
     {
       getNextPageParam: (lastPage) =>
         !lastPage.isLast ? lastPage.nextPage : undefined,

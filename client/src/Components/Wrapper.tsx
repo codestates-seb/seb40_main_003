@@ -64,7 +64,7 @@ export const MainRightWrapper = styled.aside`
     flex-direction: row;
     justify-content:${(props:{center?:boolean})=>(props.center?"center":"space-between")};
     position: fixed;
-    z-index: 9999;
+    z-index: 9998;
     width: 100%;
     top: auto;
     bottom: 52px;

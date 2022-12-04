@@ -124,7 +124,7 @@ const CareDetail = () => {
           content={data.detailContent}
           borderNone={true}
         />
-        <SectionWrapper title="기본비용" price={data.price} borderNone={true} />
+        <SectionWrapper title="기본비용" content={data.price} borderNone={true} />
         <SectionWrapper
           title="추가비용"
           content={data.extra}
