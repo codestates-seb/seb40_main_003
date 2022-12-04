@@ -1,11 +1,16 @@
-import React from "react";
+import axios from "../../Hooks/api";
+import React, { useState } from "react";
 import { FieldErrors, useForm } from "react-hook-form";
-import { SigButton } from "../../Components/GlobalComponents";
+import { Select, SigButton } from "../../Components/GlobalComponents";
 import { ColumnWrapper } from "../../Components/Wrapper";
+import { areaArray } from "../../Const/Address";
+import { categoryNumberToString } from "../../Const/Category";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { compressImage } from "../../utils/imageCompress";
 
 type FormData = {
+  areaTags: any;
+
   image: FileList;
   nickname: string;
   memberProfile: {
@@ -23,6 +28,7 @@ type setUserModal = {
 
 const SetUserModal: React.FC<setUserModal> = ({ closeModal, url }) => {
   const axiosPrivate = useAxiosPrivate();
+  const [gugun, setGugun] = useState<[] | [{ dong: string }]>([]);
   const {
     register,
     handleSubmit,
@@ -48,7 +54,7 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal, url }) => {
     if (data.image !== undefined) {
       await compressImage(data.image[0], 100).then((res: any) =>
         formData.append("multipartFile", res)
-      )
+      );
     }
 
     axiosPrivate
@@ -64,6 +70,7 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal, url }) => {
       .catch((err) => {
         console.log(err);
       });
+    console.log(data);
   };
 
   const onInValid = (errors: FieldErrors) => {
@@ -71,10 +78,7 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal, url }) => {
   };
 
   return (
-    <ColumnWrapper
-      as={"form"}
-      onSubmit={handleSubmit(onValid, onInValid)}
-    >
+    <ColumnWrapper as={"form"} onSubmit={handleSubmit(onValid, onInValid)}>
       {/* 닉네임 */}
       <label className="bold h4 mb-4">닉네임</label>
       <input
@@ -113,7 +117,7 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal, url }) => {
       <p className="font-alert-red">{errors.memberProfile?.content?.message}</p>
 
       {/* 주소 */}
-      <label className="bold h4 mb-4 mt-16">주소</label>
+      {/* <label className="bold h4 mb-4 mt-16">주소</label>
       <input
         {...register("memberInformation.address", {
           required: true,
@@ -131,7 +135,58 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal, url }) => {
       />
       <p className="font-alert-red">
         {errors.memberInformation?.address?.message}
-      </p>
+      </p> */}
+
+      {/* 주소 수정 */}
+
+      <label className="bold h4 mb-4 mt-16">사는 곳 (구)</label>
+      <Select
+        className="areaTags"
+        {...register("areaTags", {
+          required: true,
+          onChange: (e) => {
+            const parsedArea = categoryNumberToString({
+              number: Number(e.target.value),
+              arr: areaArray,
+            });
+            axios
+              .get("/address", { params: { gugun: parsedArea } })
+              .then((res) => {
+                setGugun(res.data.dongs);
+              });
+          },
+        })}
+      >
+        <option value="" hidden>
+          선택해주세요.
+        </option>
+        {areaArray.map((e) => {
+          return (
+            <option key={`${e.number}address`} value={e.number}>
+              {e.name}
+            </option>
+          );
+        })}
+      </Select>
+
+      <label className="bold h4 mb-4 mt-16">사는 곳 (동)</label>
+      <Select
+        className="address"
+        {...register("memberInformation.address", {
+          required: true,
+        })}
+      >
+        <option value="" hidden>
+          선택해주세요.
+        </option>
+        {gugun.map((e, i) => {
+          return (
+            <option key={`dong${i}`} value={e.dong}>
+              {e.dong}
+            </option>
+          );
+        })}
+      </Select>
 
       {/* 사진 */}
       <label className="bold h4 mt-16 mb-4">사진</label>
