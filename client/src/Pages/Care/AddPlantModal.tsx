@@ -30,9 +30,12 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
       years: String(data.years).replaceAll("-",""),
       type: data.type,
     });
-    compressImage(data.image[0],100).then((res)=>{
-      res!==undefined&&formData.append("multipartFile",res)
-    })
+
+    if (data.image !== undefined) {
+      await compressImage(data.image[0]).then((res: any) =>
+        formData.append("multipartFile", res)
+      )
+    }
     
     formData.append(
       "plantDto", new Blob([plantDto], { type: "application/json" })
@@ -51,6 +54,8 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
       .catch((err) => {
         console.log(err);
       });
+      console.log(plantDto);
+      
   };
 
   const onInValid = (errors: FieldErrors) => {
