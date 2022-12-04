@@ -7,6 +7,7 @@ import {
   SectionWrapper,
   RowWrapper,
   ColumnWrapper,
+  SpaceBetween,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
@@ -19,6 +20,7 @@ import axios from "../../Hooks/api";
 import { compressImage } from "../../utils/imageCompress";
 import defaultProfile from "../../images/defaultProfileImage.png";
 import { Errormsg } from "../User/Signup";
+import styled from "@emotion/styled";
 
 interface ExpertProfileTransferForm {
   image: FileList;
@@ -317,7 +319,7 @@ const ExpertProfileTransfer = () => {
         <SectionWrapper>
           
             <span className="mb-10 bold font-main">보유 기술 (중복 가능)</span>
-          <RowWrapper>
+          <FlexWrapper>
             {CareCategoryList.map((e) => {
               return (
                 <RowWrapper key={`${e.number}tachtag`} className="align-center">
@@ -333,7 +335,7 @@ const ExpertProfileTransfer = () => {
                 </RowWrapper>
               );
             })}
-          </RowWrapper>
+          </FlexWrapper>
         </SectionWrapper>
 
         </ColumnWrapper>
@@ -341,7 +343,7 @@ const ExpertProfileTransfer = () => {
         <SectionWrapper width={100} borderNone={true}>
           <>
             <span className="mb-10 bold font-main"> 한 줄 자기 소개</span>
-            <Textarea
+            <textarea
               className="simpleContent"
               minLength={10}
               maxLength={30}
@@ -390,5 +392,11 @@ const ExpertProfileTransfer = () => {
     </MainContentContainer>
   );
 };
+
+const FlexWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+` 
 
 export default ExpertProfileTransfer;
