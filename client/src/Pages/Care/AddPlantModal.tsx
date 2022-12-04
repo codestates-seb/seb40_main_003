@@ -54,8 +54,6 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
       .catch((err) => {
         console.log(err);
       });
-      console.log(plantDto);
-      
   };
 
   const onInValid = (errors: FieldErrors) => {
