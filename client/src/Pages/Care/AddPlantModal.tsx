@@ -27,16 +27,19 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
     const formData = new FormData();
     const plantDto = JSON.stringify({
       name: data.name,
-      years: String(data.years).replaceAll("-",""),
+      years: String(data.years).replaceAll("-", ""),
       type: data.type,
     });
-    compressImage(data.image[0],100).then((res)=>{
-      res!==undefined&&formData.append("multipartFile",res)
-    })
-    
+
     formData.append(
-      "plantDto", new Blob([plantDto], { type: "application/json" })
-      );
+      "plantDto",
+      new Blob([plantDto], { type: "application/json" })
+    );
+    compressImage(data.image[0], 100).then((res) => {
+      if (res !== undefined) {
+        formData.append("multipartFile", res);
+      }
+    });
 
     axiosPrivate
       .post("/plants", formData, {
@@ -52,7 +55,6 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
         console.log(err);
       });
   };
-
   const onInValid = (errors: FieldErrors) => {
     console.log(errors);
   };
