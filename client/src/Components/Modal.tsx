@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { confirmCancel } from "../Const/message";
-import { useRecoilState, useRecoilValue } from "recoil";
+import {  useRecoilValue } from "recoil";
 import { isModalOpen, modalContent } from "../Recoil/atoms/globalModal";
 
 interface ModalDefaultType {

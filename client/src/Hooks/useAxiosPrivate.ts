@@ -29,8 +29,9 @@ const useAxiosPrivate = () => {
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
                     console.log(`리프레시 토큰 성공함${newAccessToken}`);
-                    setLS("accessToken",newAccessToken)
-                    prevRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                    // prevRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                    prevRequest.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
+                    console.log()
                     return axiosPrivate(prevRequest);
                 }
                 return Promise.reject(error);

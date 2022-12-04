@@ -7,7 +7,7 @@ import { getLS } from "./useSecureLS";
 export const useInitailSetup = () => {
   const [user, setUser] = useRecoilState(userState);
   const setIsExpertNow = useSetRecoilState(isExpert);
-  const memberId = useRecoilValue(userState);
+
   useEffect(() => {
     const expertInfo = getLS("expertInfo");
     const accessToken = getLS("accessToken");
@@ -24,7 +24,7 @@ export const useInitailSetup = () => {
         socket.send(
           JSON.stringify({
             type: "JOIN_WEB_SOCKET",
-            memberId: 2,
+            memberId: user?.memberId,
           })
         );
       };

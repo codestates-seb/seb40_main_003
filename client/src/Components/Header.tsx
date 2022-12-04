@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { NavLink, useNavigate } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue } from "recoil";
 import useWindowSize from "../Hooks/windowSize";
 import { currentPage } from "../Recoil/atoms/currentPage";
 import gobackIcon from "../images/gobackIcon.svg";

@@ -26,6 +26,7 @@ const useRefreshToken = () => {
         localStorage.removeItem("userInfo");
         /**아톰 초기화 */
         resetUserState();
+        alert("로그인 후 이용가능합니다")
       });
     return response.accessToken;
   };

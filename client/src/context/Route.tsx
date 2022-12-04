@@ -1,5 +1,5 @@
 import { Outlet, Navigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useResetRecoilState } from "recoil";
 import { userState } from "../Recoil/atoms/user";
 import Header from "../Components/Header";
 import { getLS } from "../Hooks/useSecureLS";
@@ -12,6 +12,7 @@ export const LogOutOnly = () => {
 };
 
 export const AuthProvider = () => {
+  const resetUserState = useResetRecoilState(userState);
   const hasUserInfo = useRecoilValue(userState);
   const auth = () => {
     const access = getLS("accessToken");
@@ -23,6 +24,7 @@ export const AuthProvider = () => {
       // eslint-disable-next-line react-hooks/rules-of-hooks
       useSetModal("로그인 후 이용가능합니다")
       cleanLS();
+      resetUserState();
       return false;
     }
   };
