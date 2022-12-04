@@ -66,21 +66,39 @@ public class CommentService {
 
     public void deleteComment(Long commentId) {
         Comment comment = verifiedComment(commentId);
-        if (comment.getDepth()==0 && commentRepository.existsByParent(commentId)) {
-            comment.deleteComment();
+
+        if (comment.getDepth()==0) {
+            //최상위 댓글
+            if (commentRepository.existsByParent(commentId)) {
+                //대댓글 존재
+                comment.deleteComment();
+                commentRepository.save(comment);
+            } else {
+                commentRepository.delete(comment);
+            }
         } else {
+            //대댓글
             commentRepository.delete(comment);
+            Long parentId = comment.getParent();
+            Comment parentComment = verifiedComment(parentId);
+            if (parentComment.getIsDeleted()==1 && !commentRepository.existsByParent(parentId)) {
+                //대댓글 부모 지워진 상태
+                commentRepository.delete(parentComment);
+            }
         }
+    }
+
+    public void sudoDeleteComment(Long commentId) {
+        Comment comment = verifiedComment(commentId);
+        commentRepository.delete(comment);
     }
 
     public List<CommentResponseDto> getComments(Community community) {
         List<Comment> commentList = commentRepository.findAllByCommunity(community);
         List<CommentResponseDto> comments = commentList.stream().map(
-                c -> {
-                    return mapper.commentToResponseDto(c,
+                c -> mapper.commentToResponseDto(c,
                             memberMapper.memberToCommunityMemberDto(c.getMember(),
-                                    imageService.findImageByMember(c.getMember())));
-                }
+                                    imageService.findImageByMember(c.getMember())))
         ).collect(Collectors.toList());
         return comments;
     }
