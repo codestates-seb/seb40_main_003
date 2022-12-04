@@ -1,5 +1,4 @@
 import axios from "../../node_modules/axios/index";
-import { getLS } from "./useSecureLS";
 
 // axios.defaults.baseURL = "https://fbc9-121-162-186-109.jp.ngrok.io";
 

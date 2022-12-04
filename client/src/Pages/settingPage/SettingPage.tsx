@@ -9,7 +9,6 @@ import {
 import usePageTitle from "../../Hooks/usePageTitle";
 import { cleanLS, useLogout } from "../../Hooks/useLogout";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import { confirmSignout } from "../../Const/message";
 import { useSetRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 
@@ -30,7 +29,6 @@ const SettingPage = () => {
           cleanLS()
           setUser(null)
           navigate("/")
-          console.log(res);   
           })
         } else {
           window.alert("다시 입력해주세요.")
