@@ -3,6 +3,7 @@ import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper, RowWrapper, SpaceBetween } from "../Wrapper";
 import { DescriptionColumnWrapper } from "../product/ProductCard";
 import { SigTag, TagWrapper } from "../GlobalComponents";
+import { defaultImage, defaultProfile } from "../../utils/defaultImage";
 
 const CardWrapper = styled.div`
   /* background-color: aliceblue; */
@@ -13,15 +14,17 @@ const CardWrapper = styled.div`
 `;
 
 const CareCard = ({ data }: any) => {
+console.log(data)
   return (
     <>
       <CardWrapper>
         <RowWrapper>
           <ImageWrapper
             size={"100"}
-            src={data.image.imgUrl}
+            src={data.image!==null?data.image.imgUrl:""}
             alt={`상품명 ${data.name}의 대표이미지`}
             loading="lazy"
+            onError={defaultImage}
           />
           <DescriptionColumnWrapper>
             <ColumnWrapper>

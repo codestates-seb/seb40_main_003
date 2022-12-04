@@ -45,11 +45,7 @@ export type ProductDetailDataType = {
   member: {
     memberId: number;
     nickname: string;
-    image: {
-      imageId: string;
-      imgUrl: string;
-      isRepImg: string;
-    };
+    image: string;
   };
 };
 
@@ -71,18 +67,18 @@ export type ProductLikeListType = {
 };
 
 export type ProductLikeType = {
-      dealId: number;
-      title: string;
-      content: string;
-      view: number;
-      price: number;
-      createdAt: string;
-      modifiedAt: string;
-      category: number;
-      state: number;
-      likeNum: number;
-      images: [string];
-      area: number;
+  dealId: number;
+  title: string;
+  content: string;
+  view: number;
+  price: number;
+  createdAt: string;
+  modifiedAt: string;
+  category: number;
+  state: number;
+  likeNum: number;
+  images: [string];
+  area: number;
 };
 
 // 거래 후기 작성

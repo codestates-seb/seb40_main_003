@@ -60,7 +60,7 @@ const Product = () => {
   };
 
   const navigate = useNavigate();
-
+console.log(data)
   return data !== undefined ? (
     // 메인 컨테이너 (반응형 제공!)
     <MainContentContainer>
@@ -82,7 +82,7 @@ const Product = () => {
         </TopCarousel>
         <Link to={`/profile/${data.member.memberId}`}>
           <ProfileCard
-            src={data.member.image.imgUrl}
+            src={data.member.image?data.member.image:""}
             alt={`${data.member.nickname}의 대표사진`}
             name={data.member.nickname}
             area={data.area}

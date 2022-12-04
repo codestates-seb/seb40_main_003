@@ -162,7 +162,7 @@ export const CommentCard = (props: CommentCardTypes) => {
                 <button
                   onClick={() => editOn()}
                   onKeyDown={handleKeyDown}
-                  className="sub font-gray cursor mr-8"
+                  className="sub font-gray cursor mr-8 ml-8"
                 >
                   수정
                 </button>

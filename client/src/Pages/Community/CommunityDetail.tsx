@@ -58,7 +58,7 @@ const CommunityDetail = () => {
           ) : null}
           <Link to={`/profile/${data.member.memberId}`}>
             <ProfileCard
-              src={data.member.image !== null ? data.member.image.imgUrl : ""}
+              src={data.member.image !== null ? data.member.image : ""}
               alt={`${data.member.nickname}의 대표사진`}
               name={data.member.nickname}
               circle={true}

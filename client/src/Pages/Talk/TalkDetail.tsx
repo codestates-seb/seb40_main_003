@@ -24,7 +24,7 @@ export const TalkDetail = () => {
   const [message, setMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
-  console.log(data)
+  console.log(data);
 
   // 패칭함수
   const Fetching = () => {
@@ -39,9 +39,9 @@ export const TalkDetail = () => {
   useEffect(() => {
     Fetching();
   }, []);
-  
-  const socketURL = process.env.REACT_APP_WS_BASE_URL
-  const socket = new WebSocket(socketURL!==undefined?socketURL:"");
+
+  const socketURL = process.env.REACT_APP_WS_BASE_URL;
+  const socket = new WebSocket(socketURL !== undefined ? socketURL : "");
 
   // 새로운 메시지가 생기면 자동으로 밑으로
   useEffect(() => {
@@ -147,6 +147,7 @@ export const TalkDetail = () => {
 };
 
 const SubmitButton = styled.button`
+  min-width: 70px;
   padding: 8px;
   color: var(--pure-white);
   background-color: var(--main);

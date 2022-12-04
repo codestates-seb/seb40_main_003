@@ -13,6 +13,7 @@ import { areaArray } from "../Const/Address";
 import heartIcon from "../../images/like/heartIcon.png";
 import emptyHeartIcon from "../../images/like/emptyHeartIcon.png";
 import { LikeButton } from "./LikeButton";
+import { defaultImage } from "../utils/defaultImage";
 
 // 버튼앨리먼트
 export const SigButton = styled.button`
@@ -288,11 +289,12 @@ export const ProfileCard = (props: ProfileCardTypes) => {
     <CenteringWrapper className="space-between" borderNone={!border}>
       <SpaceBetween>
         <ImageWrapper
-          src={src ? src : defaultProfile}
+          src={src}
           alt={alt ? alt : "기본프로필사진"}
           size={size}
           className="mr-16"
           circle={circle}
+          onError={defaultImage}
         />
         <ColumnWrapper className="justify-center">
           <span className="medium ">{name}</span>

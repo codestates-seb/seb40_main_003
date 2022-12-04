@@ -40,9 +40,8 @@ export type communityDetailTypes = {
   member: {
     memberId: number;
     nickname: string;
-    image: {
-      imgUrl: string;
-    };
+    image: string;
+
   };
   comments: communityCommentType[];
 };
