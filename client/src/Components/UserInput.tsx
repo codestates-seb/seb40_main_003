@@ -54,6 +54,7 @@ const CommentInput = (props: props) => {
         <SigTag
           as={"button"}
           width={36}
+
           height={20}
           onClick={()=>{
             if(value.length<2 || value.length>300){
