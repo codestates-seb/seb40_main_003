@@ -107,11 +107,17 @@ export const TagWrapper = styled.div`
 type sigtagProps = {
   width?: number;
   height?: number;
+  position?:string;
+  right?:string;
 };
 export const SigTag = styled.div`
   width: ${(props: sigtagProps) => (props.width ? props.width + "px" : "auto")};
   height: ${(props: sigtagProps) =>
     props.height ? props.height + "px" : "auto"};
+  position: ${(props: sigtagProps) =>
+    props.position ? props.position : ""};
+  right:${(props: sigtagProps) =>
+    props.right ? props.right : ""};
   justify-content: center;
   padding: 2px 4px;
   background-color: var(--main);

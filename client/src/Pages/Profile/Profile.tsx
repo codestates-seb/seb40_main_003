@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { ReactComponent as AddIcon } from "../../images/addIcon.svg";
 import useFetch from "../../Hooks/useFetch";
+import defaultProfileImage from "../../images/defaultProfileImage.png";
 import usePageTitle from "../../Hooks/usePageTitle";
 
 import {
@@ -80,7 +81,7 @@ const Profile = (props: props) => {
           </>
           <ProfileCard
             pk={id}
-            src={data.image !== null ? data.image.imgUrl : ""}
+            src={data.image!==null?data.image.imgUrl:defaultProfileImage}
             alt={`${data.nickname}의 대표사진`}
             name={data.nickname}
             location={data.memberInformation?.address}

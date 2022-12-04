@@ -1,10 +1,9 @@
 import styled from "@emotion/styled";
-import { RowWrapper, SectionWrapper } from "./Wrapper";
+import {  SectionWrapper, SpaceBetween } from "./Wrapper";
 import { useRef, useState } from "react";
 import { SigTag } from "./GlobalComponents";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
-import { useResetRecoilState } from "recoil";
-import { userState } from "../Recoil/atoms/user";
+
 
 type props = {
   url: string | undefined;
@@ -37,7 +36,7 @@ const CommentInput = (props: props) => {
 
   return (
     <SectionWrapper width={100}>
-      <RowWrapper className="align-center">
+      <SpaceBetween className="align-center">
         <Textarea
         className="comment-height"
           ref={textAreaRef}
@@ -54,7 +53,8 @@ const CommentInput = (props: props) => {
           />
         <SigTag
           as={"button"}
-          width={33}
+          width={36}
+
           height={20}
           onClick={()=>{
             if(value.length<2 || value.length>300){
@@ -64,11 +64,11 @@ const CommentInput = (props: props) => {
             }
             
           }}
-          className="ml--45 z-index cursor"
+          className="inputHoverButton mt-8 z-index cursor"
         >
           작성
         </SigTag>
-      </RowWrapper>
+      </SpaceBetween>
     </SectionWrapper>
   );
 };

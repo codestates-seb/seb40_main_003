@@ -21,7 +21,7 @@ export const AuthProvider = () => {
       return true;
     } else {
       // eslint-disable-next-line react-hooks/rules-of-hooks
-      useSetModal("로그인 후 \n 이용가능합니다")
+      useSetModal("로그인 후 이용가능합니다")
       cleanLS();
       return false;
     }

@@ -1,14 +1,11 @@
 import { Routes } from "react-router";
 import { BrowserRouter, Route } from "react-router-dom";
-
 import { AuthProvider, HeaderLayout, LogOutOnly } from "./context/Route";
 import Product from "./Pages/Product/Product";
 import Navbar from "./Components/Navbar";
-
 import Profile from "./Pages/Profile/Profile";
 import Login from "./Pages/User/Login";
 import Signup from "./Pages/User/Signup";
-
 import Setting from "./Pages/settingPage/SettingPage";
 import CareBookmarks from "./Pages/settingPage/CareBookmarks";
 import DealBookmarks from "./Pages/settingPage/DealBookmarks";
@@ -17,70 +14,29 @@ import PurchaseHistory from "./Pages/settingPage/PurchaseHistory";
 import CaringHistory from "./Pages/settingPage/CaringHistory";
 import MyHistory from "./Pages/settingPage/MyHistory";
 import EditAccount from "./Pages/settingPage/EditAccount";
-
 import Missing from "./Pages/Missing";
-
 import Care from "./Pages/Care/Care";
 import CareDetail from "./Pages/Care/CareDetail";
 import CareReviewEditor from "./Pages/Talk/CareReviewEditor";
-
 import ProductDetail from "./Pages/Product/ProductDetail";
 import ProductEditor from "./Pages/Product/ProductEditor";
 import ProductReviewEditor from "./Pages/Talk/ProductReviewEditor";
-
 import Community from "./Pages/Community/Community";
 import CommunityDetail from "./Pages/Community/CommunityDetail";
 import CommunityEditor from "./Pages/Community/CommunityEditor";
 import CommunityModify from "./Pages/Community/CommunityModify";
-
 import Talk from "./Pages/Talk/Talk";
-
-import { useEffect } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { isExpert, userState } from "./Recoil/atoms/user";
-import { getLS } from "./Hooks/useSecureLS";
 import ProductModify from "./Pages/Product/ProductModify";
 import Main from "./Pages/Main/Main";
-import { cleanLS } from "./Hooks/useLogout";
+
 import ExpertProfileTransfer from "./Pages/Profile/ExpertProfileTransfer";
 import { DefaultLayout } from "./context/Route";
 import { TalkDetail } from "./Pages/Talk/TalkDetail";
 import { GlobalModal } from "./Components/Modal";
+import { useInitailSetup } from "./Hooks/initialSetup";
 
 const App = () => {
-  const [user, setUser] = useRecoilState(userState);
-  const setIsExpertNow = useSetRecoilState(isExpert);
-  const memberId = useRecoilValue(userState);
-  
-  useEffect(() => {
-  }, [memberId]);
-  
-  useEffect(() => {
-    const expertInfo = getLS("expertInfo");
-    const accessToken = getLS("accessToken");
-    const refreshToken = getLS("refreshToken");
-    const userInfo = getLS("userInfo");
-    
-    //로컬스토리지에 유저정보가 있고, 액세스토큰, 리프레시토큰 모두 있을때 (토큰 유효성검사는 안함)
-    if (accessToken && refreshToken && userInfo) {
-      setUser(userInfo);
-      const socket = new WebSocket("ws://3.39.124.200:8080/ws/chat");
-      socket.onopen = () => {
-        console.log("소켓연결 성공");
-        socket.send(
-          JSON.stringify({
-            type: "JOIN_WEB_SOCKET",
-            memberId: 2,
-          })
-        );
-      };
-      expertInfo && setIsExpertNow(true);
-    } else {
-      cleanLS();
-      setUser(null);
-      setIsExpertNow(false);
-    }
-  }, [setUser]);
+  useInitailSetup()
 
   return (
     
