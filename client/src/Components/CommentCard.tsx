@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import { useRef, useState } from "react";
-
-import { UserStateType } from "../Recoil/atoms/user";
+import defaultProfileImage from "../images/defaultProfileImage.png";
 import { getDateAgo } from "../utils/controller";
 import {
   ImageWrapper,
@@ -9,7 +8,7 @@ import {
   TagWrapper,
   Textarea,
 } from "../Components/GlobalComponents";
-import { ColumnWrapper, SpaceBetween } from "./Wrapper";
+import { ColumnWrapper, RowWrapper } from "./Wrapper";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 import { useIsAuthor } from "../Hooks/useAuth";
 
@@ -72,50 +71,50 @@ export const CommentCard = (props: CommentCardTypes) => {
 
   return (
     <CommentCardWrapper>
-      {src && alt !== undefined ? (
+      <RowWrapper>
         <ImageWrapper
-          src={src}
-          alt={alt}
+          src={src ? src : defaultProfileImage}
+          alt={alt ? alt : "기본이미지"}
           size={size === "sm" ? "16" : "36"}
           loading="lazy"
         />
-      ) : null}
-      <ColumnWrapper width={75}>
-        <div className="sub bold font-gray mb-4 width-100">{name}</div>
-        {tag ? (
-          <TagWrapper>
-            {tag.map((e) => {
-              return <SigTag key={e.techId}>{e.name}</SigTag>;
-            })}
-          </TagWrapper>
-        ) : null}
-        {editable ? (
-          <Textarea
-            className="comment-height width-100"
-            ref={textAreaRef}
-            autoFocus
-            value={text}
-            onChange={(e) => handleChange(e)}
-            onBlur={(e) => {
-              if (e.target.value.length < 2 || e.target.value.length > 300) {
-                alert("2글자 이상, 300글자 이하로 입력하세요.");
-              } else {
-                if (editable) {
-                  axiosPrivate
-                    .patch(`/community/${communityId}/comment/${commentId}`, {
-                      content: text,
-                    })
-                    .then(() => setEditable(false));
-                }
-              }
-            }}
-          />
-        ) : (
-          <p className="font-black medium">{text}</p>
-        )}
-      </ColumnWrapper>
 
-      <ColumnWrapper>
+        <ColumnWrapper>
+          <div className="sub bold font-gray mb-4 width-100">{name}</div>
+          {tag ? (
+            <TagWrapper>
+              {tag.map((e) => {
+                return <SigTag key={e.techId}>{e.name}</SigTag>;
+              })}
+            </TagWrapper>
+          ) : null}
+          {editable ? (
+            <Textarea
+              className="comment-height width-100"
+              ref={textAreaRef}
+              autoFocus
+              value={text}
+              onChange={(e) => handleChange(e)}
+              onBlur={(e) => {
+                if (e.target.value.length < 2 || e.target.value.length > 300) {
+                  alert("2글자 이상, 300글자 이하로 입력하세요.");
+                } else {
+                  if (editable) {
+                    axiosPrivate
+                      .patch(`/community/${communityId}/comment/${commentId}`, {
+                        content: text,
+                      })
+                      .then(() => setEditable(false));
+                  }
+                }
+              }}
+            />
+          ) : (
+            <p className="font-black medium">{text}</p>
+          )}
+        </ColumnWrapper>
+      </RowWrapper>
+      <ColumnWrapper minWidth="70px">
         <div className="sub font-gray mb-6 ml-4 text-align-end">
           {getDateAgo(createdAt)}
         </div>

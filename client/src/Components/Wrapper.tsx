@@ -135,6 +135,7 @@ const MainLeftWrapper = styled.aside`
 type columnWrapperType = {
   width?: number;
   center?: boolean;
+  minWidth?:string;
   borderBottom?:boolean
 };
 export const ReverseWrap = styled.section`
@@ -146,6 +147,8 @@ export const ColumnWrapper = styled.div`
   flex-direction: column;
   width: ${(props: columnWrapperType) =>
     props.width ? `${props.width}%` : "auto"};
+min-width: ${(props: columnWrapperType) =>
+  props.minWidth ? `${props.minWidth}` : ""};
   align-items: ${(props: columnWrapperType) =>
     props.center ? `center` : "auto"};
   justify-content: ${(props: columnWrapperType) =>
