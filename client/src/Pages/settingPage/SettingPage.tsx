@@ -7,9 +7,11 @@ import {
   SectionWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import { useLogout } from "../../Hooks/useLogout";
+import { cleanLS, useLogout } from "../../Hooks/useLogout";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { confirmSignout } from "../../Const/message";
+import { useSetRecoilState } from "recoil";
+import { userState } from "../../Recoil/atoms/user";
 
 const ContentWrapper = styled.div`
     margin-left: 18px;
@@ -17,6 +19,7 @@ const ContentWrapper = styled.div`
 
 const SettingPage = () => {
   usePageTitle("설정");
+  const setUser = useSetRecoilState(userState)
   const logout = useLogout();
   const axiosPrivate = useAxiosPrivate();
 	const navigate = useNavigate();
@@ -24,6 +27,8 @@ const SettingPage = () => {
     if (window.prompt('탈퇴를 원하시면 "굿바이 플랜트하이커"라고 작성해주세요.') === "굿바이 플랜트하이커") {
         axiosPrivate.delete(`/users`)
         .then ((res)=>{
+          cleanLS()
+          setUser(null)
           navigate("/")
           console.log(res);   
           })
