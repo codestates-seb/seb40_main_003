@@ -30,7 +30,17 @@ public class ExpertChatRoom {
 	@JoinColumn(name = "seller_id")
 	private Member seller;
 
+	private int state;
+
 	@ManyToOne
 	@JoinColumn(name = "expert_profile_id")
 	private ExpertProfile expertProfile;
+
+	public void updateState() {
+		if (state == 0) {
+			this.state = 1;
+		} else {
+			this.state = 0;
+		}
+	}
 }

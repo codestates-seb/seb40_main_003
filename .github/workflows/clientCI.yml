@@ -19,6 +19,13 @@ jobs:
         working-directory: ./client
         env:
           REACT_APP_SECURE_LOCAL_STORAGE_HASH_KEY: ${{ secrets.REACT_APP_SECURE_LOCAL_STORAGE_HASH_KEY }}
+          
+      - name: Generate Environment Variables File for Production WS_BASE_URL
+        run: echo "REACT_APP_WS_BASE_URL=$REACT_APP_WS_BASE_URL" >> .env.production
+        working-directory: ./client
+        env:
+          REACT_APP_WS_BASE_URL: ${{ secrets.REACT_APP_WS_BASE_URL }}
+
       - name: Install dependencies
         run: yarn
         working-directory: ./client

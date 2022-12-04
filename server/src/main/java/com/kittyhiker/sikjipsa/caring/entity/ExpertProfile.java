@@ -92,4 +92,6 @@ public class ExpertProfile {
 	@OneToMany(mappedBy = "expertProfile")
 	private List<ExpertChat> expertChats = new ArrayList<>();
 
+//	@OneToMany(mappedBy = "expertProfile")
+//	private List<ExpertChatRoom> expertChatRooms = new ArrayList<>();
 }
