@@ -10,6 +10,7 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
+  SectionWrapper,
   SpaceBetween,
   SpaceEnd,
 } from "../../Components/Wrapper";
@@ -47,17 +48,16 @@ const Product = () => {
   const axiosPrivate = useAxiosPrivate();
   const LikeOnClick = () => {
     axiosPrivate
-    .post(`/deal/like/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-    .then((res)=>{
-    console.log(res)}
-    )
-    .catch((err) => {});
-
-  }
+      .post(`/deal/like/${id}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {});
+  };
 
   const navigate = useNavigate();
 
@@ -66,7 +66,7 @@ const Product = () => {
     <MainContentContainer>
       <MainCenterWrapper>
         <SpaceEnd className="mb-8 cursor">
-        <LikeButton onClick={LikeOnClick} />
+          <LikeButton onClick={LikeOnClick} />
         </SpaceEnd>
         {/* 실제 메인이 되는 내용! */}
         <TopCarousel>
@@ -90,7 +90,7 @@ const Product = () => {
           />
         </Link>
         <SpaceBetween>
-          <h1 className="h3 bold mt-16 mb-4">{data.title}</h1>                
+          <h1 className="h3 bold mt-16 mb-4">{data.title}</h1>
           {/* 게시글 수정, 삭제 버튼 */}
           {isAuthor(data.member.memberId) && (
             // 수정삭제 버튼팝업
@@ -123,8 +123,9 @@ const Product = () => {
       </MainCenterWrapper>
 
       <MainRightWrapper>
-        <span className="h4 bold">{data.price.toLocaleString()}원</span>
-
+        <SectionWrapper borderNone={true}>
+          <span className="h4 bold">{data.price.toLocaleString()}원</span>
+        </SectionWrapper>
         <SigButton
           onClick={() => {
             axiosprivate

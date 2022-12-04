@@ -188,7 +188,7 @@ type ViewCounterProps = {
 };
 const ViewCounterWrapper = styled.div`
   display: flex;
-  max-width: 100px;
+  max-width: 170px;
   justify-content: flex-end;
 `;
 

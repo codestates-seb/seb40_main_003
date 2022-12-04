@@ -30,6 +30,7 @@ export const MainCenterWrapper = styled.main`
   min-width: 312px;
   min-height: 80vh;
   max-width: 1024px;
+  margin-top: 18px;
   padding: 24px;
   /* margin-bottom: 156px; */
   background-color: var(--pure-white);
@@ -134,6 +135,7 @@ const MainLeftWrapper = styled.aside`
 type columnWrapperType = {
   width?: number;
   center?: boolean;
+  borderBottom?:boolean
 };
 export const ReverseWrap = styled.section`
   display: flex;
@@ -148,6 +150,7 @@ export const ColumnWrapper = styled.div`
     props.center ? `center` : "auto"};
   justify-content: ${(props: columnWrapperType) =>
     props.center ? `center` : "auto"};
+  border-bottom:${(props:columnWrapperType)=>props.borderBottom?"1px solid #ededed":""}
 `;
 export const SpaceEnd = styled.div`
   display: flex;

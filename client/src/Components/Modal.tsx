@@ -35,22 +35,19 @@ const Modal = ({
     </ModalContainer>
   );
 };
-
+// 전역모달
 export const GlobalModal = () => {
   const content = useRecoilValue(modalContent);
-  const [isShow, setIsShow] = useRecoilState(isModalOpen);
+  const isShow = useRecoilValue(isModalOpen);
 
   return (
-
       <AlertBox className={isShow ? "bold" : "hiding "}>{content}</AlertBox>
-
   );
 };
 
 const AlertBox = styled.dialog`
-  min-width: 150px;
-  width: 100%;
-  max-width: 100px;
+
+  width: 50vw;
   padding: 32px;
   min-height: 50px;
   display: flex;
@@ -58,16 +55,16 @@ const AlertBox = styled.dialog`
   align-items: center;
   justify-content: center;
   position: absolute;
-  bottom: 36px;
-  left: 36px;
+  left :calc(25vw);
+  bottom: 58px;
   border:none;
   box-shadow: 0 0 30px rgba(30, 30, 30, 0.185);
-  border-radius: var(--sig-border-16);
+  border-radius: 24px 0;
   text-align: center;
   box-sizing: border-box;
-  background-color: white;
+  background-color: var(--pure-white);
   z-index: 10000;
-  color: var(--main);
+  color: var(--alert-amber);
   transition-duration: 300ms;
   opacity: 1;
   &.hiding {
