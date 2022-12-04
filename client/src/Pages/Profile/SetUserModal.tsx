@@ -3,6 +3,7 @@ import { FieldErrors, useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import { ColumnWrapper } from "../../Components/Wrapper";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import { compressImage } from "../../utils/imageCompress";
 
 type FormData = {
   image: FileList;
@@ -20,7 +21,7 @@ type setUserModal = {
   url?: string | undefined;
 };
 
-const SetUserModal: React.FC<setUserModal> = ({ closeModal }) => {
+const SetUserModal: React.FC<setUserModal> = ({ closeModal, url }) => {
   const axiosPrivate = useAxiosPrivate();
   const {
     register,
@@ -39,14 +40,19 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal }) => {
         address: data.memberInformation.address,
       },
     });
-    formData.append("multipartFile", data.image[0]);
     formData.append(
       "memberPatchDto",
       new Blob([memberPatchDto], { type: "application/json" })
     );
 
+    if (data.image !== undefined) {
+      await compressImage(data.image[0], 100).then((res: any) =>
+        formData.append("multipartFile", res)
+      )
+    }
+
     axiosPrivate
-      .patch(`/profile/${data.url}`, formData, {
+      .patch(`/profile/${url}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -84,11 +90,12 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal }) => {
           },
         })}
         type="text"
+        placeholder="닉네임을 수정해주세요."
       />
       <p className="font-alert-red">{errors.nickname?.message}</p>
 
       {/* 자기소개 */}
-      <label className="bold h4 mb-4">자기소개</label>
+      <label className="bold h4 mb-4 mt-16">자기소개</label>
       <textarea
         {...register("memberProfile.content", {
           required: true,
@@ -101,11 +108,12 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal }) => {
             value: 20,
           },
         })}
+        placeholder="자기소개를 입력해주세요."
       />
       <p className="font-alert-red">{errors.memberProfile?.content?.message}</p>
 
       {/* 주소 */}
-      <label className="bold h4 mb-4">주소</label>
+      <label className="bold h4 mb-4 mt-16">주소</label>
       <input
         {...register("memberInformation.address", {
           required: true,
@@ -119,6 +127,7 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal }) => {
           },
         })}
         type="text"
+        placeholder="주소를 입력해주세요."
       />
       <p className="font-alert-red">
         {errors.memberInformation?.address?.message}
