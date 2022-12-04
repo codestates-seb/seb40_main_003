@@ -1,10 +1,4 @@
 import styled from "@emotion/styled";
-import { RowWrapper, SectionWrapper } from "./Wrapper";
-import { useRef, useState } from "react";
-import { SigTag } from "./GlobalComponents";
-import useAxiosPrivate from "../Hooks/useAxiosPrivate";
-import { useResetRecoilState } from "recoil";
-import { userState } from "../Recoil/atoms/user";
 import emptyHeartIcon from "../images/like/emptyHeartIcon.png"
 
 export const LikeButton = styled.img`

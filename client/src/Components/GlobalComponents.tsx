@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { overKillo } from "../utils/controller";
 import { ColumnWrapper, SpaceBetween } from "./Wrapper";
 import { isExpert, userState, UserStateType } from "../Recoil/atoms/user";
-import defaultProfile from "../images/defaultProfileImage.png";
+
 import { useRecoilState, useRecoilValue } from "recoil";
 import { ReactComponent as Exchange } from "../images/exchangeIcon.svg";
 import { useIsAuthor } from "../Hooks/useAuth";
@@ -10,9 +10,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "../Hooks/api";
 import { categoryNumberToString } from "../Const/Category";
 import { areaArray } from "../Const/Address";
-import heartIcon from "../../images/like/heartIcon.png";
-import emptyHeartIcon from "../../images/like/emptyHeartIcon.png";
-import { LikeButton } from "./LikeButton";
 import { defaultImage } from "../utils/defaultImage";
 
 // 버튼앨리먼트

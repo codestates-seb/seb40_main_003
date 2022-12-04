@@ -5,7 +5,6 @@ import { Outlet, NavLink } from "react-router-dom";
 import { SubText } from "./GlobalComponents";
 import { ReactComponent as Home } from "../images/homeIcon.svg";
 import { ReactComponent as Community } from "../images/communityIcon.svg";
-import { ReactComponent as Chat } from "../images/chatIcon.svg";
 import { ReactComponent as Market } from "../images/marketIcon.svg";
 import { ReactComponent as Login } from "../images/loginIcon.svg";
 import { ReactComponent as Care } from "../images/careIcon.svg";

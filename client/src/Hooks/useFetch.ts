@@ -1,7 +1,6 @@
 import { fetchingImageLimit } from "../Const/fetchImage";
 import axios, { axiosPrivate } from "./api";
 import { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
 
 
 export type FetchByParamsType = {
