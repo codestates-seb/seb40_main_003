@@ -13,10 +13,11 @@ type FormData = {
   memberInformation: {
     address: string;
   };
-  url: string | undefined;
+  url?: string | undefined;
 };
 type setUserModal = {
   closeModal?: Function;
+  url?: string | undefined;
 };
 
 const SetUserModal: React.FC<setUserModal> = ({ closeModal }) => {
