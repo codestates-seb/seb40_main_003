@@ -8,8 +8,9 @@ export const useSetModal = (content: string) => {
   setContent(content)
   setIsOpen(true);
   useEffect(() => {
+    if(isOpen){
     setTimeout(() => {
       setIsOpen(false);
-    }, 2000);
+    }, 2000)}
   }, [content]);
 };

@@ -12,9 +12,10 @@ export const LogOutOnly = () => {
 };
 
 export const AuthProvider = () => {
+  const hasUserInfo = useRecoilValue(userState);
   const auth = () => {
     const access = getLS("accessToken");
-    const userInfo = getLS("userInfo");
+    const userInfo = hasUserInfo || getLS("userInfo");
     const refresh = getLS("refreshToken");
     if (refresh && userInfo && access) {
       return true;

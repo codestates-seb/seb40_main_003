@@ -90,13 +90,13 @@ const CommunityDetail = () => {
 
           <p className="font-black mt-16 text-overflow ">{data.content}</p>
 
-          <SpaceBetween className="mt-16">
-            <RowWrapper>
+          <SpaceBetween className="mt-16 mb-16">
+            <div>
               <span className="sub font-gray mb-8">
                 {getDateAgo(data.createdAt)}
               </span>
               {/* <span className='sub font-gray ml-16'>{data.member.nickname}</span> */}
-            </RowWrapper>
+            </div>
             <ViewCounter
               view={data.view}
               renameLike="좋아요"

@@ -8,7 +8,6 @@ import {
 } from "../Wrapper";
 
 const CommunityCard = ({ data }: any) => {
-  console.log(data);
   return (
     <ColumnWrapper borderBottom={true}>
       <SectionWrapper

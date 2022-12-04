@@ -66,10 +66,10 @@ const Login = () => {
         setLS("refreshToken", res.data.refreshToken);
         if (data.autoLogin) {
           setLS("userInfo", userInfo);
+          setUser(userInfo);
         }
       })
       .then(() => {
-        
         navigate(-1);
       })
       .catch((err) => {
