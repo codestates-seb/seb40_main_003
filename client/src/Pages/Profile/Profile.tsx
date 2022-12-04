@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { ReactComponent as AddIcon } from "../../images/addIcon.svg";
 import useFetch from "../../Hooks/useFetch";
+import defaultProfileImage from "../../images/defaultProfileImage.png";
 import usePageTitle from "../../Hooks/usePageTitle";
 
 import {
@@ -11,6 +12,7 @@ import {
   ReverseWrap,
   RowWrapper,
   SectionWrapper,
+  SpaceBetween,
 } from "../../Components/Wrapper";
 import { ProfileCard, SigButton } from "../../Components/GlobalComponents";
 import { Link } from "react-router-dom";
@@ -26,6 +28,7 @@ import PlantCardCarousel, {
 import { useIsAuthor } from "../../Hooks/useAuth";
 import ProductCard from "../../Components/product/ProductCard";
 import EditPlantModal from "./EditPlantModal";
+import SetUserModal from "./SetUserModal";
 
 type props = {
   url?: string | undefined;
@@ -40,29 +43,54 @@ const Profile = (props: props) => {
   const data = useFetch<profileType>(`/profile/${id}`);
   // 페이지 설정
   usePageTitle("프로필");
-  // 모달
+  
+  // 반려식물 추가 모달
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
-
-  const [isEditing, setIsEditing] = useState()
+  const [isEditing, setIsEditing] = useState();
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-  console.log(data)
+  console.log(data);
 
+  // 프로필 수정 모달
+  const [isOpenModalProfile, setOpenModalProfile] = useState<boolean>(false);
+  const [isEditingProfile, setIsEditingProfile] = useState();
+  const onClickModalProfile = useCallback(() => {
+    setOpenModalProfile(!isOpenModalProfile);
+  }, [isOpenModalProfile]);
+  console.log(data);
   return data ? (
     <>
       <MainContentContainer>
         <MainCenterWrapper>
+          <>
+            <>
+              {isAuthor(id) ? (
+                <SpaceBetween>
+                  <button className="sub" onClick={onClickModalProfile}>프로필 수정</button>
+                </SpaceBetween>
+              ) : (
+                <></>
+              )}
+            </>
+            {isOpenModalProfile && (
+              <Modal onClickModal={onClickModalProfile}>
+                <SetUserModal closeModal={onClickModalProfile}/>
+              </Modal>
+            )}
+          </>
           <ProfileCard
             pk={id}
-            src={data.image!==null?data.image.imgUrl:""}
+            src={data.image!==null?data.image.imgUrl:defaultProfileImage}
             alt={`${data.nickname}의 대표사진`}
             name={data.nickname}
             location={data.memberInformation?.address}
             circle={true}
             size={"66"}
           />
-          <RowWrapper className="pb-16 mt-8">{data.memberProfile?.content}</RowWrapper>
+          <RowWrapper className="pb-16 mt-8">
+            {data.memberProfile?.content}
+          </RowWrapper>
           <SectionWrapper title="반려 식물">
             {/* 모달창 */}
             <>
@@ -77,7 +105,7 @@ const Profile = (props: props) => {
                 {data.plants.map((e, i) => {
                   return (
                     <ProfilePlantCard
-                    onClickModal={onClickModal}
+                      onClickModal={onClickModal}
                       src={e.image.imgUrl}
                       alt={`${data.nickname}의 반려식물 ${e.name}의 사진`}
                       name={e.name}
@@ -98,9 +126,9 @@ const Profile = (props: props) => {
                 )}
               </>
             </PlantCardCarousel>
-          </SectionWrapper>          
+          </SectionWrapper>
           <SectionWrapper width={100} title="거래 리뷰">
-            {data.memberReviews&&data.memberReviews.length !== 0 ? (
+            {data.memberReviews && data.memberReviews.length !== 0 ? (
               <>
                 {data.memberReviews.map((e) => {
                   return (

@@ -55,16 +55,16 @@ export const MainRightWrapper = styled.aside`
   background-color: var(--pure-white);
   padding: 16px 24px;
   position: sticky;
-  z-index: 9999;
   top: 70px;
   border-top: 1px solid var(--line-light-gray);
   display: ${(props) => !props.children && "none"};
-
+  
   @media screen and (max-width: 1024px) {
     margin: 0;
     flex-direction: row;
     justify-content:${(props:{center?:boolean})=>(props.center?"center":"space-between")};
     position: fixed;
+    z-index: 9999;
     width: 100%;
     top: auto;
     bottom: 52px;
@@ -135,6 +135,7 @@ const MainLeftWrapper = styled.aside`
 type columnWrapperType = {
   width?: number;
   center?: boolean;
+  minWidth?:string;
   borderBottom?:boolean
 };
 export const ReverseWrap = styled.section`
@@ -146,6 +147,8 @@ export const ColumnWrapper = styled.div`
   flex-direction: column;
   width: ${(props: columnWrapperType) =>
     props.width ? `${props.width}%` : "auto"};
+min-width: ${(props: columnWrapperType) =>
+  props.minWidth ? `${props.minWidth}` : ""};
   align-items: ${(props: columnWrapperType) =>
     props.center ? `center` : "auto"};
   justify-content: ${(props: columnWrapperType) =>

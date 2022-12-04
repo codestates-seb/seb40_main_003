@@ -1,4 +1,4 @@
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import {
   ImageWrapper,
@@ -9,7 +9,6 @@ import {
   MainCenterWrapper,
   MainContentContainer,
   MainRightWrapper,
-  RowWrapper,
   SectionWrapper,
   SpaceBetween,
 } from "../../Components/Wrapper";

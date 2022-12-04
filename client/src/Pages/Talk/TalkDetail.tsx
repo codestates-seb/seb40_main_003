@@ -39,8 +39,9 @@ export const TalkDetail = () => {
   useEffect(() => {
     Fetching();
   }, []);
-
-  const socket = new WebSocket("ws://3.39.124.200:8080/ws/chat");
+  
+  const socketURL = process.env.REACT_APP_WS_BASE_URL
+  const socket = new WebSocket(socketURL!==undefined?socketURL:"");
 
   // 새로운 메시지가 생기면 자동으로 밑으로
   useEffect(() => {
