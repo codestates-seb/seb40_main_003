@@ -14,4 +14,5 @@ public interface DealChatRepository extends JpaRepository<DealChatRoom, Long> {
     Optional<DealChatRoom> findByDealAndBuyer(Deal deal, Member buyer);
     Optional<DealChatRoom> findByRoomName(String roomName);
     List<DealChatRoom> findBySellerOrBuyer(Member Seller, Member Buyer);
+    boolean existsByRoomName(String roomName);
 }

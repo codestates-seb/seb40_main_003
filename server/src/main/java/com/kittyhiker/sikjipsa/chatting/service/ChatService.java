@@ -3,10 +3,7 @@ package com.kittyhiker.sikjipsa.chatting.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
 import com.kittyhiker.sikjipsa.caring.service.ExpertService;
-import com.kittyhiker.sikjipsa.chatting.dto.ChatMessageDto;
-import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto;
-import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto2;
-import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomMessageDto;
+import com.kittyhiker.sikjipsa.chatting.dto.*;
 import com.kittyhiker.sikjipsa.chatting.entity.ChatMessage;
 import com.kittyhiker.sikjipsa.chatting.entity.DealChatRoom;
 import com.kittyhiker.sikjipsa.chatting.entity.ExpertChatRoom;
@@ -176,18 +173,68 @@ public class ChatService {
         return response;
     }
 
-    public List<ChatRoomMessageDto> getMessageFromRoom(String roomName) {
 
+    public ExpertChatMessageDto getMessageFromExpertRoom(String roomName) {
+        ChatRoomDto2 expertRoom = findExpertRoomByName(roomName);
+        ChatExpertInfo expertInfo = expertRoom.getExpertInfo();
+        List<MessageResponseDto> messages = getMessageFromRoomName(roomName);
+        ExpertChatMessageDto expertChatMessageDto = chatRoomMapper.messageToExpertMessageDto(messages, expertInfo);
+        return expertChatMessageDto;
+    }
+
+    public DealChatMessageDto getMessageFromDealRoom(String roomName) {
+        ChatRoomDto dealRoom = findDealRoomByName(roomName);
+        ChatDealInfo dealInfo = dealRoom.getDealInfo();
+        List<MessageResponseDto> messages = getMessageFromRoomName(roomName);
+        DealChatMessageDto dealChatMessageDto = chatRoomMapper.messageToDealMessageDto(messages, dealInfo);
+        return dealChatMessageDto;
+    }
+
+    public List<MessageResponseDto> getMessageFromRoomName(String roomName) {
         List<ChatMessage> messages = messageRepository.findByRoomName(roomName);
-        List<ChatRoomMessageDto> response = new ArrayList<>();
+        List<MessageResponseDto> response = new ArrayList<>();
+        messages.stream()
+                .forEach(
+                        m -> {
+                            m.readMessage();
+                            ChatMessage savedMessage = messageRepository.save(m);
+                            Member sender = savedMessage.getSender();
+                            MessageResponseDto mDto = chatRoomMapper.messageToMessageResponseDto(savedMessage,
+                                    memberMapper.memberToCommunityMemberDto(sender,
+                                            imageService.findImageByMember(sender)));
+                            response.add(mDto);
+                        }
+                );
+        return response;
+    }
+
+    public List<ExpertChatMessageDto> getExpertMessageFromRoom(String roomName, ChatExpertInfo chatExpertInfo) {
+        List<ChatMessage> messages = messageRepository.findByRoomName(roomName);
+        List<ExpertChatMessageDto> response = new ArrayList<>();
         messages.stream()
                 .forEach( m -> {
                     m.readMessage();
                     ChatMessage savedMessage = messageRepository.save(m);
                     Member member = savedMessage.getSender();
-                    ChatRoomMessageDto mDto = chatRoomMapper.messageToMessageResponse(savedMessage,
+                    ExpertChatMessageDto mDto = chatRoomMapper.messageToExpertMessageDto(savedMessage,
                             memberMapper.memberToCommunityMemberDto(member,
-                                    imageService.findImageByMember(member)));
+                                    imageService.findImageByMember(member)), chatExpertInfo);
+                    response.add(mDto);
+                });
+        return response;
+    }
+
+    public List<DealChatMessageDto> getDealMessageFromRoom(String roomName, ChatDealInfo dealInfo) {
+        List<ChatMessage> messages = messageRepository.findByRoomName(roomName);
+        List<DealChatMessageDto> response = new ArrayList<>();
+        messages.stream()
+                .forEach( m -> {
+                    m.readMessage();
+                    ChatMessage savedMessage = messageRepository.save(m);
+                    Member member = savedMessage.getSender();
+                    DealChatMessageDto mDto = chatRoomMapper.messageToDealMessageDto(savedMessage,
+                            memberMapper.memberToCommunityMemberDto(member,
+                                    imageService.findImageByMember(member)), dealInfo);
                     response.add(mDto);
                 });
         return response;
