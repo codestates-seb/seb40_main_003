@@ -45,6 +45,14 @@ public class DealLikeController {
         return new ResponseEntity(response, HttpStatus.CREATED);
     }
 
+    @GetMapping("{deal-id}")
+    public ResponseEntity isAlreadyLike(@PathVariable("deal-id") Long dealId,
+                                        @RequestHeader("Authorization") String token) {
+        Long userId = jwtTokenizer.getUserIdFromToken(token);
+        Boolean alreadyLike = dealLikeService.isAlreadyLike(userId, dealId);
+        return new ResponseEntity(alreadyLike, HttpStatus.OK);
+    }
+
     /**
      * 찜 취소
      */
