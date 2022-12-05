@@ -14,4 +14,6 @@ public interface MemberLikeExpertRepository extends JpaRepository<MemberLikeExpe
 	Optional<MemberLikeExpert> findByMemberAndExpertProfile(Member member, ExpertProfile expertProfile);
 
 	Page<MemberLikeExpert> findAllByMember_MemberId(Long memberId, Pageable pageable);
+
+	Boolean existsByExpertProfileAndMember(ExpertProfile expertProfile, Member member);
 }
