@@ -51,7 +51,7 @@ public class MemberService {
 //        MemberInformation memberInformation = new MemberInformation(savedUser, "name", "010-1234-5678", "20000101", 1, "address");
 //        memberInfoRepository.save(memberInformation);
 
-        MemberProfile memberProfile = new MemberProfile("content", savedUser);
+        MemberProfile memberProfile = new MemberProfile("", savedUser);
         memberProfileRepository.save(memberProfile);
 
         return savedUser.getMemberId();
