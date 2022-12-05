@@ -29,14 +29,14 @@ http://plant-hiker.s3-website.ap-northeast-2.amazonaws.com/community
 
 ### Front-end
 
-| <img src="https://blog.kakaocdn.net/dn/FMhSD/btrSHWMejS5/lKeFYfUiQbl0Q0wQHeS2q0/img.png"/> | <img src="https://blog.kakaocdn.net/dn/mA1pw/btrSLJqR79O/pM7RJACN7NmJj1sY8cjHhK/img.png"/> | <img src="https://blog.kakaocdn.net/dn/6PwBc/btrSHMQCumK/r63HSncKqAyELb6cjSVr8k/img.png"/> |
+| <img src="https://blog.kakaocdn.net/dn/FMhSD/btrSHWMejS5/lKeFYfUiQbl0Q0wQHeS2q0/img.png" width="250" height="250"/> | <img src="https://blog.kakaocdn.net/dn/mA1pw/btrSLJqR79O/pM7RJACN7NmJj1sY8cjHhK/img.png" width="250" height="250"/> | <img src="https://blog.kakaocdn.net/dn/6PwBc/btrSHMQCumK/r63HSncKqAyELb6cjSVr8k/img.png" width="250" height="250"/> |
 | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
 | **이준구** 🥇                                                                              | 전윤정                                                                                     | 정우시                                                                                     |
 | https://github.com/jobkaeHenry                                                             | https://github.com/herong0515                                                              | https://github.com/wusi-hub                                                                |
 
 ### back-end
 
-| <img src="https://blog.kakaocdn.net/dn/3Q3KE/btrSJS2UxTf/MDABwNPp7WqQukkJpLjBdk/img.png"/> | <img src="https://blog.kakaocdn.net/dn/cQvNmb/btrSJyp5WGX/Cpe2Mprbq1PzNYMumEWkRK/img.png"/> |
+| <img src="https://blog.kakaocdn.net/dn/3Q3KE/btrSJS2UxTf/MDABwNPp7WqQukkJpLjBdk/img.png" width="250" height="250"/> | <img src="https://blog.kakaocdn.net/dn/cQvNmb/btrSJyp5WGX/Cpe2Mprbq1PzNYMumEWkRK/img.png" width="250" height="250"/> |
 | ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------- |
 | 강다솔                                                                                     | 김수연                                                                                      |
 | https://github.com/DasolKang                                                               | https://github.com/Nucys                                                                    |
@@ -70,9 +70,16 @@ http://plant-hiker.s3-website.ap-northeast-2.amazonaws.com/community
 **프레임워크/라이브러리**<br>
 <img src="https://img.shields.io/badge/Spring-6DB33F?style=flat-square&logo=Spring&logoColor=white"/>
 <img src="https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=spring-boot&logoColor=white"/>
-<img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=Spring-Security&logoColor=white"/><br>
+<img src="https://img.shields.io/badge/Spring_Data_JPA-6DB33F?style=flat-square&logoColor=white"/>
+<img src="https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=Spring-Security&logoColor=white"/>
+<img src="https://img.shields.io/badge/JWT-000000?style=flat-square&logoColor=white"/><br>
 **데이터베이스**<br>
 <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=MySQL&logoColor=white"/><br>
 **배포 및 관리**<br>
 <img src="https://img.shields.io/badge/Amazon_AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white"/>
+<img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=GitHub Actions&logoColor=white"/>
+<br>
+
+### Others
+<img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> <img src="https://img.shields.io/badge/Discord-5865F2?style=flat-square&logo=Discord&logoColor=white"/> <img src="https://img.shields.io/badge/Notion-000000?style=flat-square&logo=Notion&logoColor=white"/>
 <br>
