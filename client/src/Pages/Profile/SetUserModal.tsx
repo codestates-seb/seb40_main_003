@@ -64,13 +64,10 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal, url }) => {
         },
       })
       .then((res) => {
-        console.log(res);
         closeModal && closeModal();
       })
       .catch((err) => {
-        console.log(err);
       });
-    console.log(data);
   };
 
   const onInValid = (errors: FieldErrors) => {

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { isExpert, userState } from "../Recoil/atoms/user";
 import { cleanLS } from "./useLogout";
 import { getLS } from "./useSecureLS";

@@ -7,7 +7,6 @@ import {
   SectionWrapper,
   RowWrapper,
   ColumnWrapper,
-  SpaceBetween,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
@@ -93,7 +92,6 @@ const ExpertProfileTransfer = () => {
       "expertProfileDto",
       new Blob([expertProfileDto], { type: "application/json" })
     );
-    console.log(expertProfileDto);
     if (data.image !== undefined) {
       await compressImage(data.image[0]).then((res: any) => {
         formData.append("multipartFile", res);
@@ -107,7 +105,6 @@ const ExpertProfileTransfer = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         navigate(`/`);
       })
       .catch((err) => {});

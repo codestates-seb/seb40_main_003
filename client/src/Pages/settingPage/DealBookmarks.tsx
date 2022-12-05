@@ -21,6 +21,7 @@ import { ErrorBoundary } from "react-error-boundary";
 import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import React from "react";
+import { cannotLoad } from "../../Const/message";
 
 // 쿼리클라이언트
 const productBookmarksQueryClient = new QueryClient();
@@ -45,7 +46,7 @@ export const ProductBookmarksMain = () => {
 
   if (status === "loading") return <LoadingSkeleton />;
   if (status === "error")
-    return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
+    return <ErrorMessage content={cannotLoad} />;
 
   return (
     <>
@@ -71,7 +72,7 @@ const ProductBookmarks = () => {
       <MainCenterWrapper>
         {/* 쿼리클라이언트로 감쌈 */}
         <ErrorBoundary
-          fallback={<ErrorMessage content={"정보를 불러오는데 실패했습니다"} />}
+          fallback={<ErrorMessage content={cannotLoad} />}
         >
           <QueryClientProvider client={productBookmarksQueryClient}>
             <ProductBookmarksMain />
