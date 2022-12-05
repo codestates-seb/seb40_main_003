@@ -11,11 +11,6 @@ const useRefreshToken = () => {
       .post("/users/refresh", { refreshToken: refreshToken })
       .then((res) => {
         setLS("accessToken", res.data.accessToken);
-        console.log(
-          `발급받은 토큰 저장쓰! ${
-            res.data.accessToken + "암호화됨->" + getLS("accessToken")
-          }`
-        );
         setLS("refreshToken", res.data.refreshToken);
         return res.data;
       })

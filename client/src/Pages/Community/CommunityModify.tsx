@@ -63,7 +63,6 @@ const CommunityModify = (props: Props) => {
         },
       })
       .then((res) => {
-        console.log(res);
         setEditData(null);
         navigate(`/community/${editData?.communityId}`);
       })

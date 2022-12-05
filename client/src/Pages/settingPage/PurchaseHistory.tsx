@@ -13,6 +13,7 @@ import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
 import { ProfileDealType } from "../../types/profileType";
+import { cannotLoad } from "../../Const/message";
 
 // 쿼리클라이언트
 const purchaseHistoryQueryClient = new QueryClient();
@@ -24,9 +25,7 @@ export const PurchaseHistoryMain = () => {
     
   });
   if (isLoading) return <LoadingSkeleton />;
-  if (error) return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;
-  if(isSuccess) console.log(data.data.data);
-  
+  if (error) return <ErrorMessage content={cannotLoad} />;
 
   return (
     <>
@@ -48,7 +47,7 @@ const PurchaseHistory = () => {
       <MainCenterWrapper>
         {/* 쿼리클라이언트로 감쌈 */}
         <ErrorBoundary
-          fallback={<ErrorMessage content={"정보를 불러오는데 실패했습니다"} />}
+          fallback={<ErrorMessage content={cannotLoad} />}
         >
           <QueryClientProvider client={purchaseHistoryQueryClient}>
             <PurchaseHistoryMain />

@@ -50,7 +50,7 @@ const Profile = (props: props) => {
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
-  console.log(data);
+
 
   // 프로필 수정 모달
   const [isOpenModalProfile, setOpenModalProfile] = useState<boolean>(false);
@@ -58,7 +58,7 @@ const Profile = (props: props) => {
   const onClickModalProfile = useCallback(() => {
     setOpenModalProfile(!isOpenModalProfile);
   }, [isOpenModalProfile]);
-  console.log(data);
+
   return data ? (
     <>
       <MainContentContainer>

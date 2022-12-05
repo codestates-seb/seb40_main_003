@@ -56,7 +56,6 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
         },
       })
       .then((res) => {
-        console.log(res);
         closeModal && closeModal();
       })
       .catch((err) => {
@@ -64,7 +63,7 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
       });
   };
   const onInValid = (errors: FieldErrors) => {
-    console.log(errors);
+
   };
 
   return (

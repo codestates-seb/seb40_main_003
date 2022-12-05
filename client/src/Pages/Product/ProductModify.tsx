@@ -47,8 +47,6 @@ const ProductModify = () => {
   const navigate = useNavigate();
 
   const onValid = async (data: ProductEditorForm) => {
-    console.log(data);
-
     const formData = new FormData();
     const dealPatchDto = JSON.stringify({
       title: data.title,

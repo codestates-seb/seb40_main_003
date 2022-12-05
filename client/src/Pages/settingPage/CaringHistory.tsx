@@ -13,6 +13,7 @@ import { ErrorMessage } from "../../Components/ErrorHandle";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import { LoadingSkeleton } from "../../Components/Loading";
+import { cannotLoad } from "../../Const/message";
 
 const careQueryClient = new QueryClient();
 
@@ -23,7 +24,7 @@ export const CareMain = () => {
   });
   if (isLoading) return <LoadingSkeleton />;
   if (error) {
-    return <ErrorMessage content="컨텐츠를 불러오지 못했습니다" />;}
+    return <ErrorMessage content={cannotLoad} />;}
   return (
     <>
       {data &&
@@ -43,7 +44,7 @@ const CaringHistory = () => {
     <MainContentContainer>
       <MainCenterWrapper>
 
-        <ErrorBoundary fallback={<ErrorMessage content="예상치 못한 발생했습니다"/>}>
+        <ErrorBoundary fallback={<ErrorMessage content={cannotLoad}/>}>
           <QueryClientProvider client={careQueryClient} >
             <CareMain />
           </QueryClientProvider>

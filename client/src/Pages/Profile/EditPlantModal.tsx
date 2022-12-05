@@ -31,7 +31,7 @@ const EditPlantModal: React.FC<addplantModal> = ({ closeModal, url }) => {
       years: String(data.years).replaceAll("-",""),
       type: data.type,
     });
-    console.log(plantDto)
+
     formData.append("multipartFile", data.image[0]);
     formData.append(
       "plantDto", new Blob([plantDto], { type: "application/json" })
@@ -44,7 +44,7 @@ const EditPlantModal: React.FC<addplantModal> = ({ closeModal, url }) => {
         },
       })
       .then((res) => {
-        console.log(res);
+
         closeModal && closeModal();
       })
       .catch((err) => {
@@ -52,9 +52,6 @@ const EditPlantModal: React.FC<addplantModal> = ({ closeModal, url }) => {
       });
   };
 
-  const onInValid = (errors: FieldErrors) => {
-    console.log(errors);
-  };
 
   return (
     <ColumnWrapper width={100} as={"form"} onSubmit={handleSubmit(onValid)}>

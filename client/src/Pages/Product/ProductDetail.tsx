@@ -60,7 +60,6 @@ const Product = () => {
   };
 
   const navigate = useNavigate();
-console.log(data)
   return data !== undefined ? (
     // 메인 컨테이너 (반응형 제공!)
     <MainContentContainer>
@@ -99,7 +98,6 @@ console.log(data)
               deleteFunction={() => {
                 if (window.confirm(confirmRemove("게시물을"))) {
                   axiosPrivate.delete(`/deal/${data.dealId}`).then((res) => {
-                    console.log(res);
                     window.alert(completeDelete);
                     navigate("/product");
                   });
@@ -132,7 +130,7 @@ console.log(data)
               .post(`/chat/experts/${data.member.memberId}`)
               .then((e) => {
                 navigate(`/talk/${e.data.roomName}`);
-                console.log();
+
               });
           }}
         >
