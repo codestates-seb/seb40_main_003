@@ -1,8 +1,6 @@
 package com.kittyhiker.sikjipsa.chatting.dto;
 
-import com.kittyhiker.sikjipsa.community.dto.CommentResponseDto;
 import com.kittyhiker.sikjipsa.member.dto.CommunityMemberResponse;
-import com.kittyhiker.sikjipsa.member.dto.MemberResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ChatRoomMessageDto {
+public class MessageResponseDto {
 
     private Long messageId;
     private String message;

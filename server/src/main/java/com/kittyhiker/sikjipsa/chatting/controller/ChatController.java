@@ -1,8 +1,6 @@
 package com.kittyhiker.sikjipsa.chatting.controller;
 
-import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto;
-import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomDto2;
-import com.kittyhiker.sikjipsa.chatting.dto.ChatRoomMessageDto;
+import com.kittyhiker.sikjipsa.chatting.dto.*;
 import com.kittyhiker.sikjipsa.chatting.service.ChatService;
 import com.kittyhiker.sikjipsa.jwt.util.JwtTokenizer;
 import lombok.RequiredArgsConstructor;
@@ -53,14 +51,14 @@ public class ChatController {
 
 	@GetMapping("/deal/{room-name}")
 	public ResponseEntity getDealChatDetail(@PathVariable("room-name") String roomName) {
-		List<ChatRoomMessageDto> messageFromRoom = chatService.getMessageFromRoom(roomName);
-		return new ResponseEntity(messageFromRoom, HttpStatus.OK);
+		DealChatMessageDto messages = chatService.getMessageFromDealRoom(roomName);
+		return new ResponseEntity(messages, HttpStatus.OK);
 	}
 
 	@GetMapping("/experts/{room-name}")
 	public ResponseEntity getExpertChatDetail(@PathVariable("room-name") String roomName) {
-		List<ChatRoomMessageDto> messageFromRoom = chatService.getMessageFromRoom(roomName);
-		return new ResponseEntity(messageFromRoom, HttpStatus.OK);
+		ExpertChatMessageDto messages = chatService.getMessageFromExpertRoom(roomName);
+		return new ResponseEntity(messages, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/chat/{chat-id}")
