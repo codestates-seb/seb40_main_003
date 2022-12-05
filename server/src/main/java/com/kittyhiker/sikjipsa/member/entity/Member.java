@@ -43,46 +43,46 @@ public class Member extends AuditingEntity {
 
 	private String roles;
 
-	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private MemberProfile memberProfile;
 
-	@OneToOne(mappedBy = "member")
+	@OneToOne(mappedBy = "member", orphanRemoval = true)
 	private Image image;
 
-	@OneToOne(mappedBy = "member")
+	@OneToOne(mappedBy = "member", orphanRemoval = true)
 	private ExpertProfile expertProfile;
 
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", orphanRemoval = true)
 	private List<MemberLikeExpert> memberLikeExperts = new ArrayList<>();
 
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", orphanRemoval = true)
 	private List<ExpertReview> expertReviews = new ArrayList<>();
 
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", orphanRemoval = true)
 	private List<Deal> deals = new ArrayList<>();
 
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", orphanRemoval = true)
 	private List<MemberLikeDeal> memberLikeDeals = new ArrayList<>();
 
-	@OneToMany(mappedBy = "seller")
+	@OneToMany(mappedBy = "seller", orphanRemoval = true)
 	private List<DealReview> dealReviews = new ArrayList<>();
 
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", orphanRemoval = true)
 	private List<Plant> plants = new ArrayList<>();
 
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", orphanRemoval = true)
 	private List<Community> communities = new ArrayList<>();
 
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", orphanRemoval = true)
 	private List<CommunityLike> communityLikes = new ArrayList<>();
 
-	@OneToMany(mappedBy = "member")
+	@OneToMany(mappedBy = "member", orphanRemoval = true)
 	private List<Comment> comments = new ArrayList<>();
 
-	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
+	@OneToOne(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
 	private MemberInformation memberInformation;
 
-	@OneToOne(mappedBy = "member")
+	@OneToOne(mappedBy = "member", orphanRemoval = true)
 	private Token token;
 
 	public List<String> getRolesToList() {

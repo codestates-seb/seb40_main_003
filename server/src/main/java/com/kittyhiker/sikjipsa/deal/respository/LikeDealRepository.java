@@ -13,4 +13,5 @@ public interface LikeDealRepository extends JpaRepository<MemberLikeDeal, Long> 
 
     Page<MemberLikeDeal> findByMember(Member member, Pageable pageable);
     Optional<MemberLikeDeal> findByMemberAndDeal(Member member, Deal deal);
+    boolean existsByDealAndMember(Deal deal, Member member);
 }

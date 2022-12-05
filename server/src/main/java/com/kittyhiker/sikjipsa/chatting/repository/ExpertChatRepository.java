@@ -19,4 +19,5 @@ public interface ExpertChatRepository extends JpaRepository<ExpertChatRoom, Long
 	Optional<ExpertChatRoom> findByExpertProfileAndBuyer(ExpertProfile expertProfile, Member member);
 
 	List<ExpertChatRoom> findBySellerOrBuyer(Member Seller, Member Buyer);
+	boolean existsByRoomName(String roomName);
 }

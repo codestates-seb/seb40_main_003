@@ -25,5 +25,12 @@ public interface ChatRoomMapper {
                                          Long buyerId, Long sellerId, Long notReadNum);
 
     ChatMessage messageDtoToChatMessage(ChatMessageDto messageDto, Member sender, Long receiverId, Long isRead);
-    ChatRoomMessageDto messageToMessageResponse(ChatMessage message, CommunityMemberResponse messageSender);
+    DealChatMessageDto messageToDealMessageDto(List<MessageResponseDto> messageInfo, ChatDealInfo chatDealInfo);
+    ExpertChatMessageDto messageToExpertMessageDto(List<MessageResponseDto> messageInfo, ChatExpertInfo chatExpertInfo);
+    MessageResponseDto messageToMessageResponseDto(ChatMessage message, CommunityMemberResponse messageSender);
+
+    DealChatMessageDto messageToDealMessageDto(ChatMessage message, CommunityMemberResponse messageSender,
+                                                ChatDealInfo chatDealInfo);
+    ExpertChatMessageDto messageToExpertMessageDto(ChatMessage message, CommunityMemberResponse messageSender,
+                                               ChatExpertInfo chatExpertInfo);
 }

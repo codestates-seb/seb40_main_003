@@ -225,6 +225,12 @@ public class ExpertService {
 				memberId, PageRequest.of(page, size, Sort.by("memberLikeExpertId").descending()));
 	}
 
+	public Boolean getIsExpertLike(Long expertId, Long memberId) {
+		ExpertProfile expertProfile = findVerifiedExpert(expertId);
+		Member member = findVerifiedMember(memberId);
+		return memberLikeExpertRepository.existsByExpertProfileAndMember(expertProfile, member);
+	}
+
 	public void deleteExpertLike(Long expertId, Long memberLikeExpertId, Long memberId) {
 		ExpertProfile expertProfile = findVerifiedExpert(expertId);
 		Member member = findVerifiedMember(memberId);

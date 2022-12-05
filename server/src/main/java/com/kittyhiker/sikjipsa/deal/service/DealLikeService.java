@@ -66,20 +66,28 @@ public class DealLikeService {
         return new DealPagingDto<>(dealList, pageInfo);
     }
 
-
     public LikeDealResponseDto likeDeal(Long userId, Long dealId) {
         Member findMember = verifiedMember(userId);
         Deal findDeal = verifiedDeal(dealId);
-        MemberLikeDeal likeDeal = MemberLikeDeal.builder()
-                .member(findMember)
-                .deal(findDeal).build();
-        MemberLikeDeal savedLike = likeDealRepository.save(likeDeal);
-        findDeal.likeDeal();
-        findMember.likeDeal(savedLike);
-        memberRepository.save(findMember);
-        return LikeDealResponseDto.builder().memberId(userId)
-                .dealId(dealId)
-                .likeDealId(savedLike.getId()).build();
+        if (!likeDealRepository.existsByDealAndMember(findDeal, findMember)) {
+            MemberLikeDeal likeDeal = MemberLikeDeal.builder()
+                    .member(findMember)
+                    .deal(findDeal).build();
+            MemberLikeDeal savedLike = likeDealRepository.save(likeDeal);
+            findDeal.likeDeal();
+            findMember.likeDeal(savedLike);
+            memberRepository.save(findMember);
+
+            return LikeDealResponseDto.builder().memberId(userId)
+                    .dealId(dealId)
+                    .likeDealId(savedLike.getId()).build();
+        } else throw new BusinessLogicException(ExceptionCode.ALREADY_LIKE);
+    }
+
+    public Boolean isAlreadyLike(Long userId, Long dealId) {
+        Member findMember = verifiedMember(userId);
+        Deal findDeal = verifiedDeal(dealId);
+        return likeDealRepository.existsByDealAndMember(findDeal, findMember);
     }
 
     public void cancelLikeDeal (Long userId, Long dealId) {

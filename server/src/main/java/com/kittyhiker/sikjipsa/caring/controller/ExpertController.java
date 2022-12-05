@@ -3,7 +3,6 @@ package com.kittyhiker.sikjipsa.caring.controller;
 import com.kittyhiker.sikjipsa.caring.dto.*;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertProfile;
 import com.kittyhiker.sikjipsa.caring.entity.ExpertReview;
-import com.kittyhiker.sikjipsa.caring.entity.ExpertSuccess;
 import com.kittyhiker.sikjipsa.caring.entity.MemberLikeExpert;
 import com.kittyhiker.sikjipsa.caring.mapper.ExpertMapper;
 import com.kittyhiker.sikjipsa.caring.mapper.ExpertReviewMapper;
@@ -22,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.io.IOException;
-import java.security.PublicKey;
 import java.util.List;
 
 @RestController
@@ -114,6 +112,13 @@ public class ExpertController {
 		Page<MemberLikeExpert> pageMemberLikeExpert = expertService.getExpertLikes(page - 1, size, jwtTokenizer.getUserIdFromToken(token));
 		List<MemberLikeExpert> memberLikeExperts = pageMemberLikeExpert.getContent();
 		return new ResponseEntity<>(new MultiResponseDto<>(memberLikeExpertMapper.toMemberLikeExpertResponseDtos(memberLikeExperts), pageMemberLikeExpert), HttpStatus.OK);
+	}
+
+	@GetMapping("/{expert-id}/is-like")
+	public ResponseEntity getIsExpertLike(@PathVariable("expert-id") @Positive Long expertId,
+										  @RequestHeader("Authorization") String token) {
+		Boolean response = expertService.getIsExpertLike(expertId, jwtTokenizer.getUserIdFromToken(token));
+		return new ResponseEntity(response, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{expert-id}/like/{member-like-expert-id}")
