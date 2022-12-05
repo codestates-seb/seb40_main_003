@@ -146,6 +146,11 @@ public class MemberService {
                 .nickname(findMember.getNickname()).build();
     }
 
+    public void byebyeMember(Long userId) {
+        Member member = verifyMember(userId);
+        memberRepository.delete(member);
+    }
+
     public Member verifyMember(Long memberId) {
         return memberRepository.findById(memberId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));
