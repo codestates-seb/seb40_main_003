@@ -115,7 +115,7 @@ public class MemberService {
         return memberInfo;
     }
 
-    public TokenDto reissueToken(String refreshToken) {
+    public MemberLoginResponseDto reissueToken(String refreshToken) {
 //        String[] tokenArr = refreshToken.split(",");
 //        refreshToken = tokenArr[1];
 
@@ -133,10 +133,22 @@ public class MemberService {
 
         tokenRepository.save(new RefreshToken(newRefreshToken));
 
-        return TokenDto.builder()
+        Member findMember = verifyMember(userId);
+        String image = "";
+        if (findMember.getImage()!=null) image=findMember.getImage().getImgUrl();
+
+        return MemberLoginResponseDto.builder()
                 .accessToken(accessToken)
-                .refreshToken(newRefreshToken)
-                .build();
+                .refreshToken(refreshToken)
+                .memberId(findMember.getMemberId())
+                .image(image)
+                .notReadNum(messageRepository.countByReceiverIdAndIsRead(findMember.getMemberId(), 0L))
+                .nickname(findMember.getNickname()).build();
+    }
+
+    public void byebyeMember(Long userId) {
+        Member member = verifyMember(userId);
+        memberRepository.delete(member);
     }
 
     public Member verifyMember(Long memberId) {

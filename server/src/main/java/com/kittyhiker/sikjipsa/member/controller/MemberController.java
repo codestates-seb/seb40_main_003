@@ -46,14 +46,15 @@ public class MemberController {
 
     @PostMapping("/users/refresh")
     public ResponseEntity requestRefresh(@RequestBody RefreshTokenDto token) {
-        TokenDto tokenDto = memberService.reissueToken(token.getRefreshToken());
-        return new ResponseEntity(tokenDto, HttpStatus.CREATED);
+        MemberLoginResponseDto memberLoginResponseDto = memberService.reissueToken(token.getRefreshToken());
+        return new ResponseEntity(memberLoginResponseDto, HttpStatus.CREATED);
     }
 
     @DeleteMapping("/users")
     public ResponseEntity byeUser(@RequestHeader("Authorization") String token) {
         //회원정보와 연관된 모든 정보 삭제
-
+        Long userId = jwtTokenizer.getUserIdFromToken(token);
+        memberService.byebyeMember(userId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
