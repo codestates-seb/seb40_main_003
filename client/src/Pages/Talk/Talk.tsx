@@ -39,7 +39,6 @@ const TalkElem = () => {
 };
 
 const TalkCard: React.FC<any> = ({ data }) => {
-  console.log(data);
   return (
     <Link to={`/talk/${data.roomName}`}>
       <ColumnWrapper>

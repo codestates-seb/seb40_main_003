@@ -55,7 +55,6 @@ const CareDetail = () => {
   };
 
   usePageTitle(data !== undefined ? `${data.name} 님의 서비스` : "서비스");
-  console.log(data);
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>
@@ -133,7 +132,6 @@ const CareDetail = () => {
         <SectionWrapper title="돌봄 리뷰" borderNone={true}>
           <>
             {data?.expertReviews.map((e) => {
-              console.log(data);
               return (
                 <CommentCard
                   name={e.member.nickname}
