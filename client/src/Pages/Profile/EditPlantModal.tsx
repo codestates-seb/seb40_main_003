@@ -5,12 +5,11 @@ import { ColumnWrapper } from "../../Components/Wrapper";
 import { ProfilePlantType } from "../../types/profileType";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
-const EditPlantModal: React.FC<addplantModal> = ({
+const EditPlantModal: React.FC<editplantModal> = ({
   closeModal,
   url,
   defaultValue,
 }) => {
-  console.log(defaultValue)
   const axiosPrivate = useAxiosPrivate();
   const {
     register,
@@ -64,7 +63,7 @@ const EditPlantModal: React.FC<addplantModal> = ({
           },
         })}
         type="text"
-        placeholder="식물 이름을 입력해 주세요"
+        defaultValue={defaultValue.name}
       />
       <p className="font-alert-red">{errors.name?.message}</p>
       {/* 종류 */}
@@ -82,12 +81,19 @@ const EditPlantModal: React.FC<addplantModal> = ({
           },
         })}
         type="text"
-        placeholder="종을 입력해주세요 ex)몬스테라"
+        defaultValue={defaultValue.type}
       />
       <p className="font-alert-red">{errors.type?.message}</p>
       {/* 연도 */}
       <label className="bold h4 mt-16 mb-4">키우기 시작한 날</label>
-      <input {...register("years", { required: true })} type="date" />
+      <input
+        {...register("years", { required: true })}
+        type="date"
+        defaultValue={defaultValue.age.replace(
+          /(\d{4})(\d{2})(\d{2})/g,
+          "$1-$2-$3"
+        )}
+      />
       <p className="font-alert-red">{errors.years?.message}</p>
       {/* 사진 */}
       <label className="bold h4 mt-16 mb-4">사진</label>
@@ -99,10 +105,10 @@ const EditPlantModal: React.FC<addplantModal> = ({
     </ColumnWrapper>
   );
 };
-type addplantModal = {
+type editplantModal = {
   closeModal?: Function;
   url?: number | undefined;
-  defaultValue: { age: string, src: string ,name: string, type:string};
+  defaultValue: { age: string; src?: string; name: string; type: string };
 };
 type FormData = {
   name: string;

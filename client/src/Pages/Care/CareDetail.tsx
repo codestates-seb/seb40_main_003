@@ -132,7 +132,6 @@ const CareDetail = () => {
         <SectionWrapper title="돌봄 리뷰" borderNone={true}>
           <>
             {data?.expertReviews.map((e) => {
-              console.log(data);
               return (
                 <CommentCard
                   name={e.member.nickname}
