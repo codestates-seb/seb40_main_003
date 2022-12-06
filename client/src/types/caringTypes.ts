@@ -41,7 +41,6 @@ export type CareDetailTypes = {
   expertId:number
   name: string;
   age: number;
-  photo:string;
   gender: number;
   simpleContent: string;
   detailContent: string;

@@ -30,13 +30,12 @@ const CareReviewEditor = () => {
   const onValid = async (data: CareReviewEditorForm) => {}
     
     usePageTitle("돌봄 리뷰 글쓰기");
-  console.log(data);
   return data ? (
     <MainContentContainer as={"form"} onSubmit={handleSubmit(onValid, onInValid)}>
       <MainCenterWrapper>
         <SectionWrapper>
         <ProfileCard
-          src={data.photo}
+          src={data.image.imgUrl}
           alt={`${data.name}의 대표사진`}
           name={data.name}
           location={data.address}
