@@ -27,6 +27,7 @@ export const ProductCategoryList = [
   { number: 6, name: "도구/용품", img: ProductCategoryIcon7 },
   { number: 7, name: "서적", img: ProductCategoryIcon8 },
   { number: 8, name: "기타", img: ProductCategoryIcon9},
+  { number: 9, name: "모두보기", img: ProductCategoryIcon9},
 ] as const;
 
 export const CareCategoryList = [

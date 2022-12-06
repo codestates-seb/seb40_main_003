@@ -63,7 +63,7 @@ export const ProductMain = ({ searchKeyword, size, category }: productMain) => {
         <React.Fragment key={index}>
           {page.data
             .filter((elem: ProfileDealType) => {
-              if (category === undefined) {
+              if (category === undefined||category>8) {
                 return true;
               } else {
                 return elem.category === category;
@@ -76,7 +76,7 @@ export const ProductMain = ({ searchKeyword, size, category }: productMain) => {
             ))}
         </React.Fragment>
       ))}
-      {isFetchingNextPage ? <LoadingSkeleton /> : <div ref={ref}></div>}
+      {isFetchingNextPage ? category===undefined&&<LoadingSkeleton /> : <div ref={ref}></div>}
     </>
   );
 };
