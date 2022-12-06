@@ -40,7 +40,7 @@ const Container = styled.div`
   flex-wrap: wrap;
   margin: 8px auto;
   overflow: hidden;
-  height: ${(props:{isSearching:boolean})=>(props.isSearching?"83px":"0")};
-  transition-duration: 200ms;
+  max-height: ${(props:{isSearching:boolean})=>(props.isSearching?"300px":"0px")};
+  transition-duration: 300ms;
 `
 export default ProductCategory;

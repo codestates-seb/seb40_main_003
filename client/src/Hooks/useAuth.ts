@@ -6,7 +6,7 @@ export const useIsAuthor = () => {
   const userInfo = useRecoilValue(userState);
 
   return (id: string | undefined | number) => {
-    return String(userInfo?.memberId) === String(id);
+    return userInfo&&String(userInfo.memberId) === String(id);
   };
 };
 
