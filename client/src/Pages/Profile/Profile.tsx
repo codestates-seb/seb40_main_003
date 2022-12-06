@@ -22,12 +22,10 @@ import Modal from "../../Components/Modal";
 import { useCallback, useState } from "react";
 import { CommentCard } from "../../Components/CommentCard";
 import PlantCardCarousel, {
-  EditAndDeleteButton,
   ProfilePlantCard,
 } from "../../Components/profile/plantCardCarousel";
 import { useIsAuthor } from "../../Hooks/useAuth";
 import ProductCard from "../../Components/product/ProductCard";
-import EditPlantModal from "./EditPlantModal";
 import SetUserModal from "./SetUserModal";
 
 type props = {
@@ -46,7 +44,6 @@ const Profile = (props: props) => {
   
   // 반려식물 추가 모달
   const [isOpenModal, setOpenModal] = useState<boolean>(false);
-  const [isEditing, setIsEditing] = useState();
   const onClickModal = useCallback(() => {
     setOpenModal(!isOpenModal);
   }, [isOpenModal]);
@@ -54,10 +51,10 @@ const Profile = (props: props) => {
 
   // 프로필 수정 모달
   const [isOpenModalProfile, setOpenModalProfile] = useState<boolean>(false);
-  const [isEditingProfile, setIsEditingProfile] = useState();
   const onClickModalProfile = useCallback(() => {
     setOpenModalProfile(!isOpenModalProfile);
   }, [isOpenModalProfile]);
+
 
   return data ? (
     <>
@@ -78,6 +75,7 @@ const Profile = (props: props) => {
                 <SetUserModal closeModal={onClickModalProfile} url={id}/>
               </Modal>
             )}
+
           </>
           <ProfileCard
             pk={id}
@@ -105,7 +103,6 @@ const Profile = (props: props) => {
                 {data.plants.map((e, i) => {
                   return (
                     <ProfilePlantCard
-                      onClickModal={onClickModal}
                       src={e.image.imgUrl}
                       alt={`${data.nickname}의 반려식물 ${e.name}의 사진`}
                       name={e.name}

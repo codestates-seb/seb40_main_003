@@ -20,7 +20,9 @@ body{
   text-decoration: none;
   color: var(--font-black);
 }
-
+p{
+  line-height: 1.5;
+}
 :root {
   --main: #127c56;
   --sub-color: #eab64d;

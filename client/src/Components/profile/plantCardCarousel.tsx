@@ -7,6 +7,9 @@ import seeMoreIcon from "../../images/seeMoreIcon.svg";
 import { useDelete } from "../../Hooks/useDelete";
 import { useIsAuthor } from "../../Hooks/useAuth";
 import { useParams } from "react-router-dom";
+import { useCallback, useState } from "react";
+import Modal from "../Modal";
+import EditPlantModal from "../../Pages/Profile/EditPlantModal";
 
 type Props = {
   children: JSX.Element[] | JSX.Element;
@@ -38,27 +41,39 @@ export const ProfilePlantCardWrapper = styled.div`
   border-radius: var(--sig-border-8);
 `;
 type ProfilePlantCardTypes = {
-  size?: string;
+
   src: string;
   alt: string;
   name: string;
-  type: string ;
+  type: string;
   age: string;
   plantId: number;
-  onClickModal?: Function | null;
 };
 export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
   // 비구조화할당
   const { id } = useParams();
-  const { size, src, alt, name, type, age, plantId, onClickModal } = props;
+  const { src, alt, name, type, age, plantId } = props;
+  // 지우기
   const deleteItem = useDelete(`/plants/${plantId}`);
+  // 작성자 판별
   const isAuthor = useIsAuthor();
+  // 모달
+  const [isOpenModal, setOpenModal] = useState<boolean>(false);
+  const onClickModal = useCallback(() => {
+    setOpenModal(!isOpenModal);
+  }, [isOpenModal]);
+
   return (
     <ProfilePlantCardWrapper>
+      {isOpenModal && (
+        <Modal onClickModal={onClickModal}>
+          <EditPlantModal closeModal={onClickModal} url={plantId} defaultValue={{age,src,name,type}}/>
+        </Modal>
+      )}
       <ImageWrapper
         src={src}
         alt={alt}
-        size={size === "sm" ? "36" : "66"}
+        size={"36"}
         className="mr-16"
         loading="lazy"
       ></ImageWrapper>
@@ -67,7 +82,14 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
           <span className="medium">{name}</span>
           <SpaceEnd>
             {/* 팝업 사용법 */}
-            {isAuthor(id) && <EditAndDeleteButton deleteFunction={deleteItem} editFunction={()=>{onClickModal&&onClickModal()}} />}
+            {isAuthor(id) && (
+              <EditAndDeleteButton
+                deleteFunction={deleteItem}
+                editFunction={() => {
+                  onClickModal && onClickModal();
+                }}
+              />
+            )}
           </SpaceEnd>
         </SpaceBetween>
         <span className="sub font-gray">{type}</span>
