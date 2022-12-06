@@ -1,21 +1,16 @@
 import React from "react";
-import { FieldErrors, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import { ColumnWrapper } from "../../Components/Wrapper";
+import { ProfilePlantType } from "../../types/profileType";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
-type FormData = {
-  name: string;
-  type: string;
-  years: string;
-  image: FileList;
-  
-};
-type addplantModal = {
-  closeModal?: Function;
-  url?: number | undefined;
-};
-const EditPlantModal: React.FC<addplantModal> = ({ closeModal, url }) => {
+const EditPlantModal: React.FC<addplantModal> = ({
+  closeModal,
+  url,
+  defaultValue,
+}) => {
+  console.log(defaultValue)
   const axiosPrivate = useAxiosPrivate();
   const {
     register,
@@ -28,14 +23,15 @@ const EditPlantModal: React.FC<addplantModal> = ({ closeModal, url }) => {
     const formData = new FormData();
     const plantDto = JSON.stringify({
       name: data.name,
-      years: String(data.years).replaceAll("-",""),
+      years: String(data.years).replaceAll("-", ""),
       type: data.type,
     });
 
     formData.append("multipartFile", data.image[0]);
     formData.append(
-      "plantDto", new Blob([plantDto], { type: "application/json" })
-      );
+      "plantDto",
+      new Blob([plantDto], { type: "application/json" })
+    );
 
     axiosPrivate
       .patch(`/plants/${url}`, formData, {
@@ -44,14 +40,12 @@ const EditPlantModal: React.FC<addplantModal> = ({ closeModal, url }) => {
         },
       })
       .then((res) => {
-
         closeModal && closeModal();
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
 
   return (
     <ColumnWrapper width={100} as={"form"} onSubmit={handleSubmit(onValid)}>
@@ -100,10 +94,20 @@ const EditPlantModal: React.FC<addplantModal> = ({ closeModal, url }) => {
       <input {...register("image")} type="file" accept="image/*" name="image" />
       <p className="font-alert-red">{errors.image?.message}</p>
       <SigButton type="submit" className="mt-16">
-        식물 등록
+        식물 수정
       </SigButton>
     </ColumnWrapper>
   );
 };
-
+type addplantModal = {
+  closeModal?: Function;
+  url?: number | undefined;
+  defaultValue: { age: string, src: string ,name: string, type:string};
+};
+type FormData = {
+  name: string;
+  type: string;
+  years: string;
+  image: FileList;
+};
 export default EditPlantModal;

@@ -150,8 +150,7 @@ export const CommentCard = (props: CommentCardTypes) => {
                         `/community/${communityId}/comment/${commentId}`
                       );
                     }
-                    // eslint-disable-next-line no-restricted-globals
-                    location.reload();
+                    window.location.reload();
                   }}
                 >
                   삭제
@@ -174,8 +173,7 @@ export const CommentCard = (props: CommentCardTypes) => {
                         `/community/${communityId}/comment/${commentId}`
                       );
                     }
-                    // eslint-disable-next-line no-restricted-globals
-                    location.reload();
+                    window.location.reload();
                   }}
                 >
                   삭제

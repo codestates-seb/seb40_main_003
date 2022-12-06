@@ -81,7 +81,7 @@ const Product = () => {
         </TopCarousel>
         <Link to={`/profile/${data.member.memberId}`}>
           <ProfileCard
-            src={data.member.image?data.member.image:""}
+            src={data.member.image ? data.member.image : ""}
             alt={`${data.member.nickname}의 대표사진`}
             name={data.member.nickname}
             area={data.area}
@@ -130,7 +130,6 @@ const Product = () => {
               .post(`/chat/experts/${data.member.memberId}`)
               .then((e) => {
                 navigate(`/talk/${e.data.roomName}`);
-
               });
           }}
         >

@@ -19,7 +19,7 @@ import {
 import { ErrorMessage } from "../../Components/ErrorHandle";
 import { LoadingSkeleton } from "../../Components/Loading";
 import { ErrorBoundary } from "react-error-boundary";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import React from "react";
 import { ProfileDealType } from "../../types/profileType";
@@ -51,7 +51,7 @@ export const ProductMain = ({ searchKeyword, size, category }: productMain) => {
   // 스크롤감지
 
   useEffect(() => {
-    if (size&&size>10 && inView) fetchNextPage();
+    if (size && size > 10 && inView) fetchNextPage();
   }, [inView, size]);
 
   if (status === "loading") return <LoadingSkeleton />;
@@ -61,14 +61,22 @@ export const ProductMain = ({ searchKeyword, size, category }: productMain) => {
     <>
       {data?.pages.map((page, index) => (
         <React.Fragment key={index}>
-          {page.data.map((e: ProfileDealType) => (
-            <Link key={e.dealId} to={`/product/${e.dealId}`}>
-              <ProductCard data={e} />
-            </Link>
-          ))}
+          {page.data
+            .filter((elem: ProfileDealType) => {
+              if (category === undefined||category>8) {
+                return true;
+              } else {
+                return elem.category === category;
+              }
+            })
+            .map((e: ProfileDealType) => (
+              <Link key={e.dealId} to={`/product/${e.dealId}`}>
+                <ProductCard data={e} />
+              </Link>
+            ))}
         </React.Fragment>
       ))}
-      {isFetchingNextPage ? <LoadingSkeleton /> : <div ref={ref}></div>}
+      {isFetchingNextPage ? category===undefined&&<LoadingSkeleton /> : <div ref={ref}></div>}
     </>
   );
 };

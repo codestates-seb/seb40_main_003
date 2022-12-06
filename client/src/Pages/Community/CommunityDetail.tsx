@@ -94,7 +94,6 @@ const CommunityDetail = () => {
               <span className="sub font-gray mb-8">
                 {getDateAgo(data.createdAt)}
               </span>
-              {/* <span className='sub font-gray ml-16'>{data.member.nickname}</span> */}
             </div>
             <ViewCounter
               view={data.view}

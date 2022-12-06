@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { keyframes, css } from "@emotion/react";
 import styled from "@emotion/styled";
 import { DescriptionColumnWrapper } from "./product/ProductCard";
@@ -11,14 +11,13 @@ const spin = keyframes`
   }
   `;
 
-
 const LoadingWrapper = styled.section`
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: ${(props:spinnerProps)=>props.fullscreen?"90vh":0};
+  min-height: ${(props: spinnerProps) => (props.fullscreen ? "90vh" : 0)};
 `;
 
 type LoadingSpinnerProps = {
@@ -33,10 +32,10 @@ const LoadingElem = styled.div`
   border-top-color: var(--main);
   animation: ${spin} 500ms linear infinite;
 `;
-type spinnerProps={
-  fullscreen?:boolean
-}
-export const LoadingSpinner = ({fullscreen=true}:spinnerProps) => {
+type spinnerProps = {
+  fullscreen?: boolean;
+};
+export const LoadingSpinner = ({ fullscreen = true }: spinnerProps) => {
   return (
     <LoadingWrapper fullscreen={fullscreen}>
       <LoadingElem />
@@ -55,21 +54,30 @@ export const ProductWrapper = styled.div`
   border-bottom: 1px solid var(--line-light-gray);
   &.soldOut {
     opacity: 0.5;
-    transition-duration:200ms;
-    :hover{
-      opacity:1;
+    transition-duration: 200ms;
+    :hover {
+      opacity: 1;
     }
-    }
+  }
 `;
-export const LoadingSkeleton = ({count=5}) => {
-
-  return (
+export const LoadingSkeleton = ({ count = 5 }) => {
+  const [isLoading, setIsloading] = useState(true);
+  useEffect(() => {
+    if (isLoading === true) {
+      setTimeout(() => {
+        setIsloading(false);
+      }, 200);
+    }
+  }, []);
+  return !isLoading ? (
     <>
-      {[...Array(count)].map((e,i) => {
-        return <ProductPlaceHolder key={"skeleton"+i}/>;
+      {[...Array(count)].map((e, i) => {
+        return <ProductPlaceHolder key={"skeleton" + i} />;
       })}
     </>
-  ) 
+  ) : (
+    <></>
+  );
 };
 
 export const ProductPlaceHolder = () => {
