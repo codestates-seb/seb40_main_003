@@ -55,7 +55,6 @@ const CareDetail = () => {
   };
 
   usePageTitle(data !== undefined ? `${data.name} 님의 서비스` : "서비스");
-  console.log(data);
   return data !== undefined ? (
     <MainContentContainer>
       <MainCenterWrapper>

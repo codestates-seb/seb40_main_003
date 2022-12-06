@@ -79,7 +79,10 @@ const Login = () => {
           setErrMsg("이메일 또는 패스워드를 확인해주세요");
         } else if (err.response?.status === 401) {
           setErrMsg("허가되지않은 접근입니다");
-        } else {
+        } else if (err.response?.status === 404) {
+          setErrMsg("이메일 또는 패스워드를 확인해주세요");
+        } 
+        else {
           setErrMsg("로그인에 실패했습니다");
         }
       });
