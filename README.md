@@ -53,7 +53,7 @@ http://plant-hiker.s3-website.ap-northeast-2.amazonaws.com/community
 **프레임워크/라이브러리**<br>
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/React_router-CA4245?style=flat-square&logo=react-router&logoColor=white"/><br>
 **스타일링**<br>
-<img src="https://img.shields.io/badge/emotion-DB7093?style=flat-square&logo=styled-components&logoColor=white"/> <img src="https://img.shields.io/badge/React Hook Form-EC5990?style=flat-square&logo=React Hook Form&logoColor=white"/><br>
+<img src="https://img.shields.io/badge/emotion-DB7093?style=flat-square&logo=styled-components&logoColor=white"/> <img src="https://img.shields.io/badge/React-Hook-Form-EC5990?style=flat-square&logo=React-Hook-Form&logoColor=white"/><br>
 
 **상태관리**<br>
 <img src="https://img.shields.io/badge/Recoil-5466FB?style=flat-square&logo=react&logoColor=white"/> <img src="https://img.shields.io/badge/ReactQuery-FF4154?style=flat-square&logo=ReactQuery&logoColor=white"/><br>
