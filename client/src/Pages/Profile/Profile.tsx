@@ -170,11 +170,12 @@ const Profile = (props: props) => {
             )}
           </SectionWrapper>
         </MainCenterWrapper>
+        {isAuthor(id)&&
         <MainRightWrapper>
           <Link to={"/setting"}>
             <SigButton>설정</SigButton>
           </Link>
-        </MainRightWrapper>
+        </MainRightWrapper>}
       </MainContentContainer>
     </>
   ) : (
