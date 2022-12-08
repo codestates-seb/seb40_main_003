@@ -76,3 +76,4 @@ http://plant-hiker.s3-website.ap-northeast-2.amazonaws.com/community
 **배포 및 관리**<br>
 <img src="https://img.shields.io/badge/Amazon_AWS-232F3E?style=flat-square&logo=Amazon AWS&logoColor=white"/>
 <br>
+![기획](https://user-images.githubusercontent.com/100949102/206383716-b51e82de-0756-42d0-978d-6822cf941876.jpg)
