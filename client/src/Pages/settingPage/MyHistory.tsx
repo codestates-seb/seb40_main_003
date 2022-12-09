@@ -7,7 +7,6 @@ import {
   MainRightWrapper,
   SectionWrapper,
 } from "../../Components/Wrapper";
-import { SigButton } from "../../Components/GlobalComponents";
 import usePageTitle from "../../Hooks/usePageTitle";
 import { InfiniteFetch } from "../../Hooks/useFetch";
 import { ErrorBoundary } from "react-error-boundary";

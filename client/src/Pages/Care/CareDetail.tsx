@@ -51,7 +51,6 @@ const CareDetail = () => {
       .then((res) => {
         console.log(res);
       })
-      .catch((err) => {});
   };
 
   usePageTitle(data !== undefined ? `${data.name} 님의 서비스` : "서비스");

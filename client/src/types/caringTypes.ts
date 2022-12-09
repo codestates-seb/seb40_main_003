@@ -3,9 +3,9 @@ import { imageType, ProfilePlantType } from "./profileType";
 
 // 돌봄 프로필 리스트 조회 / 검색
 export type caringPreviewTypes = {
-  data: [caringPreviewDataTypes];
-  pageInfo: pageInfo
+  data: caringPreviewDataTypes;
 };
+
 export type caringPreviewDataTypes = {
   expertId: number;
   name: string;
@@ -17,28 +17,26 @@ export type caringPreviewDataTypes = {
   view: number;
   member: {
     memberId: number;
-    plants: [
-      ProfilePlantType
-    ];
+    plants: [ProfilePlantType];
   };
-  techTags: [
-    {
-      techTagId: number;
-      techTagName: string;
-    }
-  ];
+  techTags: [techTagType];
   areaTags: [
     {
       areaTagId: number;
       areaTagName: string;
     }
   ];
-  image: imageType
+  image: imageType;
+};
+
+export type techTagType = {
+  techTagId: number;
+  techTagName: string;
 };
 
 // 돌봄 프로필 상세 조회
 export type CareDetailTypes = {
-  expertId:number
+  expertId: number;
   name: string;
   age: number;
   gender: number;
@@ -48,10 +46,10 @@ export type CareDetailTypes = {
   price: string;
   extra: string;
   address: string;
-  member:{
-    memberId:string
-    plants:[ProfilePlantType]|[]
-  }
+  member: {
+    memberId: string;
+    plants: [ProfilePlantType] | [];
+  };
   techTags: [
     {
       techTagId: number;
@@ -63,14 +61,14 @@ export type CareDetailTypes = {
 };
 // 돌봄리뷰타입
 export type expertReviewType = {
-  expertReviewId: string
-  content: string
+  expertReviewId: string;
+  content: string;
   member: {
-      memberId: number
-      nickname: string
-  }
-  createdAt: string
-  modifiedAt: string
+    memberId: number;
+    nickname: string;
+  };
+  createdAt: string;
+  modifiedAt: string;
 };
 
 // 돌봄 프로필 찜 하기
@@ -85,8 +83,8 @@ export type CareLikeAddType = {
 
 // 돌봄 찜 목록 조회
 export type CareLikeListType = {
-  data: [CareLikeType];
-  pageInfo: pageInfo
+  data: CareLikeType;
+  pageInfo: pageInfo;
 };
 
 export type CareLikeType = {

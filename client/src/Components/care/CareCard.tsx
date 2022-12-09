@@ -3,7 +3,8 @@ import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 import { ColumnWrapper, RowWrapper, SpaceBetween } from "../Wrapper";
 import { DescriptionColumnWrapper } from "../product/ProductCard";
 import { SigTag, TagWrapper } from "../GlobalComponents";
-import { defaultImage, defaultProfile } from "../../utils/defaultImage";
+import { defaultImage } from "../../utils/defaultImage";
+import {  caringPreviewTypes } from "../../types/caringTypes";
 
 const CardWrapper = styled.div`
   /* background-color: aliceblue; */
@@ -13,7 +14,7 @@ const CardWrapper = styled.div`
   border-bottom: 1px solid var(--line-light-gray);
 `;
 
-const CareCard = ({ data }: any) => {
+const CareCard = ({ data }: caringPreviewTypes) => {
   return (
     <>
       <CardWrapper>

@@ -19,7 +19,7 @@ import { cannotLoad } from "../../Const/message";
 const productQueryClient = new QueryClient();
 
 export const ProductMain = () => {
-  const { data, isLoading, error,isSuccess } = useQuery(["productQuery"], () => {
+  const { data, isLoading, error } = useQuery(["productQuery"], () => {
     const data = FetchByParams("/deal", { page: 1, size: 5 });
     return data;
     

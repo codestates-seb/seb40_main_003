@@ -1,5 +1,5 @@
 import React from "react";
-import { FieldErrors, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import { ColumnWrapper } from "../../Components/Wrapper";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
@@ -18,7 +18,6 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
   const axiosPrivate = useAxiosPrivate();
   const {
     register,
-    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
@@ -31,13 +30,11 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
       type: data.type,
     });
 
-
     if (data.image !== undefined) {
       await compressImage(data.image[0]).then((res: any) =>
         formData.append("multipartFile", res)
-      )
+      );
     }
-    
 
     formData.append(
       "plantDto",
@@ -61,9 +58,6 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
       .catch((err) => {
         console.log(err);
       });
-  };
-  const onInValid = (errors: FieldErrors) => {
-
   };
 
   return (

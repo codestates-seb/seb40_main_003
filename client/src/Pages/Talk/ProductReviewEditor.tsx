@@ -3,13 +3,9 @@ import { MainCenterWrapper, MainContentContainer, MainRightWrapper, RowWrapper, 
 import usePageTitle from "../../Hooks/usePageTitle";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import useFetch from "../../Hooks/useFetch";
-import { useParams } from "react-router-dom";
 import { FieldErrors, useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import styled from "@emotion/styled";
 import { profileType } from "../../types/profileType";
 
-type Props = {}
 
 interface ProductReviewEditorForm {
     content: string;
@@ -19,7 +15,7 @@ interface ProductReviewEditorForm {
 }
 
 const CareReviewEditor = () => {
-  const axiosPrivate = useAxiosPrivate();
+  // const axiosPrivate = useAxiosPrivate();
   const {
     register, handleSubmit, formState: {errors},} = useForm<ProductReviewEditorForm>({
       mode: "onSubmit"

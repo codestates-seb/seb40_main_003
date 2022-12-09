@@ -11,7 +11,7 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import { useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { ProductCategoryList } from "../../Const/Category";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { productEditDataAtom } from "../../Recoil/atoms/editData";
 
 
@@ -34,7 +34,7 @@ interface ProductEditorForm {
 
 const ProductModify = () => {
   const axiosPrivate = useAxiosPrivate();
-  const [productEditData, setProducteditData] = useRecoilState(productEditDataAtom);
+  const productEditData = useRecoilValue(productEditDataAtom);
   const {
     register,
     handleSubmit,
@@ -43,7 +43,6 @@ const ProductModify = () => {
     mode: "onChange",
   });
 
-  const onInValid = (errors: FieldErrors) => {};
   const navigate = useNavigate();
 
   const onValid = async (data: ProductEditorForm) => {
@@ -78,7 +77,7 @@ const ProductModify = () => {
   return (
     <MainContentContainer
       as={"form"}
-      onSubmit={handleSubmit(onValid, onInValid)}
+      onSubmit={handleSubmit(onValid)}
     >
       <MainCenterWrapper>
         <SectionWrapper width={100} borderNone={true}>

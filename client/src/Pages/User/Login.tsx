@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 import { SigButton } from "../../Components/GlobalComponents";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,7 +9,6 @@ import {
   MainContentContainer,
   MainCenterWrapper,
   MainRightWrapper,
-  RowWrapper,
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import axios from "../../Hooks/api";
@@ -26,7 +25,7 @@ interface LoginForm {
 
 const Login = () => {
   const [error, setErrMsg] = useState("");
-  const [user, setUser] = useRecoilState(userState);
+  const setUser = useSetRecoilState(userState);
   const setNoReadNum  =useSetRecoilState(noReadNum)
 
   const {

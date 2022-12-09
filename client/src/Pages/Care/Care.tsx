@@ -87,7 +87,6 @@ const Care = () => {
           <select name="sorting" className="medium font-gray" id="option">
             <option value="정렬">최신순</option>
             <option value="정렬">찜 많은 순</option>
-            <option value="정렬">찜순</option>
           </select>
           <button className="ml-16" onClick={onClickModal}>
             <Hamburger />

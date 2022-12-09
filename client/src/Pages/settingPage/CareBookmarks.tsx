@@ -1,5 +1,5 @@
 import CareCard from "../../Components/care/CareCard";
-import { CareLikeType } from "../../types/caringTypes";
+import { CareLikeType, caringPreviewTypes } from "../../types/caringTypes";
 import { Link } from "react-router-dom";
 import {
   MainCenterWrapper,
@@ -53,12 +53,12 @@ export const CareBookmarksMain = () => {
       {data?.pages.map((page, index) => (
 
         <React.Fragment key={index}>
-          {page.data.map((e: CareLikeType) => (
+          {page.data.map((e: caringPreviewTypes&CareLikeType) => (
             <Link
               key={e.memberLikeExpertId}
               to={`/experts/${e.memberLikeExpertId}`}
             >
-              <CareCard data={e} />
+              <CareCard data={e.data} />
             </Link>
 
           ))}

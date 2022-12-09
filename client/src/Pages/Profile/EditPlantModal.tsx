@@ -2,7 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { SigButton } from "../../Components/GlobalComponents";
 import { ColumnWrapper } from "../../Components/Wrapper";
-import { ProfilePlantType } from "../../types/profileType";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 const EditPlantModal: React.FC<editplantModal> = ({
@@ -13,7 +12,6 @@ const EditPlantModal: React.FC<editplantModal> = ({
   const axiosPrivate = useAxiosPrivate();
   const {
     register,
-    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>();
@@ -38,7 +36,7 @@ const EditPlantModal: React.FC<editplantModal> = ({
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((res) => {
+      .then(() => {
         closeModal && closeModal();
       })
       .catch((err) => {

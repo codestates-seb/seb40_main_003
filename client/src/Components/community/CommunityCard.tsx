@@ -1,4 +1,3 @@
-import styled from "@emotion/styled";
 import { getDateAgo } from "../../utils/controller";
 import { ImageWrapper, ViewCounter } from "../GlobalComponents";
 import {

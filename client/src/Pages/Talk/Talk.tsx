@@ -38,13 +38,9 @@ const TalkElem = () => {
   );
 };
 
-const TalkCard: React.FC<any> = ({ data }) => {
+const TalkCard: React.FC<{data:talkPreview}> = ({ data }) => {
   return (
     <Link to={`/talk/${data.roomName}`}>
-      <ColumnWrapper>
-        {data.notReadNum!==0?<NotReadNum/>:null}
-        <CareCard data={data.expertInfo} />
-      </ColumnWrapper>
       <ColumnWrapper>
         {data.notReadNum!==0?<NotReadNum/>:null}
         <CareCard data={data.expertInfo} />

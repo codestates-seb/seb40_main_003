@@ -104,10 +104,9 @@ const ExpertProfileTransfer = () => {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then((res) => {
+      .then(() => {
         navigate(`/`);
       })
-      .catch((err) => {});
   };
 
   usePageTitle("전문가 계정으로 전환");

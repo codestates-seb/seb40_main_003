@@ -25,7 +25,7 @@ const SettingPage = () => {
   const handleSubmit = async () => {
     if (window.prompt('탈퇴를 원하시면 "굿바이 플랜트하이커"라고 작성해주세요.') === "굿바이 플랜트하이커") {
         axiosPrivate.delete(`/users`)
-        .then ((res)=>{
+        .then (()=>{
           cleanLS()
           setUser(null)
           navigate("/")

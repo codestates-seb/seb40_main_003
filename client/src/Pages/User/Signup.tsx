@@ -10,7 +10,7 @@ import {
 } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
 import axios from "../../Hooks/api";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { userState } from "../../Recoil/atoms/user";
 import { setLS } from "../../Hooks/useSecureLS";
 
@@ -24,7 +24,7 @@ interface SignupForm {
 
 const Signup = () => {
   // 리코일설정
-  const [user, setUser] = useRecoilState(userState);
+  const setUser = useSetRecoilState(userState);
 
   // 페이지 이름변경
   useEffect(() => {

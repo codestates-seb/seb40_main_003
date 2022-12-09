@@ -1,5 +1,5 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { TopCarousel } from "../../Components/Carousel";
 import {
   ProfileCard,
@@ -14,7 +14,6 @@ import {
   SpaceBetween,
   SpaceEnd,
 } from "../../Components/Wrapper";
-import { userState } from "../../Recoil/atoms/user";
 import { ProductDetailDataType } from "../../types/productTypes";
 import { LoadingSpinner } from "../../Components/Loading";
 import useFetch from "../../Hooks/useFetch";
@@ -38,13 +37,10 @@ const CarouselImage = styled.img`
 const Product = () => {
   const { id } = useParams();
   const axiosprivate = useAxiosPrivate();
-
-  const user = useRecoilValue(userState);
   const isAuthor = useIsAuthor();
 
   const data = useFetch<ProductDetailDataType>(id ? `/deal/${id}` : "");
-  const [productEditData, setProductEditData] =
-    useRecoilState(productEditDataAtom);
+  const setProductEditData = useSetRecoilState(productEditDataAtom);
   const axiosPrivate = useAxiosPrivate();
   const LikeOnClick = () => {
     axiosPrivate

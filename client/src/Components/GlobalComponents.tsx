@@ -395,19 +395,3 @@ export const Textarea = styled.textarea`
   outline-color: var(--line-light-gray);
   border-radius: 6px;
 `;
-
-// export type LikeButtonTypes = {
-//   size?: string;
-//   src?: string;
-//   alt?: string;
-// }
-// const LikeButton = styled.button`
-// width: 20px;
-// height: 20px;
-// `
-
-// export const likeButtonClick = ({like, onClick}) => {
-//   return (
-//     <LikeButton src={like?heartIcon:emptyHeartIcon} onClick={onClick} />
-//   )
-// }

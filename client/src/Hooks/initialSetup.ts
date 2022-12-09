@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { isExpert, userState } from "../Recoil/atoms/user";
 import { cleanLS } from "./useLogout";
@@ -8,7 +8,7 @@ export const useInitailSetup = () => {
   const [user, setUser] = useRecoilState(userState);
   const setIsExpertNow = useSetRecoilState(isExpert);
 
-  useEffect(() => {
+  useCallback(() => {
     const expertInfo = getLS("expertInfo");
     const accessToken = getLS("accessToken");
     const refreshToken = getLS("refreshToken");

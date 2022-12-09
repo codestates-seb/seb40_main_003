@@ -16,15 +16,14 @@ import { userState } from "../../Recoil/atoms/user";
 import { talkDetail } from "../../types/talk";
 
 export const TalkDetail = () => {
-  usePageTitle("");
   const { id } = useParams();
+  usePageTitle(`돌봄 대화`);
   const [data, setData] = useState<talkDetail>();
   const [isLoading, setIsLoading] = useState(true);
   const user = useRecoilValue(userState);
   const [message, setMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
-  console.log(data);
 
   // 패칭함수
   const Fetching = () => {
@@ -65,7 +64,7 @@ export const TalkDetail = () => {
         })
       );
     };
-    socket.onmessage = (e: any) => {
+    socket.onmessage = () => {
       Fetching();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

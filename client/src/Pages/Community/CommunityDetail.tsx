@@ -1,5 +1,5 @@
-import {  useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useNavigate, useParams } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
 import {
   ImageWrapper,
   SigButton,
@@ -12,7 +12,6 @@ import {
   SectionWrapper,
   SpaceBetween,
 } from "../../Components/Wrapper";
-import { userState } from "../../Recoil/atoms/user";
 import {
   communityCommentType,
   communityDetailTypes,
@@ -34,9 +33,8 @@ import { ProfileCard } from "../../Components/GlobalComponents";
 
 const CommunityDetail = () => {
   const { id } = useParams();
-  const user = useRecoilValue(userState);
   const data = useFetch<communityDetailTypes>(`/community/${id}`);
-  const [editData, setEditData] = useRecoilState(editDataAtom);
+  const setEditData = useSetRecoilState(editDataAtom);
 
   usePageTitle("커뮤니티");
   const axiosPrivate = useAxiosPrivate();

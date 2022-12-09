@@ -19,7 +19,7 @@ import { cannotLoad } from "../../Const/message";
 const purchaseHistoryQueryClient = new QueryClient();
 
 export const PurchaseHistoryMain = () => {
-  const { data, isLoading, error,isSuccess } = useQuery(["purchaseHistoryQuery"], () => {
+  const { data, isLoading, error } = useQuery(["purchaseHistoryQuery"], () => {
     const data = FetchByParams("/deal/success", { page: 1, size: 5 });
     return data;
     

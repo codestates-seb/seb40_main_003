@@ -113,28 +113,6 @@ const SetUserModal: React.FC<setUserModal> = ({ closeModal, url }) => {
       />
       <p className="font-alert-red">{errors.memberProfile?.content?.message}</p>
 
-      {/* 주소 */}
-      {/* <label className="bold h4 mb-4 mt-16">주소</label>
-      <input
-        {...register("memberInformation.address", {
-          required: true,
-          minLength: {
-            message: "2글자 이상으로 작성해주세요.",
-            value: 2,
-          },
-          maxLength: {
-            message: "10글자 미만으로 작성해주세요",
-            value: 10,
-          },
-        })}
-        type="text"
-        placeholder="주소를 입력해주세요."
-      />
-      <p className="font-alert-red">
-        {errors.memberInformation?.address?.message}
-      </p> */}
-
-      {/* 주소 수정 */}
 
       <label className="bold h4 mb-4 mt-16">사는 곳 (구)</label>
       <Select

@@ -3,12 +3,8 @@ import {  ConfirmWrapper, MainCenterWrapper, MainContentContainer, MainRightWrap
 import usePageTitle from "../../Hooks/usePageTitle";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import useFetch from "../../Hooks/useFetch";
-import { CareDetailTypes } from "../../types/caringTypes";
-import { useParams } from "react-router-dom";
+import { CareDetailTypes, techTagType } from "../../types/caringTypes";
 import { FieldErrors, useForm } from "react-hook-form";
-import styled from "@emotion/styled";
-
-type Props = {}
 
 interface CareReviewEditorForm {
     content: string;
@@ -17,7 +13,7 @@ interface CareReviewEditorForm {
 }
 
 const CareReviewEditor = () => {
-  const axiosPrivate = useAxiosPrivate();
+  // const axiosPrivate = useAxiosPrivate();
   const {
     register, handleSubmit, formState: {errors},} = useForm<CareReviewEditorForm>({
       mode: "onSubmit"
@@ -46,7 +42,7 @@ const CareReviewEditor = () => {
         </SectionWrapper>
         <SectionWrapper width={100}>
         <TagWrapper className="mt-4">
-                {data.techTags.map((e: any) => {
+                {data.techTags.map((e: techTagType) => {
                   return (
                     <SigTag className="ghost sub" key={e.techTagId}>
                       {e.techTagName}

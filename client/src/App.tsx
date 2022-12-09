@@ -1,6 +1,7 @@
 import { Routes } from "react-router";
 import { BrowserRouter, Route } from "react-router-dom";
 import { AuthProvider, HeaderLayout, LogOutOnly } from "./context/Route";
+
 import Product from "./Pages/Product/Product";
 import Navbar from "./Components/Navbar";
 import Profile from "./Pages/Profile/Profile";
@@ -50,7 +51,6 @@ const App = () => {
         <Route element={<HeaderLayout />}>
           <Route element={<AuthProvider />}>
             {/* 대화 */}
-
             <Route path="/talk" element={<DefaultLayout />}>
               <Route index element={<Talk />} />
               <Route path=":id" element={<TalkDetail />} />

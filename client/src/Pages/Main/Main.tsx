@@ -5,7 +5,6 @@ import {
   MainContentContainer,
   MainRightWrapper,
   RowWrapper,
-  SectionWrapper,
 } from "../../Components/Wrapper";
 import MainBanner1 from "../../images/banner/mainBanner1.png";
 import MainBanner2 from "../../images/banner/mainBanner2.png";
