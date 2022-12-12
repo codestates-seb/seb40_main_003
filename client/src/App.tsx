@@ -32,13 +32,12 @@ import Main from "./Pages/Main/Main";
 
 import ExpertProfileTransfer from "./Pages/Profile/ExpertProfileTransfer";
 import { DefaultLayout } from "./context/Route";
-import { TalkDetail } from "./Pages/Talk/TalkDetail";
+import  TalkDetail  from "./Pages/Talk/TalkDetail";
 import { GlobalModal } from "./Components/Modal";
 import { useInitailSetup } from "./Hooks/initialSetup";
 
 const App = () => {
   useInitailSetup()
-
   return (
     
     <BrowserRouter>
