@@ -1,7 +1,6 @@
-import { ProfileCard, SigButton, SigTag, TagWrapper } from "../../Components/GlobalComponents";
+import { ProfileCard, SigButton} from "../../Components/GlobalComponents";
 import { MainCenterWrapper, MainContentContainer, MainRightWrapper, RowWrapper, SectionWrapper } from "../../Components/Wrapper";
 import usePageTitle from "../../Hooks/usePageTitle";
-import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import useFetch from "../../Hooks/useFetch";
 import { FieldErrors, useForm } from "react-hook-form";
 import { profileType } from "../../types/profileType";

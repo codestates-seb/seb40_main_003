@@ -9,12 +9,12 @@ export type FetchByParamsType = {
   size?: number;
   gugun?:string;
 };
-// /** params로 페치하는 훅으로, url, Params{page:불러올페이지, size:한번에 불러올 사이즈(기본값 15, const폴더에 정의 되어있음)}를 인자로 가짐 -준구짱-*/
+// /** params로 페치하는 훅으로, url, Params{page:불러올페이지, size:한번에 불러올 사이즈(기본값 15, const폴더에 정의 되어있음)}를 인자로 가짐 */
 // export const FetchByParams = async(url:string,params:FetchByParamsType={keyword:null,page:1,size:fetchingImageLimit})=>{
 //   const data = await axios.get(url,{params})
 //   return data
 // }
-/** params로 페치하는 훅으로, url, Params{page:불러올페이지, size:한번에 불러올 사이즈(기본값 15, const폴더에 정의 되어있음)}를 인자로 가짐 -준구짱-*/
+/** params로 페치하는 훅으로, url, Params{page:불러올페이지, size:한번에 불러올 사이즈(기본값 15, const폴더에 정의 되어있음)}를 인자로 가짐*/
 export const FetchByParams = async (
   url: string,
   params: FetchByParamsType = {
@@ -27,7 +27,7 @@ export const FetchByParams = async (
   const data = await axios.get(url, { params });
   return data;
 };
-/** body로 페치하는 훅으로, url->string, Body->오브젝트 형태 를 인자로 가짐 -준구짱-*/
+/** body로 페치하는 훅으로, url->string, Body->오브젝트 형태 를 인자로 가짐 */
 export const FetchByBody = async <T>(url: string, body?: object) => {
   const { data } = await axiosPrivate.get(url, body);
   return data;

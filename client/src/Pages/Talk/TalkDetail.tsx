@@ -15,7 +15,7 @@ import usePageTitle from "../../Hooks/usePageTitle";
 import { userState } from "../../Recoil/atoms/user";
 import { talkDetail } from "../../types/talk";
 
-export const TalkDetail = () => {
+const TalkDetail = () => {
   const { id } = useParams();
   usePageTitle(`돌봄 대화`);
   const [data, setData] = useState<talkDetail>();
@@ -176,3 +176,5 @@ const Message = styled.div`
     border: 1px solid var(--line-gray);
   }
 `;
+
+export default TalkDetail

@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { isExpert, userState } from "../Recoil/atoms/user";
 import { cleanLS } from "./useLogout";
@@ -8,13 +8,13 @@ export const useInitailSetup = () => {
   const [user, setUser] = useRecoilState(userState);
   const setIsExpertNow = useSetRecoilState(isExpert);
 
-  useCallback(() => {
+  useEffect(() => {
     const expertInfo = getLS("expertInfo");
     const accessToken = getLS("accessToken");
     const refreshToken = getLS("refreshToken");
     const userInfo = getLS("userInfo");
 
-    //로컬스토리지에 유저정보가 있고, 액세스토큰, 리프레시토큰 모두 있을때 (토큰 유효성검사는 안함)
+    /**  로컬스토리지에 유저정보가 있고, 액세스토큰, 리프레시토큰 모두 있을때 (토큰 유효성검사는 안함)*/
     if (accessToken && refreshToken && userInfo) {
       setUser(userInfo);
       const socketURL = process.env.REACT_APP_WS_BASE_URL;
