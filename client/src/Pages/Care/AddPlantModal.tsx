@@ -12,7 +12,7 @@ type FormData = {
   image: FileList;
 };
 type addplantModal = {
-  closeModal?: Function;
+  closeModal: Function;
 };
 const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
   const axiosPrivate = useAxiosPrivate();
@@ -53,7 +53,7 @@ const AddPlantModal: React.FC<addplantModal> = ({ closeModal }) => {
         },
       })
       .then((res) => {
-        closeModal && closeModal();
+        closeModal();
       })
       .catch((err) => {
         console.log(err);

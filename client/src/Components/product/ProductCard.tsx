@@ -31,7 +31,7 @@ const ProductCard: React.FC<props> = ({ data }) => {
       className={data.state === 2 ? "soldOut" : ""}
     >
       <RowWrapper>
-        {data.images !== null ? (
+        {data.images && (
           <ImageWrapper
             size={"100"}
             src={data?.images[0]}
@@ -39,7 +39,7 @@ const ProductCard: React.FC<props> = ({ data }) => {
             loading="lazy"
             onError={defaultImage}
           />
-        ) : null}
+        )}
         <DescriptionColumnWrapper>
           <h2 className="medium font-main">{data.title}</h2>
           <span className="sub mb-8">

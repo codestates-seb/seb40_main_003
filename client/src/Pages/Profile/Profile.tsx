@@ -62,12 +62,10 @@ const Profile = (props: props) => {
         <MainCenterWrapper>
           <>
             <>
-              {isAuthor(id) ? (
+              {isAuthor(id) && (
                 <SpaceBetween>
                   <button className="sub" onClick={onClickModalProfile}>프로필 수정</button>
                 </SpaceBetween>
-              ) : (
-                <></>
               )}
             </>
             {isOpenModalProfile && (
@@ -110,16 +108,15 @@ const Profile = (props: props) => {
                       key={`profilePlantCard ${e.plantId}`}
                       age={e.years}
                       plantId={e.plantId}
+                      author={id!==undefined?id:""}
                     />
                   );
                 })}
-                {isAuthor(id) ? (
+                {isAuthor(id) && (
                   <ColumnWrapper center={true} className="cursor">
                     <AddIcon onClick={onClickModal} height={"36px"} />
                     <span className="sub">반려식물 추가</span>
                   </ColumnWrapper>
-                ) : (
-                  <></>
                 )}
               </>
             </PlantCardCarousel>

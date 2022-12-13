@@ -17,14 +17,17 @@ type Props = {
 const CarouselWrapper = styled.div`
   /* height: 90px; */
   padding: 8px 0;
-  width: 90vw;
+  width: 70vw;
   max-width: 974px;
   display: flex;
-  overflow-x: scroll;
+  overflow-x: auto;
   overflow-y: hidden;
+  @media screen and (max-width: 1024px) {
+    width: 90vw;
+  }
 `;
 
-function PlantCardCarousel({ children }: Props) {
+const PlantCardCarousel=({ children }: Props)=>{
   return <CarouselWrapper>{children}</CarouselWrapper>;
 }
 export default PlantCardCarousel;
@@ -41,18 +44,17 @@ export const ProfilePlantCardWrapper = styled.div`
   border-radius: var(--sig-border-8);
 `;
 type ProfilePlantCardTypes = {
-
   src: string;
   alt: string;
   name: string;
   type: string;
   age: string;
   plantId: number;
+  author:number|string;
 };
 export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
   // 비구조화할당
-  const { id } = useParams();
-  const { src, alt, name, type, age, plantId } = props;
+  const { src, alt, name, type, age, plantId, author } = props;
   // 지우기
   const deleteItem = useDelete(`/plants/${plantId}`);
   // 작성자 판별
@@ -73,7 +75,7 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
       <ImageWrapper
         src={src}
         alt={alt}
-        size={"36"}
+        size={"56"}
         className="mr-16"
         loading="lazy"
       ></ImageWrapper>
@@ -82,7 +84,7 @@ export const ProfilePlantCard = (props: ProfilePlantCardTypes) => {
           <span className="medium">{name}</span>
           <SpaceEnd>
             {/* 팝업 사용법 */}
-            {isAuthor(id) && (
+            {isAuthor(author) && (
               <EditAndDeleteButton
                 deleteFunction={deleteItem}
                 editFunction={() => {

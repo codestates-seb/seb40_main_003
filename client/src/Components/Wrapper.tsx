@@ -13,12 +13,12 @@ export const MainContentContainer = styled.div`
     align-items: center;
     margin-bottom: 156px;
   }
-  &.fullscreen{
+  &.fullscreen {
     height: 100vh;
     width: 100vw;
     align-items: center;
   }
-  &.mg-0{
+  &.mg-0 {
     margin-bottom: 0;
   }
 `;
@@ -39,10 +39,10 @@ export const MainCenterWrapper = styled.main`
   /* @media screen and (max-width: 1024px) {
     margin-bottom: 156px;
   } */
-  &.pd-0{
-    padding:0;
+  &.pd-0 {
+    padding: 0;
   }
-  &.mg-0{
+  &.mg-0 {
     margin: 0;
   }
 `;
@@ -58,11 +58,12 @@ export const MainRightWrapper = styled.aside`
   top: 70px;
   border-top: 1px solid var(--line-light-gray);
   display: ${(props) => !props.children && "none"};
-  
+
   @media screen and (max-width: 1024px) {
     margin: 0;
     flex-direction: row;
-    justify-content:${(props:{center?:boolean})=>(props.center?"center":"space-between")};
+    justify-content: ${(props: { center?: boolean }) =>
+      props.center ? "center" : "space-between"};
     position: fixed;
     z-index: 9998;
     width: 100%;
@@ -78,14 +79,14 @@ type SectionWrapperType = {
   content?: string;
   price?: string;
   tag?: [{ techTagId: number; techTagName: string }];
-  children?: JSX.Element|JSX.Element[]|string;
+  children?: JSX.Element | JSX.Element[] | string;
   width?: number;
   borderNone?: boolean;
   font?: string;
   pb?: number;
   pt?: number;
 };
-export const SectionWrapper:React.FC<SectionWrapperType> = ({
+export const SectionWrapper: React.FC<SectionWrapperType> = ({
   title,
   content,
   tag,
@@ -103,7 +104,7 @@ export const SectionWrapper:React.FC<SectionWrapperType> = ({
       borderNone={borderNone ? borderNone : false}
     >
       <ColumnWrapper width={width}>
-        {title && <h2 className={`bold font-main ${font}`}>{title}</h2> }
+        {title && <h2 className={`bold font-main ${font}`}>{title}</h2>}
         {content && <p className="mt-8 text-overflow3">{content}</p>}
         {tag && (
           <TagWrapper>
@@ -135,8 +136,8 @@ const MainLeftWrapper = styled.aside`
 type columnWrapperType = {
   width?: number;
   center?: boolean;
-  minWidth?:string;
-  borderBottom?:boolean
+  minWidth?: string;
+  borderBottom?: boolean;
 };
 export const ReverseWrap = styled.section`
   display: flex;
@@ -147,13 +148,14 @@ export const ColumnWrapper = styled.div`
   flex-direction: column;
   width: ${(props: columnWrapperType) =>
     props.width ? `${props.width}%` : "auto"};
-min-width: ${(props: columnWrapperType) =>
-  props.minWidth ? `${props.minWidth}` : ""};
+  min-width: ${(props: columnWrapperType) =>
+    props.minWidth ? `${props.minWidth}` : ""};
   align-items: ${(props: columnWrapperType) =>
     props.center ? `center` : "auto"};
   justify-content: ${(props: columnWrapperType) =>
     props.center ? `center` : "auto"};
-  border-bottom:${(props:columnWrapperType)=>props.borderBottom?"1px solid #ededed":""}
+  border-bottom: ${(props: columnWrapperType) =>
+    props.borderBottom ? "1px solid #ededed" : ""};
 `;
 export const SpaceEnd = styled.div`
   display: flex;
@@ -172,7 +174,7 @@ export const RowWrapper = styled.div`
 export const SpaceBetween = styled.div`
   display: flex;
   justify-content: space-between;
-  &.center{
+  &.center {
     align-items: center;
   }
 `;

@@ -6,7 +6,7 @@ export const useIsAuthor = () => {
   const userInfo = useRecoilValue(userState);
 
   return (id: string | undefined | number) => {
-    return userInfo&&String(userInfo.memberId) === String(id);
+    return String(userInfo?.memberId) === String(id);
   };
 };
 /**게시글 작성자 id를 인자로 받아서 전문가 유저여부, 작성자여부를 검증하는 함수*/

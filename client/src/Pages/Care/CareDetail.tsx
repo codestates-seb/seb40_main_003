@@ -77,7 +77,7 @@ const CareDetail = () => {
         <>
           {isOpenModal && (
             <Modal onClickModal={onClickModal}>
-              <AddPlantModal />
+              <AddPlantModal closeModal={onClickModal} />
             </Modal>
           )}
         </>
@@ -87,7 +87,7 @@ const CareDetail = () => {
             <>
               {data.member.plants.length === 0 &&
               !isAuthor(data.member.memberId) ? (
-                <>반려식물이 없습니다</>
+                <span>반려식물이 없습니다</span>
               ) : (
                 data.member.plants.map((e, i) => {
                   return (
@@ -99,6 +99,7 @@ const CareDetail = () => {
                       key={`profilePlantCard ${e.plantId}`}
                       age={e.years}
                       plantId={e.plantId}
+                      author={data.member.memberId}
                     />
                   );
                 })
