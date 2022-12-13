@@ -93,8 +93,8 @@ const ExpertProfileTransfer = () => {
       new Blob([expertProfileDto], { type: "application/json" })
     );
     if (data.image !== undefined) {
-      await compressImage(data.image[0]).then((res: any) => {
-        formData.append("multipartFile", res);
+      await compressImage(data.image[0], 100).then((res) => {
+        res && formData.append("multipartFile", res);
       });
     }
 
@@ -106,7 +106,7 @@ const ExpertProfileTransfer = () => {
       })
       .then(() => {
         navigate(`/`);
-      })
+      });
   };
 
   usePageTitle("전문가 계정으로 전환");
@@ -312,28 +312,29 @@ const ExpertProfileTransfer = () => {
         </SectionWrapper>
 
         <ColumnWrapper>
-        <SectionWrapper>
-          
+          <SectionWrapper>
             <span className="mb-10 bold font-main">보유 기술 (중복 가능)</span>
-          <FlexWrapper>
-            {CareCategoryList.map((e) => {
-              return (
-                <RowWrapper key={`${e.number}tachtag`} className="align-center">
-                  <input 
-                    type="checkbox"
-                    value={e.name}
-                    className="techTagName checkbox-20 mb-16"
-                    {...register("techTags.0.techTagName", {
-                      required: true,
-                    })}
-                  />
-                  <label className="ml-8 mb-16">{e.name}</label>
-                </RowWrapper>
-              );
-            })}
-          </FlexWrapper>
-        </SectionWrapper>
-
+            <FlexWrapper>
+              {CareCategoryList.map((e) => {
+                return (
+                  <RowWrapper
+                    key={`${e.number}tachtag`}
+                    className="align-center"
+                  >
+                    <input
+                      type="checkbox"
+                      value={e.name}
+                      className="techTagName checkbox-20 mb-16"
+                      {...register("techTags.0.techTagName", {
+                        required: true,
+                      })}
+                    />
+                    <label className="ml-8 mb-16">{e.name}</label>
+                  </RowWrapper>
+                );
+              })}
+            </FlexWrapper>
+          </SectionWrapper>
         </ColumnWrapper>
 
         <SectionWrapper width={100} borderNone={true}>
@@ -393,6 +394,6 @@ const FlexWrapper = styled.div`
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-` 
+`;
 
 export default ExpertProfileTransfer;

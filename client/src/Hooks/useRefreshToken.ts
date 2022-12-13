@@ -4,7 +4,9 @@ import axios from "./api";
 import { getLS, setLS } from "./useSecureLS";
 
 const useRefreshToken = () => {
+  // 유저정보 아톰 리셋
   const resetUserState = useResetRecoilState(userState);
+  /**ㅇ */
   const refresh = async () => {
     const refreshToken = getLS("refreshToken");
     const response = await axios
