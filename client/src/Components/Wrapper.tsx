@@ -32,13 +32,9 @@ export const MainCenterWrapper = styled.main`
   max-width: 1024px;
   margin-top: 18px;
   padding: 24px;
-  /* margin-bottom: 156px; */
   background-color: var(--pure-white);
   border: 1px solid var(--line-light-gray);
   border-radius: var(--sig-border-16);
-  /* @media screen and (max-width: 1024px) {
-    margin-bottom: 156px;
-  } */
   &.pd-0 {
     padding: 0;
   }
@@ -130,7 +126,6 @@ export const SectionWrapper: React.FC<SectionWrapperType> = ({
 const MainLeftWrapper = styled.aside`
   min-width: 164px;
   min-height: 600px;
-  background-color: #333;
   min-height: 600;
 `;
 type columnWrapperType = {

@@ -40,7 +40,7 @@ const CareDetail = () => {
   const axiosprivate = useAxiosPrivate();
   const data = useFetch<CareDetailTypes>(`/experts/${id}`);
   const navigate = useNavigate();
-
+// 좋아요 함수 
   const LikeOnClick = () => {
     axiosPrivate
       .post(`/experts/${id}/like`, {

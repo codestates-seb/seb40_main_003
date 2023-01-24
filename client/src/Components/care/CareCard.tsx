@@ -7,7 +7,6 @@ import { defaultImage } from "../../utils/defaultImage";
 import {  caringPreviewTypes } from "../../types/caringTypes";
 
 const CardWrapper = styled.div`
-  /* background-color: aliceblue; */
   padding: 16px 0;
   display: flex;
   align-items: center;

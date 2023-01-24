@@ -44,11 +44,7 @@ const Product = () => {
   const axiosPrivate = useAxiosPrivate();
   const LikeOnClick = () => {
     axiosPrivate
-      .post(`/deal/like/${id}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
+      .post(`/deal/like/${id}`)
       .then((res) => {
         console.log(res);
       })

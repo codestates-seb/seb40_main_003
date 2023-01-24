@@ -58,11 +58,12 @@ const ExpertProfileTransfer = () => {
     }
   }, [avatar]);
 
-  const onInValid = (errors: FieldErrors) => {};
+
   const navigate = useNavigate();
 
   const onValid = async (data: ExpertProfileTransferForm) => {
     const formData = new FormData();
+    // ??무슨함수
     const techTagname = (techTag: []) => {
       let arr = [];
       for (let i = 0; i < techTag.length; i++) {
@@ -72,6 +73,7 @@ const ExpertProfileTransfer = () => {
     };
 
     techTagname(data.techTags[0].techTagName);
+
     const expertProfileDto = JSON.stringify({
       name: data.name,
       age: data.age,
@@ -114,7 +116,7 @@ const ExpertProfileTransfer = () => {
   return (
     <MainContentContainer
       as={"form"}
-      onSubmit={handleSubmit(onValid, onInValid)}
+      onSubmit={handleSubmit(onValid)}
     >
       <MainCenterWrapper>
         <RowWrapper>
@@ -145,6 +147,7 @@ const ExpertProfileTransfer = () => {
           </label>
           <p className="font-alert-red sub">{errors.image?.message}</p>
         </RowWrapper>
+
         {errors.image && errors.image.type === "required" && (
           <Errormsg>프로필 사진을 선택해주세요.</Errormsg>
         )}

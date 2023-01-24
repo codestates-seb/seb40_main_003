@@ -51,10 +51,12 @@ const EditPlantModal: React.FC<editplantModal> = ({
       <input
         {...register("name", {
           required: true,
+          // 최소이름길이
           minLength: {
             message: "제목은 2글자 이상으로 작성해주세요.",
             value: 2,
           },
+          // 최대이름길이
           maxLength: {
             message: "이름이 너무 길어요 10글자 미만으로 작성해주세요",
             value: 10,
@@ -69,10 +71,12 @@ const EditPlantModal: React.FC<editplantModal> = ({
       <input
         {...register("type", {
           required: true,
+          // 최소이름 길이
           minLength: {
             message: "식물이름을 입력해주세요.",
             value: 1,
           },
+          // 최대 이름길이
           maxLength: {
             message: "이름이 너무 길어요 20글자 미만으로 작성해주세요",
             value: 20,
