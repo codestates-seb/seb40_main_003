@@ -1,1 +1,1 @@
-export const debounceTime = 500 as const
+export const debounceTime = 200 as const

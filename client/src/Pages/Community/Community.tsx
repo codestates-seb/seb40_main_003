@@ -73,8 +73,8 @@ export const CommunityMain = ({searchKeyword, size}:communityMain) => {
 
 const Community = () => {
   usePageTitle("커뮤니티");
-  const [searchKeyWord, setSearchKeyWord] = useState("");
-  const debouncedValue = useDebounce(searchKeyWord,debounceTime)
+  const [searchKeyWord, setSearchKeyWord] = useState<string>("");
+  const debouncedValue = useDebounce<string>(searchKeyWord,debounceTime)
 
   return (
     <MainContentContainer>

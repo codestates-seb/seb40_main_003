@@ -25,6 +25,8 @@ import React from "react";
 import { ProfileDealType } from "../../types/profileType";
 import { cannotLoad, searchbarComment } from "../../Const/message";
 import ProductCategory from "../../Components/product/ProductCategory";
+import { debounceTime } from "../../Const/time/debounceTime";
+import useDebounce from "../../Hooks/useDebounce";
 
 // 쿼리클라이언트
 export const productQueryClient = new QueryClient();
@@ -83,9 +85,8 @@ export const ProductMain = ({ searchKeyword, size, category }: productMain) => {
 
 // 전체 페이지
 const Product = () => {
-  const [searchKeyWord, setSearchKeyWord] = useState<string | undefined>(
-    undefined
-  );
+  const [searchKeyWord, setSearchKeyWord] = useState<string>(  );
+  const debouncedValue = useDebounce(searchKeyWord,debounceTime)
   const [isSearching, setIsSearching] = useState(false);
   const [category, setCategory] = useState<undefined | number>(undefined);
 
@@ -130,7 +131,7 @@ const Product = () => {
           <ErrorBoundary fallback={<ErrorMessage content={cannotLoad} />}>
             <QueryClientProvider client={productQueryClient}>
               <ProductMain
-                searchKeyword={searchKeyWord}
+                searchKeyword={debouncedValue}
                 size={15}
                 category={category}
               />
