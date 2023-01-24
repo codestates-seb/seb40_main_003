@@ -1,0 +1,1 @@
+export const debounceTime = 500 as const

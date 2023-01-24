@@ -22,6 +22,8 @@ import { communityPreviewDataTypes } from "../../types/communityTypes";
 import { useInView } from "react-intersection-observer";
 import React, { useEffect, useState } from "react";
 import { cannotLoad, searchbarComment } from "../../Const/message";
+import useDebounce from "../../Hooks/useDebounce";
+import { debounceTime } from "../../Const/time/debounceTime";
 
 export const communityQueryClient = new QueryClient();
 
@@ -72,6 +74,8 @@ export const CommunityMain = ({searchKeyword, size}:communityMain) => {
 const Community = () => {
   usePageTitle("커뮤니티");
   const [searchKeyWord, setSearchKeyWord] = useState("");
+  const debouncedValue = useDebounce(searchKeyWord,debounceTime)
+
   return (
     <MainContentContainer>
 
@@ -90,7 +94,7 @@ const Community = () => {
         >
           {/* 쿼리클라이언트 */}
           <QueryClientProvider client={communityQueryClient}>
-            <CommunityMain searchKeyword={searchKeyWord}/>
+            <CommunityMain searchKeyword={debouncedValue}/>
           </QueryClientProvider>
         </ErrorBoundary>
       </MainCenterWrapper>
